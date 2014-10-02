@@ -1,0 +1,37 @@
+// _variales.scss: variables used throughout your project.
+
+// ==============================================================
+//		colours
+// ==============================================================
+$blue: #00257f;
+$black: #333;
+$grey: #5F697F;
+$light-grey: lighten($grey, 45%);
+$periwinkle: #ccd3e5;
+$red: #cc0a12;
+
+// ==============================================================
+//		fonts
+// ==============================================================
+$font-regular: normal;
+$font-bold: bold;
+
+$font-family: Arial, Helvetica, sans-serif;
+$font-family-headings: "Times New Roman", serif;
+
+// ==============================================================
+//		margins and padding
+// ==============================================================
+$v-rhythm: 20px;
+
+// ==============================================================
+//		Breakpoints
+// ==============================================================
+$s: 320px;
+$s-max: max-width 320px;
+$s-m: 320px 768px;
+$m: 480px;
+$m-max: max-width 480px;
+$m-l: 480px 900px;
+$l: 900px;
+$l-max: max-width 900px;

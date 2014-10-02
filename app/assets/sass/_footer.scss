@@ -1,0 +1,11 @@
+footer {
+	@include font-size(12);
+	padding:$v-rhythm 0;
+	color:$black;
+	a {
+		color:white;
+		&:hover {
+			color:$blue;
+		}
+	}
+}

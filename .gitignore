@@ -1,0 +1,24 @@
+# System
+.DS_Store
+Thumbs.db
+.Trashes
+._*
+Icon
+.AppleDouble
+.LSOverride
+
+# Editors
+.idea
+*.sublime-*
+
+# Laravel
+/bootstrap/compiled.php
+/vendor
+/log/*
+composer.phar
+# composer.lock
+.env.*.php
+.env.php
+
+#node.js
+/node_modules

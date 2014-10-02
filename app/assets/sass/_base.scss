@@ -1,0 +1,177 @@
+//	_base.scss: styles that will affect all pages (heading tags, small tags, etc.)
+
+* {
+	@include box-sizing(border-box);
+}
+
+html, body {
+	height:100%;
+}
+html {
+	font-size:14px;
+    @include breakpoint($l)
+    {
+      font-size:16px;
+    }
+	background-color: #888;
+}
+body {
+	font-family: $font-family;
+	@include background(linear-gradient(top, #f0f0f0, #888 66%));
+	color:$black;
+	line-height:1.4;
+}
+a {
+	text-decoration:none;
+	color:$blue;
+	&:hover {
+	}
+}
+h1, h2 {
+	font-family: Arial, Helvetica, sans-serif;
+    line-height:1;
+  font-weight: bold;
+  letter-spacing: -1px;
+
+}
+h1 {
+  @include font-size(26);
+  color:$grey;
+  margin-bottom:$v-rhythm / 2;
+  @include breakpoint($l) {
+    	margin-top:30px;
+    }
+}
+h2 {
+    padding:($v-rhythm / 2) 15px;
+    @include font-size(24);
+    color:white;
+}
+h3 {
+  padding:0 0 ($v-rhythm / 2);
+  @include font-size(20);
+  color:$blue;
+}
+h4 {
+  @include font-size(18);
+  font-weight:$font-bold;
+  padding:$v-rhythm 0 ($v-rhythm / 2);
+  border-bottom:1px solid $periwinkle;
+  margin-bottom:$v-rhythm;
+}
+h5 {
+  @include font-size(14);
+  text-transform: uppercase;
+  font-weight: $font-bold;
+  padding-bottom:$v-rhythm / 4;
+  border-bottom: 1px solid $light-grey;
+  margin-bottom:$v-rhythm / 4;
+  &.no-underline {
+    padding-bottom:0;
+    border-bottom:0;
+  }
+}
+h1, h2, h3, h4, h5 {
+  small {
+    font-size:0.7em;
+    color:$grey;
+  }
+}
+p {
+	padding-bottom:$v-rhythm;
+}
+em {
+  font-style: italic;
+}
+strong {
+	font-weight:$font-bold;
+}
+label {
+	display:inline-block;
+	font-weight:$font-bold;
+    @include font-size(16);
+	color:$grey;
+	padding-bottom:$v-rhythm / 2;
+	&.required {
+		&::before {
+			content:"* ";
+			color:$red;
+			font-weight:$font-bold;
+		}
+	}
+}
+a.back-to-top {
+	display:inline-block;
+	padding:($v-rhythm / 2) 10px;
+	background-color:darken(white, 5%);
+	margin:($v-rhythm / 2) 0;
+	&:hover {
+		opacity:0.8;
+	}
+}
+a.button {
+  display:inline-block;
+}
+input[type=text],
+input[type=email],
+input[type=file],
+input[type=password],
+textarea {
+	width:100%;
+	padding:$v-rhythm / 4 10px;
+	@include font-size(14);
+	font-family:$font-family;
+	@include breakpoint($l) {
+		@include font-size(16);
+	}
+	&.inline {
+		width:auto;
+	}
+}
+input[readonly=readonly],
+input[disabled=disabled] {
+  background-color:lighten($red, 50%);
+  border:1px solid $red;
+}
+input[type=checkbox] {
+	width:30px;
+	height:30px;
+	vertical-align: middle;
+}
+input[type=submit] {
+	cursor:pointer;
+	padding-left:20px;
+	padding-right:20px;
+	font-weight:$font-bold;
+}
+select {
+    display: block;
+	width:100%;
+	padding:$v-rhythm / 4 10px;
+	@include font-size(14);
+	@include breakpoint($l) {
+		@include font-size(16);
+	}
+	&.inline {
+		display:inline-block;
+	}
+}
+strong {
+	font-weight:$font-bold;
+}
+
+#content {
+	@include font-size(14);
+}
+.red {
+	color:$red !important;
+}
+.white {
+  color:white !important;
+}
+.showjs {
+	display:none;
+}
+.hidejs {
+  display:block;
+}

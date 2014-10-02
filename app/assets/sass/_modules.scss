@@ -1,0 +1,425 @@
+// _modules.scss: modular pieces of code used throughout your project. Use modules to avoid repeating code.
+
+.modal {
+  display:none;
+}
+
+.primary {
+	@include primary-but();
+}
+.secondary {
+	@include secondary-but();
+}
+.red-but {
+  @include primary-but();
+  background-color:$red;
+  @include text-shadow(darken($red, 10%) 0 -1px);
+  border-top: 1px solid lighten($red, 10%);
+  border-bottom: 2px solid rgba(darken($red, 40%), 0.6);
+  @include dark-grad($red, top, 10%);
+}
+
+.alert {
+  position:relative;
+  margin-bottom:$v-rhythm;
+  padding:($v-rhythm / 2) 15px;
+  @include font-size(16);
+  ul li {
+    padding:($v-rhythm / 4) 0;
+  }
+  button.close {
+    display:block;
+    position:absolute;
+    cursor:pointer;
+    border:0;
+    padding:0;
+    margin:0;
+    right:15px;
+    top:7px;
+    background:none;
+    @include font-size(24);
+    font-weight: $font-bold;
+    color:rgba($black, 0.4);
+  }
+  &:before {
+    font-family: "Fontawesome";
+    @include font-size(18);
+    padding-right:5px;
+  }
+}
+.alert-overlay {
+  position:absolute;
+  top:0;
+  left:0;
+  padding:$v-rhythm * 2;
+  text-align:center;
+  width:100%;
+  @include font-size(24);
+  background:rgba(white, 0.8);
+}
+.alert-success {
+  background-color:lighten(greenyellow, 20%);
+  border:1px solid greenyellow;
+  &.alert-overlay {
+    background-color:rgba(lighten(greenyellow, 20%), 0.8);
+    border:0;
+  }
+  &:before {
+    content: "\f046";
+  }
+}
+.alert-info {
+  background-color:lighten($blue, 68%);
+  border:1px solid lighten($blue, 50%);
+  &.alert-overlay {
+    background-color:rgba(lighten($blue, 68%), 0.8);
+    border:0;
+  }
+  &:before {
+    content: "\f05a";
+  }
+}
+.alert-warning {
+  background-color:lighten(orange, 30%);
+  border:1px solid lighten(orange, 10%);
+  &.alert-overlay {
+    background-color:rgba(lighten(orange, 30%), 0.8);
+    border:0;
+  }
+  &:before {
+    content: "\f071";
+  }
+}
+.alert-error {
+  background-color:lighten(red, 40%);
+  border:1px solid lighten(red, 30%);
+  &.alert-overlay {
+    background-color:rgba(lighten(red, 40%), 0.8);
+    border:0;
+  }
+  &:before {
+    content: "\f057";
+  }
+}
+
+#page-header {
+  position:relative;
+  background-color: $blue;
+  color:white;
+  margin-bottom:0;
+  .page-menu-icon-s {
+    color:white;
+    position:absolute;
+    display:block;
+    top:8px;
+    right:10px;
+    @include breakpoint($m) { display:none; }
+  }
+  nav {
+    padding:0 10px ($v-rhythm / 2);
+    ul {
+      @include horizontal-list();
+      li {
+        margin-right:5px;
+        @include breakpoint($m-max) { display:block; width:100%; padding:10px 0 0 0; }
+        a {
+          @include secondary-but();
+          display:inline-block;
+          line-height:1.1;
+          @include breakpoint($m-max) {
+            display:block; padding:10px 0;
+            i {
+              display:none;
+            }
+          }
+        }
+      }
+    }
+    @include breakpoint($m-max) { display:none; }
+  }
+}
+
+.intro {
+    margin-bottom: $v-rhythm;
+    border-bottom:1px solid $light-grey;
+  @include font-size(16);
+  @include breakpoint($l) {
+    @include font-size(18);
+  }
+}
+
+.filter-container {
+  background-color:darken(white, 5%);
+  margin-bottom:$v-rhythm / 2;
+  @for $i from 1 through 12 {
+    .col-#{$i} {
+      margin-bottom:0;
+      padding:($v-rhythm / 4) 0;
+    }
+  }
+  .highlight {
+    background-color: $periwinkle;
+    padding:($v-rhythm / 2) 15px;
+    @include font-size(18);
+    .col-6 {
+      padding:0;
+    }
+  }
+  .filters {
+    @include breakpoint($m-max) { display:none; }
+    & > ul {
+      & > li {
+        padding:$v-rhythm 15px;
+        &:not(:last-of-type) { border-right:1px solid darken(white, 20%); }
+        @include breakpoint($m) {
+          display:inline;
+          float:left;
+        }
+      }
+    }
+  }
+}
+.filter-menu-icon-s {
+  display:block;
+  background-color:darken(white, 10%);
+  text-align: center;
+  padding:$v-rhythm / 2 0;
+  @include font-size(16);
+  @include breakpoint($m) { display:none; }
+}
+
+.filter-search {
+  position:relative;
+  @include breakpoint($l) { margin-right:15px; }
+  padding:0;
+  input {
+    @include font-size(14);
+    padding:3px;
+    margin:0;
+    @include breakpoint($m-max) { padding:8px; }
+  }
+  button {
+    position:absolute;
+    line-height:1;
+    top:1px;
+    right:5px;
+    @include breakpoint($m-max) { @include secondary-but(); line-height:1; }
+  }
+}
+.filter-options {
+  @include horizontal-list();
+  @include font-size(16);
+  @include breakpoint($m) {
+    @include font-size(12);
+  }
+
+  li {
+    border-right:1px solid darken(white, 20%);
+    &:last-child {
+      border:0;
+    }
+    &.title {
+      border-right:0;
+    }
+
+    a,
+    strong {
+      text-align: center;
+      display:inline-block;
+      padding:0 5px;
+    }
+
+    a:hover {
+      color:$periwinkle;
+    }
+
+  }
+
+}
+.filter-but {
+  background-color:darken(white, 15%);
+  padding:5px;
+  @include border-radius(5px);
+  @include font-size(12);
+}
+
+.index-table {
+  width:100%;
+  tr td {
+    border-left:1px solid darken(white, 10%);
+    vertical-align: middle;
+    &.content-center {
+      text-align: center;
+    }
+    &.content-right {
+      text-align: right;
+    }
+    &:last-child {
+      border-right:1px solid darken(white, 10%);
+    }
+    &.hide-s {
+      display:none;
+      @include breakpoint($m)
+      {
+        display:table-cell;
+      }
+    }
+  }
+  thead {
+    td {
+      background-color:$grey;
+      color:white;
+      border-collapse: separate;
+      text-transform: uppercase;
+      @include font-size(12);
+      font-weight:$font-bold;
+      padding:($v-rhythm / 2) 15px;
+    }
+  }
+  tbody {
+    tr {
+      td {
+        padding:($v-rhythm / 4) 15px;
+        &:last-child {
+          width:1%;
+          white-space:nowrap;
+        }
+      }
+      &:nth-child(even) {
+        background-color:darken(white, 5%);
+      }
+      &:last-child {
+        border-bottom:1px solid darken(white, 10%);
+      }
+    }
+  }
+}
+
+
+.formfield {
+	margin-bottom:$v-rhythm;
+	&.highlight {
+		padding:($v-rhythm / 2) 10px;
+		background-color:lighten($blue, 70%);
+		border:1px solid lighten($blue, 60%);
+	}
+	&.hide {
+		display:none;
+	}
+}
+.formgroup {
+  @include clearfix();
+	position:relative;
+	padding:$v-rhythm / 2 0;
+	background-color:lighten($periwinkle, 10%);
+	margin-bottom:$v-rhythm;
+    &.highlight {
+      background-color:$blue;
+      label {
+        color:white;
+      }
+    }
+	.title {
+		margin-top:-($v-rhythm / 2);
+		padding:($v-rhythm / 2) 20px;
+		background-color:$periwinkle;
+		@include font-size(18);
+		font-weight:$font-bold;
+		color:darken($periwinkle, 30%);
+		margin-bottom:$v-rhythm;
+
+      small {
+        font-size:70%;
+      }
+	}
+	.formfield {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+.help {
+    display: none;
+    width:16px;
+    height:16px;
+    background:url('../img/help_icon.png') top left no-repeat;
+    &:hover {
+    	background:url('../img/help_icon.png') top right no-repeat;
+    }
+}
+.help-box {
+    background:$light-grey;
+    border:#dedede 1px solid;
+    padding:5px 10px;
+    display: block;
+    margin-bottom: $v-rhythm / 2;
+}
+.sub-box {
+  display:none;
+  background:white;
+  padding:10px 20px;
+  border:1px solid $periwinkle;
+}
+.buttons,
+.loading {
+	@include clearfix();
+	margin-bottom:$v-rhythm;
+}
+.loading {
+	display:none;
+}
+.small-print {
+	@include font-size(12);
+	color:$grey;
+    font-style: italic;
+}
+.italic {
+  font-style: italic;
+}
+.bold {
+  font-style: bold;
+}
+
+ul.square {
+  list-style:square;
+  margin-bottom:$v-rhythm;
+  padding-left: 20px;
+}
+.datepicker {
+  background:url(../img/iconCalendar.gif) no-repeat 10px center;
+  padding-left:40px !important;
+  padding:$v-rhythm / 4 10px;
+}
+
+.pagination-container {
+  margin:$v-rhythm 0;
+}
+ul.pagination {
+  @include horizontal-list();
+  padding:0;
+  li {
+    padding:0;
+    margin-right:5px;
+    a {
+      @include secondary-but();
+    }
+    &.active span {
+      @include primary-but();
+    }
+    &.disabled span {
+      @include but();
+      background-color:darken(white, 10%);
+    }
+  }
+}
+
+.euro-field {
+  &:before {
+    content: "€";
+  }
+}
+
+//Buttons that are JS-dependent. Hide until JS displays them.
+.js-block {
+  display:none;
+}

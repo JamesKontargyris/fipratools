@@ -1,0 +1,22 @@
+/*!   
+Theme Name: Fipra Online Internal Work Order
+Theme URI: http://fipra.com
+Description: Custom Theme for Fipra Online Internal Work Order
+Author: James Kontargyris
+Author URI: http://jameskontargyris.co.uk
+Version: 0.0.1
+*/
+
+// Tools
+@import "compass";
+@import "compass/reset";
+@import "susy";
+@import "breakpoint";
+
+@import "variables";
+@import "mixins";
+@import "base";
+@import "layout";
+@import "modules";
+@import "header";
+@import "footer";

@@ -1,0 +1,118 @@
+// _mixins.scss: any mixins created for this project.
+
+@mixin background-img($imgpath, $x:0, $y:0, $repeat: no-repeat) {
+    background: {
+        image: url($imgpath);
+        position: $x $y;
+        repeat: $repeat;
+    }
+}
+
+@mixin but {
+	cursor:pointer;
+	padding:($v-rhythm / 4) 10px;
+	line-height:$v-rhythm * 2;
+	@include font-size(16);
+	@include border-radius(5px);
+	text-align:center;
+	font-weight:$font-regular;
+	&:hover {
+		opacity:0.8;
+	}
+}
+
+@mixin primary-but {
+	@include but();
+	color:white;
+	border:0;
+	background-color:$blue;
+	@include text-shadow(darken($blue, 10%) 0 -1px);
+	border-top: 1px solid lighten($blue, 10%);
+	border-bottom: 2px solid rgba(darken($blue, 40%), 0.6);
+	@include dark-grad($blue, top, 10%);
+}
+
+@mixin secondary-but {
+	@include but();
+	color:$blue;
+	border:1px solid darken($light-grey, 5%);
+	border-bottom: 2px solid rgba(darken($light-grey, 10%), 0.6);
+	@include light-grad(darken(white, 10%), top, 20%);
+}
+
+@mixin dark-grad($color: $blue, $position: top, $percentage: 7%) {
+	background-color:$color;
+	@include background(linear-gradient($position, $color, darken($color, $percentage)));
+}
+
+@mixin light-grad($color: $blue, $position: top, $percentage: 7%) {
+	background-color:$color;
+	@include background(linear-gradient($position, lighten($color, $percentage), $color));
+}
+
+@mixin legibility {
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+// Fonts
+@mixin font-size($sizeValue: 16) {
+  font-size: $sizeValue + px;
+  font-size: ($sizeValue / 16) + rem;
+}
+
+// opacity
+@mixin opacity($opacity) {
+    filter: unquote("progid:DXImageTransform.Microsoft.Alpha(Opacity=#{round($opacity * 100)})");
+    opacity: $opacity;
+}
+
+// input placeholder
+@mixin placeholder($color : $primary_color) {
+	&::-webkit-input-placeholder {
+		color: $color;
+	}
+	&:-moz-placeholder {
+		color: $color;
+	}
+	&:-ms-input-placeholder {
+		color: $color;
+	}
+}
+
+// position
+@mixin position ($position: relative, $coordinates: 0 0 0 0) {
+	@if type-of($position) == list {
+		$coordinates: $position;
+		$position: relative;
+	}
+	$top: nth($coordinates, 1);
+	$right: nth($coordinates, 2);
+	$bottom: nth($coordinates, 3);
+	$left: nth($coordinates, 4);
+	position: $position;
+	@if $top == auto {
+		top: $top;
+	}
+	@else if not(unitless($top)) {
+		top: $top;
+	}
+	@if $right == auto {
+		right: $right;
+	}
+	@else if not(unitless($right)) {
+		right: $right;
+	}
+	@if $bottom == auto {
+		bottom: $bottom;
+	}
+	@else if not(unitless($bottom)) {
+		bottom: $bottom;
+	}
+	@if $left == auto {
+		left: $left;
+	}
+	@else if not(unitless($left)) {
+		left: $left;
+	}
+}
