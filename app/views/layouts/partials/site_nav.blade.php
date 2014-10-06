@@ -13,8 +13,8 @@
 		<a href="{{ route('units.create') }}" class="site-nav-extra-link" title="Add a new Unit"><i class="fa fa-plus-circle"></i></a>
 	</li>
 	<li class="{{ nav_item_is_active('sectors') ? 'active' : '' }}">
-		<a href="#" class="has-extra-link">Sectors</a>
-		<a href="#" class="site-nav-extra-link" title="Add a new sector"><i class="fa fa-plus-circle"></i></a>
+		<a href="{{ route('sectors.index') }}" class="has-extra-link">Sectors</a>
+		<a href="{{ route('sectors.create') }}" class="site-nav-extra-link" title="Add a new sector"><i class="fa fa-plus-circle"></i></a>
 	</li>
 	<li class="{{ nav_item_is_active('types') ? 'active' : '' }}">
 		<a href="#" class="has-extra-link">Types</a>

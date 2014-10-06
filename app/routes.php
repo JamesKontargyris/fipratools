@@ -81,4 +81,5 @@ Route::group(['before' => 'auth'], function()
 	Route::post('units/search', 'UnitsController@search');
 	Route::resource('units', 'UnitsController');
 	Route::resource('users', 'UsersController');
+	Route::resource('sectors', 'SectorsController');
 });

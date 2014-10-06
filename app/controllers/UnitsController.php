@@ -2,8 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
-use Leadofficelist\Forms\AddUnit as AddUnitForm;
-use Leadofficelist\Forms\EditUnit as EditUnitForm;
+use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
 use Leadofficelist\Units\EditUnitCommand;
 use Leadofficelist\Units\Unit;
 
@@ -12,23 +11,15 @@ class UnitsController extends \BaseController {
 	use CommanderTrait;
 
 	protected $resource_key = 'units';
-	private $addUnitForm;
-	private $editUnitForm;
-	/**
-	 * Array of filter keys to reset when "reset filters" is clicked
-	 *
-	 * @var array
-	 */
-	protected $filter_keys = ['units.rowsToView', 'units.rowsSort'];
+	private $addEditUnitForm;
 
-	public function __construct(AddUnitForm $addUnitForm, EditUnitForm $editUnitForm) {
-
+	public function __construct(AddEditUnitForm $addEditUnitForm)
+	{
 		parent::__construct();
 
-		$this->addUnitForm = $addUnitForm;
-		$this->editUnitForm = $editUnitForm;
+		$this->addEditUnitForm = $addEditUnitForm;
 
-
+		View::share('page_title', 'Units');
 	}
 
 
@@ -58,6 +49,7 @@ class UnitsController extends \BaseController {
 		$this->check_perm('manage_units');
 
 		return View::make('units.create');
+
 	}
 
 	/**
@@ -71,7 +63,7 @@ class UnitsController extends \BaseController {
 		$this->check_perm('manage_units');
 
 		$input = Input::all();
-		$this->addUnitForm->validate($input);
+		$this->addEditUnitForm->validate($input);
 
 		$this->execute('Leadofficelist\Units\AddUnitCommand');
 
@@ -81,7 +73,7 @@ class UnitsController extends \BaseController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified unit.
 	 * GET /units/{id}
 	 *
 	 * @param  int  $id
@@ -137,7 +129,8 @@ class UnitsController extends \BaseController {
 
 		$input = Input::all();
 		$input['id'] = $id;
-		$this->editUnitForm->validate($input);
+		$this->addEditUnitForm->rules['name'] = 'required|max:255|unique:units,name,' . $id;
+		$this->addEditUnitForm->validate($input);
 
 		$this->execute('Leadofficelist\Units\EditUnitCommand', $input);
 
@@ -159,7 +152,7 @@ class UnitsController extends \BaseController {
 
 		$unit = Unit::find($id);
 		$unit_name = $unit->name;
-		$unit = Unit::destroy($id);
+		Unit::destroy($id);
 		Flash::overlay('"' . $unit_name . '" has been deleted.', 'info');
 
 		return Redirect::route('units.index');

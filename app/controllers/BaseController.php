@@ -10,6 +10,12 @@ class BaseController extends Controller {
 	protected $rows_sort_order;
 	protected $rows_to_view;
 	protected $userFullName;
+	/**
+	 * Array of filter keys to reset when "reset filters" is clicked
+	 *
+	 * @var array
+	 */
+	protected $filter_keys = ['units.rowsToView', 'units.rowsSort'];
 
 	function __construct()
 	{
@@ -111,5 +117,4 @@ class BaseController extends Controller {
 
 		throw new PermissionDeniedException;
 	}
-
 }
