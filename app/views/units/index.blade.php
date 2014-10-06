@@ -13,41 +13,9 @@
 @include('layouts.partials.messages')
 
 @if(count($items) > 0)
-	<section class="rows-nav-container row no-margin">
-		<div class="col-12">
-			<ul class="rows-nav">
-				@if($items->links() != '')
-					<li class="hide-s">
-						{{ $items->links() }}
-					</li>
-				@endif
-				<li>Viewing <strong>{{ $items->getFrom() }}-{{ $items->getTo() }}</strong> of <strong>{{ $items->getTotal() }}</strong></li>
-				<li class="hide-m">Page {{ str_replace('Page ', '', $items->getCurrentPage()) }} of {{ str_replace('Page ', '', $items->getLastPage()) }}</li>
-				<li class="search-container">
-					{{ Form::open(['url' => 'units/search']) }}
-						{{ Form::text('search', null, ['placeholder' => 'Search...']) }}
-						<button type="submit" class="search-but"><i class="fa fa-search"></i></button>
-					{{ Form::close() }}
-				</li>
-				@if(is_search())
-					<li><a href="{{ route('units.index') }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Search</a></li>
-				@endif
-			</ul>
-		</div>
-	</section>
+	@include('layouts.partials.rows_nav')
 
-	<section class="row no-margin">
-		<div class="col-12 filter-container">
-			<a class="filter-menu-icon-m" href="#">Filters</a>
-			<div class="col-12 filters">
-				<ul>
-					<li>@include('layouts.partials.filters.rows_to_view')</li>
-					<li>@include('layouts.partials.filters.rows_sort_order')</li>
-					<li><a href="?reset_filters=yes" class="filter-but">Reset Filters</a></li>
-				</ul>
-			</div>
-		</div>
-	</section>
+	@include('layouts.partials.filters')
 
 	<section class="index-table-container">
 		<div class="row">
@@ -88,23 +56,8 @@
 		</div>
 	</section>
 
-	<section class="pagination-container">
-		@if($items->links() != '')
-			<div class="row">
-				<div class="col-12">
-					{{ $items->links() }}
-				</div>
-			</div>
-		@endif
-	</section>
+	@include('layouts.partials.pagination_container')
 @else
-	<div class="row">
-		<div class="col-12">
-			<p>No records found.</p>
-			@if(is_search())
-				<a class="primary" href="{{ route('units.index') }}"><i class="fa fa-caret-left"></i> Back to overview</a>
-			@endif
-		</div>
-	</div>
+	@include('layouts.partials.index_no_records_found')
 @endif
 @stop
