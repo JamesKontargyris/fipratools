@@ -3,20 +3,32 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddUnit as AddUnitForm;
+use Leadofficelist\Forms\EditUnit as EditUnitForm;
+use Leadofficelist\Units\EditUnitCommand;
 use Leadofficelist\Units\Unit;
 
 class UnitsController extends \BaseController {
 
 	use CommanderTrait;
 
-	/**
-	 * @var AddUnitForm
-	 */
+	protected $resource_key = 'units';
 	private $addUnitForm;
+	private $editUnitForm;
+	/**
+	 * Array of filter keys to reset when "reset filters" is clicked
+	 *
+	 * @var array
+	 */
+	protected $filter_keys = ['units.rowsToView', 'units.rowsSort'];
 
-	public function __construct(AddUnitForm $addUnitForm) {
+	public function __construct(AddUnitForm $addUnitForm, EditUnitForm $editUnitForm) {
+
+		parent::__construct();
 
 		$this->addUnitForm = $addUnitForm;
+		$this->editUnitForm = $editUnitForm;
+
+
 	}
 
 
@@ -28,13 +40,11 @@ class UnitsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$this->reset_filters();
+		$this->check_perm('manage_units');
 
-		$rows_sort_order = $this->getRowsSortOrder();
-		$rows_to_view = $this->getRowsToView();
-
-		$units = Unit::rowsSortOrder($rows_sort_order)->paginate($rows_to_view);
-		return View::make('units.index')->with(compact('units'));
+		$items = Unit::rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
+		$items->key = 'units';
+		return View::make('units.index')->with(compact('items'));
 	}
 
 	/**
@@ -45,6 +55,8 @@ class UnitsController extends \BaseController {
 	 */
 	public function create()
 	{
+		$this->check_perm('manage_units');
+
 		return View::make('units.create');
 	}
 
@@ -56,6 +68,8 @@ class UnitsController extends \BaseController {
 	 */
 	public function store()
 	{
+		$this->check_perm('manage_units');
+
 		$input = Input::all();
 		$this->addUnitForm->validate($input);
 
@@ -63,7 +77,7 @@ class UnitsController extends \BaseController {
 
 		Flash::overlay('Fipra Unit added.', 'success');
 
-		return Redirect::to('unit');
+		return Redirect::route('units.index');
 	}
 
 	/**
@@ -75,7 +89,17 @@ class UnitsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$this->check_perm('view_list');
+
+		if($unit = Unit::find($id))
+		{
+			return View::make('units.show')->with(compact('unit'));
+		}
+		else
+		{
+			Flash::error('Sorry, that unit does not exist.');
+			return Redirect::route('units.index');
+		}
 	}
 
 	/**
@@ -87,7 +111,17 @@ class UnitsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$this->check_perm('manage_units');
+
+		if($unit = Unit::find($id))
+		{
+			return View::make('units.edit')->with(compact('unit'));
+		}
+		else
+		{
+			Flash::error('Sorry, that unit does not exist.');
+			return Redirect::route('units.index');
+		}
 	}
 
 	/**
@@ -99,7 +133,17 @@ class UnitsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$this->check_perm('manage_units');
+
+		$input = Input::all();
+		$input['id'] = $id;
+		$this->editUnitForm->validate($input);
+
+		$this->execute('Leadofficelist\Units\EditUnitCommand', $input);
+
+		Flash::overlay('Fipra Unit updated.', 'success');
+
+		return Redirect::route('units.index');
 	}
 
 	/**
@@ -111,7 +155,25 @@ class UnitsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$this->check_perm('manage_units');
+
+		$unit = Unit::find($id);
+		$unit_name = $unit->name;
+		$unit = Unit::destroy($id);
+		Flash::overlay('"' . $unit_name . '" has been deleted.', 'info');
+
+		return Redirect::route('units.index');
+
+	}
+
+	public function search()
+	{
+		$this->check_perm('manage_units');
+
+		$items = Unit::where('name', 'LIKE', '%' . Input::get('search') . '%')->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
+		$items->key = 'units';
+		$items->search_term = Input::get('search');
+		return View::make('units.index')->with(compact('items'));
 	}
 
 }

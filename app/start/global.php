@@ -11,7 +11,10 @@
 |
 */
 
+use Laracasts\Flash\Flash;
 use Laracasts\Validation\FormValidationException;
+use Leadofficelist\Exceptions\LoginFailedException;
+use Leadofficelist\Exceptions\PermissionDeniedException;
 
 ClassLoader::addDirectories(array(
 
@@ -57,6 +60,21 @@ App::error(function(FormValidationException $exception)
 {
 	Log::error($exception);
 	return Redirect::back()->withInput()->withErrors($exception->getErrors());
+});
+
+App::error(function(PermissionDeniedException $exception)
+{
+	Log::error($exception);
+
+	Flash::error('Sorry - you do not have access to that page.');
+	return Redirect::back();
+});
+
+App::error(function(LoginFailedException $exception)
+{
+	Log::error($exception);
+
+	return Redirect::back()->withInput()->withErrors('Incorrect login details entered. Please try again.');
 });
 
 /*

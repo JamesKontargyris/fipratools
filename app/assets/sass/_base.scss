@@ -8,23 +8,21 @@ html, body {
 	height:100%;
 }
 html {
-	font-size:14px;
-    @include breakpoint($l)
-    {
-      font-size:16px;
-    }
+	font-size:16px;
 	background-color: #888;
 }
 body {
 	font-family: $font-family;
-	@include background(linear-gradient(top, #f0f0f0, #888 66%));
+//	@include background(linear-gradient(top, #f0f0f0, #888 66%));
+  background-color: $light-grey;
 	color:$black;
-	line-height:1.4;
+	line-height:$v-rhythm;
 }
 a {
 	text-decoration:none;
 	color:$blue;
 	&:hover {
+      color:rgba($blue, 0.7);
 	}
 }
 h1, h2 {
@@ -39,13 +37,16 @@ h1 {
   color:$grey;
   margin-bottom:$v-rhythm / 2;
   @include breakpoint($l) {
-    	margin-top:30px;
-    }
+      margin-top:15px;
+  }
 }
 h2 {
     padding:($v-rhythm / 2) 15px;
     @include font-size(24);
     color:white;
+    @include breakpoint($m-max) {
+      @include font-size(18);
+      }
 }
 h3 {
   padding:0 0 ($v-rhythm / 2);
@@ -55,9 +56,9 @@ h3 {
 h4 {
   @include font-size(18);
   font-weight:$font-bold;
-  padding:$v-rhythm 0 ($v-rhythm / 2);
+  padding:($v-rhythm / 2) 0;
+  margin-bottom:($v-rhythm / 2);
   border-bottom:1px solid $periwinkle;
-  margin-bottom:$v-rhythm;
 }
 h5 {
   @include font-size(14);
@@ -161,6 +162,7 @@ strong {
 }
 
 #content {
+    padding-top:$v-rhythm;
 	@include font-size(14);
 }
 .red {

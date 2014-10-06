@@ -9,15 +9,48 @@
     // Hide all help boxes
     $('.help-box').css('display', 'none');
 
+    if($.trim($('.page-menu-nav ul').text()) == '')
+    {
+        $('.page-menu-icon-s').hide();
+    }
+
     $('.page-menu-icon-s').on('click', function()
     {
-        $('nav').slideToggle();
+        $('.page-menu-nav').slideToggle();
+        $(this).animate({opacity:0.1}, 300, function()
+        {
+            $(this).html($.trim($(this).text()) == 'Actions' ? 'Close <i class="fa fa-lg fa-caret-up"></i>' : 'Actions <i class="fa fa-lg fa-caret-down"></i>');
+        }).animate({opacity:1}, 300);
+
         return false;
     });
 
-    $('.filter-menu-icon-s').on('click', function()
+    $('.mobile-user-details-but').on('click', function()
     {
+        $('.mobile-user-details-container').slideToggle();
+        $('.mobile-site-nav-container').slideUp();
+    });
+
+    $('.mobile-site-nav-but').on('click', function()
+    {
+        $('.mobile-site-nav-container').slideToggle();
+        $('.mobile-user-details-container').slideUp();
+    });
+
+    $('.filter-menu-icon-m').on('click', function()
+    {
+        $(this).text(function(i, text){
+            return text === "Filters" ? "Close" : "Filters";
+        })
         $('.filters').slideToggle();
+        return false;
+    });
+
+    //When the delete-row button is clicked, show a confirmation dialogue box
+    //Continue with the deletion if the OK button is pressed. Otherwise, do nothing.
+    $('.delete-row').on("click", function()
+    {
+        if(confirm("Are you sure you want to delete this " + $(this).data('resource-type') + '?')) { return true; }
         return false;
     });
 

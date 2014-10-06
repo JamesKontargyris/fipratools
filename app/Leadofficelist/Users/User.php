@@ -19,11 +19,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
-	//DB Relationships
 	public function unit()
 	{
 		//One user belongs to one unit
-		return $this->belongsTo('units');
+		return $this->belongsTo('\Leadofficelist\Units\Unit', 'unit_id');
 	}
 
 	public function getFirstNameAttribute($value)
@@ -53,9 +52,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this;
 	}
 
-	public static function getFullName($user)
+	public function getFullName()
 	{
-		return $user->first_name . ' ' . $user->last_name;
+		return $this->first_name . ' ' . $this->last_name;
+	}
+
+	public function getUnit()
+	{
+		return $this->unit;
 	}
 
 }

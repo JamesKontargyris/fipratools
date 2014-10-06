@@ -22,20 +22,80 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="content-container">
-            <header>
-                <div id="logo">
-                    <img src="{{ asset('img/fipra_logo.gif') }}" alt="Fipra - Professional Public Affairs in More Than 50 Countries">
-                </div>
-                <div id="page-title">
-                    <h1>{{ display_page_title() }}</h1>
-                </div>
-            </header>
-            
-            <section id="content">
-                @yield('content')
-            </section>
-        </div>
+
+		<section class="mobile-user-details-container">
+			<div class="row">
+				<div class="col-12">
+					Logged in as <strong>{{ $user_full_name }}</strong><br/>
+					{{ $user_unit }} &bull; {{ $user_role }}<br/><a href="/logout" class="primary">Logout</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="mobile-site-nav-container">
+			<div class="row">
+				<div class="col-12">
+					@include('layouts.partials.site_nav')
+				</div>
+			</div>
+		</section>
+
+		<section id="site-nav-container">
+			<nav id="site-nav" class="container">
+				<div class="mobile">
+					<div class="row no-margin">
+						<div class="col-8 logo">
+							<img src="{{ asset('img/fipra_logo_s.png') }}" alt="Fipra" style="vertical-align:middle"/> <span>Lead Office List</span>
+						</div>
+						<div class="col-4 last">
+							<ul class="mobile-nav-buttons">
+								<li><a href="#" class="mobile-user-details-but"><i class="fa fa-2x fa-user"></i></a></li>
+								<li><a href="#" class="mobile-site-nav-but"><i class="fa fa-2x fa-navicon"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="desktop">
+					<div class="row">
+					    <div class="col-8 logo">
+					    	<img src="{{ asset('img/fipra_logo.png') }}" alt="Fipra" style="vertical-align:middle"/> <span>Lead Office List</span>
+					    </div>
+						<div class="col-4 last user-details">
+							Logged in as <strong>{{ $user_full_name }}</strong><br/>
+							{{ $user_unit }} &bull; {{ $user_role }} &bull; <a href="/logout">Logout</a>
+						</div>
+					</div>
+					<div class="col-12">
+						@include('layouts.partials.site_nav')
+					</div>
+				</div>
+			</nav>
+		</section>
+
+        <section class="content-container">
+
+			<section id="content">
+				<div class="row">
+					<div class="col-12">
+						<div id="page-header">
+							<h2>@yield('page-header')</h2>
+							<nav class="page-menu-nav">
+								<ul>
+									@yield('page-nav')
+								</ul>
+							</nav>
+							<a href="#" class="page-menu-icon-s">
+								Actions <i class="fa fa-lg fa-caret-down"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				@yield('content')
+
+			</section>
+
+        </section>
 
         <div class="container">
             <footer>

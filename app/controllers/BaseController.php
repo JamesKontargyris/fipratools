@@ -1,26 +1,31 @@
 <?php
 
+use Laracasts\Flash\Flash;
+use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Users\User;
+
 class BaseController extends Controller {
 
-	/**
-	 * Array of filter keys to reset when "reset filters" is clicked
-	 *
-	 * @var array
-	 */
-	protected $filter_keys = ['index.rowsToView', 'index.rowsSort'];
+	protected $user;
+	protected $rows_sort_order;
+	protected $rows_to_view;
+	protected $userFullName;
 
-	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
-	protected function setupLayout()
+	function __construct()
 	{
-		if ( ! is_null($this->layout))
+		$this->user = Auth::user();
+		if(isset($this->user->id))
 		{
-			$this->layout = View::make($this->layout);
+			View::share('user_full_name', $this->user->getFullName());
+			View::share('user_unit', $this->user->unit()->pluck('name'));
+			View::share('user_role', $this->user->roles()->first()->pluck('name'));
 		}
+
+		$this->reset_filters();
+		$this->rows_sort_order = $this->getRowsSortOrder($this->resource_key);
+		$this->rows_to_view = $this->getRowsToView($this->resource_key);
 	}
+
 
 	/**
 	 * If reset_filters is set to yes, reset all session keys
@@ -46,7 +51,7 @@ class BaseController extends Controller {
 	 *
 	 * @return int|mixed
 	 */
-	protected function getRowsToView()
+	protected function getRowsToView($key)
 	{
 		//If the value passed in is 'all', set the valye to 99999. Otherwise,
 		//use the value passed in, which should be numeric
@@ -54,13 +59,13 @@ class BaseController extends Controller {
 		//Value passed in and it is numeric?
 		if(Input::has('view') && is_numeric($value))
 		{
-			Session::set('index.rowsToView', $value);
+			Session::set($key . '.rowsToView', $value);
 			return $value;
 		}
 		//Session value exists for rowsToView?
-		elseif(Session::get('index.rowsToView'))
+		elseif(Session::get($key . '.rowsToView'))
 		{
-			return Session::get('index.rowsToView');
+			return Session::get($key . '.rowsToView');
 		}
 		//If all else fails...
 		else
@@ -74,7 +79,7 @@ class BaseController extends Controller {
 	 *
 	 * @return array
 	 */
-	protected function getRowsSortOrder()
+	protected function getRowsSortOrder($key)
 	{
 		//Array of column names that will be sorted on, and how they should be ordered
 		$sort_on = ['az' => 'name.asc', 'za' => 'name.desc', 'newest' => 'id.desc', 'oldest' => 'id.asc'];
@@ -85,19 +90,26 @@ class BaseController extends Controller {
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get('sort');
-			Session::set('index.rowsSort', $sort_on[$sort_term]);
+			Session::set($key . '.rowsSort', $sort_on[$sort_term]);
 			return explode('.', $sort_on[$sort_term]);
 		}
 		//Session value exists for rowsSort?
-		elseif(Session::get('index.rowsSort'))
+		elseif(Session::get($key . '.rowsSort'))
 		{
-			return explode('.', Session::get('index.rowsSort'));
+			return explode('.', Session::get($key . '.rowsSort'));
 		}
 		//If all else fails...
 		else
 		{
 			return ['name', 'asc'];
 		}
+	}
+
+	protected function check_perm($perm)
+	{
+		if($this->user->can($perm)) return true;
+
+		throw new PermissionDeniedException;
 	}
 
 }

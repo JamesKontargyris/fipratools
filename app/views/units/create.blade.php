@@ -1,17 +1,56 @@
 @extends('layouts.master')
 
+@section('page-header')
+Add a Unit
+@stop
+
+@section('page-nav')
+<li><a href="{{ route('units.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Overview</a></li>
+@stop
+
 @section('content')
-<h2>Add a new Fipra Unit</h2>
 
 @include('layouts.partials.messages')
 
-<div class="col-6">
-	{{ Form::open(['route' => 'unit.store']) }}
-	<div class="formfield">
-		{{ Form::label('name', 'Unit Name:') }}
-		{{ Form::text('name', Input::old('name')) }}
+{{ Form::open(['route' => 'units.store']) }}
+<div class="row">
+	<div class="col-6">
+		<div class="formfield">
+			{{ Form::label('name', 'Unit Name:', ['class' => 'required']) }}
+			{{ Form::text('name', Input::old('name')) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('address', 'Address:', ['class' => 'required']) }}
+			{{ Form::text('address1', Input::old('address1')) }}
+			{{ Form::text('address2', Input::old('address2')) }}
+			{{ Form::text('address3', Input::old('address3')) }}
+			{{ Form::text('address4', Input::old('address4')) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('postcode', 'Zip / Post Code:', ['class' => 'required']) }}
+            {{ Form::text('postcode', Input::old('postcode')) }}
+		</div>
 	</div>
-	{{ Form::submit('Add', ['class' => 'primary']) }}
-	{{ Form::close() }}
+	<div class="col-6 last">
+		<div class="formfield">
+			{{ Form::label('phone', 'Telephone:') }}
+			{{ Form::text('phone', Input::old('phone')) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('fax', 'Fax:') }}
+			{{ Form::text('fax', Input::old('fax')) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('email', 'Email:') }}
+			{{ Form::email('email', Input::old('email')) }}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		{{ Form::submit('Add', ['class' => 'primary']) }}
+		{{ Form::close() }}
+	</div>
 </div>
 @stop

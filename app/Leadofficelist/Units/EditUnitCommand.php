@@ -1,6 +1,6 @@
 <?php namespace Leadofficelist\Units;
 
-class AddUnitCommand {
+class EditUnitCommand {
 
 	public $name;
 	public $address1;
@@ -12,19 +12,17 @@ class AddUnitCommand {
 	public $fax;
 	public $email;
 
-	function __construct($name, $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email) {
-
-		$this->name = $name;
-
+	function __construct( $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email, $id ) {
+		//$this->name     = $input->name;
 		$this->address1 = $address1;
 		$this->address2 = $address2;
 		$this->address3 = $address3;
 		$this->address4 = $address4;
 		$this->postcode = $postcode;
-		$this->phone = $phone;
-		$this->fax = $fax;
-		$this->email = $email;
+		$this->phone    = $phone;
+		$this->fax      = $fax;
+		$this->email    = $email;
+		$this->id       = $id;
 	}
 
-
-} 
+}

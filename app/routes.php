@@ -1,24 +1,14 @@
 <?php
 
-Route::get('/', ['as' => 'home', function()
+Route::get('/', ['before' => 'auth', 'as' => 'home', function()
 {
 //	TODO: add in auth filter before
 	return View::make('home');
 }]);
 
-Route::get('/login', function()
-{
-	return View::make('login');
-});
+Route::controller('login', 'LoginController');
 
-Route::post('/login', function()
-{
-	// Validation? Not in my quickstart!
-	// No, but really, I'm a bad person for leaving that out
-	Auth::attempt( array('email' => Input::get('email'), 'password' => Input::get('password')) );
-
-	return Redirect::to('/');
-});
+Route::get('/logout', 'LoginController@logout');
 
 Route::get('roles', function()
 {
@@ -86,5 +76,9 @@ Route::get('roles', function()
 	return "All done!";
 });
 
-Route::resource('unit', 'UnitsController');
-Route::resource('user', 'UsersController');
+Route::group(['before' => 'auth'], function()
+{
+	Route::post('units/search', 'UnitsController@search');
+	Route::resource('units', 'UnitsController');
+	Route::resource('users', 'UsersController');
+});

@@ -1,5 +1,7 @@
 <?php
 
+use Leadofficelist\Users\User;
+
 function display_page_title($default = 'Lead Office List')
 {
 	if(isset($page_title)) {
@@ -52,4 +54,34 @@ function str_lreplace($search, $replace, $subject)
 	}
 
 	return $subject;
+}
+
+/**
+ * Check if we are adding a new resource or editing an existing one.
+ *
+ * @return bool
+ */
+function editing()
+{
+	//If we are on the edit page of a resource, and this is not a post request on the edit page (i.e. validation errors), return true
+	if(Request::is() == "*/edit" && ! Request::isMethod('post'))
+	{
+		return true;
+	}
+	//Otherwise, this is not an edit page
+	return false;
+}
+
+function is_search()
+{
+	if(Request::is('*/search') && Request::isMethod('post')) { return true; }
+
+	return false;
+}
+
+function nav_item_is_active($uri)
+{
+	if(Request::is($uri)) return true;
+
+	return false;
 }

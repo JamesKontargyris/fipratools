@@ -2,7 +2,7 @@
 
 use Laracasts\Validation\FormValidator;
 
-class AddUnit extends FormValidator {
+class EditUnit extends FormValidator {
 
 	/**
 	 * Validation rules for adding a unit
@@ -10,7 +10,6 @@ class AddUnit extends FormValidator {
 	 * @var array
 	 */
 	protected $rules = [
-		'name'     => 'required|max:255|unique:units',
 		'address1' => 'required|max:255',
 		'address2' => 'max:255',
 		'address3' => 'max:255',
