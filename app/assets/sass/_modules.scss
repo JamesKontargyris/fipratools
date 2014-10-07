@@ -90,7 +90,8 @@
     content: "\f071";
   }
 }
-.alert-error {
+.alert-error,
+.alert-danger {
   background-color:lighten(red, 40%);
   border:1px solid lighten(red, 30%);
   &.alert-overlay {

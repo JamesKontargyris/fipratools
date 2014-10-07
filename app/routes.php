@@ -82,6 +82,7 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('users', 'UsersController');
 	Route::resource('sectors', 'SectorsController');
 	Route::resource('types', 'TypesController');
+	Route::resource('services', 'ServicesController');
 
 	Route::resource('reports', 'ReportsController');
 });

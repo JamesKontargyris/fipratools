@@ -3,6 +3,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditType as AddEditTypeForm;
 use Leadofficelist\Types\Type;
 
@@ -60,7 +61,7 @@ class TypesController extends \BaseController
 
 		$this->execute('Leadofficelist\Types\AddTypeCommand');
 
-		Flash::overlay('Type added.', 'success');
+		Flash::overlay('"' . $input['name'] . '" added.', 'success');
 
 		return Redirect::route('types.index');
 	}
@@ -70,12 +71,12 @@ class TypesController extends \BaseController
 	 * GET /types/{id}
 	 *
 	 * @param  int $id
-	 *
+	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
 	public function show( $id )
 	{
-		if($type = Type::find($id))
+		if($type = $this->getType($id))
 		{
 			//TODO: get clients of this type
 			//TODO: convert array values to objects in view
@@ -87,8 +88,7 @@ class TypesController extends \BaseController
 		}
 		else
 		{
-			Flash::error('Sorry, that type does not exist.');
-			return Redirect::route('types.index');
+			throw new ResourceNotFoundException('types');
 		}
 	}
 
@@ -97,19 +97,18 @@ class TypesController extends \BaseController
 	 * GET /types/{id}/edit
 	 *
 	 * @param  int $id
-	 *
+	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
 	public function edit( $id )
 	{
-		if($type = Type::find($id))
+		if($type = $this->getType($id))
 	{
 		return View::make('types.edit')->with(compact('type'));
 	}
 	else
 	{
-		Flash::error('Sorry, that type does not exist.');
-		return Redirect::route('types.index');
+		throw new ResourceNotFoundException('types');
 	}
 	}
 
@@ -130,7 +129,7 @@ class TypesController extends \BaseController
 
 		$this->execute('Leadofficelist\Types\EditTypeCommand', $input);
 
-		Flash::overlay('Type updated.', 'success');
+		Flash::overlay('"' . $input['name'] . '" updated.', 'success');
 
 		return Redirect::route('types.index');
 	}
@@ -140,17 +139,21 @@ class TypesController extends \BaseController
 	 * DELETE /types/{id}
 	 *
 	 * @param  int $id
-	 *
+	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
 	public function destroy( $id )
 	{
-		$type = Type::find($id);
-		$type_name = $type->name;
-		$type = Type::destroy($id);
-		Flash::overlay('"' . $type_name . '" has been deleted.', 'info');
+		if ( $type = $this->getType( $id ) )
+		{
+			Type::destroy( $id );
+			Flash::overlay('"' . $type->name . '" deleted.', 'info');
 
-		return Redirect::route('types.index');
+			return Redirect::route( 'types.index' );
+		} else
+		{
+			throw new ResourceNotFoundException( 'types' );
+		}
 	}
 
 	public function search()
@@ -159,5 +162,10 @@ class TypesController extends \BaseController
 		$items->key = 'types';
 		$items->search_term = Input::get('search');
 		return View::make('types.index')->with(compact('items'));
+	}
+
+	protected function getType($id)
+	{
+		return Type::find( $id );
 	}
 }

@@ -30,8 +30,8 @@ class Unit extends \BaseModel
 
 	public function edit( $unit )
 	{
-		$update_unit = $this->find( $unit->id );
-		//$this->name     = $unit->name;
+		$update_unit            = $this->find( $unit->id );
+		$update_unit->name      = $unit->name;
 		$update_unit->address1  = $unit->address1;
 		$update_unit->address2  = $unit->address2;
 		$update_unit->address3  = $unit->address3;

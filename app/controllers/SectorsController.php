@@ -4,6 +4,7 @@ use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Forms\AddEditSector as AddEditSectorForm;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class SectorsController extends \BaseController
 {
@@ -60,7 +61,7 @@ class SectorsController extends \BaseController
 
 		$this->execute( 'Leadofficelist\Sectors\AddSectorCommand' );
 
-		Flash::overlay( 'Sector added.', 'success' );
+		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
 
 		return Redirect::route( 'sectors.index' );
 	}
@@ -75,7 +76,7 @@ class SectorsController extends \BaseController
 	 */
 	public function show( $id )
 	{
-		if ( $sector = Sector::find( $id ) )
+		if ( $sector = $this->getSector($id) )
 		{
 			//TODO: get clients in this sector
 			//TODO: convert array values to objects in view
@@ -86,9 +87,7 @@ class SectorsController extends \BaseController
 			return View::make( 'sectors.show' )->with( compact( 'sector', 'clients' ) );
 		} else
 		{
-			Flash::error( 'Sorry, that sector does not exist.' );
-
-			return Redirect::route( 'sectors.index' );
+			throw new ResourceNotFoundException('sectors');
 		}
 	}
 
@@ -102,14 +101,13 @@ class SectorsController extends \BaseController
 	 */
 	public function edit( $id )
 	{
-		if ( $sector = Sector::find( $id ) )
+		if ( $this->getSector($id) )
 		{
 			return View::make( 'sectors.edit' )->with( compact( 'sector' ) );
-		} else
+		}
+		else
 		{
-			Flash::error( 'Sorry, that sector does not exist.' );
-
-			return Redirect::route( 'sectors.index' );
+			throw new ResourceNotFoundException('sectors');
 		}
 	}
 
@@ -145,14 +143,23 @@ class SectorsController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
-		$sector      = Sector::find( $id );
-		$sector_name = $sector->name;
-		$sector      = Sector::destroy( $id );
-		Flash::overlay( '"' . $sector_name . '" has been deleted.', 'info' );
+		if ( $sector = $this->getSector( $id ) )
+		{
+			Sector::destroy( $id );
+			Flash::overlay( '"' . $sector->name . '" has been deleted.', 'info' );
 
-		return Redirect::route( 'sectors.index' );
+			return Redirect::route( 'sectors.index' );
+		} else
+		{
+			throw new ResourceNotFoundException( 'sectors' );
+		}
 	}
 
+	/**
+	 * Process a sector search.
+	 *
+	 * @return $this
+	 */
 	public function search()
 	{
 		$items              = Sector::where( 'name', 'LIKE', '%' . Input::get( 'search' ) . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
@@ -160,5 +167,10 @@ class SectorsController extends \BaseController
 		$items->search_term = Input::get( 'search' );
 
 		return View::make( 'sectors.index' )->with( compact( 'items' ) );
+	}
+
+	protected function getSector($id)
+	{
+		return Sector::find( $id );
 	}
 }

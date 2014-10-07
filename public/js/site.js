@@ -77,7 +77,7 @@
     //Alerts
     $('.alert button.close').on('click', function()
     {
-        $(this).parent('.alert').slideUp(500);
+        $('.alert-container').slideUp(500);
     });
 
     $('.alert-overlay').hide().slideDown(200).delay(2000).slideUp(200);

@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
 use Leadofficelist\Units\Unit;
 
@@ -66,7 +67,7 @@ class UnitsController extends \BaseController {
 
 		$this->execute('Leadofficelist\Units\AddUnitCommand');
 
-		Flash::overlay('Fipra Unit added.', 'success');
+		Flash::overlay('"' . $input['name'] .'" added.', 'success');
 
 		return Redirect::route('units.index');
 	}
@@ -75,21 +76,22 @@ class UnitsController extends \BaseController {
 	 * Display the specified unit.
 	 * GET /units/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 * @throws ResourceNotFoundException
+	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
 	public function show($id)
 	{
 		$this->check_perm('view_list');
 
-		if($unit = Unit::find($id))
+		if($unit = $this->getUnit($id))
 		{
 			return View::make('units.show')->with(compact('unit'));
 		}
 		else
 		{
-			Flash::error('Sorry, that unit does not exist.');
-			return Redirect::route('units.index');
+			throw new ResourceNotFoundException('units');
 		}
 	}
 
@@ -97,21 +99,22 @@ class UnitsController extends \BaseController {
 	 * Show the form for editing the specified resource.
 	 * GET /units/{id}/edit
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 * @throws ResourceNotFoundException
+	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
 	public function edit($id)
 	{
 		$this->check_perm('manage_units');
 
-		if($unit = Unit::find($id))
+		if($unit = $this->getUnit($id))
 		{
 			return View::make('units.edit')->with(compact('unit'));
 		}
 		else
 		{
-			Flash::error('Sorry, that unit does not exist.');
-			return Redirect::route('units.index');
+			throw new ResourceNotFoundException('units');
 		}
 	}
 
@@ -133,7 +136,7 @@ class UnitsController extends \BaseController {
 
 		$this->execute('Leadofficelist\Units\EditUnitCommand', $input);
 
-		Flash::overlay('Fipra Unit updated.', 'success');
+		Flash::overlay('"' . $input['name'] .'" updated.', 'success');
 
 		return Redirect::route('units.index');
 	}
@@ -149,13 +152,14 @@ class UnitsController extends \BaseController {
 	{
 		$this->check_perm('manage_units');
 
-		$unit = Unit::find($id);
-		$unit_name = $unit->name;
-		Unit::destroy($id);
-		Flash::overlay('"' . $unit_name . '" has been deleted.', 'info');
+		if($unit = $this->getUnit($id))
+		{
+			Unit::destroy($id);
+			Flash::overlay('"' . $unit->name .'" deleted.', 'success');
+
+		}
 
 		return Redirect::route('units.index');
-
 	}
 
 	public function search()
@@ -168,4 +172,8 @@ class UnitsController extends \BaseController {
 		return View::make('units.index')->with(compact('items'));
 	}
 
+	protected function getUnit($id)
+	{
+		return Unit::find($id);
+	}
 }

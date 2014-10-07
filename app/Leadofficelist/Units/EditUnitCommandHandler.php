@@ -27,6 +27,5 @@ class EditUnitCommandHandler implements CommandHandler {
 		$this->unit->edit($command);
 
 		return $this->unit;
-		//$this->dispatchEventsFor($this->unit);
 	}
 }

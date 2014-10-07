@@ -12,8 +12,8 @@ class EditUnitCommand {
 	public $fax;
 	public $email;
 
-	function __construct( $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email, $id ) {
-		//$this->name     = $input->name;
+	function __construct( $name, $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email, $id ) {
+		$this->name     = $name;
 		$this->address1 = $address1;
 		$this->address2 = $address2;
 		$this->address3 = $address3;

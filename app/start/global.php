@@ -15,6 +15,7 @@ use Laracasts\Flash\Flash;
 use Laracasts\Validation\FormValidationException;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 
 ClassLoader::addDirectories(array(
 
@@ -75,6 +76,13 @@ App::error(function(LoginFailedException $exception)
 	Log::error($exception);
 
 	return Redirect::back()->withInput()->withErrors('Incorrect login details entered. Please try again.');
+});
+
+App::error(function(ResourceNotFoundException $exception)
+{
+	Log::error($exception);
+	Flash::error($exception->getErrorMessage());
+	return Redirect::route( $exception->getResourceKey() . '.index' );
 });
 
 /*

@@ -22,7 +22,7 @@
 		<a href="{{ route('types.create') }}" class="site-nav-extra-link" title="Add a new type"><i class="fa fa-plus-circle"></i></a>
 	</li>
 	<li class="{{ nav_item_is_active('services') ? 'active' : '' }}">
-		<a href="#" class="has-extra-link">Services</a>
-		<a href="#" class="site-nav-extra-link" title="Add a new service"><i class="fa fa-plus-circle"></i></a>
+		<a href="{{ route('services.index') }}" class="has-extra-link">Services</a>
+		<a href="{{ route('services.create') }}" class="site-nav-extra-link" title="Add a new service"><i class="fa fa-plus-circle"></i></a>
 	</li>
 </ul>
