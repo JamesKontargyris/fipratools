@@ -15,7 +15,7 @@ class BaseController extends Controller {
 	 *
 	 * @var array
 	 */
-	protected $filter_keys = ['units.rowsToView', 'units.rowsSort'];
+	protected $filter_keys = ['rowsToView', 'rowsSort'];
 
 	function __construct()
 	{
@@ -45,7 +45,7 @@ class BaseController extends Controller {
 		{
 			foreach($this->filter_keys as $key)
 			{
-				Session::forget($key);
+				Session::forget($this->resource_key . '.' . $key);
 			}
 		}
 

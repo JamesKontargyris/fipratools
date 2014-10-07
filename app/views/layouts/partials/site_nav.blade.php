@@ -1,5 +1,6 @@
 <ul class="site-nav-menu">
-	<li><a href="#" class="{{ nav_item_is_active('/') ? 'active' : '' }}"><i class="fa fa-list"></i> <strong>Lead Office List</strong></a></li>
+	<li class="{{ nav_item_is_active('/') ? 'active' : '' }}"><a href="#"><i class="fa fa-list"></i> <strong>Lead Office List</strong></a></li>
+	<li class="{{ nav_item_is_active('reports') ? 'active' : '' }}"><a href="{{ route('reports.index') }}"><i class="fa fa-file"></i> <strong>Reports</strong></a></li>
 	<li>
 		<a href="#" class="{{ nav_item_is_active('clients') ? 'active' : '' }} has-extra-link">Clients</a>
 		<a href="#" class="site-nav-extra-link" title="Add a new client"><i class="fa fa-plus-circle"></i></a>
@@ -17,8 +18,8 @@
 		<a href="{{ route('sectors.create') }}" class="site-nav-extra-link" title="Add a new sector"><i class="fa fa-plus-circle"></i></a>
 	</li>
 	<li class="{{ nav_item_is_active('types') ? 'active' : '' }}">
-		<a href="#" class="has-extra-link">Types</a>
-		<a href="#" class="site-nav-extra-link" title="Add a new type"><i class="fa fa-plus-circle"></i></a>
+		<a href="{{ route('types.index') }}" class="has-extra-link">Types</a>
+		<a href="{{ route('types.create') }}" class="site-nav-extra-link" title="Add a new type"><i class="fa fa-plus-circle"></i></a>
 	</li>
 	<li class="{{ nav_item_is_active('services') ? 'active' : '' }}">
 		<a href="#" class="has-extra-link">Services</a>

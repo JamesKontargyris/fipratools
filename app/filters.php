@@ -36,7 +36,11 @@ App::after(function($request, $response)
 Route::filter('auth', function()
 {
 	// Slight change to redirect to login route
-	if (Auth::guest()) return Redirect::to('login');
+	if (Auth::guest())
+	{
+		Flash::message('Please log in to access this area.');
+		return Redirect::to('login');
+	}
 });
 
 

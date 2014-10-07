@@ -2,7 +2,6 @@
 
 Route::get('/', ['before' => 'auth', 'as' => 'home', function()
 {
-//	TODO: add in auth filter before
 	return View::make('home');
 }]);
 
@@ -82,4 +81,7 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('units', 'UnitsController');
 	Route::resource('users', 'UsersController');
 	Route::resource('sectors', 'SectorsController');
+	Route::resource('types', 'TypesController');
+
+	Route::resource('reports', 'ReportsController');
 });

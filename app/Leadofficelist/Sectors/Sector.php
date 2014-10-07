@@ -1,6 +1,6 @@
 <?php namespace Leadofficelist\Sectors;
 
-class Sector extends \Eloquent
+class Sector extends \BaseModel
 {
 	protected $fillable = [ 'name' ];
 	public $timestamps = false;
@@ -20,15 +20,5 @@ class Sector extends \Eloquent
 		$update_sector->save();
 
 		return $update_sector;
-	}
-
-	public function scopeRowsToView( $query, $number_of_rows )
-	{
-		return $query->take( $number_of_rows );
-	}
-
-	public function scopeRowsSortOrder( $query, $sort_on )
-	{
-		return $query->orderBy( $sort_on[0], $sort_on[1] );
 	}
 }

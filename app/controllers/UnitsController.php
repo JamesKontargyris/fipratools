@@ -3,7 +3,6 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
-use Leadofficelist\Units\EditUnitCommand;
 use Leadofficelist\Units\Unit;
 
 class UnitsController extends \BaseController {
