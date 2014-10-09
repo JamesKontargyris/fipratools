@@ -21,6 +21,6 @@ class AddUser extends FormValidator {
 	protected $messages = [
 		'role.required' => 'Please select a role for this user.',
 		'unit_id.required' => 'Please link this user to a Fipra unit.',
-		'email.unique' => 'User with this email address already exists.',
+		'email.unique' => 'A user with this email address already exists.',
 	];
 } 

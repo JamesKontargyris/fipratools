@@ -15,21 +15,23 @@ class BaseController extends Controller {
 	 *
 	 * @var array
 	 */
-	protected $filter_keys = ['rowsToView', 'rowsSort'];
+	protected $filter_keys = ['rowsToView', 'rowsSort', 'rowsNameOrder'];
 
 	function __construct()
 	{
 		$this->user = Auth::user();
 		if(isset($this->user->id))
 		{
+			View::share('user', $this->user);
 			View::share('user_full_name', $this->user->getFullName());
 			View::share('user_unit', $this->user->unit()->pluck('name'));
-			View::share('user_role', $this->user->roles()->first()->pluck('name'));
+			View::share('user_role', $this->user->roles()->pluck('name'));
 		}
 
 		$this->reset_filters();
 		$this->rows_sort_order = $this->getRowsSortOrder($this->resource_key);
 		$this->rows_to_view = $this->getRowsToView($this->resource_key);
+		$this->name_order = $this->getNameOrder($this->resource_key);
 	}
 
 
@@ -89,15 +91,25 @@ class BaseController extends Controller {
 	{
 		//Array of column names that will be sorted on, and how they should be ordered
 		$sort_on = ['az' => 'name.asc', 'za' => 'name.desc', 'newest' => 'id.desc', 'oldest' => 'id.asc'];
+		//Different column names in the user table
+		$sort_on_users = ['az' => 'last_name.asc', 'za' => 'last_name.desc', 'newest' => 'id.desc', 'oldest' => 'id.asc'];
 
 		//Value passed in and exists in the $sort_on variable?
-		if(Input::has('sort') && isset($sort_on[Input::get('sort')]))
+		if(Input::has('sort'))
 		{
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get('sort');
-			Session::set($key . '.rowsSort', $sort_on[$sort_term]);
-			return explode('.', $sort_on[$sort_term]);
+			if( ! $this->is_request('users') && isset($sort_on[Input::get('sort')]))
+			{
+				Session::set($key . '.rowsSort', $sort_on[$sort_term]);
+				return explode('.', $sort_on[$sort_term]);
+			}
+			elseif($this->is_request('users'))
+			{
+				Session::set($key . '.rowsSort', $sort_on_users[$sort_term]);
+				return explode('.', $sort_on_users[$sort_term]);
+			}
 		}
 		//Session value exists for rowsSort?
 		elseif(Session::get($key . '.rowsSort'))
@@ -107,7 +119,18 @@ class BaseController extends Controller {
 		//If all else fails...
 		else
 		{
-			return ['name', 'asc'];
+			return ($this->is_request('users')) ? ['last_name', 'asc'] : ['name', 'asc'];
+		}
+	}
+
+	protected function getNameOrder($key)
+	{
+		$value = Input::get('name');
+		//Value passed in?
+		if($value)
+		{
+			Session::set($key . '.rowsNameOrder', $value);
+			return $value;
 		}
 	}
 
@@ -116,5 +139,13 @@ class BaseController extends Controller {
 		if($this->user->can($perm)) return true;
 
 		throw new PermissionDeniedException;
+	}
+
+	protected function is_request($uri, $strict = false)
+	{
+		if($strict == true) $request_is = Request::is($uri);
+		else $request_is = Request::is($uri) || Request::is($uri . '/*');
+
+		return $request_is;
 	}
 }

@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Forms\AddEditSector as AddEditSectorForm;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -45,7 +46,8 @@ class SectorsController extends \BaseController
 	 */
 	public function create()
 	{
-		return View::make( 'sectors.create' );
+		$categories = $this->getSectorCategories();
+		return View::make( 'sectors.create' )->with(compact('categories'));
 	}
 
 	/**
@@ -101,9 +103,10 @@ class SectorsController extends \BaseController
 	 */
 	public function edit( $id )
 	{
-		if ( $this->getSector($id) )
+		if ( $sector = $this->getSector($id) )
 		{
-			return View::make( 'sectors.edit' )->with( compact( 'sector' ) );
+			$categories = $this->getSectorCategories();
+			return View::make( 'sectors.edit' )->with(compact('sector', 'categories'));
 		}
 		else
 		{
@@ -172,5 +175,16 @@ class SectorsController extends \BaseController
 	protected function getSector($id)
 	{
 		return Sector::find( $id );
+	}
+
+	protected function getSectorCategories()
+	{
+		$categories = ['' => 'Select existing category or create new...', 'new' => 'New...'];
+		foreach(Sector_category::all() as $category)
+		{
+			$categories[$category->id] = $category->name;
+		}
+
+		return $categories;
 	}
 }

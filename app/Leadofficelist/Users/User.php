@@ -8,7 +8,8 @@ use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Entrust\HasRole;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends \BaseModel implements UserInterface, RemindableInterface
+{
 
 	use UserTrait, RemindableTrait, HasRole;
 
@@ -17,44 +18,71 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password', 'remember_token');
+	protected $hidden = array( 'password', 'remember_token' );
 
 	public function unit()
 	{
 		//One user belongs to one unit
-		return $this->belongsTo('\Leadofficelist\Units\Unit', 'unit_id');
+		return $this->belongsTo( '\Leadofficelist\Units\Unit', 'unit_id' );
 	}
 
-	public function getFirstNameAttribute($value)
+	public function getFirstNameAttribute( $value )
 	{
-		return ucfirst($value);
+		return ucfirst( $value );
 	}
 
-	public function getLastNameAttribute($value)
+	public function getLastNameAttribute( $value )
 	{
-		return ucfirst($value);
+		return ucfirst( $value );
 	}
 
-	public function setPasswordAttribute($value)
+	public function setPasswordAttribute( $value )
 	{
-		$this->attributes['password'] = Hash::make($value);
+		$this->attributes['password'] = Hash::make( $value );
 	}
 
-	public function add($user)
+	public function add( $user )
 	{
 		$this->first_name = $user->first_name;
-		$this->last_name = $user->last_name;
-		$this->email = $user->email;
-		$this->password = $user->password;
-		$this->unit_id = $user->unit_id;
+		$this->last_name  = $user->last_name;
+		$this->email      = $user->email;
+		$this->password   = $user->password;
+		$this->unit_id    = $user->unit_id;
 		$this->save();
 
 		return $this;
 	}
 
-	public function getFullName()
+	public function edit( $user )
 	{
-		return $this->first_name . ' ' . $this->last_name;
+		$update_user             = $this->find( $user->id );
+		$update_user->detachRole($update_user->roles()->pluck('roles.id'));
+		$update_user->attachRole($user->role_id);
+
+		$update_user->first_name = $user->first_name;
+		$update_user->last_name  = $user->last_name;
+		$update_user->email      = $user->email;
+		$update_user->unit_id    = $user->unit_id;
+
+		if ( $user->password )
+		{
+			$update_user->password = $user->password;
+		}
+
+		$update_user->save();
+
+		return $update_user;
+	}
+
+	public function getFullName( $reversed = false )
+	{
+		if ( $reversed )
+		{
+			return $this->last_name . ', ' . $this->first_name;
+		} else
+		{
+			return $this->first_name . ' ' . $this->last_name;
+		}
 	}
 
 	public function getUnit()

@@ -1,9 +1,6 @@
 <?php
 
-Route::get('/', ['before' => 'auth', 'as' => 'home', function()
-{
-	return View::make('home');
-}]);
+Route::get('/', ['before' => 'auth', 'as' => 'home', 'uses' => 'PagesController@home']);
 
 Route::controller('login', 'LoginController');
 
@@ -77,12 +74,20 @@ Route::get('roles', function()
 
 Route::group(['before' => 'auth'], function()
 {
+	Route::post('users/search', 'UsersController@search');
+	Route::resource('users', 'UsersController');
 	Route::post('units/search', 'UnitsController@search');
 	Route::resource('units', 'UnitsController');
-	Route::resource('users', 'UsersController');
+	Route::post('sectors/search', 'SectorsController@search');
 	Route::resource('sectors', 'SectorsController');
+	Route::post('sector_categories/search', 'SectorCategoriesController@search');
+	Route::resource('sector_categories', 'SectorCategoriesController');
+	Route::post('types/search', 'TypesController@search');
 	Route::resource('types', 'TypesController');
+	Route::post('services/search', 'ServicesController@search');
 	Route::resource('services', 'ServicesController');
+	Route::post('clients/search', 'ClientsController@search');
+	Route::resource('clients', 'ClientsController');
 
 	Route::resource('reports', 'ReportsController');
 });

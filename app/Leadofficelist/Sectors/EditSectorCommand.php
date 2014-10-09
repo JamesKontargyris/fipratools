@@ -3,11 +3,16 @@
 class EditSectorCommand
 {
 	public $name;
+	public $category;
+	public $new_category;
+	public $id;
 
-	function __construct( $name, $id )
+	function __construct( $name, $category, $new_category, $id )
 	{
-		$this->name = $name;
-		$this->id   = $id;
+		$this->name         = $name;
+		$this->category     = $category;
+		$this->new_category = $new_category;
+		$this->id           = $id;
 	}
 
 }

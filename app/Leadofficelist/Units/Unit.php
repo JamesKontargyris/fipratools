@@ -54,7 +54,7 @@ class Unit extends \BaseModel
 		//Remove whitespace from $prefix and add a space on the end, so there is a space
 		//between the prefix and the unit name
 		$prefix = trim( $prefix ) . ' ';
-
+		//If $blank_entry == true, add a blank "Please select..." option
 		if ( $blank_entry )
 		{
 			$units[''] = 'Please select...';
@@ -65,7 +65,16 @@ class Unit extends \BaseModel
 			$units[ $unit->id ] = $prefix . $unit->name;
 		}
 
-		return $units;
+		if ( $blank_entry && count( $units ) == 1 )
+		{
+			return false;
+		} elseif ( ! $blank_entry && count( $units ) == 0 )
+		{
+			return false;
+		} else
+		{
+			return $units;
+		}
 	}
 
 	public function addressOneLine()

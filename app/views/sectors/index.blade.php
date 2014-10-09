@@ -6,6 +6,7 @@
 
 @section('page-nav')
 <li><a href="{{ route('sectors.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Sector</a></li>
+<li><a href="{{ route('sector_categories.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Categories</a></li>
 @stop
 
 @section('content')
@@ -23,7 +24,8 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="55%">Sector Name</td>
+							<td width="65%">Sector Name</td>
+							<td width="25%" class="content-center hide-s">Reporting Category</td>
 							<td width="10%" class="content-center hide-s">Clients</td>
 							<td colspan="2">Actions</td>
 						</tr>
@@ -32,6 +34,7 @@
 						@foreach($items as $sector)
 							<tr>
 								<td><strong><a href="{{ route('sectors.show', ['id' => $sector->id]) }}">{{ $sector->name }}</a></strong></td>
+								<td class="content-center hide-s">{{ $sector->category()->pluck('name') }}</td>
 								<td class="content-center hide-s">{{ number_format(0,0,'.',',') }}</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('sectors.edit', $sector->id), 'method' => 'get']) }}

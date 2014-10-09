@@ -79,6 +79,14 @@ function is_search()
 	return false;
 }
 
+function is_request($uri, $strict = false)
+{
+	if($strict == true) $request_is = Request::is($uri);
+	else $request_is = Request::is($uri) || Request::is($uri . '/*');
+
+	return $request_is;
+}
+
 function nav_item_is_active($uri)
 {
 	if(Request::is($uri)) return true;

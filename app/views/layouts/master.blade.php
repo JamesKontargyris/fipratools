@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
         <!--jQuery-->
        	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
@@ -62,7 +62,7 @@
 					    </div>
 						<div class="col-4 last user-details">
 							Logged in as <strong>{{ $user_full_name }}</strong><br/>
-							{{ $user_unit }} &bull; {{ $user_role }} &bull; <a href="/logout">Logout</a>
+							<i class="fa fa-sitemap"></i> {{ $user_unit }} &nbsp;&nbsp;<i class="fa fa-user"></i> {{ $user_role }} &nbsp;&nbsp;<a href="/logout">Logout</a>
 						</div>
 					</div>
 					<div class="col-12">

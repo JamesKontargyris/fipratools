@@ -5,7 +5,9 @@
 @stop
 
 @section('page-nav')
-<li><a href="/units/{{ $unit->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this unit</a></li>
+@if($user->can('manage_units'))
+	<li><a href="/units/{{ $unit->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this unit</a></li>
+@endif
 @stop
 
 @section('content')

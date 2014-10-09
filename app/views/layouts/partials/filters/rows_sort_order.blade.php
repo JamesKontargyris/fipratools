@@ -1,14 +1,14 @@
 <ul class="filter-options">
 	<li class="title">Sort:</li>
 	<li>
-		@if(Session::get($items->key . '.rowsSort') == 'name.asc' || ! Session::get($items->key . '.rowsSort'))
+		@if(Session::get($items->key . '.rowsSort') == 'last_name.asc' || Session::get($items->key . '.rowsSort') == 'name.asc' || ! Session::get($items->key . '.rowsSort'))
 			<strong>A-Z</strong>
 		@else
 			<a href="?sort=az">A-Z</a>
 		@endif
 	</li>
 	<li>
-		@if(Session::get($items->key . '.rowsSort') == 'name.desc')
+		@if(Session::get($items->key . '.rowsSort') == 'last_name.desc' || Session::get($items->key . '.rowsSort') == 'name.desc')
 			<strong>Z-A</strong>
 		@else
 			<a href="?sort=za">Z-A</a>

@@ -155,7 +155,7 @@ class UnitsController extends \BaseController {
 		if($unit = $this->getUnit($id))
 		{
 			Unit::destroy($id);
-			Flash::overlay('"' . $unit->name .'" deleted.', 'success');
+			Flash::overlay('"' . $unit->name .'" deleted.', 'info');
 
 		}
 

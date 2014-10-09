@@ -9,7 +9,8 @@
         "way/generators": "~2.0",
         "laracasts/validation": "~1.0",
         "laracasts/commander": "~1.0",
-        "laracasts/flash": "~1.0"
+        "laracasts/flash": "~1.0",
+        "doctrine/dbal": "~2.3"
 	},
 	"autoload": {
 		"classmap": [

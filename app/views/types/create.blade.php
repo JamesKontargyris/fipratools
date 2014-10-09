@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-Add a Unit
+Add a Type
 @stop
 
 @section('page-nav')

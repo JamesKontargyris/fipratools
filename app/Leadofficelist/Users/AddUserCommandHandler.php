@@ -2,7 +2,6 @@
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
-use Leadofficelist\Users\User;
 
 class AddUserCommandHandler implements CommandHandler {
 

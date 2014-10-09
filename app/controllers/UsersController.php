@@ -2,115 +2,299 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Exceptions\CannotEditException;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddUser as AddUserForm;
+use Leadofficelist\Forms\EditUser as EditUserForm;
 use Leadofficelist\Units\Unit;
+use Leadofficelist\Users\User;
 
-class UsersController extends \BaseController {
-
+class UsersController extends \BaseController
+{
 	use CommanderTrait;
-	/**
-	 * @var AddUserForm
-	 */
-	private $addUserForm;
 
-	function __construct(AddUserForm $addUserForm) {
+	protected $resource_key = 'users';
+	protected $units;
+	protected $roles;
+	protected $viewer_perms_list;
+	protected $admin_perms_list;
+	protected $editor_perms_list;
+	private $addUserForm;
+	private $editUserForm;
+
+	function __construct( AddUserForm $addUserForm, EditUserForm $editUserForm )
+	{
+		parent::__construct();
 
 		$this->addUserForm = $addUserForm;
 
+		$this->getFormData();
+
+		View::share( 'page_title', 'Units' );
+		$this->editUserForm = $editUserForm;
 	}
 
 	/**
-	 * Display a listing of the resource.
+	 * Display a listing of users.
 	 * GET /users
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
-		return Permission::getPermsForRole('Administrator', true);
+		$this->check_perm( 'manage_users' );
+
+		$items      = User::where('id', '!=', $this->user->id)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items->key = 'users';
+
+		return View::make( 'users.index' )->with( compact( 'items' ) );
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new user.
 	 * GET /users/create
 	 *
 	 * @return Response
 	 */
 	public function create()
 	{
-		if( ! $units = Unit::getUnitsForFormSelect(true)) $units = ['' => 'No units available to select'];
-		if( ! $roles = Role::getRolesForFormSelect(true)) $roles = ['' => 'No roles available to select'];
-		if( ! $admin_perms_list = Permission::getPermsForRole('Administrator', true)) $admin_perms_list = 'do nothing.';
-		if( ! $editor_perms_list = Permission::getPermsForRole('Editor', true)) $editor_perms_list = 'do nothing.';
-		if( ! $viewer_perms_list = Permission::getPermsForRole('Viewer', true)) $viewer_perms_list = 'do nothing.';
+		$this->check_perm( 'manage_users' );
 
-		return View::make('users.create')->with(compact('units', 'roles', 'admin_perms_list', 'editor_perms_list', 'viewer_perms_list'));
+		$this->getFormData();
+
+		return View::make( 'users.create' )->with( [ 'units'             => $this->units,
+		                                             'roles'             => $this->roles,
+		                                             'admin_perms_list'  => $this->admin_perms_list,
+		                                             'editor_perms_list' => $this->editor_perms_list,
+		                                             'viewer_perms_list' => $this->viewer_perms_list
+			] );
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created user in storage.
 	 * POST /users
 	 *
 	 * @return Response
 	 */
 	public function store()
 	{
+		$this->check_perm( 'manage_units' );
+
 		$input = Input::all();
-		$this->addUserForm->validate($input);
+		$this->addUserForm->validate( $input );
 
-		$this->execute('Leadofficelist\Users\AddUserCommand');
+		$this->execute( 'Leadofficelist\Units\AddUnitCommand' );
 
-		Flash::success('New user added.');
+		Flash::overlay( '"' . $input['first_name'] . ' ' . $input['last_name'] . '" added.', 'success' );
 
-		return Redirect::to('user');
+		return Redirect::route( 'users.index' );
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified user.
 	 * GET /users/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 *
+	 * @throws ResourceNotFoundException
+	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
-	public function show($id)
+	public function show( $id )
 	{
-		//
+		$this->check_perm( 'view_list' );
+
+		if ( $show_user = $this->getUser( $id ) )
+		{
+			return View::make( 'users.show' )->with( compact( 'show_user' ) );
+		} else
+		{
+			throw new ResourceNotFoundException( 'users' );
+		}
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Show the form for editing the specified user.
 	 * GET /users/{id}/edit
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 * @throws CannotEditException
+	 * @throws ResourceNotFoundException
+	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit( $id )
 	{
-		//
+		$this->check_perm( 'manage_users' );
+
+		if( $this->editingCurrentUser($id)) throw new CannotEditException('users');
+
+		if ( $edit_user = $this->getUser( $id ) )
+		{
+			$this->getFormData();
+
+			return View::make( 'users.edit' )->with( [ 'edit_user'         => $edit_user,
+			                                           'units'             => $this->units,
+			                                           'roles'             => $this->roles,
+			                                           'admin_perms_list'  => $this->admin_perms_list,
+			                                           'editor_perms_list' => $this->editor_perms_list,
+			                                           'viewer_perms_list' => $this->viewer_perms_list
+				] );
+		} else
+		{
+			throw new ResourceNotFoundException( 'users' );
+		}
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified user in storage.
 	 * PUT /users/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 *
 	 * @return Response
 	 */
-	public function update($id)
+	public function update( $id )
 	{
-		//
+		$this->check_perm( 'manage_users' );
+
+		$input                              = Input::all();
+		$input['id']                        = $id;
+		$this->editUserForm->rules['email'] = 'required|email|max:255|unique:users,email,' . $id;
+		$this->editUserForm->validate( $input );
+
+		$this->execute( 'Leadofficelist\Users\EditUserCommand', $input );
+
+		Flash::overlay( '"' . $input['first_name'] . ' ' . $input['last_name'] . '" updated.', 'success' );
+
+		return Redirect::route( 'users.index' );
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove the specified user from storage.
 	 * DELETE /users/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 *
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy( $id )
 	{
-		//
+		$this->check_perm('manage_users');
+
+		if($user = $this->getUser($id))
+		{
+			Unit::destroy($id);
+			Flash::overlay('"' . $user->getFullName() .'" deleted.', 'info');
+
+		}
+
+		return Redirect::route('units.index');
 	}
 
+	/**
+	 * Show search results.
+	 *
+	 * @return $this
+	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
+	 */
+	public function search()
+	{
+		$this->check_perm('manage_users');
+
+		$items = User::where('id', '!=', $this->user->id)->where(function($query)
+		{
+			$query->where('first_name', 'LIKE', '%' . Input::get('search') . '%')->orWhere('last_name', 'LIKE', '%' . Input::get('search') . '%');
+		})->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
+		$items->key = 'users';
+		$items->search_term = Input::get('search');
+		return View::make('users.index')->with(compact('items'));
+	}
+
+	/**
+	 * Get the user we're trying to modify/view.
+	 *
+	 * @param $id
+	 *
+	 * @return \Illuminate\Support\Collection|static
+	 */
+	protected function getUser( $id )
+	{
+		return User::find( $id );
+	}
+
+	/**
+	 * Get all data required to populate the add/edit user forms.
+	 *
+	 * @return bool
+	 */
+	protected function getFormData()
+	{
+		$this->units             = $this->getUnitsFormData();
+		$this->roles             = $this->getRolesFormData();
+		$this->admin_perms_list  = $this->getPerms( 'Administrator' );
+		$this->editor_perms_list = $this->getPerms( 'Editor' );
+		$this->viewer_perms_list = $this->getPerms( 'Viewer' );
+
+		return true;
+	}
+
+	/**
+	 * Get all the units in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getUnitsFormData()
+	{
+		if ( ! Unit::getUnitsForFormSelect( true ) )
+		{
+			return [ '' => 'No units available to select' ];
+		}
+
+		return Unit::getUnitsForFormSelect( true );
+	}
+
+	/**
+	 * Get all the roles in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getRolesFormData()
+	{
+		if ( ! Role::getRolesForFormSelect( true ) )
+		{
+			return [ '' => 'No roles available to select' ];
+		}
+
+		return Role::getRolesForFormSelect( true );
+	}
+
+	/**
+	 * Get the permissions for a role name.
+	 *
+	 * @param $role
+	 *
+	 * @return array|string
+	 */
+	protected function getPerms( $role )
+	{
+		if ( ! Permission::getPermsForRole( $role, true ) )
+		{
+			return 'do nothing.';
+		}
+
+		return Permission::getPermsForRole( $role, true );
+	}
+
+	/**
+	 * Are we trying to edit the currently logged-in user?
+	 *
+	 * @param $id
+	 *
+	 * @return bool
+	 */
+	private function editingCurrentUser($id)
+	{
+		return ($id == $this->user->id);
+	}
 }

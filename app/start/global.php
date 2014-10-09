@@ -13,6 +13,7 @@
 
 use Laracasts\Flash\Flash;
 use Laracasts\Validation\FormValidationException;
+use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
@@ -68,7 +69,7 @@ App::error(function(PermissionDeniedException $exception)
 	Log::error($exception);
 
 	Flash::error('Sorry - you do not have access to that page.');
-	return Redirect::back();
+	return Redirect::home();
 });
 
 App::error(function(LoginFailedException $exception)
@@ -79,6 +80,13 @@ App::error(function(LoginFailedException $exception)
 });
 
 App::error(function(ResourceNotFoundException $exception)
+{
+	Log::error($exception);
+	Flash::error($exception->getErrorMessage());
+	return Redirect::route( $exception->getResourceKey() . '.index' );
+});
+
+App::error(function(CannotEditException $exception)
 {
 	Log::error($exception);
 	Flash::error($exception->getErrorMessage());
