@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
 use Leadofficelist\Units\Unit;
@@ -87,7 +88,9 @@ class UnitsController extends \BaseController {
 
 		if($unit = $this->getUnit($id))
 		{
-			return View::make('units.show')->with(compact('unit'));
+			$clients = $this->getActiveClientsByField('unit_id', $id);
+
+			return View::make('units.show')->with(compact('unit', 'clients'));
 		}
 		else
 		{

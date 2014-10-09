@@ -31,7 +31,7 @@
 					<tbody>
 						@foreach($items as $sector_category)
 							<tr>
-								<td><strong><a href="{{ route('sector_categories.show', ['id' => $sector_category->id]) }}">{{ $sector_category->name }}</a></strong></td>
+								<td><strong>{{ $sector_category->name }}</strong></td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('sector_categories.edit', $sector_category->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>

@@ -78,11 +78,7 @@ class TypesController extends \BaseController
 	{
 		if($type = $this->getType($id))
 		{
-			//TODO: get clients of this type
-			//TODO: convert array values to objects in view
-			$clients[0] = ['name' => 'Joe Bloggs'];
-			$clients[1] = ['name' => 'Helen Jones'];
-			$clients[2] = ['name' => 'Will Kontargyris'];
+			$clients = $this->getActiveClientsByField('type_id', $id);
 
 			return View::make('types.show')->with(compact('type', 'clients'));
 		}

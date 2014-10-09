@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Clients\Client;
 use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Forms\AddEditSector as AddEditSectorForm;
@@ -80,11 +81,7 @@ class SectorsController extends \BaseController
 	{
 		if ( $sector = $this->getSector($id) )
 		{
-			//TODO: get clients in this sector
-			//TODO: convert array values to objects in view
-			$clients[0] = [ 'name' => 'Joe Bloggs' ];
-			$clients[1] = [ 'name' => 'Helen Jones' ];
-			$clients[2] = [ 'name' => 'Will Kontargyris' ];
+			$clients = $this->getActiveClientsByField('sector_id', $id);
 
 			return View::make( 'sectors.show' )->with( compact( 'sector', 'clients' ) );
 		} else

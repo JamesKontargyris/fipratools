@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddUser as AddUserForm;
@@ -106,7 +107,9 @@ class UsersController extends \BaseController
 
 		if ( $show_user = $this->getUser( $id ) )
 		{
-			return View::make( 'users.show' )->with( compact( 'show_user' ) );
+			$clients = $this->getActiveClientsByField('user_id', $id);
+
+			return View::make( 'users.show' )->with( compact( 'show_user', 'clients' ) );
 		} else
 		{
 			throw new ResourceNotFoundException( 'users' );

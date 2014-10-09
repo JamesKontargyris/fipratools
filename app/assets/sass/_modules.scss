@@ -309,6 +309,20 @@
         display:table-cell;
       }
     }
+    &.show-s {
+      display:none;
+      @include breakpoint($m-max)
+      {
+        display:table-cell;
+      }
+    }
+    &.show-m {
+      display:none;
+      @include breakpoint($l-max)
+      {
+        display:table-cell;
+      }
+    }
   }
   thead {
     td {
@@ -342,6 +356,20 @@
   }
   button {
     line-height:1;
+  }
+  .status-active {
+    background-color:lighten(#adff2f, 20%);
+    color:green;
+  }
+  .status-dormant {
+    background-color:#d3d3d3;
+    color:grey;
+  }
+  .status-active,
+  .status-dormant {
+    @include breakpoint($m-max) {
+      @include font-size(8);
+    }
   }
 }
 

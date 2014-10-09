@@ -112,3 +112,19 @@ $susy: (
     display:block;
   }
 }
+
+.show-s {
+  display:none;
+  @include breakpoint($m-max)
+  {
+    display:block;
+  }
+}
+
+.show-m {
+  display:none;
+  @include breakpoint($l-max)
+  {
+    display:block;
+  }
+}

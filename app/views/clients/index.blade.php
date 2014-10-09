@@ -23,20 +23,32 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
+							<td class="content-center show-s"></td>
 							<td width="60%">Client name</td>
 							<td width="15%" class="content-center hide-s">Sector</td>
 							<td width="15%" class="content-center hide-m">Type</td>
 							<td width="10%" class="content-center hide-m">Service</td>
+							<td class="content-center hide-s">Status</td>
 							<td colspan="3">Actions</td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $client)
 							<tr>
+								@if($client->status)
+									<td class="actions content-center status-active show-s"><i class="fa fa-circle fa-lg show-s"></i></td>
+								@else
+									<td class="actions content-center status-dormant show-s"><i class="fa fa-circle-o fa-lg show-s"></i></td>
+								@endif
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="content-center hide-s">{{ $client->sector()->pluck('name') }}</td>
 								<td class="content-center hide-m">{{ $client->type()->pluck('name') }}</td>
 								<td class="content-center hide-m">{{ $client->service()->pluck('name') }}</td>
+								@if($client->status)
+									<td class="actions content-center status-active hide-s">Active</td>
+								@else
+									<td class="actions content-center status-dormant hide-s">Dormant</td>
+								@endif
 								<td class="actions content-right">
 									{{ Form::open(['url' => 'clients/' . $client->id . '/archive', 'method' => 'get']) }}
 										<button type="submit" class="primary" title="Add an archive entry for this client"><i class="fa fa-folder"></i></button>

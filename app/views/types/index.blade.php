@@ -31,7 +31,7 @@
 					<tbody>
 						@foreach($items as $type)
 							<tr>
-								<td><strong><a href="{{ route('sectors.show', ['id' => $type->id]) }}">{{ $type->name }}</a></strong></td>
+								<td><strong><a href="{{ route('types.show', ['id' => $type->id]) }}">{{ $type->name }}</a></strong></td>
 								<td class="content-center hide-s">{{ number_format(0,0,'.',',') }}</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('types.edit', $type->id), 'method' => 'get']) }}

@@ -1,6 +1,7 @@
 <?php
 
 use Laracasts\Flash\Flash;
+use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Users\User;
 
@@ -147,5 +148,10 @@ class BaseController extends Controller {
 		else $request_is = Request::is($uri) || Request::is($uri . '/*');
 
 		return $request_is;
+	}
+
+	protected function getActiveClientsByField($field, $id)
+	{
+		return Client::orderBy('name')->where($field, '=', $id)->where('status', '=', 1)->get();
 	}
 }

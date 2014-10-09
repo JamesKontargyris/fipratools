@@ -14,6 +14,11 @@ class Client extends \BaseModel
 		'status'
 	];
 
+	public function unit()
+	{
+		return $this->hasOne('\Leadofficelist\Units\Unit', 'id', 'unit_id');
+	}
+
 	public function sector()
 	{
 		return $this->hasOne('\Leadofficelist\Sectors\Sector', 'id', 'sector_id');

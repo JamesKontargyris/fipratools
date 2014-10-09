@@ -89,7 +89,7 @@ function is_request($uri, $strict = false)
 
 function nav_item_is_active($uri)
 {
-	if(Request::is($uri)) return true;
+	if(is_request($uri)) return true;
 
 	return false;
 }

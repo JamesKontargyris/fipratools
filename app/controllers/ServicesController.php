@@ -76,13 +76,9 @@ class ServicesController extends \BaseController
 	 */
 	public function show( $id )
 	{
-		if ( $this->getService( $id ) )
+		if ( $service = $this->getService( $id ) )
 		{
-			//TODO: get clients in this sector
-			//TODO: convert array values to objects in view
-			$clients[0] = [ 'name' => 'Joe Bloggs' ];
-			$clients[1] = [ 'name' => 'Helen Jones' ];
-			$clients[2] = [ 'name' => 'Will Kontargyris' ];
+			$clients = $this->getActiveClientsByField('service_id', $id);
 
 			return View::make( 'services.show' )->with( compact( 'service', 'clients' ) );
 		} else
