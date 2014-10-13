@@ -12,6 +12,7 @@
 
 	@include('layouts.partials.messages')
 
+
 	@if(count($items) > 0)
 		@include('layouts.partials.rows_nav')
 
@@ -51,7 +52,11 @@
 										@endif
 									@endif
 									<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
-									<td class="archive-count"><i class="fa fa-archive"></i> 1</td>
+									<td class="archive-count">
+										@if($client->archives()->count())
+											<a href="{{ route('client_archives.index', ['client_id' => $client->id]) }}"><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</a>
+										@endif
+									</td>
 
 									@if($user->hasRole('Administrator'))
 										<td class="content-center hide-s"><strong><a href="/units/{{ $client->unit()->pluck('id') }}">{{ $client->unit()->pluck('name') }}</a></strong></td>
@@ -61,7 +66,8 @@
 									<td class="content-center hide-m">{{ $client->service()->pluck('name') }}</td>
 
 									<td class="actions content-right">
-										{{ Form::open(['url' => 'clients/' . $client->id . '/archive', 'method' => 'get']) }}
+										{{ Form::open(['url' => 'client_archives/create', 'method' => 'get']) }}
+											{{ Form::hidden('client_id', $client->id) }}
 											<button type="submit" class="primary" title="Add an archive record for this client"><i class="fa fa-archive"></i></button>
 										{{ Form::close() }}
 									</td>

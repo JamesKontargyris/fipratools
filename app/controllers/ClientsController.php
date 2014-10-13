@@ -39,6 +39,8 @@ class ClientsController extends \BaseController
 	 */
 	public function index()
 	{
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		if ( $this->user->hasRole( 'Administrator' ) )
 		{
 			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
@@ -188,11 +190,18 @@ class ClientsController extends \BaseController
 	 */
 	public function search()
 	{
-		$items              = Client::where( 'name', 'LIKE', '%' . Input::get( 'search' ) . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-		$items->key         = 'clients';
-		$items->search_term = Input::get( 'search' );
+		if($search_term = $this->findSearchTerm())
+		{
+			$items              = Client::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items->key         = 'clients';
+			$items->search_term = $search_term;
 
-		return View::make( 'clients.index' )->with( compact( 'items' ) );
+			return View::make( 'clients.index' )->with( compact( 'items' ) );
+		}
+		else
+		{
+			return Redirect::route('clients.index');
+		}
 	}
 
 	protected function getClient( $id )

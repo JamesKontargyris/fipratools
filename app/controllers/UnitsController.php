@@ -34,6 +34,8 @@ class UnitsController extends \BaseController {
 	{
 		$this->check_perm('manage_units');
 
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		$items = Unit::rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
 		$items->key = 'units';
 		return View::make('units.index')->with(compact('items'));
@@ -165,14 +167,25 @@ class UnitsController extends \BaseController {
 		return Redirect::route('units.index');
 	}
 
+	/**
+	 * Process a unit search.
+	 *
+	 * @return $this
+	 */
 	public function search()
 	{
-		$this->check_perm('manage_units');
+		if($search_term = $this->findSearchTerm())
+		{
+			$items              = Unit::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items->key         = 'units';
+			$items->search_term = $search_term;
 
-		$items = Unit::where('name', 'LIKE', '%' . Input::get('search') . '%')->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
-		$items->key = 'units';
-		$items->search_term = Input::get('search');
-		return View::make('units.index')->with(compact('items'));
+			return View::make( 'units.index' )->with( compact( 'items' ) );
+		}
+		else
+		{
+			return Redirect::route('units.index');
+		}
 	}
 
 	protected function getUnit($id)

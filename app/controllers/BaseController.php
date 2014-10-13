@@ -201,4 +201,18 @@ class BaseController extends Controller
 	{
 		return Client::orderBy( 'name' )->where( $field, '=', $id )->where( 'status', '=', 1 )->get();
 	}
+
+	protected function searchCheck()
+	{
+		if(Input::has('clear_search')) { Session::forget($this->resource_key . '.SearchTerm'); }
+		elseif(Session::has($this->resource_key . '.SearchTerm')) { return true; }
+
+		return false;
+	}
+
+	protected function findSearchTerm()
+	{
+		if(Input::has('search')) Session::set($this->resource_key . '.SearchTerm', Input::get('search'));
+		return Session::get($this->resource_key . '.SearchTerm');
+	}
 }

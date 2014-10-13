@@ -35,6 +35,8 @@ class SectorCategoriesController extends \BaseController
 	 */
 	public function index()
 	{
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		$items      = Sector_category::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'sector_categories';
 
@@ -163,11 +165,18 @@ class SectorCategoriesController extends \BaseController
 	 */
 	public function search()
 	{
-		$items              = Sector_category::where( 'name', 'LIKE', '%' . Input::get( 'search' ) . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-		$items->key         = 'sector_categories';
-		$items->search_term = Input::get( 'search' );
+		if($search_term = $this->findSearchTerm())
+		{
+			$items              = Sector_category::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items->key         = 'sector_categories';
+			$items->search_term = $search_term;
 
-		return View::make( 'sector_categories.index' )->with( compact( 'items' ) );
+			return View::make( 'sector_categories.index' )->with( compact( 'items' ) );
+		}
+		else
+		{
+			return View::make( 'sector_categories.index' );
+		}
 	}
 
 	protected function getSectorCategory( $id )

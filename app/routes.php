@@ -74,20 +74,21 @@ Route::get('roles', function()
 
 Route::group(['before' => 'auth'], function()
 {
-	Route::post('users/search', 'UsersController@search');
+	Route::any('users/search', 'UsersController@search');
 	Route::resource('users', 'UsersController');
-	Route::post('units/search', 'UnitsController@search');
+	Route::any('units/search', 'UnitsController@search');
 	Route::resource('units', 'UnitsController');
-	Route::post('sectors/search', 'SectorsController@search');
+	Route::any('sectors/search', 'SectorsController@search');
 	Route::resource('sectors', 'SectorsController');
-	Route::post('sector_categories/search', 'SectorCategoriesController@search');
+	Route::any('sector_categories/search', 'SectorCategoriesController@search');
 	Route::resource('sector_categories', 'SectorCategoriesController');
-	Route::post('types/search', 'TypesController@search');
+	Route::any('types/search', 'TypesController@search');
 	Route::resource('types', 'TypesController');
-	Route::post('services/search', 'ServicesController@search');
+	Route::any('services/search', 'ServicesController@search');
 	Route::resource('services', 'ServicesController');
-	Route::post('clients/search', 'ClientsController@search');
+	Route::any('clients/search', 'ClientsController@search');
 	Route::resource('clients', 'ClientsController');
+	Route::resource('client_archives', 'ClientArchivesController');
 
 	Route::resource('reports', 'ReportsController');
 });

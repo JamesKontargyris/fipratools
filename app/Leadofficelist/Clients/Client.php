@@ -41,6 +41,11 @@ class Client extends \BaseModel
 		return $this->hasOne('\Leadofficelist\Services\Service', 'id', 'service_id');
 	}
 
+	public function archives()
+	{
+		return $this->hasMany('\Leadofficelist\Client_archives\ClientArchive');
+	}
+
 	public function add( $client )
 	{
 		$this->name             = $client->name;

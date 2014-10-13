@@ -33,6 +33,8 @@ class SectorsController extends \BaseController
 	 */
 	public function index()
 	{
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		$items      = Sector::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'sectors';
 
@@ -162,11 +164,18 @@ class SectorsController extends \BaseController
 	 */
 	public function search()
 	{
-		$items              = Sector::where( 'name', 'LIKE', '%' . Input::get( 'search' ) . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-		$items->key         = 'sectors';
-		$items->search_term = Input::get( 'search' );
+		if($search_term = $this->findSearchTerm())
+		{
+			$items              = Sector::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items->key         = 'sectors';
+			$items->search_term = $search_term;
 
-		return View::make( 'sectors.index' )->with( compact( 'items' ) );
+			return View::make( 'sectors.index' )->with( compact( 'items' ) );
+		}
+		else
+		{
+			return View::make( 'sectors.index' );
+		}
 	}
 
 	protected function getSector($id)

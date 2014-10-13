@@ -45,6 +45,8 @@ class UsersController extends \BaseController
 	{
 		$this->check_perm( 'manage_users' );
 
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		$items      = User::where('id', '!=', $this->user->id)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'users';
 
@@ -205,13 +207,21 @@ class UsersController extends \BaseController
 	{
 		$this->check_perm('manage_users');
 
-		$items = User::where('id', '!=', $this->user->id)->where(function($query)
+		if($search_term = $this->findSearchTerm())
 		{
-			$query->where('first_name', 'LIKE', '%' . Input::get('search') . '%')->orWhere('last_name', 'LIKE', '%' . Input::get('search') . '%');
-		})->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
-		$items->key = 'users';
-		$items->search_term = Input::get('search');
-		return View::make('users.index')->with(compact('items'));
+			$items = User::where('id', '!=', $this->user->id)->where(function($query)
+			{
+				$query->where('first_name', 'LIKE', '%' . $search_term . '%')->orWhere('last_name', 'LIKE', '%' . $search_term . '%');
+			})->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
+			$items->key = 'users';
+			$items->search_term = $search_term;
+			return View::make('users.index')->with(compact('items'));
+		}
+		else
+		{
+			return Redirect::route('users.index');
+		}
+
 	}
 
 	/**

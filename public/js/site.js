@@ -8,6 +8,17 @@
 	$('.help').css('display', 'inline-block');
     // Hide all help boxes
     $('.help-box').css('display', 'none');
+    //Show the datepicker
+    var dates = $("#start_date, #end_date").datepicker({
+        dateFormat: "d MM yy",
+        numberOfMonths: 1,
+        onSelect: function(selectedDate) {
+            var option = this.id == "start_date" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+            dates.not(this).datepicker("option", option, date);
+        }
+    });
 
     if($.trim($('.page-menu-nav ul').text()) == '') { $('.page-menu-icon-s').hide(); }
 

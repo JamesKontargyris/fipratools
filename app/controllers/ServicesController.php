@@ -10,7 +10,7 @@ class ServicesController extends \BaseController
 {
 	use CommanderTrait;
 
-	protected $resource_key = 'sectors';
+	protected $resource_key = 'services';
 	private $addEditServiceForm;
 
 	function __construct( AddEditServiceForm $addEditServiceForm )
@@ -30,6 +30,8 @@ class ServicesController extends \BaseController
 	 */
 	public function index()
 	{
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		$items      = Service::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'services';
 
@@ -159,11 +161,18 @@ class ServicesController extends \BaseController
 	 */
 	public function search()
 	{
-		$items              = Service::where( 'name', 'LIKE', '%' . Input::get( 'search' ) . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-		$items->key         = 'services';
-		$items->search_term = Input::get( 'search' );
+		if($search_term = $this->findSearchTerm())
+		{
+			$items              = Service::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items->key         = 'services';
+			$items->search_term = $search_term;
 
-		return View::make( 'services.index' )->with( compact( 'items' ) );
+			return View::make( 'services.index' )->with( compact( 'items' ) );
+		}
+		else
+		{
+			return View::make( 'services.index' );
+		}
 	}
 
 	/**

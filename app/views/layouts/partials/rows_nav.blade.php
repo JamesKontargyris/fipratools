@@ -15,7 +15,7 @@
 				{{ Form::close() }}
 			</li>
 			@if(is_search())
-				<li><a href="{{ route($items->key . '.index') }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Search</a></li>
+				<li><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Search</a></li>
 			@endif
 		</ul>
 	</div>

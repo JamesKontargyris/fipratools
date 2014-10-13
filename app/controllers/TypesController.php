@@ -32,6 +32,8 @@ class TypesController extends \BaseController
 	 */
 	public function index()
 	{
+		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+
 		$items = Type::rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
 		$items->key = 'types';
 		return View::make('types.index')->with(compact('items'));
@@ -152,12 +154,25 @@ class TypesController extends \BaseController
 		}
 	}
 
+	/**
+	 * Process a type search.
+	 *
+	 * @return $this
+	 */
 	public function search()
 	{
-		$items = Type::where('name', 'LIKE', '%' . Input::get('search') . '%')->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
-		$items->key = 'types';
-		$items->search_term = Input::get('search');
-		return View::make('types.index')->with(compact('items'));
+		if($search_term = $this->findSearchTerm())
+		{
+			$items              = Type::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items->key         = 'types';
+			$items->search_term = $search_term;
+
+			return View::make( 'types.index' )->with( compact( 'items' ) );
+		}
+		else
+		{
+			return View::make( 'types.index' );
+		}
 	}
 
 	protected function getType($id)

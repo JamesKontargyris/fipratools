@@ -74,7 +74,7 @@ function editing()
 
 function is_search()
 {
-	if(Request::is('*/search') && Request::isMethod('post')) { return true; }
+	if(Request::is('*/search')) { return true; }
 
 	return false;
 }
