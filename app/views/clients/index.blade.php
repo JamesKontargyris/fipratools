@@ -1,7 +1,7 @@
 	@extends('layouts.master')
 
 	@section('page-header')
-	@if(is_search()) Searching for: {{ $items->search_term }} @elseif($user->hasRole('Administrator')) Clients Overview @else Your Clients Overview @endif
+	@if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @elseif($user->hasRole('Administrator')) Clients Overview @else Your Clients Overview @endif
 	@stop
 
 	@section('page-nav')

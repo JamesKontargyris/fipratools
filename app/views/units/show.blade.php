@@ -51,10 +51,11 @@
 	</div>
 </div>
 
+<div class="row">
+	<h3>Active clients linked to this unit</h3>
+</div>
+
 @if($user->hasRole('Administrator') && count($clients) > 0)
-	<div class="row">
-		<h3>Active clients linked to this unit</h3>
-	</div>
 	<section class="index-table-container">
 		<div class="row">
 			<div class="col-12">
