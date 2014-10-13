@@ -7,7 +7,7 @@ class Sector extends \BaseModel
 
 	public function clients()
 	{
-		return $this->belongsTo( '\Leadofficelist\Clients\Client', 'sector_id' );
+		return $this->belongsTo( '\Leadofficelist\Clients\Client', 'id', 'sector_id' );
 	}
 
 	public function category()

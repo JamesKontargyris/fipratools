@@ -217,6 +217,7 @@
         padding:($v-rhythm / 2) 15px;
         &:not(:last-of-type) { border-right:1px solid darken(white, 20%); }
         @include breakpoint($l) {
+          padding-bottom:$v-rhythm;
           display:inline;
           float:left;
         }
@@ -277,8 +278,16 @@
 }
 .filter-but {
   background-color:darken(white, 15%);
-  padding:5px;
+  @include dark-grad(white, top, 15%);
+  border:1px solid white;
+  padding:5px 10px;
   @include border-radius(5px);
+  &.highlight {
+    background-color: $blue;
+    @include dark-grad($blue, top, 15%);
+    border:0;
+    color:white;
+  }
 }
 
 .index-table {
@@ -333,17 +342,28 @@
       text-transform: uppercase;
       @include font-size(12);
       font-weight:$font-bold;
-      padding:($v-rhythm / 2) 15px;
+      padding:($v-rhythm / 4) 15px;
+      &.sub-header {
+        background-color:$light-grey;
+        @include dark-grad($light-grey, top, 10%);
+        color:$grey;
+      }
     }
   }
   tbody {
     tr {
       td {
         padding:5px 15px;
-        &.actions {
+        &.actions,
+        &.archive-count {
           padding:5px;
           width:1%;
           white-space:nowrap;
+        }
+        &.archive-count {
+          padding-right:10px;
+          border-left:0;
+          color:$grey;
         }
       }
       &:nth-child(even) {
@@ -362,8 +382,8 @@
     color:green;
   }
   .status-dormant {
-    background-color:#d3d3d3;
-    color:grey;
+    background-color:white;
+    color:#d3d3d3;
   }
   .status-active,
   .status-dormant {
@@ -510,6 +530,16 @@ ul.pagination {
   padding:0 10px;
   color:darken(white, 10%);
 }
+
+.border-box {
+  border:1px solid $light-grey;
+  padding:$v-rhythm 15px;
+  margin-bottom: $v-rhythm;
+  &.fill {
+    background-color:lighten($light-grey, 10%);
+  }
+}
+
 //Buttons that are JS-dependent. Hide until JS displays them.
 .js-block {
   display:none;

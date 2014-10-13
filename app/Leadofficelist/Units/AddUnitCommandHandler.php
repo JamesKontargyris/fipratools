@@ -1,9 +1,9 @@
-<?php namespace Leadofficelist\Clients;
+<?php namespace Leadofficelist\Units;
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 
-class EditClientCommandHandler implements CommandHandler {
+class AddUnitCommandHandler implements CommandHandler {
 
 	use DispatchableTrait;
 

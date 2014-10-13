@@ -23,10 +23,14 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="55%">User</td>
-							<td width="10%" class="content-center hide-s">Role</td>
-							<td width="10%" class="content-center hide-s">Clients Added</td>
-							<td colspan="2">Actions</td>
+							<td rowspan="2" width="55%">User</td>
+							<td rowspan="2" width="10%" class="content-center hide-s">Role</td>
+							<td colspan="2" width="10%" class="content-center hide-s">Clients Added</td>
+							<td rowspan="2" colspan="2">Actions</td>
+						</tr>
+						<tr>
+							<td class="sub-header content-center hide-s">Active</td>
+							<td class="sub-header content-center hide-s">Dormant</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -40,7 +44,8 @@
 									@endif
 									</a></strong></td>
 								<td class="content-center hide-s">{{ $list_user->roles()->pluck('name') }}</td>
-								<td class="content-center hide-s">{{ number_format(0,0,0,',') }}</td>
+								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 1)->count(),0,0,',') }}</td>
+								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 0)->count(),0,0,',') }}</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('users.edit', $list_user->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>

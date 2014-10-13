@@ -1,5 +1,7 @@
 <?php namespace Leadofficelist\Clients;
 
+use Leadofficelist\Units\Unit;
+
 class Client extends \BaseModel
 {
 	protected $fillable = [
@@ -13,6 +15,11 @@ class Client extends \BaseModel
 		'service_id',
 		'status'
 	];
+
+	public function user()
+	{
+		return $this->hasOne('\Leadofficelist\Users\User', 'id', 'user_id');
+	}
 
 	public function unit()
 	{
@@ -65,5 +72,10 @@ class Client extends \BaseModel
 		$update_client->save();
 
 		return $update_client;
+	}
+
+	public function getLeadOfficeAddress()
+	{
+		return Unit::addressMultiLine($this->unit_id);
 	}
 }

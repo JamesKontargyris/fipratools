@@ -12,6 +12,11 @@ class Unit extends \BaseModel
 		return $this->hasMany( 'Leadofficelist\Users\User' );
 	}
 
+	public function clients()
+	{
+		return $this->hasMany( 'Leadofficelist\Clients\Client' );
+	}
+
 	public function add( $unit )
 	{
 		$this->name      = $unit->name;
@@ -96,6 +101,32 @@ class Unit extends \BaseModel
 		if ( $this->post_code != '' )
 		{
 			$address .= ', ' . $this->post_code;
+		}
+
+		return $address;
+	}
+
+	public static function addressMultiLine($unit_id)
+	{
+		$lead_office = Unit::find($unit_id);
+
+		$address = '';
+		$address .= $lead_office->address1;
+		if ( $lead_office->address2 != '' )
+		{
+			$address .= '<br/>' . $lead_office->address2;
+		}
+		if ( $lead_office->address3 != '' )
+		{
+			$address .= '<br/>' . $lead_office->address3;
+		}
+		if ( $lead_office->address4 != '' )
+		{
+			$address .= '<br/>' . $lead_office->address4;
+		}
+		if ( $lead_office->post_code != '' )
+		{
+			$address .= '<br/>' . $lead_office->post_code;
 		}
 
 		return $address;

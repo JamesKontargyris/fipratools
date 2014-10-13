@@ -26,6 +26,12 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 		return $this->belongsTo( '\Leadofficelist\Units\Unit', 'unit_id' );
 	}
 
+	public function clients()
+	{
+		//One user belongs to one unit
+		return $this->hasMany( '\Leadofficelist\Clients\Client' );
+	}
+
 	public function getFirstNameAttribute( $value )
 	{
 		return ucfirst( $value );

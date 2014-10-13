@@ -12,4 +12,14 @@ class BaseModel extends Eloquent
 	{
 		return $query->orderBy( $sort_on[0], $sort_on[1] );
 	}
+
+	public function scopeRowsHideShowDormant( $query, $dormant )
+	{
+		if($dormant == 'hide')
+		{
+			return $query->where( 'status', '!=', 0 );
+		}
+
+		return $query;
+	}
 } 

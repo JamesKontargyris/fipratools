@@ -23,20 +23,26 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="55%">Unit Name</td>
-							<td width="25%" class="hide-m">Address</td>
-							<td width="10%" class="content-center hide-s">Clients</td>
-							<td width="10%" class="content-center hide-s">Users</td>
-							<td colspan="2">Actions</td>
+							<td rowspan="2" width="55%">Unit Name</td>
+							<td rowspan="2" width="25%" class="hide-m">Address</td>
+							<td colspan="2" class="content-center hide-s">Clients</td>
+							<td rowspan="2" width="5%" class="content-center hide-s">Users</td>
+							<td rowspan="2" colspan="2">Actions</td>
 						</tr>
+						<tr>
+							<td class="sub-header content-center hide-s">Active</td>
+							<td class="sub-header content-center hide-s">Dormant</td>
+						</tr>
+
 					</thead>
 					<tbody>
 						@foreach($items as $unit)
 							<tr>
 								<td><a href="{{ route('units.show', ['id' => $unit->id]) }}"><strong>{{ $unit->name }}</strong></a></td>
 								<td class="hide-m">{{ $unit->addressOneLine() }}</td>
-								<td class="content-center hide-s">{{ number_format(0,0,'.',',') }}</td>
-								<td class="content-center hide-s">{{ number_format(0,0,'.',',') }}</td>
+								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
+								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
+								<td class="content-center hide-s">{{ number_format($unit->users()->count(),0,'.',',') }}</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('units.edit', $unit->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>

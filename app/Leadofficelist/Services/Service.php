@@ -7,7 +7,7 @@ class Service extends \BaseModel
 
 	public function clients()
 	{
-		return $this->belongsTo('\Leadofficelist\Clients\Client', 'service_id');
+		return $this->belongsTo('\Leadofficelist\Clients\Client', 'id', 'service_id');
 	}
 
 	public function add( $service )

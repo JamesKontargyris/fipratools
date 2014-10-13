@@ -7,7 +7,7 @@ class Type extends \BaseModel
 
 	public function clients()
 	{
-		return $this->belongsTo('\Leadofficelist\Clients\Client', 'type_id');
+		return $this->belongsTo('\Leadofficelist\Clients\Client', 'id', 'type_id');
 	}
 
 	public function add( $type )

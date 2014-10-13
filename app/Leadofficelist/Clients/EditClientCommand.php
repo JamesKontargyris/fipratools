@@ -1,6 +1,6 @@
-<?php namespace Leadofficelist\Units;
+<?php namespace Leadofficelist\Clients;
 
-class AddClientCommand
+class EditClientCommand
 {
 	public $name;
 	public $account_director;

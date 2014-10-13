@@ -23,16 +23,21 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="55%">Service Name</td>
-							<td width="10%" class="content-center hide-s">Clients</td>
-							<td colspan="2">Actions</td>
+							<td rowspan="2" width="80%">Service Name</td>
+							<td colspan="2" width="20%" class="content-center hide-s">Clients</td>
+							<td rowspan="2" colspan="2">Actions</td>
+						</tr>
+						<tr>
+							<td class="sub-header content-center hide-s">Active</td>
+							<td class="sub-header content-center hide-s">Dormant</td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $service)
 							<tr>
 								<td><strong><a href="{{ route('services.show', ['id' => $service->id]) }}">{{ $service->name }}</a></strong></td>
-								<td class="content-center hide-s">{{ number_format(0,0,'.',',') }}</td>
+								<td class="content-center hide-s">{{ number_format($service->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
+								<td class="content-center hide-s">{{ number_format($service->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('services.edit', $service->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>

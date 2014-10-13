@@ -3,11 +3,13 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Clients\Client;
+use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Forms\AddEditClient as AddEditClientForm;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Services\Service;
 use Leadofficelist\Types\Type;
 use Leadofficelist\Units\Unit;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class ClientsController extends \BaseController
 {
@@ -39,10 +41,10 @@ class ClientsController extends \BaseController
 	{
 		if ( $this->user->hasRole( 'Administrator' ) )
 		{
-			$items = Client::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		} else
 		{
-			$items = Client::where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 		$items->key = 'clients';
 
@@ -91,11 +93,23 @@ class ClientsController extends \BaseController
 	 *
 	 * @param  int $id
 	 *
+	 * @throws PermissionDeniedException
 	 * @return Response
 	 */
 	public function show( $id )
 	{
-		//
+		if ( $client = Client::find( $id ) )
+		{
+			if ( ! $this->user->hasRole( 'Administrator' ) && $client->unit_id != $this->user->unit_id )
+			{
+				throw new PermissionDeniedException();
+			}
+
+			return View::make( 'clients.show' )->with( compact( 'client' ) );
+		} else
+		{
+			throw new ResourceNotFoundException( 'clients' );
+		}
 	}
 
 	/**
@@ -108,7 +122,21 @@ class ClientsController extends \BaseController
 	 */
 	public function edit( $id )
 	{
-		//
+		if ( $client = $this->getClient( $id ) )
+		{
+			$this->getFormData();
+
+			return View::make( 'clients.edit' )->with( [
+				'units'    => $this->units,
+				'sectors'  => $this->sectors,
+				'types'    => $this->types,
+				'services' => $this->services,
+				'client'   => $client
+			] );
+		} else
+		{
+			throw new ResourceNotFoundException( 'clients' );
+		}
 	}
 
 	/**
@@ -121,7 +149,16 @@ class ClientsController extends \BaseController
 	 */
 	public function update( $id )
 	{
-		//
+		$input = Input::all();
+		$input['id'] = $id;
+		$this->addEditClientForm->rules['name'] = 'required|max:255|unique:clients,name,' . $id;
+		$this->addEditClientForm->validate($input);
+
+		$this->execute('Leadofficelist\Clients\EditClientCommand', $input);
+
+		Flash::overlay('"' . $input['name'] .'" updated.', 'success');
+
+		return Redirect::route('clients.index');
 	}
 
 	/**
@@ -134,7 +171,14 @@ class ClientsController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
-		//
+		if($client = $this->getClient($id))
+		{
+			Client::destroy($id);
+			Flash::overlay('"' . $client->name .'" deleted.', 'info');
+
+		}
+
+		return Redirect::route('clients.index');
 	}
 
 	/**
@@ -151,7 +195,7 @@ class ClientsController extends \BaseController
 		return View::make( 'clients.index' )->with( compact( 'items' ) );
 	}
 
-	protected function getClient($id)
+	protected function getClient( $id )
 	{
 		return Client::find( $id );
 	}
