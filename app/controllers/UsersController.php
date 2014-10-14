@@ -23,6 +23,8 @@ class UsersController extends \BaseController
 	private $addUserForm;
 	private $editUserForm;
 
+	private $search_term;
+
 	function __construct( AddUserForm $addUserForm, EditUserForm $editUserForm )
 	{
 		parent::__construct();
@@ -45,9 +47,12 @@ class UsersController extends \BaseController
 	{
 		$this->check_perm( 'manage_users' );
 
-		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+		if ( $this->searchCheck() )
+		{
+			return Redirect::to( $this->resource_key . '/search' );
+		}
 
-		$items      = User::where('id', '!=', $this->user->id)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = User::where( 'id', '!=', $this->user->id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'users';
 
 		return View::make( 'users.index' )->with( compact( 'items' ) );
@@ -65,12 +70,13 @@ class UsersController extends \BaseController
 
 		$this->getFormData();
 
-		return View::make( 'users.create' )->with( [ 'units'             => $this->units,
-		                                             'roles'             => $this->roles,
-		                                             'admin_perms_list'  => $this->admin_perms_list,
-		                                             'editor_perms_list' => $this->editor_perms_list,
-		                                             'viewer_perms_list' => $this->viewer_perms_list
-			] );
+		return View::make( 'users.create' )->with( [
+			'units'             => $this->units,
+			'roles'             => $this->roles,
+			'admin_perms_list'  => $this->admin_perms_list,
+			'editor_perms_list' => $this->editor_perms_list,
+			'viewer_perms_list' => $this->viewer_perms_list
+		] );
 	}
 
 	/**
@@ -109,7 +115,7 @@ class UsersController extends \BaseController
 
 		if ( $show_user = $this->getUser( $id ) )
 		{
-			$clients = $this->getActiveClientsByField('user_id', $id);
+			$clients = $this->getActiveClientsByField( 'user_id', $id );
 
 			return View::make( 'users.show' )->with( compact( 'show_user', 'clients' ) );
 		} else
@@ -123,6 +129,7 @@ class UsersController extends \BaseController
 	 * GET /users/{id}/edit
 	 *
 	 * @param  int $id
+	 *
 	 * @throws CannotEditException
 	 * @throws ResourceNotFoundException
 	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
@@ -132,19 +139,23 @@ class UsersController extends \BaseController
 	{
 		$this->check_perm( 'manage_users' );
 
-		if( $this->editingCurrentUser($id)) throw new CannotEditException('users');
+		if ( $this->editingCurrentUser( $id ) )
+		{
+			throw new CannotEditException( 'users' );
+		}
 
 		if ( $edit_user = $this->getUser( $id ) )
 		{
 			$this->getFormData();
 
-			return View::make( 'users.edit' )->with( [ 'edit_user'         => $edit_user,
-			                                           'units'             => $this->units,
-			                                           'roles'             => $this->roles,
-			                                           'admin_perms_list'  => $this->admin_perms_list,
-			                                           'editor_perms_list' => $this->editor_perms_list,
-			                                           'viewer_perms_list' => $this->viewer_perms_list
-				] );
+			return View::make( 'users.edit' )->with( [
+				'edit_user'         => $edit_user,
+				'units'             => $this->units,
+				'roles'             => $this->roles,
+				'admin_perms_list'  => $this->admin_perms_list,
+				'editor_perms_list' => $this->editor_perms_list,
+				'viewer_perms_list' => $this->viewer_perms_list
+			] );
 		} else
 		{
 			throw new ResourceNotFoundException( 'users' );
@@ -185,16 +196,16 @@ class UsersController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
-		$this->check_perm('manage_users');
+		$this->check_perm( 'manage_users' );
 
-		if($user = $this->getUser($id))
+		if ( $user = $this->getUser( $id ) )
 		{
-			Unit::destroy($id);
-			Flash::overlay('"' . $user->getFullName() .'" deleted.', 'info');
+			Unit::destroy( $id );
+			Flash::overlay( '"' . $user->getFullName() . '" deleted.', 'info' );
 
 		}
 
-		return Redirect::route('units.index');
+		return Redirect::route( 'units.index' );
 	}
 
 	/**
@@ -205,21 +216,26 @@ class UsersController extends \BaseController
 	 */
 	public function search()
 	{
-		$this->check_perm('manage_users');
+		$this->check_perm( 'manage_users' );
 
-		if($search_term = $this->findSearchTerm())
+		if ( $this->search_term = $this->findSearchTerm() )
 		{
-			$items = User::where('id', '!=', $this->user->id)->where(function($query)
+			$items = User::where( 'id', '!=', $this->user->id )->where( function ( $query )
 			{
-				$query->where('first_name', 'LIKE', '%' . $search_term . '%')->orWhere('last_name', 'LIKE', '%' . $search_term . '%');
-			})->rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
-			$items->key = 'users';
-			$items->search_term = $search_term;
-			return View::make('users.index')->with(compact('items'));
-		}
-		else
+				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if ( ! $this->checkForSearchResults( $items ) )
+			{
+				return Redirect::route( $this->resource_key . '.index' );
+			}
+			$items->search_term = str_replace( '%', '', $this->search_term );
+			$items->key         = 'users';
+
+			return View::make( 'users.index' )->with( compact( 'items' ) );
+		} else
 		{
-			return Redirect::route('users.index');
+			return Redirect::route( 'users.index' );
 		}
 
 	}
@@ -306,8 +322,8 @@ class UsersController extends \BaseController
 	 *
 	 * @return bool
 	 */
-	private function editingCurrentUser($id)
+	private function editingCurrentUser( $id )
 	{
-		return ($id == $this->user->id);
+		return ( $id == $this->user->id );
 	}
 }

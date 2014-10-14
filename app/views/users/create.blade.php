@@ -45,9 +45,6 @@ Add a User
 				{{ Form::label('role_id', 'User role:') }} <a href="#" class="modal-open" data-modal="roles-modal"><i class="fa fa-info-circle fa-lg"></i></a>
 				{{ Form::select('role_id', $roles, Input::old('role_id'), ['class' => 'required']) }}
 			</div>
-			<div class="formfield">
-				{{ Form::checkbox('send_email', 'send_email', Input::old('send_email')) }} Send email notification?
-			</div>
 	</div>
 </div>
 

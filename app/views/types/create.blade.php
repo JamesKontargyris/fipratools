@@ -19,6 +19,10 @@ Add a Type
 			{{ Form::label('name', 'Type Name:', ['class' => 'required']) }}
 			{{ Form::text('name', Input::old('name')) }}
 		</div>
+		<div class="formfield">
+			{{ Form::label('short_name', 'Short Name:', ['class' => 'required']) }}
+			{{ Form::text('short_name', Input::old('short_name')) }}
+		</div>
 	</div>
 </div>
 

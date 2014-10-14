@@ -7,12 +7,13 @@ class Type extends \BaseModel
 
 	public function clients()
 	{
-		return $this->belongsTo('\Leadofficelist\Clients\Client', 'id', 'type_id');
+		return $this->belongsTo( '\Leadofficelist\Clients\Client', 'id', 'type_id' );
 	}
 
 	public function add( $type )
 	{
-		$this->name = $type->name;
+		$this->name       = $type->name;
+		$this->short_name = $type->short_name;
 		$this->save();
 
 		return $this;
@@ -20,8 +21,9 @@ class Type extends \BaseModel
 
 	public function edit( $type )
 	{
-		$update_type       = $this->find( $type->id );
-		$update_type->name = $type->name;
+		$update_type             = $this->find( $type->id );
+		$update_type->name       = $type->name;
+		$update_type->short_name = $type->short_name;
 		$update_type->save();
 
 		return $update_type;

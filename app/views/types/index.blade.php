@@ -23,7 +23,8 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td rowspan="2" width="80%">Type Name</td>
+							<td rowspan="2" width="60%">Type Name</td>
+							<td rowspan="2" width="20%">ShortName</td>
 							<td colspan="2" width="20%" class="content-center hide-s">Clients</td>
 							<td rowspan="2" colspan="2">Actions</td>
 						</tr>
@@ -36,6 +37,7 @@
 						@foreach($items as $type)
 							<tr>
 								<td><strong><a href="{{ route('types.show', ['id' => $type->id]) }}">{{ $type->name }}</a></strong></td>
+								<td>{{ $type->short_name }}</td>
 								<td class="content-center hide-s">{{ number_format($type->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($type->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
 								<td class="actions content-right">

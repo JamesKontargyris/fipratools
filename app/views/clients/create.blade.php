@@ -19,10 +19,6 @@ Add a Client
 			{{ Form::label('name', 'Client name:', ['class' => 'required']) }}
 			{{ Form::text('name', Input::old('name')) }}
 		</div>
-		<div class="formfield">
-			{{ Form::label('account_director', 'The Account Director to speak to:', ['class' => 'required']) }}
-            {{ Form::text('account_director', Input::old('account_director')) }}
-		</div>
 		@if($user->hasRole('Administrator'))
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to unit:', ['class' => 'required']) }}
@@ -33,6 +29,10 @@ Add a Client
 		@endif
 		{{ Form::hidden('user_id', $user->id) }}
 
+		<div class="formfield">
+			{{ Form::label('account_director', 'The Account Director to speak to:', ['class' => 'required']) }}
+            {{ Form::text('account_director', Input::old('account_director')) }}
+		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}
 			{{ Form::select('sector_id', $sectors, Input::old('sector_id')) }}
@@ -49,7 +49,7 @@ Add a Client
 	<div class="col-4 last">
 		<div class="formfield">
 			{{ Form::label('status', 'Current status:', ['class' => 'required']) }}
-			{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], Input::old('status')) }}
+			{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], Input::has('status') ? Input::old('status') : 1) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('comments', 'Comments:') }}

@@ -166,9 +166,11 @@ class SectorsController extends \BaseController
 	{
 		if($search_term = $this->findSearchTerm())
 		{
-			$items              = Sector::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items              = Sector::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if( ! $this->checkForSearchResults($items)) return Redirect::route( $this->resource_key . '.index' );
+			$items->search_term = str_replace('%', '', $search_term);
 			$items->key         = 'sectors';
-			$items->search_term = $search_term;
 
 			return View::make( 'sectors.index' )->with( compact( 'items' ) );
 		}
@@ -186,7 +188,7 @@ class SectorsController extends \BaseController
 	protected function getSectorCategories()
 	{
 		$categories = ['' => 'Select existing category or create new...', 'new' => 'New...'];
-		foreach(Sector_category::all() as $category)
+		foreach(Sector_category::orderBy('name')->get() as $category)
 		{
 			$categories[$category->id] = $category->name;
 		}

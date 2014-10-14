@@ -23,8 +23,9 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td rowspan="2" width="55%">Unit Name</td>
-							<td rowspan="2" width="25%" class="hide-m">Address</td>
+							<td rowspan="2" width="40%">Unit Name</td>
+							<td rowspan="2" width="10%">Short Name</td>
+							<td rowspan="2" width="30%" class="hide-m">Address</td>
 							<td colspan="2" class="content-center hide-s">Clients</td>
 							<td rowspan="2" width="5%" class="content-center hide-s">Users</td>
 							<td rowspan="2" colspan="2">Actions</td>
@@ -39,6 +40,7 @@
 						@foreach($items as $unit)
 							<tr>
 								<td><a href="{{ route('units.show', ['id' => $unit->id]) }}"><strong>{{ $unit->name }}</strong></a></td>
+								<td>{{ $unit->short_name }}</td>
 								<td class="hide-m">{{ $unit->addressOneLine() }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>

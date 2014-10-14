@@ -292,6 +292,7 @@
 
 .index-table {
   width:100%;
+  @include font-size(12);
   tr td {
     border-left:1px solid darken(white, 10%);
     vertical-align: middle;
@@ -380,10 +381,12 @@
   .status-active {
     background-color:lighten(#adff2f, 20%);
     color:green;
+    border:1px solid white;
   }
   .status-dormant {
     background-color:white;
     color:#d3d3d3;
+    border:1px solid white;
   }
   .status-active,
   .status-dormant {
@@ -393,6 +396,21 @@
   }
 }
 
+.letter-select-table-container {
+  display:block;
+  width:100%;
+  .letter-select-table {
+    width:100%;
+    @include breakpoint($l-max)
+    {
+      display:none;
+    }
+    tr td {
+      width:4%;
+      text-align: center;
+    }
+  }
+}
 
 .formfield {
 	margin-bottom:$v-rhythm;

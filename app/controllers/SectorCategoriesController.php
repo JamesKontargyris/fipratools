@@ -35,7 +35,10 @@ class SectorCategoriesController extends \BaseController
 	 */
 	public function index()
 	{
-		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+		if ( $this->searchCheck() )
+		{
+			return Redirect::to( $this->resource_key . '/search' );
+		}
 
 		$items      = Sector_category::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'sector_categories';
@@ -90,7 +93,7 @@ class SectorCategoriesController extends \BaseController
 			return View::make( 'sector_categories.show' )->with( compact( 'sector_category', 'sectors' ) );
 		} else
 		{
-			throw new ResourceNotFoundException( 'sector_category ' );
+			throw new ResourceNotFoundException( 'sector_categories' );
 		}
 	}
 
@@ -141,6 +144,7 @@ class SectorCategoriesController extends \BaseController
 	 * DELETE /sectorcategories/{id}
 	 *
 	 * @param  int $id
+	 *
 	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
@@ -154,7 +158,7 @@ class SectorCategoriesController extends \BaseController
 			return Redirect::route( 'sector_categories.index' );
 		} else
 		{
-			throw new ResourceNotFoundException( 'sector_category ' );
+			throw new ResourceNotFoundException( 'sector_categories' );
 		}
 	}
 
@@ -165,15 +169,19 @@ class SectorCategoriesController extends \BaseController
 	 */
 	public function search()
 	{
-		if($search_term = $this->findSearchTerm())
+		if ( $search_term = $this->findSearchTerm() )
 		{
-			$items              = Sector_category::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Sector_category::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if ( ! $this->checkForSearchResults( $items ) )
+			{
+				return Redirect::route( $this->resource_key . '.index' );
+			}
+			$items->search_term = str_replace( '%', '', $search_term );
 			$items->key         = 'sector_categories';
-			$items->search_term = $search_term;
 
 			return View::make( 'sector_categories.index' )->with( compact( 'items' ) );
-		}
-		else
+		} else
 		{
 			return View::make( 'sector_categories.index' );
 		}

@@ -89,16 +89,20 @@
     //Reveal new reporting category box on sectors.create
     $('select[name=category]').on('change', function()
     {
-        if($(this).val() == 'new') { $('.' + $(this).data('reveal')).slideDown(); }
-        else { $('.' + $(this).data('reveal')).slideUp(); }
+        if($(this).val() == 'new') {
+            $('.' + $(this).data('reveal')).slideDown();
+            if($('.new-category').val() == '')
+            {
+                $('.new-category').val($(this).val());
+            }
+        } else {
+            $('.' + $(this).data('reveal')).slideUp();
+        }
     });
 
     $('.sector-name').on('blur', function()
     {
-        if($('.new-category').val() == '')
-        {
-            $('.new-category').val($(this).val());
-        }
+
     })
 
 })();

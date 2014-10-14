@@ -24,7 +24,7 @@ class AddUnitCommandHandler implements CommandHandler {
 	 */
 	public function handle($command) {
 
-		$this->unit->edit($command);
+		$this->unit->add($command);
 
 		return $this->unit;
 		//$this->dispatchEventsFor($this->unit);

@@ -204,7 +204,11 @@ class BaseController extends Controller
 
 	protected function searchCheck()
 	{
-		if(Input::has('clear_search')) { Session::forget($this->resource_key . '.SearchTerm'); }
+		if(Input::has('clear_search') || Session::has('clear_search'))
+		{
+			Session::forget($this->resource_key . '.SearchTerm');
+			Session::forget('clear_search');
+		}
 		elseif(Session::has($this->resource_key . '.SearchTerm')) { return true; }
 
 		return false;
@@ -212,7 +216,31 @@ class BaseController extends Controller
 
 	protected function findSearchTerm()
 	{
-		if(Input::has('search')) Session::set($this->resource_key . '.SearchTerm', Input::get('search'));
+		if(Input::has('search')) {
+			if(Input::has('letter'))
+			{
+				Session::set($this->resource_key . '.SearchTerm', Input::get('search') . '%');
+				Session::set($this->resource_key . '.SearchType', 'first letter');
+			}
+			else
+			{
+				Session::set($this->resource_key . '.SearchTerm', '%' . Input::get('search') . '%');
+				Session::set($this->resource_key . '.SearchType', 'term');
+			}
+		}
 		return Session::get($this->resource_key . '.SearchTerm');
+	}
+
+	protected function checkForSearchResults($items)
+	{
+		if ( ! count( $items ) )
+		{
+			Flash::message( 'No records found for that search term.' );
+			Session::set( 'clear_search', 'yes' );
+
+			return false;
+		}
+
+		return true;
 	}
 }

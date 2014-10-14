@@ -7,20 +7,21 @@ use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
 use Leadofficelist\Units\Unit;
 
-class UnitsController extends \BaseController {
+class UnitsController extends \BaseController
+{
 
 	use CommanderTrait;
 
 	protected $resource_key = 'units';
 	private $addEditUnitForm;
 
-	public function __construct(AddEditUnitForm $addEditUnitForm)
+	public function __construct( AddEditUnitForm $addEditUnitForm )
 	{
 		parent::__construct();
 
 		$this->addEditUnitForm = $addEditUnitForm;
 
-		View::share('page_title', 'Units');
+		View::share( 'page_title', 'Units' );
 	}
 
 
@@ -32,13 +33,17 @@ class UnitsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$this->check_perm('manage_units');
+		$this->check_perm( 'manage_units' );
 
-		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+		if ( $this->searchCheck() )
+		{
+			return Redirect::to( $this->resource_key . '/search' );
+		}
 
-		$items = Unit::rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
+		$items      = Unit::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'units';
-		return View::make('units.index')->with(compact('items'));
+
+		return View::make( 'units.index' )->with( compact( 'items' ) );
 	}
 
 	/**
@@ -49,9 +54,9 @@ class UnitsController extends \BaseController {
 	 */
 	public function create()
 	{
-		$this->check_perm('manage_units');
+		$this->check_perm( 'manage_units' );
 
-		return View::make('units.create');
+		return View::make( 'units.create' );
 
 	}
 
@@ -63,16 +68,16 @@ class UnitsController extends \BaseController {
 	 */
 	public function store()
 	{
-		$this->check_perm('manage_units');
+		$this->check_perm( 'manage_units' );
 
 		$input = Input::all();
-		$this->addEditUnitForm->validate($input);
+		$this->addEditUnitForm->validate( $input );
 
-		$this->execute('Leadofficelist\Units\AddUnitCommand');
+		$this->execute( 'Leadofficelist\Units\AddUnitCommand' );
 
-		Flash::overlay('"' . $input['name'] .'" added.', 'success');
+		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
 
-		return Redirect::route('units.index');
+		return Redirect::route( 'units.index' );
 	}
 
 	/**
@@ -80,23 +85,23 @@ class UnitsController extends \BaseController {
 	 * GET /units/{id}
 	 *
 	 * @param  int $id
+	 *
 	 * @throws ResourceNotFoundException
 	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
-	public function show($id)
+	public function show( $id )
 	{
-		$this->check_perm('view_list');
+		$this->check_perm( 'view_list' );
 
-		if($unit = $this->getUnit($id))
+		if ( $unit = $this->getUnit( $id ) )
 		{
-			$clients = $this->getActiveClientsByField('unit_id', $id);
+			$clients = $this->getActiveClientsByField( 'unit_id', $id );
 
-			return View::make('units.show')->with(compact('unit', 'clients'));
-		}
-		else
+			return View::make( 'units.show' )->with( compact( 'unit', 'clients' ) );
+		} else
 		{
-			throw new ResourceNotFoundException('units');
+			throw new ResourceNotFoundException( 'units' );
 		}
 	}
 
@@ -105,21 +110,21 @@ class UnitsController extends \BaseController {
 	 * GET /units/{id}/edit
 	 *
 	 * @param  int $id
+	 *
 	 * @throws ResourceNotFoundException
 	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit( $id )
 	{
-		$this->check_perm('manage_units');
+		$this->check_perm( 'manage_units' );
 
-		if($unit = $this->getUnit($id))
+		if ( $unit = $this->getUnit( $id ) )
 		{
-			return View::make('units.edit')->with(compact('unit'));
-		}
-		else
+			return View::make( 'units.edit' )->with( compact( 'unit' ) );
+		} else
 		{
-			throw new ResourceNotFoundException('units');
+			throw new ResourceNotFoundException( 'units' );
 		}
 	}
 
@@ -127,44 +132,47 @@ class UnitsController extends \BaseController {
 	 * Update the specified resource in storage.
 	 * PUT /units/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 *
 	 * @return Response
 	 */
-	public function update($id)
+	public function update( $id )
 	{
-		$this->check_perm('manage_units');
+		$this->check_perm( 'manage_units' );
 
-		$input = Input::all();
-		$input['id'] = $id;
-		$this->addEditUnitForm->rules['name'] = 'required|max:255|unique:units,name,' . $id;
-		$this->addEditUnitForm->validate($input);
+		$input                                      = Input::all();
+		$input['id']                                = $id;
+		$this->addEditUnitForm->rules['name']       = 'required|max:255|unique:units,name,' . $id;
+		$this->addEditUnitForm->rules['short_name'] = 'required|max:255|unique:units,short_name,' . $id;
+		$this->addEditUnitForm->validate( $input );
 
-		$this->execute('Leadofficelist\Units\EditUnitCommand', $input);
+		$this->execute( 'Leadofficelist\Units\EditUnitCommand', $input );
 
-		Flash::overlay('"' . $input['name'] .'" updated.', 'success');
+		Flash::overlay( '"' . $input['name'] . '" updated.', 'success' );
 
-		return Redirect::route('units.index');
+		return Redirect::route( 'units.index' );
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 * DELETE /units/{id}
 	 *
-	 * @param  int  $id
+	 * @param  int $id
+	 *
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy( $id )
 	{
-		$this->check_perm('manage_units');
+		$this->check_perm( 'manage_units' );
 
-		if($unit = $this->getUnit($id))
+		if ( $unit = $this->getUnit( $id ) )
 		{
-			Unit::destroy($id);
-			Flash::overlay('"' . $unit->name .'" deleted.', 'info');
+			Unit::destroy( $id );
+			Flash::overlay( '"' . $unit->name . '" deleted.', 'info' );
 
 		}
 
-		return Redirect::route('units.index');
+		return Redirect::route( 'units.index' );
 	}
 
 	/**
@@ -174,22 +182,26 @@ class UnitsController extends \BaseController {
 	 */
 	public function search()
 	{
-		if($search_term = $this->findSearchTerm())
+		if ( $search_term = $this->findSearchTerm() )
 		{
-			$items              = Unit::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Unit::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if ( ! $this->checkForSearchResults( $items ) )
+			{
+				return Redirect::route( $this->resource_key . '.index' );
+			}
+			$items->search_term = str_replace( '%', '', $search_term );
 			$items->key         = 'units';
-			$items->search_term = $search_term;
 
 			return View::make( 'units.index' )->with( compact( 'items' ) );
-		}
-		else
+		} else
 		{
-			return Redirect::route('units.index');
+			return Redirect::route( 'units.index' );
 		}
 	}
 
-	protected function getUnit($id)
+	protected function getUnit( $id )
 	{
-		return Unit::find($id);
+		return Unit::find( $id );
 	}
 }

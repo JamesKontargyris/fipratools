@@ -27,11 +27,15 @@ Editing Unit: {{ $unit->name }}
 			{{ Form::text('address4', isset($unit->address4) ? $unit->address4 : '') }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('postcode', 'Zip / Post Code:', ['class' => 'required']) }}
+			{{ Form::label('postcode', 'Zip / Post Code:') }}
             {{ Form::text('postcode', isset($unit->post_code) ? $unit->post_code : '') }}
 		</div>
 	</div>
 	<div class="col-6 last">
+		<div class="formfield">
+			{{ Form::label('short_name', 'Short Name:', ['class' => 'required']) }}
+			{{ Form::text('short_name', isset($unit->short_name) ? $unit->short_name : '') }}
+		</div>
 		<div class="formfield">
 			{{ Form::label('phone', 'Telephone:') }}
 			{{ Form::text('phone', isset($unit->phone) ? $unit->phone : '') }}

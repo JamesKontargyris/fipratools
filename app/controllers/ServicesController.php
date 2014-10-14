@@ -30,7 +30,10 @@ class ServicesController extends \BaseController
 	 */
 	public function index()
 	{
-		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+		if ( $this->searchCheck() )
+		{
+			return Redirect::to( $this->resource_key . '/search' );
+		}
 
 		$items      = Service::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'services';
@@ -80,7 +83,7 @@ class ServicesController extends \BaseController
 	{
 		if ( $service = $this->getService( $id ) )
 		{
-			$clients = $this->getActiveClientsByField('service_id', $id);
+			$clients = $this->getActiveClientsByField( 'service_id', $id );
 
 			return View::make( 'services.show' )->with( compact( 'service', 'clients' ) );
 		} else
@@ -161,15 +164,19 @@ class ServicesController extends \BaseController
 	 */
 	public function search()
 	{
-		if($search_term = $this->findSearchTerm())
+		if ( $search_term = $this->findSearchTerm() )
 		{
-			$items              = Service::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Service::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if ( ! $this->checkForSearchResults( $items ) )
+			{
+				return Redirect::route( $this->resource_key . '.index' );
+			}
+			$items->search_term = str_replace( '%', '', $search_term );
 			$items->key         = 'services';
-			$items->search_term = $search_term;
 
 			return View::make( 'services.index' )->with( compact( 'items' ) );
-		}
-		else
+		} else
 		{
 			return View::make( 'services.index' );
 		}

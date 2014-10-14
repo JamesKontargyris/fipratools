@@ -26,7 +26,11 @@
 	</div>
 	<div class="col-6 last">
 		<h3>Comments</h3>
-		<p>{{ $client->comments }}</p>
+		@if($client->comments)
+			<p>{{ $client->comments }}</p>
+		@else
+			<p>No comments</p>
+		@endif
 		<h4>Details</h4>
 		<p><strong>Sector:</strong> {{ $client->sector()->pluck('name') }}</p>
 		<p><strong>Type:</strong> {{ $client->type()->pluck('name') }}</p>
@@ -36,8 +40,36 @@
 
 <div class="row">
 	<div class="col-12">
-		<h3>Archive</h3>
+		<h3>History</h3>
 	</div>
 </div>
 
+@if(count($archives) > 0)
+	<div class="row">
+    	<div class="col-12">
+			<section class="index-table-container">
+				<table width="100%" class="index-table">
+					<thead>
+						<tr>
+							<td width="15%" class="content-center">Start Date</td>
+							<td width="15%" class="content-center">End Date</td>
+							<td width="70%">Details</td>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($archives as $client_archive)
+							<tr>
+								<td class="content-center">{{ date('j M Y', strtotime($client_archive->start_date)) }}</td>
+								<td class="content-center">{{ date('j M Y', strtotime($client_archive->end_date)) }}</td>
+								<td>{{ $client_archive->comment }}</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</section>
+		</div>
+	</div>
+@else
+	@include('layouts.partials.index_no_records_found')
+@endif
 @stop

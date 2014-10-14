@@ -2,7 +2,8 @@
 
 use Laracasts\Validation\FormValidator;
 
-class AddEditType extends FormValidator {
+class AddEditType extends FormValidator
+{
 
 	/**
 	 * Validation rules for adding a sector
@@ -10,7 +11,8 @@ class AddEditType extends FormValidator {
 	 * @var array
 	 */
 	public $rules = [
-		'name'     => 'required|max:255|unique:types',
+		'name'       => 'required|max:255|unique:types',
+		'short_name' => 'required|max:255|unique:types',
 	];
 
 	public $messages = [

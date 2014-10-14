@@ -19,15 +19,16 @@ class Unit extends \BaseModel
 
 	public function add( $unit )
 	{
-		$this->name      = $unit->name;
-		$this->address1  = $unit->address1;
-		$this->address2  = $unit->address2;
-		$this->address3  = $unit->address3;
-		$this->address4  = $unit->address4;
-		$this->post_code = $unit->postcode;
-		$this->phone     = $unit->phone;
-		$this->fax       = $unit->fax;
-		$this->email     = $unit->email;
+		$this->name       = $unit->name;
+		$this->short_name = $unit->short_name;
+		$this->address1   = $unit->address1;
+		$this->address2   = $unit->address2;
+		$this->address3   = $unit->address3;
+		$this->address4   = $unit->address4;
+		$this->post_code  = $unit->postcode;
+		$this->phone      = $unit->phone;
+		$this->fax        = $unit->fax;
+		$this->email      = $unit->email;
 		$this->save();
 
 		return $this;
@@ -35,16 +36,17 @@ class Unit extends \BaseModel
 
 	public function edit( $unit )
 	{
-		$update_unit            = $this->find( $unit->id );
-		$update_unit->name      = $unit->name;
-		$update_unit->address1  = $unit->address1;
-		$update_unit->address2  = $unit->address2;
-		$update_unit->address3  = $unit->address3;
-		$update_unit->address4  = $unit->address4;
-		$update_unit->post_code = $unit->postcode;
-		$update_unit->phone     = $unit->phone;
-		$update_unit->fax       = $unit->fax;
-		$update_unit->email     = $unit->email;
+		$update_unit             = $this->find( $unit->id );
+		$update_unit->name       = $unit->name;
+		$update_unit->short_name = $unit->short_name;
+		$update_unit->address1   = $unit->address1;
+		$update_unit->address2   = $unit->address2;
+		$update_unit->address3   = $unit->address3;
+		$update_unit->address4   = $unit->address4;
+		$update_unit->post_code  = $unit->postcode;
+		$update_unit->phone      = $unit->phone;
+		$update_unit->fax        = $unit->fax;
+		$update_unit->email      = $unit->email;
 		$update_unit->save();
 
 		//$this->raise(new UnitWasAdded($unit));
@@ -106,9 +108,9 @@ class Unit extends \BaseModel
 		return $address;
 	}
 
-	public static function addressMultiLine($unit_id)
+	public static function addressMultiLine( $unit_id )
 	{
-		$lead_office = Unit::find($unit_id);
+		$lead_office = Unit::find( $unit_id );
 
 		$address = '';
 		$address .= $lead_office->address1;

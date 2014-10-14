@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Client_archives\ClientArchive;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Forms\AddEditClient as AddEditClientForm;
@@ -39,7 +40,10 @@ class ClientsController extends \BaseController
 	 */
 	public function index()
 	{
-		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+		if ( $this->searchCheck() )
+		{
+			return Redirect::to( $this->resource_key . '/search' );
+		}
 
 		if ( $this->user->hasRole( 'Administrator' ) )
 		{
@@ -107,7 +111,9 @@ class ClientsController extends \BaseController
 				throw new PermissionDeniedException();
 			}
 
-			return View::make( 'clients.show' )->with( compact( 'client' ) );
+			$archives = ClientArchive::orderBy( 'start_date', 'DESC' )->where( 'client_id', '=', $id )->get();
+
+			return View::make( 'clients.show' )->with( compact( 'client', 'archives' ) );
 		} else
 		{
 			throw new ResourceNotFoundException( 'clients' );
@@ -151,16 +157,16 @@ class ClientsController extends \BaseController
 	 */
 	public function update( $id )
 	{
-		$input = Input::all();
-		$input['id'] = $id;
+		$input                                  = Input::all();
+		$input['id']                            = $id;
 		$this->addEditClientForm->rules['name'] = 'required|max:255|unique:clients,name,' . $id;
-		$this->addEditClientForm->validate($input);
+		$this->addEditClientForm->validate( $input );
 
-		$this->execute('Leadofficelist\Clients\EditClientCommand', $input);
+		$this->execute( 'Leadofficelist\Clients\EditClientCommand', $input );
 
-		Flash::overlay('"' . $input['name'] .'" updated.', 'success');
+		Flash::overlay( '"' . $input['name'] . '" updated.', 'success' );
 
-		return Redirect::route('clients.index');
+		return Redirect::route( 'clients.index' );
 	}
 
 	/**
@@ -173,14 +179,14 @@ class ClientsController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
-		if($client = $this->getClient($id))
+		if ( $client = $this->getClient( $id ) )
 		{
-			Client::destroy($id);
-			Flash::overlay('"' . $client->name .'" deleted.', 'info');
+			Client::destroy( $id );
+			Flash::overlay( '"' . $client->name . '" deleted.', 'info' );
 
 		}
 
-		return Redirect::route('clients.index');
+		return Redirect::route( 'clients.index' );
 	}
 
 	/**
@@ -190,17 +196,19 @@ class ClientsController extends \BaseController
 	 */
 	public function search()
 	{
-		if($search_term = $this->findSearchTerm())
+		if ( $search_term = $this->findSearchTerm() )
 		{
-			$items              = Client::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if( ! $this->checkForSearchResults($items)) return Redirect::route( $this->resource_key . '.index' );
+
 			$items->key         = 'clients';
-			$items->search_term = $search_term;
+			$items->search_term = str_replace( '%', '', $search_term );
 
 			return View::make( 'clients.index' )->with( compact( 'items' ) );
-		}
-		else
+		} else
 		{
-			return Redirect::route('clients.index');
+			return Redirect::route( 'clients.index' );
 		}
 	}
 

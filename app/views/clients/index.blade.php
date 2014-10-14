@@ -1,7 +1,7 @@
 	@extends('layouts.master')
 
 	@section('page-header')
-	@if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @elseif($user->hasRole('Administrator')) Clients Overview @else Your Clients Overview @endif
+	@if(is_search()) <i class="fa fa-search"></i> Searching for {{ Session::has('clients.SearchType') ? Session::get('clients.SearchType') : '' }}: {{ $items->search_term }} @elseif($user->hasRole('Administrator')) Clients Overview @else Your Clients Overview @endif
 	@stop
 
 	@section('page-nav')
@@ -30,11 +30,11 @@
 								@endif
 								<td colspan="2" width="60%">Client name</td>
 								@if($user->hasRole('Administrator'))
-									<td width="10%" class="content-center hide-s">Unit</td>
+									<td width="10%" class="hide-s">Unit</td>
 								@endif
-								<td width="15%" class="content-center hide-m">Sector</td>
-								<td width="15%" class="content-center hide-m">Type</td>
-								<td width="10%" class="content-center hide-m">Service</td>
+								<td width="15%" class="hide-m">Sector</td>
+								<td width="15%" class="hide-m">Type</td>
+								<td width="10%" class="hide-m">Service</td>
 
 								<td colspan="3">Actions</td>
 							</tr>
@@ -59,11 +59,11 @@
 									</td>
 
 									@if($user->hasRole('Administrator'))
-										<td class="content-center hide-s"><strong><a href="/units/{{ $client->unit()->pluck('id') }}">{{ $client->unit()->pluck('name') }}</a></strong></td>
+										<td class="hide-s"><strong><a href="/units/{{ $client->unit()->pluck('id') }}">{{ $client->unit()->pluck('name') }}</a></strong></td>
 									@endif
-									<td class="content-center hide-m">{{ $client->sector()->pluck('name') }}</td>
-									<td class="content-center hide-m">{{ $client->type()->pluck('name') }}</td>
-									<td class="content-center hide-m">{{ $client->service()->pluck('name') }}</td>
+									<td class="hide-m">{{ $client->sector()->pluck('name') }}</td>
+									<td class="hide-m">{{ $client->type()->pluck('short_name') }}</td>
+									<td class="hide-m">{{ $client->service()->pluck('name') }}</td>
 
 									<td class="actions content-right">
 										{{ Form::open(['url' => 'client_archives/create', 'method' => 'get']) }}

@@ -45,7 +45,7 @@
 			  width="600"
 			  height="450"
 			  frameborder="0" style="border:0"
-			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyATzzmmT075GUyVS_4EGw_RJCGc7P77sUo&q={{ $unit->post_code }}">
+			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyATzzmmT075GUyVS_4EGw_RJCGc7P77sUo&q={{ $unit->addressOneLine() }}">
 			</iframe>
 		@endif
 	</div>

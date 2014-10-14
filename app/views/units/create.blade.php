@@ -27,11 +27,15 @@ Add a Unit
 			{{ Form::text('address4', Input::old('address4')) }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('postcode', 'Zip / Post Code:', ['class' => 'required']) }}
+			{{ Form::label('postcode', 'Zip / Post Code:') }}
             {{ Form::text('postcode', Input::old('postcode')) }}
 		</div>
 	</div>
 	<div class="col-6 last">
+		<div class="formfield">
+			{{ Form::label('short_name', 'Short Name:') }}
+			{{ Form::text('short_name', Input::old('short_name')) }}
+		</div>
 		<div class="formfield">
 			{{ Form::label('phone', 'Telephone:') }}
 			{{ Form::text('phone', Input::old('phone')) }}

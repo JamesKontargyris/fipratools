@@ -14,7 +14,7 @@ class TypesController extends \BaseController
 	protected $resource_key = 'types';
 	private $addEditTypeForm;
 
-	function __construct(AddEditTypeForm $addEditTypeForm)
+	function __construct( AddEditTypeForm $addEditTypeForm )
 	{
 		parent::__construct();
 
@@ -32,11 +32,15 @@ class TypesController extends \BaseController
 	 */
 	public function index()
 	{
-		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
+		if ( $this->searchCheck() )
+		{
+			return Redirect::to( $this->resource_key . '/search' );
+		}
 
-		$items = Type::rowsSortOrder($this->rows_sort_order)->paginate($this->rows_to_view);
+		$items      = Type::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'types';
-		return View::make('types.index')->with(compact('items'));
+
+		return View::make( 'types.index' )->with( compact( 'items' ) );
 	}
 
 	/**
@@ -47,7 +51,7 @@ class TypesController extends \BaseController
 	 */
 	public function create()
 	{
-		return View::make('types.create');
+		return View::make( 'types.create' );
 	}
 
 	/**
@@ -59,13 +63,13 @@ class TypesController extends \BaseController
 	public function store()
 	{
 		$input = Input::all();
-		$this->addEditTypeForm->validate($input);
+		$this->addEditTypeForm->validate( $input );
 
-		$this->execute('Leadofficelist\Types\AddTypeCommand');
+		$this->execute( 'Leadofficelist\Types\AddTypeCommand' );
 
-		Flash::overlay('"' . $input['name'] . '" added.', 'success');
+		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
 
-		return Redirect::route('types.index');
+		return Redirect::route( 'types.index' );
 	}
 
 	/**
@@ -73,20 +77,20 @@ class TypesController extends \BaseController
 	 * GET /types/{id}
 	 *
 	 * @param  int $id
+	 *
 	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
 	public function show( $id )
 	{
-		if($type = $this->getType($id))
+		if ( $type = $this->getType( $id ) )
 		{
-			$clients = $this->getActiveClientsByField('type_id', $id);
+			$clients = $this->getActiveClientsByField( 'type_id', $id );
 
-			return View::make('types.show')->with(compact('type', 'clients'));
-		}
-		else
+			return View::make( 'types.show' )->with( compact( 'type', 'clients' ) );
+		} else
 		{
-			throw new ResourceNotFoundException('types');
+			throw new ResourceNotFoundException( 'types' );
 		}
 	}
 
@@ -95,19 +99,19 @@ class TypesController extends \BaseController
 	 * GET /types/{id}/edit
 	 *
 	 * @param  int $id
+	 *
 	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
 	public function edit( $id )
 	{
-		if($type = $this->getType($id))
-	{
-		return View::make('types.edit')->with(compact('type'));
-	}
-	else
-	{
-		throw new ResourceNotFoundException('types');
-	}
+		if ( $type = $this->getType( $id ) )
+		{
+			return View::make( 'types.edit' )->with( compact( 'type' ) );
+		} else
+		{
+			throw new ResourceNotFoundException( 'types' );
+		}
 	}
 
 	/**
@@ -120,16 +124,16 @@ class TypesController extends \BaseController
 	 */
 	public function update( $id )
 	{
-		$input = Input::all();
-		$input['id'] = $id;
+		$input                                = Input::all();
+		$input['id']                          = $id;
 		$this->addEditTypeForm->rules['name'] = 'required|max:255|unique:types,name,' . $id;
-		$this->addEditTypeForm->validate($input);
+		$this->addEditTypeForm->validate( $input );
 
-		$this->execute('Leadofficelist\Types\EditTypeCommand', $input);
+		$this->execute( 'Leadofficelist\Types\EditTypeCommand', $input );
 
-		Flash::overlay('"' . $input['name'] . '" updated.', 'success');
+		Flash::overlay( '"' . $input['name'] . '" updated.', 'success' );
 
-		return Redirect::route('types.index');
+		return Redirect::route( 'types.index' );
 	}
 
 	/**
@@ -137,6 +141,7 @@ class TypesController extends \BaseController
 	 * DELETE /types/{id}
 	 *
 	 * @param  int $id
+	 *
 	 * @throws ResourceNotFoundException
 	 * @return Response
 	 */
@@ -145,7 +150,7 @@ class TypesController extends \BaseController
 		if ( $type = $this->getType( $id ) )
 		{
 			Type::destroy( $id );
-			Flash::overlay('"' . $type->name . '" deleted.', 'info');
+			Flash::overlay( '"' . $type->name . '" deleted.', 'info' );
 
 			return Redirect::route( 'types.index' );
 		} else
@@ -161,21 +166,25 @@ class TypesController extends \BaseController
 	 */
 	public function search()
 	{
-		if($search_term = $this->findSearchTerm())
+		if ( $search_term = $this->findSearchTerm() )
 		{
-			$items              = Type::where( 'name', 'LIKE', '%' . $search_term . '%' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Type::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if ( ! $this->checkForSearchResults( $items ) )
+			{
+				return Redirect::route( $this->resource_key . '.index' );
+			}
+			$items->search_term = str_replace( '%', '', $search_term );
 			$items->key         = 'types';
-			$items->search_term = $search_term;
 
 			return View::make( 'types.index' )->with( compact( 'items' ) );
-		}
-		else
+		} else
 		{
 			return View::make( 'types.index' );
 		}
 	}
 
-	protected function getType($id)
+	protected function getType( $id )
 	{
 		return Type::find( $id );
 	}
