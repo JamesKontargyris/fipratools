@@ -17,6 +17,11 @@ class Unit extends \BaseModel
 		return $this->hasMany( 'Leadofficelist\Clients\Client' );
 	}
 
+	public function links()
+	{
+		return $this->hasMany( 'Leadofficelist\Clients\ClientLink' );
+	}
+
 	public function add( $unit )
 	{
 		$this->name       = $unit->name;

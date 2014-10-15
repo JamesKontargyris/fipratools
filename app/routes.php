@@ -50,6 +50,11 @@ Route::get('roles', function()
 	$manage_clients->display_name = "Manage Clients";
 	$manage_clients->save();
 
+	$manage_client_links = new Permission;
+	$manage_client_links->name = "manage_client_links";
+	$manage_client_links->display_name = "Manage Client Links";
+	$manage_client_links->save();
+
 	$manage_client_archives = new Permission;
 	$manage_client_archives->name = "manage_client_archives";
 	$manage_client_archives->display_name = "Manage Client Archives";
@@ -65,7 +70,7 @@ Route::get('roles', function()
 	$view_list->display_name = "View the Lead Office List";
 	$view_list->save();
 
-	$new_admin->attachPermissions([$manage_users->id, $manage_units->id, $manage_sectors->id, $manage_services->id, $manage_types->id, $manage_clients->id, $manage_client_archives->id, $manage_reports->id, $view_list->id]);
+	$new_admin->attachPermissions([$manage_users->id, $manage_units->id, $manage_sectors->id, $manage_services->id, $manage_types->id, $manage_clients->id, $manage_client_links->id, $manage_client_archives->id, $manage_reports->id, $view_list->id]);
 	$new_editor->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
 	$new_viewer->attachPermissions([$view_list->id]);
 
@@ -88,7 +93,11 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('services', 'ServicesController');
 	Route::any('clients/search', 'ClientsController@search');
 	Route::resource('clients', 'ClientsController');
+	Route::resource('client_links', 'ClientLinksController');
 	Route::resource('client_archives', 'ClientArchivesController');
 
 	Route::resource('reports', 'ReportsController');
 });
+
+//Ajax requests
+Route::get('/getclients', 'ClientLinksController@getClientsByUnit');

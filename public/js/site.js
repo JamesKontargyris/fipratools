@@ -1,5 +1,5 @@
 (function(){
-	
+
 	// Show all elements with a class of showjs
 	$('.showjs').css('display', 'block');
     // Hide all elements with a class of hidejs
@@ -100,9 +100,45 @@
         }
     });
 
-    $('.sector-name').on('blur', function()
-    {
 
-    })
+    //Return clients for the selected unit when creating a client link
+    getClientsForUnit($('#unit_1'));
+    getClientsForUnit($('#unit_2'));
+
+    $('#unit_1').on('change', function()
+    {
+        getClientsForUnit($('#unit_1'));
+    });
+
+    $('#unit_2').on('change', function()
+    {
+        getClientsForUnit($('#unit_2'));
+    });
+
+    function getClientsForUnit($element)
+    {
+        var $clients_select = $element.closest('.formfield').next().find('.clients');
+
+        if($element.val() != "")
+        {
+            console.log('Finding clients...');
+            $.ajax({
+                url: "/getclients?unit_id=" + $element.val()
+            })
+                .done(function( data ) {
+                    $clients_select.html('');
+                    $clients_select.append('<option value="">Please select...</option>');
+                    $.each(data, function(id, name)
+                    {
+                        $clients_select.append('<option value="' + id + '">' + name + '</option>');
+                    });
+                });
+        }
+        else
+        {
+            $clients_select.html('');
+            $clients_select.append('<option value="">Please select a unit...</option>');
+        }
+    }
 
 })();

@@ -23,13 +23,15 @@ class ClientsController extends \BaseController
 	protected $types;
 	protected $services;
 	private $addEditClientForm;
+	private $client;
 
-	function __construct( AddEditClientForm $addEditClientForm )
+	function __construct( AddEditClientForm $addEditClientForm, Client $client )
 	{
 		parent::__construct();
 		$this->check_perm( 'manage_clients' );
 		View::share( 'page_title', 'Clients' );
 		$this->addEditClientForm = $addEditClientForm;
+		$this->client = $client;
 	}
 
 	/**
@@ -111,9 +113,10 @@ class ClientsController extends \BaseController
 				throw new PermissionDeniedException();
 			}
 
+			$linked_units = $this->client->getLinkedUnits($id);
 			$archives = ClientArchive::orderBy( 'start_date', 'DESC' )->where( 'client_id', '=', $id )->get();
 
-			return View::make( 'clients.show' )->with( compact( 'client', 'archives' ) );
+			return View::make( 'clients.show' )->with( compact( 'client', 'archives', 'linked_units' ) );
 		} else
 		{
 			throw new ResourceNotFoundException( 'clients' );
@@ -214,7 +217,13 @@ class ClientsController extends \BaseController
 
 	protected function getClient( $id )
 	{
-		return Client::find( $id );
+		$client = Client::find( $id );
+		if( ! $this->user->hasRole('Administrator') && $client->unit()->pluck('id') != $this->user->unit_id)
+		{
+			throw new PermissionDeniedException($this->resource_key);
+		}
+
+		return $client;
 	}
 
 	/**

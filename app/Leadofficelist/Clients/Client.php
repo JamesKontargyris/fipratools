@@ -41,6 +41,11 @@ class Client extends \BaseModel
 		return $this->hasOne('\Leadofficelist\Services\Service', 'id', 'service_id');
 	}
 
+	public function links()
+	{
+		return $this->hasMany('\Leadofficelist\Clients\ClientLink');
+	}
+
 	public function archives()
 	{
 		return $this->hasMany('\Leadofficelist\Client_archives\ClientArchive');
@@ -82,5 +87,39 @@ class Client extends \BaseModel
 	public function getLeadOfficeAddress()
 	{
 		return Unit::addressMultiLine($this->unit_id);
+	}
+
+	public function getLinkedUnits($id)
+	{
+		$links = ClientLink::where('client_id', '=', $id)->get();
+		$units = [];
+
+		foreach($links as $link)
+		{
+			$units[] = Unit::find($link->unit()->pluck('id'));
+		}
+
+		return $units;
+	}
+
+	/**
+	 * Return a nicely formatted list of unit short names
+	 * for display on the client overview page
+	 *
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	public function getLinkedUnitsList($id)
+	{
+		$links = ClientLink::where('client_id', '=', $id)->get();
+		$unit_names = [];
+
+		foreach($links as $link)
+		{
+			$unit_names[] = $link->unit()->pluck('short_name');
+		}
+
+		return pretty_links_list($unit_names);
 	}
 }

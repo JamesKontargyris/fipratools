@@ -1,5 +1,6 @@
 <table class="letter-select-table">
 	<tr>
+		<td>First letter:</td>
 		<td><a href="{{ url('clients/search?search=A&letter=yes') }}" class="secondary">A</a></td>
 		<td><a href="{{ url('clients/search?search=B&letter=yes') }}" class="secondary">B</a></td>
 		<td><a href="{{ url('clients/search?search=C&letter=yes') }}" class="secondary">C</a></td>

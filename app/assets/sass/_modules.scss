@@ -18,6 +18,14 @@
   border-bottom: 2px solid rgba(darken($red, 40%), 0.6);
   @include dark-grad($red, top, 10%);
 }
+.grey-but {
+  @include primary-but();
+  background-color:$grey;
+  @include text-shadow(darken($grey, 10%) 0 -1px);
+  border-top: 1px solid lighten($grey, 10%);
+  border-bottom: 2px solid rgba(darken($grey, 40%), 0.6);
+  @include dark-grad($grey, top, 10%);
+}
 
 .alert {
   position:relative;
@@ -357,12 +365,14 @@
       td {
         padding:5px 15px;
         &.actions,
-        &.archive-count {
+        &.archive-count,
+        &.client-links {
           padding:5px;
           width:1%;
           white-space:nowrap;
         }
-        &.archive-count {
+        &.archive-count,
+        &.client-links {
           padding-right:10px;
           border-left:0;
           color:$grey;
@@ -378,6 +388,7 @@
   }
   button {
     line-height:1;
+    @include font-size(12);
   }
   .status-active {
     background-color:lighten(#adff2f, 20%);
@@ -406,13 +417,15 @@
     {
       display:none;
     }
-    tr td {
-      width:4%;
-      text-align: center;
-      padding:0 5px;
-      a {
-        display:block;
-        line-height:1;
+    tr {
+      td {
+        width:3%;
+        text-align: center;
+        padding:0 5px;
+        a {
+          display:block;
+          line-height:1;
+        }
       }
     }
   }

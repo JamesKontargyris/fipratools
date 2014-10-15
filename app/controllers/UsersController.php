@@ -92,7 +92,7 @@ class UsersController extends \BaseController
 		$input = Input::all();
 		$this->addUserForm->validate( $input );
 
-		$this->execute( 'Leadofficelist\Units\AddUnitCommand' );
+		$this->execute( 'Leadofficelist\Users\AddUserCommand' );
 
 		Flash::overlay( '"' . $input['first_name'] . ' ' . $input['last_name'] . '" added.', 'success' );
 

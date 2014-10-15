@@ -69,7 +69,7 @@ App::error(function(PermissionDeniedException $exception)
 	Log::error($exception);
 
 	Flash::error('Sorry - you do not have access to that page.');
-	return Redirect::home();
+	return Redirect::route($exception->getKey() . '.index');
 });
 
 App::error(function(LoginFailedException $exception)

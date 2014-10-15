@@ -7,7 +7,13 @@
 	@endif
 	@if($user->can('manage_clients'))
 		<li class="{{ nav_item_is_active('clients') ? 'active' : '' }}">
-			<a href="{{ route('clients.index') }}" class="{{ nav_item_is_active('clients') ? 'active' : '' }} has-extra-link">Clients</a>
+			<a href="{{ route('clients.index') }}" class="{{ nav_item_is_active('clients') ? 'active' : '' }} has-extra-link">
+				@if($user->hasRole('Administrator'))
+					Clients
+				@else
+					Your Clients
+				@endif
+			</a>
 			<a href="{{ route('clients.create') }}" class="site-nav-extra-link" title="Add a new client"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif

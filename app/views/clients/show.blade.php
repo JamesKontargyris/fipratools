@@ -25,6 +25,15 @@
 		<p>{{ $client->account_director }}</p>
 	</div>
 	<div class="col-6 last">
+		@if(count($linked_units))
+			<div class="border-box">
+				<h3>This client also has a contract with:</h3>
+				@foreach($linked_units as $unit)
+					<h4>{{ $unit->name }}</h4>
+					<p>{{ $unit->addressOneLine() }}</p>
+				@endforeach
+			</div>
+		@endif
 		<h3>Comments</h3>
 		@if($client->comments)
 			<p>{{ $client->comments }}</p>

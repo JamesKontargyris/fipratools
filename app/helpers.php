@@ -36,6 +36,20 @@ function pretty_text_list($items)
 }
 
 /**
+ * Format an array of unit short names into a nice list
+ * for display in the clients list
+ *
+ * @param $items
+ *
+ * @return string
+ */
+function pretty_links_list($items)
+{
+	//Add commas between all items
+	return implode(', ', $items);
+}
+
+/**
  * Find the last occurrence of a string within a string and replace it
  *
  * @param $search
