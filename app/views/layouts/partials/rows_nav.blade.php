@@ -1,11 +1,9 @@
 <section class="rows-nav-container row no-margin">
 	<div class="col-12">
 		<ul class="rows-nav">
-			@if($items->links() != '')
-				<li class="hide-s">
-					{{ $items->links() }}
-				</li>
-			@endif
+
+			@include('layouts.partials.pagination')
+
 			<li>Viewing <strong>{{ number_format($items->getFrom(),0, 0, ',') }}-{{ number_format($items->getTo(),0, 0, ',') }}</strong> of <strong>{{ number_format($items->getTotal(),0, 0, ',') }}</strong></li>
 			<li class="hide-m">Page {{ str_replace('Page ', '', number_format($items->getCurrentPage(),0, 0, ',')) }} of {{ str_replace('Page ', '', number_format($items->getLastPage(),0, 0, ',')) }}</li>
 			<li class="search-container">

@@ -150,14 +150,15 @@
   padding:0 15px;
   .rows-nav {
     position:relative;
-    @include breakpoint($m) { @include horizontal-list(); }
+    @include breakpoint($l) { @include horizontal-list(); }
     & > li {
       padding-bottom:$v-rhythm / 2;
       @include font-size(16);
-      @include breakpoint($m) { line-height:40px; padding:($v-rhythm / 2) 0; font-size:inherit; }
+      text-align: center;
+      @include breakpoint($l) { line-height:40px; padding:($v-rhythm / 2) 0; font-size:inherit; }
       .clear-search-but {
         display:block; width:100%; line-height:1;
-        @include breakpoint($m) { margin-left:20px; display:inline; }
+        @include breakpoint($l) { margin-left:20px; display:inline; }
       }
       &:first-child {
         padding-left:0;
@@ -168,7 +169,7 @@
       }
       &:not(:first-child):before {
         padding-left:15px;
-        @include breakpoint($m) {
+        @include breakpoint($l) {
           padding:0 15px;
           content:"|";
           color: darken(white, 10%);
@@ -184,7 +185,7 @@
           input {
             @include font-size(14);
             padding-right:30px;
-            @include breakpoint($m-max) {
+            @include breakpoint($l-max) {
               width:100%;
               padding-top:10px;
               padding-bottom:10px;
@@ -195,7 +196,7 @@
             border:0;
             margin-left:-30px;
             cursor:pointer;
-            @include breakpoint($m-max) {
+            @include breakpoint($l-max) {
               position:absolute;
               top:0;
               right:0;
@@ -408,6 +409,11 @@
     tr td {
       width:4%;
       text-align: center;
+      padding:0 5px;
+      a {
+        display:block;
+        line-height:1;
+      }
     }
   }
 }
@@ -509,10 +515,17 @@ ul.square {
 
 .pagination-container {
   margin:$v-rhythm 0;
+  @include breakpoint($l-max) {
+    text-align: center;
+  }
 }
 ul.pagination {
   @include horizontal-list();
   padding:0;
+  @include breakpoint($l-max) {
+    display:inline-block;
+    margin:0 auto;
+  }
   li {
     padding:0 !important;
     margin-right:5px;
@@ -533,7 +546,13 @@ ul.pagination {
     &.disabled span {
       @include but();
       background-color:darken(white, 5%);
-      color:darken(white, 15%);
+      color:darken(white, 25%);
+    }
+    @include breakpoint($m-max) {
+      &.link,
+      &.disabled {
+        display:none;
+      }
     }
   }
 }
