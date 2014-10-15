@@ -110,7 +110,7 @@ class ClientsController extends \BaseController
 		{
 			if ( ! $this->user->hasRole( 'Administrator' ) && $client->unit_id != $this->user->unit_id )
 			{
-				throw new PermissionDeniedException();
+				throw new PermissionDeniedException('clients');
 			}
 
 			$linked_units = $this->client->getLinkedUnits($id);
@@ -220,7 +220,7 @@ class ClientsController extends \BaseController
 		$client = Client::find( $id );
 		if( ! $this->user->hasRole('Administrator') && $client->unit()->pluck('id') != $this->user->unit_id)
 		{
-			throw new PermissionDeniedException($this->resource_key);
+			throw new PermissionDeniedException('clients');
 		}
 
 		return $client;

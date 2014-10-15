@@ -4,7 +4,7 @@ class PermissionDeniedException extends \Exception {
 
 	private $resource_key;
 
-	function __construct($resource_key = 'clients')
+	function __construct($resource_key = null)
 	{
 		parent::__construct();
 		$this->resource_key = $resource_key;

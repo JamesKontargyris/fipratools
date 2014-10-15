@@ -19,7 +19,7 @@ class ClientLinksController extends \BaseController
 	function __construct(AddEditClientLinkForm $addEditClientLinkForm)
 	{
 		parent::__construct();
-		$this->check_perm( 'manage_clients' );
+		$this->check_perm( 'manage_client_links' );
 		View::share( 'page_title', 'Client Link' );
 		$this->addEditClientLinkForm = $addEditClientLinkForm;
 	}

@@ -69,7 +69,7 @@ class ClientArchivesController extends \BaseController
 		}
 		else
 		{
-			throw new PermissionDeniedException();
+			throw new PermissionDeniedException('client_archives');
 		}
 	}
 

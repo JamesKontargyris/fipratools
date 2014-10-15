@@ -67,9 +67,16 @@ App::error(function(FormValidationException $exception)
 App::error(function(PermissionDeniedException $exception)
 {
 	Log::error($exception);
-
 	Flash::error('Sorry - you do not have access to that page.');
-	return Redirect::route($exception->getKey() . '.index');
+
+	if($exception->getKey())
+	{
+		return Redirect::route($exception->getKey() . '.index');
+	}
+	else
+	{
+		return Redirect::home();
+	}
 });
 
 App::error(function(LoginFailedException $exception)

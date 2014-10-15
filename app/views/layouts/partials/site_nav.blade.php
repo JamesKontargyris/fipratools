@@ -3,7 +3,7 @@
 		<li class="{{ nav_item_is_active('/') ? 'active' : '' }}"><a href="/"><i class="fa fa-list"></i> <strong>Lead Office List</strong></a></li>
 	@endif
 	@if($user->can('view_list'))
-		<li class="{{ nav_item_is_active('reports') ? 'active' : '' }}"><a href="{{ route('reports.index') }}"><i class="fa fa-pie-chart"></i> <strong>Reports</strong></a></li>
+		{{--<li class="{{ nav_item_is_active('reports') ? 'active' : '' }}"><a href="{{ route('reports.index') }}"><i class="fa fa-pie-chart"></i> <strong>Reports</strong></a></li>--}}
 	@endif
 	@if($user->can('manage_clients'))
 		<li class="{{ nav_item_is_active('clients') ? 'active' : '' }}">
