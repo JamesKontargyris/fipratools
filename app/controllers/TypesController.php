@@ -22,6 +22,7 @@ class TypesController extends \BaseController
 		$this->addEditTypeForm = $addEditTypeForm;
 
 		View::share( 'page_title', 'Types' );
+		View::share( 'key', 'types' );
 	}
 
 	/**

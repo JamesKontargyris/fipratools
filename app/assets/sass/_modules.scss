@@ -223,10 +223,9 @@
     & > ul {
       @include clearfix();
       & > li {
-        padding:($v-rhythm / 2) 15px;
+        padding:($v-rhythm / 1.5) 15px;
         &:not(:last-of-type) { border-right:1px solid darken(white, 20%); }
         @include breakpoint($l) {
-          padding-bottom:$v-rhythm;
           display:inline;
           float:left;
         }
@@ -418,6 +417,12 @@
       display:none;
     }
     tr {
+      &:first-child {
+        td {
+          width:1%;
+          white-space: nowrap;
+        }
+      }
       td {
         width:3%;
         text-align: center;

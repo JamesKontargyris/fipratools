@@ -23,6 +23,7 @@ class SectorsController extends \BaseController
 		$this->addEditSectorForm = $addEditSectorForm;
 
 		View::share( 'page_title', 'Sectors' );
+		View::share( 'key', 'sectors' );
 	}
 
 	/**

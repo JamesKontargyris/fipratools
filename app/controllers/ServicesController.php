@@ -19,6 +19,7 @@ class ServicesController extends \BaseController
 		$this->check_perm( 'manage_services' );
 		$this->addEditServiceForm = $addEditServiceForm;
 		View::share( 'page_title', 'Services' );
+		View::share( 'key', 'services' );
 	}
 
 

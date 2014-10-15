@@ -30,6 +30,7 @@ class ClientsController extends \BaseController
 		parent::__construct();
 		$this->check_perm( 'manage_clients' );
 		View::share( 'page_title', 'Clients' );
+		View::share( 'key', 'clients' );
 		$this->addEditClientForm = $addEditClientForm;
 		$this->client = $client;
 	}

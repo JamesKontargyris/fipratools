@@ -23,8 +23,9 @@ class SectorCategoriesController extends \BaseController
 
 		$this->check_perm( 'manage_sectors' );
 
-		View::share( 'page_title', 'Sector Categories' );
 		$this->addEditSectorCategoryForm = $addEditSectorCategoryForm;
+		View::share( 'page_title', 'Sector Categories' );
+		View::share( 'key', 'sector_categories' );
 	}
 
 	/**

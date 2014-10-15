@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-@if(is_search()) <i class="fa fa-search"></i> Searching for {{ Session::has('clients.SearchType') ? Session::get('clients.SearchType') : '' }}: {{ $items->search_term }} @elseif($user->hasRole('Administrator')) Clients Overview @else Your Clients Overview @endif
+@if(is_search()) <i class="fa fa-search"></i> Searching for {{ Session::has('clients.SearchType') ? Session::get('clients.SearchType') : '' }}: {{ $items->search_term }} @elseif($user->hasRole('Administrator')) Clients Overview @else Your Clients @endif
 @stop
 
 @section('page-nav')
@@ -101,7 +101,7 @@
 								</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('clients.destroy', $client->id), 'method' => 'delete']) }}
-										<button type="submit" class="red-but delete-row" data-resource-type="sector" title="Delete this client"><i class="fa fa-times"></i></button>
+										<button type="submit" class="red-but delete-row" data-resource-type="client" title="Delete this client"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}
 								</td>
 							</tr>

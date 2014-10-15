@@ -17,9 +17,9 @@ class UsersController extends \BaseController
 	protected $resource_key = 'users';
 	protected $units;
 	protected $roles;
-	protected $viewer_perms_list;
+	protected $fipriot_perms_list;
 	protected $admin_perms_list;
-	protected $editor_perms_list;
+	protected $manager_perms_list;
 	private $addUserForm;
 	private $editUserForm;
 
@@ -32,9 +32,10 @@ class UsersController extends \BaseController
 		$this->addUserForm = $addUserForm;
 
 		$this->getFormData();
+		$this->editUserForm = $editUserForm;
 
 		View::share( 'page_title', 'Units' );
-		$this->editUserForm = $editUserForm;
+		View::share( 'key', 'users' );
 	}
 
 	/**
@@ -74,8 +75,8 @@ class UsersController extends \BaseController
 			'units'             => $this->units,
 			'roles'             => $this->roles,
 			'admin_perms_list'  => $this->admin_perms_list,
-			'editor_perms_list' => $this->editor_perms_list,
-			'viewer_perms_list' => $this->viewer_perms_list
+			'manager_perms_list' => $this->manager_perms_list,
+			'fipriot_perms_list' => $this->fipriot_perms_list
 		] );
 	}
 
@@ -153,8 +154,8 @@ class UsersController extends \BaseController
 				'units'             => $this->units,
 				'roles'             => $this->roles,
 				'admin_perms_list'  => $this->admin_perms_list,
-				'editor_perms_list' => $this->editor_perms_list,
-				'viewer_perms_list' => $this->viewer_perms_list
+				'manager_perms_list' => $this->manager_perms_list,
+				'fipriot_perms_list' => $this->fipriot_perms_list
 			] );
 		} else
 		{
@@ -262,8 +263,8 @@ class UsersController extends \BaseController
 		$this->units             = $this->getUnitsFormData();
 		$this->roles             = $this->getRolesFormData();
 		$this->admin_perms_list  = $this->getPerms( 'Administrator' );
-		$this->editor_perms_list = $this->getPerms( 'Editor' );
-		$this->viewer_perms_list = $this->getPerms( 'Viewer' );
+		$this->manager_perms_list = $this->getPerms( 'Unit Manager' );
+		$this->fipriot_perms_list = $this->getPerms( 'Fipriot' );
 
 		return true;
 	}

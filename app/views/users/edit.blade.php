@@ -59,7 +59,7 @@ Editing: {{ $edit_user->getFullName() }}
 	<h3>User Roles</h3>
   <p>Users are assigned a role that dictates how they operate within the online Fipra Lead Office List system. Each role comes with a different set of permissions.</p>
   <p>Administrators can: <em>{{ $admin_perms_list }}</em></p>
-  <p>Editors can: <em>{{ $editor_perms_list }}</em></p>
-  <p>Viewers can: <em>{{ $viewer_perms_list }}</em></p>
+  <p>Unit Managers can: <em>{{ $manager_perms_list }}</em></p>
+  <p>Fipriots can: <em>{{ $fipriot_perms_list }}</em></p>
 </div>
 @stop

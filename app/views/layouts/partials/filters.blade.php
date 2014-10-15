@@ -2,7 +2,7 @@
 	<div class="col-12 filter-container">
 		<a class="filter-menu-icon-m" href="#">Filters</a>
 		<div class="col-12 filters">
-			@if(is_request('clients'))
+			@if(is_request('clients') || is_request('users'))
 				<ul>
 					<li class="letter-select-table-container">@include('layouts.partials.filters.letter-select-table')</li>
 				</ul>

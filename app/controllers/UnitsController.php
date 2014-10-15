@@ -22,6 +22,7 @@ class UnitsController extends \BaseController
 		$this->addEditUnitForm = $addEditUnitForm;
 
 		View::share( 'page_title', 'Units' );
+		View::share( 'key', 'units' );
 	}
 
 

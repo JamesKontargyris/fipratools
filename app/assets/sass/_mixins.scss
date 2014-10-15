@@ -32,6 +32,7 @@
 	@include dark-grad($blue, top, 10%);
     &:hover {
       opacity:0.7;
+      color:white;
     }
 }
 

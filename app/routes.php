@@ -12,12 +12,12 @@ Route::get('roles', function()
 	$new_admin->name = "Administrator";
 	$new_admin->save();
 
-	$new_editor = new Role;
-	$new_editor->name = "Editor";
-	$new_editor->save();
+	$new_manager = new Role;
+	$new_manager->name = "Unit Manager";
+	$new_manager->save();
 
 	$new_viewer = new Role;
-	$new_viewer->name = "Viewer";
+	$new_viewer->name = "Fipriot";
 	$new_viewer->save();
 
 	$manage_users = new Permission;
@@ -71,7 +71,7 @@ Route::get('roles', function()
 	$view_list->save();
 
 	$new_admin->attachPermissions([$manage_users->id, $manage_units->id, $manage_sectors->id, $manage_services->id, $manage_types->id, $manage_clients->id, $manage_client_links->id, $manage_client_archives->id, $manage_reports->id, $view_list->id]);
-	$new_editor->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
+	$new_manager->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
 	$new_viewer->attachPermissions([$view_list->id]);
 
 	return "All done!";

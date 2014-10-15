@@ -22,6 +22,8 @@ class ClientArchivesController extends \BaseController
 	{
 		parent::__construct();
 		$this->addEditClientArchiveForm = $addEditClientArchiveForm;
+		View::share( 'page_title', 'Client Archives' );
+		View::share( 'key', 'client_archives' );
 	}
 
 
