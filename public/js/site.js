@@ -20,6 +20,11 @@
         }
     });
 
+    $('.list-table-filter').on('change', function()
+    {
+        $(this).parent('form').submit();
+    });
+
     if($.trim($('.page-menu-nav ul').text()) == '') { $('.page-menu-icon-s').hide(); }
 
     $('.page-menu-icon-s').on('click', function()

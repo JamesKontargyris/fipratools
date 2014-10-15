@@ -12,7 +12,9 @@
 					<button type="submit" class="search-but"><i class="fa fa-search"></i></button>
 				{{ Form::close() }}
 			</li>
-			@if(is_search())
+			@if(is_filter())
+				<li><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Filter</a></li>
+			@elseif(is_search())
 				<li><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Search</a></li>
 			@endif
 		</ul>

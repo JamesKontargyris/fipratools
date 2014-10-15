@@ -22,4 +22,9 @@ class BaseModel extends Eloquent
 
 		return $query;
 	}
+
+	public function scopeRowsListFilter( $query, $field, $value )
+	{
+		return $query->where( $field, '=', (int) $value );
+	}
 } 

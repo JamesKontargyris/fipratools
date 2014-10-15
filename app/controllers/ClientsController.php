@@ -18,10 +18,6 @@ class ClientsController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'clients';
-	protected $units;
-	protected $sectors;
-	protected $types;
-	protected $services;
 	private $addEditClientForm;
 	private $client;
 
@@ -236,81 +232,6 @@ class ClientsController extends \BaseController
 		}
 
 		return $client;
-	}
-
-	/**
-	 * Get all data required to populate the add/edit user forms.
-	 *
-	 * @return bool
-	 */
-	protected function getFormData()
-	{
-		$this->units    = $this->getUnitsFormData();
-		$this->sectors  = $this->getSectorsFormData();
-		$this->types    = $this->getTypesFormData();
-		$this->services = $this->getServicesFormData();
-
-		return true;
-	}
-
-	/**
-	 * Get all the units in a select element-friendly collection.
-	 *
-	 * @return array
-	 */
-	protected function getUnitsFormData()
-	{
-		if ( ! Unit::getUnitsForFormSelect( true ) )
-		{
-			return [ '' => 'No units available to select' ];
-		}
-
-		return Unit::getUnitsForFormSelect( true );
-	}
-
-	/**
-	 * Get all the sectors in a select element-friendly collection.
-	 *
-	 * @return array
-	 */
-	protected function getSectorsFormData()
-	{
-		if ( ! Sector::getSectorsForFormSelect( true ) )
-		{
-			return [ '' => 'No sectors available to select' ];
-		}
-
-		return Sector::getSectorsForFormSelect( true );
-	}
-
-	/**
-	 * Get all the types in a select element-friendly collection.
-	 *
-	 * @return array
-	 */
-	protected function getTypesFormData()
-	{
-		if ( ! Type::getTypesForFormSelect( true ) )
-		{
-			return [ '' => 'No types available to select' ];
-		}
-
-		return Type::getTypesForFormSelect( true );
-	}
-
-	/**
-	 * Get all the types in a select element-friendly collection.
-	 *
-	 * @return array
-	 */
-	protected function getServicesFormData()
-	{
-		if ( ! Service::getServicesForFormSelect( true ) )
-		{
-			return [ '' => 'No services available to select' ];
-		}
-
-		return Service::getServicesForFormSelect( true );
 	}
 
 }

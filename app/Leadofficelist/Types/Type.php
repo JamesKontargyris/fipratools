@@ -29,7 +29,7 @@ class Type extends \BaseModel
 		return $update_type;
 	}
 
-	public static function getTypesForFormSelect( $blank_entry = false, $prefix = "" )
+	public static function getTypesForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
 	{
 		$types = [ ];
 		//Remove whitespace from $prefix and add a space on the end, so there is a space
@@ -38,7 +38,7 @@ class Type extends \BaseModel
 		//If $blank_entry == true, add a blank "Please select..." option
 		if ( $blank_entry )
 		{
-			$types[''] = 'Please select...';
+			$types[''] = $blank_message;
 		}
 
 		foreach ( Type::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $type )

@@ -11,7 +11,9 @@
 				@if(is_request('users'))
 					<li>@include('layouts.partials.filters.rows_name_order')</li>
 				@endif
-				<li><a href="?reset_filters=yes" class="filter-but"><i class="fa fa-undo"></i> Reset Filters</a></li>
+				@if( Session::has($key . '.rowsToView') || Session::has($key . '.rowsSort'))
+					<li><a href="?reset_sorting=yes" class="filter-but"><i class="fa fa-undo"></i> Reset Rows Per Page / Sorting</a></li>
+				@endif
 			</ul>
 			@if(is_request('clients') || is_request('users'))
 				<ul>

@@ -34,7 +34,7 @@ class Sector extends \BaseModel
 		return $update_sector;
 	}
 
-	public static function getSectorsForFormSelect( $blank_entry = false, $prefix = "" )
+	public static function getSectorsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
 	{
 		$sectors = [ ];
 		//Remove whitespace from $prefix and add a space on the end, so there is a space
@@ -43,7 +43,7 @@ class Sector extends \BaseModel
 		//If $blank_entry == true, add a blank "Please select..." option
 		if ( $blank_entry )
 		{
-			$sectors[''] = 'Please select...';
+			$sectors[''] = $blank_message;
 		}
 
 		foreach ( Sector::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $sector )

@@ -93,6 +93,13 @@ function is_search()
 	return false;
 }
 
+function is_filter()
+{
+	if(Session::get('list.SearchType') == 'filter') { return true; }
+
+	return false;
+}
+
 function is_request($uri, $strict = false)
 {
 	if($strict == true) $request_is = Request::is($uri);

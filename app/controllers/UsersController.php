@@ -201,12 +201,12 @@ class UsersController extends \BaseController
 
 		if ( $user = $this->getUser( $id ) )
 		{
-			Unit::destroy( $id );
+			User::destroy( $id );
 			Flash::overlay( '"' . $user->getFullName() . '" deleted.', 'info' );
 
 		}
 
-		return Redirect::route( 'units.index' );
+		return Redirect::route( 'users.index' );
 	}
 
 	/**
@@ -267,21 +267,6 @@ class UsersController extends \BaseController
 		$this->fipriot_perms_list = $this->getPerms( 'Fipriot' );
 
 		return true;
-	}
-
-	/**
-	 * Get all the units in a select element-friendly collection.
-	 *
-	 * @return array
-	 */
-	protected function getUnitsFormData()
-	{
-		if ( ! Unit::getUnitsForFormSelect( true ) )
-		{
-			return [ '' => 'No units available to select' ];
-		}
-
-		return Unit::getUnitsForFormSelect( true );
 	}
 
 	/**

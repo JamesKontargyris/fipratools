@@ -53,7 +53,7 @@
 								</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('users.destroy', $list_user->id), 'method' => 'delete']) }}
-										<button type="submit" class="red-but delete-row" data-resource-type="sector"><i class="fa fa-times"></i></button>
+										<button type="submit" class="red-but delete-row" data-resource-type="user"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}
 								</td>
 							</tr>

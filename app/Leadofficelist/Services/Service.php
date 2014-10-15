@@ -27,7 +27,7 @@ class Service extends \BaseModel
 		return $update_service;
 	}
 
-	public static function getServicesForFormSelect( $blank_entry = false, $prefix = "" )
+	public static function getServicesForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
 	{
 		$services = [ ];
 		//Remove whitespace from $prefix and add a space on the end, so there is a space
@@ -36,7 +36,7 @@ class Service extends \BaseModel
 		//If $blank_entry == true, add a blank "Please select..." option
 		if ( $blank_entry )
 		{
-			$services[''] = 'Please select...';
+			$services[''] = $blank_message;
 		}
 
 		foreach ( Service::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $service )

@@ -3,6 +3,10 @@
 use Laracasts\Flash\Flash;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Sectors\Sector;
+use Leadofficelist\Services\Service;
+use Leadofficelist\Types\Type;
+use Leadofficelist\Units\Unit;
 use Leadofficelist\Users\User;
 
 class BaseController extends Controller
@@ -11,7 +15,14 @@ class BaseController extends Controller
 	protected $user;
 	protected $rows_sort_order;
 	protected $rows_to_view;
+	protected $rows_list_filter_field;
+	protected $rows_list_filter_value;
+	protected $rows_hide_show_dormant;
 	protected $userFullName;
+	protected $units;
+	protected $sectors;
+	protected $types;
+	protected $services;
 	/**
 	 * Array of filter keys to reset when "reset filters" is clicked
 	 *
@@ -30,23 +41,26 @@ class BaseController extends Controller
 			View::share( 'user_role', $this->user->roles()->pluck( 'name' ) );
 		}
 
-		$this->reset_filters();
+		$this->reset_sorting();
 		$this->rows_sort_order        = $this->getRowsSortOrder( $this->resource_key );
 		$this->rows_to_view           = $this->getRowsToView( $this->resource_key );
+		$this->name_order             = $this->getNameOrder( $this->resource_key );
+		$this->rows_list_filter_field = $this->getRowsListFilterField( $this->resource_key );
+		$this->rows_list_filter_value = $this->getRowsListFilterValue( $this->resource_key );
 		$this->name_order             = $this->getNameOrder( $this->resource_key );
 		$this->rows_hide_show_dormant = $this->getRowsHideShowDormant( $this->resource_key );
 	}
 
 
 	/**
-	 * If reset_filters is set to yes, reset all session keys
+	 * If reset_sorting is set to yes, reset all session keys
 	 * listed in $filter_keys
 	 *
 	 * @return bool
 	 */
-	protected function reset_filters()
+	protected function reset_sorting()
 	{
-		if ( Input::has( 'reset_filters' ) )
+		if ( Input::has( 'reset_sorting' ) )
 		{
 			foreach ( $this->filter_keys as $key )
 			{
@@ -146,14 +160,12 @@ class BaseController extends Controller
 			Session::set( $key . '.rowsHideShowDormant', 'show' );
 
 			return 'show';
-		}
-		elseif ( Input::has( 'dormant' ) && Input::get( 'dormant') == 'hide' )
+		} elseif ( Input::has( 'dormant' ) && Input::get( 'dormant' ) == 'hide' )
 		{
 			Session::set( $key . '.rowsHideShowDormant', 'hide' );
 
 			return 'hide';
-		}
-		elseif ( Session::get( $key . '.rowsHideShowDormant' ) )
+		} elseif ( Session::get( $key . '.rowsHideShowDormant' ) )
 		{
 			return Session::get( $key . '.rowsHideShowDormant' );
 		}
@@ -169,8 +181,54 @@ class BaseController extends Controller
 		if ( $value )
 		{
 			Session::set( $key . '.rowsNameOrder', $value );
+		}
 
-			return $value;
+		return $value;
+	}
+
+	/**
+	 *
+	 * @return int|mixed
+	 */
+	protected function getRowsListFilterField( $key )
+	{
+		//Value passed in?
+		if ( Input::has( 'filter_field' ) )
+		{
+			Session::set( $key . '.rowsListFilterField', Input::get( 'filter_field' ) );
+
+			return Input::get( 'filter_field' );
+		} //Session value exists?
+		elseif ( Session::get( $key . '.rowsListFilterField' ) )
+		{
+			return Session::get( $key . '.rowsListFilterField' );
+		} //If all else fails...
+		else
+		{
+			return 'status';
+		}
+	}
+
+	/**
+	 *
+	 * @return int|mixed
+	 */
+	protected function getRowsListFilterValue( $key )
+	{
+		//Value passed in?
+		if ( Input::has( 'filter_value' ) && is_numeric( Input::get( 'filter_value' ) ) )
+		{
+			Session::set( $key . '.rowsListFilterValue', Input::get( 'filter_value' ) );
+
+			return Input::get( 'filter_value' );
+		} //Session value exists?
+		elseif ( Session::get( $key . '.rowsListFilterValue' ) )
+		{
+			return Session::get( $key . '.rowsListFilterValue' );
+		} //If all else fails...
+		else
+		{
+			return 1;
 		}
 	}
 
@@ -204,34 +262,43 @@ class BaseController extends Controller
 
 	protected function searchCheck()
 	{
-		if(Input::has('clear_search') || Session::has('clear_search'))
+		if ( Input::has( 'clear_search' ) || Session::has( 'clear_search' ) )
 		{
-			Session::forget($this->resource_key . '.SearchTerm');
-			Session::forget('clear_search');
+			Session::forget( $this->resource_key . '.SearchTerm' );
+			Session::forget( $this->resource_key . '.SearchType' );
+			Session::forget( 'clear_search' );
+		} elseif ( Session::has( $this->resource_key . '.SearchTerm' ) )
+		{
+			return true;
 		}
-		elseif(Session::has($this->resource_key . '.SearchTerm')) { return true; }
 
 		return false;
 	}
 
 	protected function findSearchTerm()
 	{
-		if(Input::has('search')) {
-			if(Input::has('letter'))
+		if ( Input::has( 'search' ) )
+		{
+			if ( Input::has( 'letter' ) )
 			{
-				Session::set($this->resource_key . '.SearchTerm', Input::get('search') . '%');
-				Session::set($this->resource_key . '.SearchType', 'first letter');
-			}
-			else
+				Session::set( $this->resource_key . '.SearchTerm', Input::get( 'search' ) . '%' );
+				Session::set( $this->resource_key . '.SearchType', 'first letter' );
+			} else
 			{
-				Session::set($this->resource_key . '.SearchTerm', '%' . Input::get('search') . '%');
-				Session::set($this->resource_key . '.SearchType', 'term');
+				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
+				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
 		}
-		return Session::get($this->resource_key . '.SearchTerm');
+		elseif(Input::has('filter_value') && Input::has('filter_field'))
+		{
+			Session::set( $this->resource_key . '.SearchTerm', Input::get( 'filter_value' ) );
+			Session::set( $this->resource_key . '.SearchType', 'filter' );
+		}
+
+		return Session::get( $this->resource_key . '.SearchTerm' );
 	}
 
-	protected function checkForSearchResults($items)
+	protected function checkForSearchResults( $items )
 	{
 		if ( ! count( $items ) )
 		{
@@ -242,5 +309,81 @@ class BaseController extends Controller
 		}
 
 		return true;
+	}
+
+
+	/**
+	 * Get all data required.
+	 *
+	 * @return bool
+	 */
+	protected function getFormData()
+	{
+		$this->units    = $this->getUnitsFormData();
+		$this->sectors  = $this->getSectorsFormData();
+		$this->types    = $this->getTypesFormData();
+		$this->services = $this->getServicesFormData();
+
+		return true;
+	}
+
+	/**
+	 * Get all the units in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getUnitsFormData( $blank_entry = true, $blank_message = 'Please select...' )
+	{
+		if ( ! Unit::getUnitsForFormSelect( $blank_entry, $blank_message ) )
+		{
+			return [ '' => 'No units available to select' ];
+		}
+
+		return Unit::getUnitsForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the sectors in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getSectorsFormData( $blank_entry = true, $blank_message = 'Please select...' )
+	{
+		if ( ! Sector::getSectorsForFormSelect( $blank_entry, $blank_message ) )
+		{
+			return [ '' => 'No sectors available to select' ];
+		}
+
+		return Sector::getSectorsForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the types in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getTypesFormData( $blank_entry = true, $blank_message = 'Please select...' )
+	{
+		if ( ! Type::getTypesForFormSelect( $blank_entry, $blank_message ) )
+		{
+			return [ '' => 'No types available to select' ];
+		}
+
+		return Type::getTypesForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the types in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getServicesFormData( $blank_entry = true, $blank_message = 'Please select...' )
+	{
+		if ( ! Service::getServicesForFormSelect( $blank_entry, $blank_message ) )
+		{
+			return [ '' => 'No services available to select' ];
+		}
+
+		return Service::getServicesForFormSelect( $blank_entry, $blank_message );
 	}
 }

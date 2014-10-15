@@ -60,7 +60,7 @@ class Unit extends \BaseModel
 	}
 
 
-	public static function getUnitsForFormSelect( $blank_entry = false, $prefix = "" )
+	public static function getUnitsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
 	{
 		$units = [ ];
 		//Remove whitespace from $prefix and add a space on the end, so there is a space
@@ -69,7 +69,7 @@ class Unit extends \BaseModel
 		//If $blank_entry == true, add a blank "Please select..." option
 		if ( $blank_entry )
 		{
-			$units[''] = 'Please select...';
+			$units[''] = $blank_message;
 		}
 
 		foreach ( Unit::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $unit )
