@@ -33,6 +33,9 @@ class LoginController extends \BaseController
 
 	public function logout()
 	{
+		//Destroy all session data
+		Session::flush();
+		//Log the user out
 		Auth::logout();
 		Flash::message('You have been logged out.');
 

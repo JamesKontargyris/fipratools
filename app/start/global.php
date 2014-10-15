@@ -75,7 +75,7 @@ App::error(function(PermissionDeniedException $exception)
 	}
 	else
 	{
-		return Redirect::home();
+		return Redirect::route('list.index');
 	}
 });
 

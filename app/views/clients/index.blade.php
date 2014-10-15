@@ -61,12 +61,20 @@
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">
 									@if($client->archives()->count())
-										<a href="{{ route('client_archives.index', ['client_id' => $client->id]) }}"><strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong></a>
+										@if($user->hasRole('Administrator'))
+											<a href="{{ route('client_archives.index', ['client_id' => $client->id]) }}"><strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong></a>
+										@else
+											<strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong>
+										@endif
 									@endif
 								</td>
 								<td class="client-links">
 									@if($client->links()->count())
-										<a href="{{ route('client_links.index', ['client_id' => $client->id]) }}"><strong><i class="fa fa-link"></i> {{ $client->getLinkedUnitsList($client->id) }}</strong></a>
+										@if($user->hasRole('Administrator'))
+											<a href="{{ route('client_links.index', ['client_id' => $client->id]) }}"><strong><i class="fa fa-link"></i> {{ $client->getLinkedUnitsList($client->id) }}</strong></a>
+										@else
+											<strong><i class="fa fa-link"></i> {{ $client->getLinkedUnitsList($client->id) }}</strong>
+										@endif
 									@endif
 								</td>
 

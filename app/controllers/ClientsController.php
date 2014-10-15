@@ -28,7 +28,6 @@ class ClientsController extends \BaseController
 	function __construct( AddEditClientForm $addEditClientForm, Client $client )
 	{
 		parent::__construct();
-		$this->check_perm( 'manage_clients' );
 		View::share( 'page_title', 'Clients' );
 		View::share( 'key', 'clients' );
 		$this->addEditClientForm = $addEditClientForm;
@@ -43,6 +42,8 @@ class ClientsController extends \BaseController
 	 */
 	public function index()
 	{
+		$this->check_perm( 'manage_clients' );
+
 		if ( $this->searchCheck() )
 		{
 			return Redirect::to( $this->resource_key . '/search' );
@@ -68,6 +69,8 @@ class ClientsController extends \BaseController
 	 */
 	public function create()
 	{
+		$this->check_perm( 'manage_clients' );
+
 		$this->getFormData();
 
 		return View::make( 'clients.create' )->with( [
@@ -86,6 +89,8 @@ class ClientsController extends \BaseController
 	 */
 	public function store()
 	{
+		$this->check_perm( 'manage_clients' );
+
 		$input = Input::all();
 		$this->addEditClientForm->validate( $input );
 
@@ -107,12 +112,10 @@ class ClientsController extends \BaseController
 	 */
 	public function show( $id )
 	{
+		$this->check_perm( 'view_list' );
+
 		if ( $client = Client::find( $id ) )
 		{
-			if ( ! $this->user->hasRole( 'Administrator' ) && $client->unit_id != $this->user->unit_id )
-			{
-				throw new PermissionDeniedException('clients');
-			}
 
 			$linked_units = $this->client->getLinkedUnits($id);
 			$archives = ClientArchive::orderBy( 'start_date', 'DESC' )->where( 'client_id', '=', $id )->get();
@@ -134,6 +137,8 @@ class ClientsController extends \BaseController
 	 */
 	public function edit( $id )
 	{
+		$this->check_perm( 'manage_clients' );
+
 		if ( $client = $this->getClient( $id ) )
 		{
 			$this->getFormData();
@@ -161,6 +166,8 @@ class ClientsController extends \BaseController
 	 */
 	public function update( $id )
 	{
+		$this->check_perm( 'manage_clients' );
+
 		$input                                  = Input::all();
 		$input['id']                            = $id;
 		$this->addEditClientForm->rules['name'] = 'required|max:255|unique:clients,name,' . $id;
@@ -183,6 +190,8 @@ class ClientsController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
+		$this->check_perm( 'manage_clients' );
+
 		if ( $client = $this->getClient( $id ) )
 		{
 			Client::destroy( $id );
@@ -200,6 +209,8 @@ class ClientsController extends \BaseController
 	 */
 	public function search()
 	{
+		$this->check_perm( 'manage_clients' );
+
 		if ( $search_term = $this->findSearchTerm() )
 		{
 			$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );

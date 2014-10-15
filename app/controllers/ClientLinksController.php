@@ -19,7 +19,6 @@ class ClientLinksController extends \BaseController
 	function __construct(AddEditClientLinkForm $addEditClientLinkForm)
 	{
 		parent::__construct();
-		$this->check_perm( 'manage_client_links' );
 		$this->addEditClientLinkForm = $addEditClientLinkForm;
 		View::share( 'page_title', 'Client Link' );
 		View::share( 'key', 'client_links' );
@@ -34,6 +33,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function index()
 	{
+		$this->check_perm( 'manage_client_links' );
 		if(Input::has('client_id') && $client = Client::find(Input::get('client_id')))
 		{
 			$id = Input::get('client_id');
@@ -52,6 +52,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function create()
 	{
+		$this->check_perm( 'manage_client_links' );
 		$this->getFormData();
 
 		$unit_1 = Input::has('unit_1') ? Unit::find(Input::get('unit_1')) : null;
@@ -72,6 +73,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function store()
 	{
+		$this->check_perm( 'manage_client_links' );
 		$input = Input::all();
 		$this->addEditClientLinkForm->rules['unit_1'] = 'required|numeric|different:unit_2|unique:client_links,unit_id,NULL,id,client_id,' . $input['client_2'];
 		$this->addEditClientLinkForm->rules['unit_2'] = 'required|numeric|unique:client_links,unit_id,NULL,id,client_id,' . $input['client_1'];
@@ -94,6 +96,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function show( $id )
 	{
+		$this->check_perm( 'manage_client_links' );
 		return Redirect::route('clients.index');
 	}
 
@@ -107,6 +110,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function edit( $id )
 	{
+		$this->check_perm( 'manage_client_links' );
 		return Redirect::route('clients.index');
 	}
 
@@ -120,6 +124,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function update( $id )
 	{
+		$this->check_perm( 'manage_client_links' );
 		return Redirect::route('clients.index');
 	}
 
@@ -133,6 +138,7 @@ class ClientLinksController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
+		$this->check_perm( 'manage_client_links' );
 		if ( $client_link = $this->getClientLink( $id ) )
 		{
 			ClientLink::destroy( $id );

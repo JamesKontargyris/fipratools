@@ -1,5 +1,5 @@
 <ul class="filter-options">
-	<li class="title">View:</li>
+	<li class="title">Per Page:</li>
 	<li>
 		@if(Session::get($items->key . '.rowsToView') == 10 || ! Session::get($items->key . '.rowsToView'))
 			<strong>10</strong>

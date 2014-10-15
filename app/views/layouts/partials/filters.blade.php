@@ -2,11 +2,6 @@
 	<div class="col-12 filter-container">
 		<a class="filter-menu-icon-m" href="#">Filters</a>
 		<div class="col-12 filters">
-			@if(is_request('clients') || is_request('users'))
-				<ul>
-					<li class="letter-select-table-container">@include('layouts.partials.filters.letter-select-table')</li>
-				</ul>
-			@endif
 			<ul>
 				@if(is_request('clients'))
 					<li>@include('layouts.partials.filters.rows_hide_show_dormant')</li>
@@ -18,6 +13,11 @@
 				@endif
 				<li><a href="?reset_filters=yes" class="filter-but"><i class="fa fa-undo"></i> Reset Filters</a></li>
 			</ul>
+			@if(is_request('clients') || is_request('users'))
+				<ul>
+					<li class="letter-select-table-container">@include('layouts.partials.filters.letter-select-table')</li>
+				</ul>
+			@endif
 		</div>
 	</div>
 </section>

@@ -301,7 +301,7 @@
 .index-table {
   width:100%;
   @include font-size(12);
-  tr td {
+  tr > td {
     border-left:1px solid darken(white, 10%);
     vertical-align: middle;
     &.content-center {
@@ -343,25 +343,27 @@
     }
   }
   thead {
-    td {
-      background-color:$grey;
-      @include dark-grad($grey, top, 10%);
-      color:white;
-      border-collapse: separate;
-      text-transform: uppercase;
-      @include font-size(12);
-      font-weight:$font-bold;
-      padding:($v-rhythm / 4) 15px;
-      &.sub-header {
-        background-color:$light-grey;
-        @include dark-grad($light-grey, top, 10%);
-        color:$grey;
+    tr {
+      & > td {
+        background-color:$grey;
+        @include dark-grad($grey, top, 10%);
+        color:white;
+        border-collapse: separate;
+        text-transform: uppercase;
+        @include font-size(12);
+        font-weight:$font-bold;
+        padding:($v-rhythm / 4) 15px;
+        &.sub-header {
+          background-color:$light-grey;
+          @include dark-grad($light-grey, top, 10%);
+          color:$grey;
+        }
       }
     }
   }
   tbody {
     tr {
-      td {
+      & > td {
         padding:5px 15px;
         &.actions,
         &.archive-count,
@@ -434,6 +436,29 @@
       }
     }
   }
+}
+
+.list-letter-filter {
+  width: 100%;
+  table-layout: fixed;
+  tbody {
+    tr {
+      border:0 !important;
+      td {
+        border: 0 !important;
+        background: none;
+        padding: 0;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.list-table-filter {
+  @include font-size(12);
+  padding:0;
+  background-color:white;
+  border:0;
 }
 
 .formfield {

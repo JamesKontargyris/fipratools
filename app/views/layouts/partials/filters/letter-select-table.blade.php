@@ -1,9 +1,9 @@
 <table class="letter-select-table">
 	<tr>
-		@if(is_request('clients'))
-			<td>Begins with:</td>
-		@else
+		@if(is_request('users'))
 			<td>First / last name begins with:</td>
+		@else
+			<td>Begins with:</td>
 		@endif
 		<td><a href="{{ url($key . '/search?search=A&letter=yes') }}" class="secondary">A</a></td>
 		<td><a href="{{ url($key . '/search?search=B&letter=yes') }}" class="secondary">B</a></td>

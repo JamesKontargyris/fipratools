@@ -1,6 +1,9 @@
 <?php
 
-Route::get('/', ['before' => 'auth', 'as' => 'home', 'uses' => 'PagesController@home']);
+Route::get('/', ['as' => 'home', function()
+{
+	return Redirect::route('list.index');
+}]);
 
 Route::controller('login', 'LoginController');
 
@@ -16,9 +19,9 @@ Route::get('roles', function()
 	$new_manager->name = "Unit Manager";
 	$new_manager->save();
 
-	$new_viewer = new Role;
-	$new_viewer->name = "Fipriot";
-	$new_viewer->save();
+	$new_fipriot = new Role;
+	$new_fipriot->name = "Fipriot";
+	$new_fipriot->save();
 
 	$manage_users = new Permission;
 	$manage_users->name = "manage_users";
@@ -72,13 +75,15 @@ Route::get('roles', function()
 
 	$new_admin->attachPermissions([$manage_users->id, $manage_units->id, $manage_sectors->id, $manage_services->id, $manage_types->id, $manage_clients->id, $manage_client_links->id, $manage_client_archives->id, $manage_reports->id, $view_list->id]);
 	$new_manager->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
-	$new_viewer->attachPermissions([$view_list->id]);
+	$new_fipriot->attachPermissions([$view_list->id]);
 
 	return "All done!";
 });
 
 Route::group(['before' => 'auth'], function()
 {
+	Route::any('list/search', 'ListController@search');
+	Route::resource('list', 'ListController');
 	Route::any('users/search', 'UsersController@search');
 	Route::resource('users', 'UsersController');
 	Route::any('units/search', 'UnitsController@search');
