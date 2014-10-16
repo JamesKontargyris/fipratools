@@ -1,0 +1,9 @@
+RewriteEngine on
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^fipraleadofficelist.jamkon.co.uk$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^fipraleadofficelist.jamkon.co.uk$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule ^(.+)$ /index.php/$1 [L]
+
+#1and1 to enable PHP 5.4
+AddHandler x-mapp-php6 .php

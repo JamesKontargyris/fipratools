@@ -4,9 +4,9 @@
 <div class="row">
 	<div class="col-12">
 		<h3>Login</h3>
-		@include ('layouts.partials.messages')
 	</div>
 </div>
+@include ('layouts.partials.messages')
 
 <div class="row">
 	<div class="col-6">
