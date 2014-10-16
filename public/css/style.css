@@ -127,9 +127,10 @@ h3 {
   padding: 0 0 10px;
   font-size: 20px;
   font-size: 1.25rem;
-  color: #00257f; }
+  color: #00257f;
+  line-height: 1.5; }
 
-/* line 55, ../../app/assets/sass/_base.scss */
+/* line 56, ../../app/assets/sass/_base.scss */
 h4 {
   font-size: 18px;
   font-size: 1.125rem;
@@ -138,7 +139,7 @@ h4 {
   margin-bottom: 10px;
   border-bottom: 1px solid #ccd3e5; }
 
-/* line 62, ../../app/assets/sass/_base.scss */
+/* line 63, ../../app/assets/sass/_base.scss */
 h5 {
   font-size: 14px;
   font-size: 0.875rem;
@@ -147,29 +148,29 @@ h5 {
   padding-bottom: 5px;
   border-bottom: 1px solid #dee0e6;
   margin-bottom: 5px; }
-  /* line 69, ../../app/assets/sass/_base.scss */
+  /* line 70, ../../app/assets/sass/_base.scss */
   h5.no-underline {
     padding-bottom: 0;
     border-bottom: 0; }
 
-/* line 75, ../../app/assets/sass/_base.scss */
+/* line 76, ../../app/assets/sass/_base.scss */
 h1 small, h2 small, h3 small, h4 small, h5 small {
   font-size: 0.7em;
   color: #5F697F; }
 
-/* line 80, ../../app/assets/sass/_base.scss */
+/* line 81, ../../app/assets/sass/_base.scss */
 p {
   padding-bottom: 20px; }
 
-/* line 83, ../../app/assets/sass/_base.scss */
+/* line 84, ../../app/assets/sass/_base.scss */
 em {
   font-style: italic; }
 
-/* line 86, ../../app/assets/sass/_base.scss */
+/* line 87, ../../app/assets/sass/_base.scss */
 strong {
   font-weight: bold; }
 
-/* line 89, ../../app/assets/sass/_base.scss */
+/* line 90, ../../app/assets/sass/_base.scss */
 label {
   display: inline-block;
   font-weight: bold;
@@ -177,27 +178,27 @@ label {
   font-size: 1rem;
   color: #5F697F;
   padding-bottom: 10px; }
-  /* line 96, ../../app/assets/sass/_base.scss */
+  /* line 97, ../../app/assets/sass/_base.scss */
   label.required::before {
     content: "* ";
     color: #cc0a12;
     font-weight: bold; }
 
-/* line 103, ../../app/assets/sass/_base.scss */
+/* line 104, ../../app/assets/sass/_base.scss */
 a.back-to-top {
   display: inline-block;
   padding: 10px 10px;
   background-color: #f2f2f2;
   margin: 10px 0; }
-  /* line 108, ../../app/assets/sass/_base.scss */
+  /* line 109, ../../app/assets/sass/_base.scss */
   a.back-to-top:hover {
     opacity: 0.8; }
 
-/* line 112, ../../app/assets/sass/_base.scss */
+/* line 113, ../../app/assets/sass/_base.scss */
 a.button {
   display: inline-block; }
 
-/* line 115, ../../app/assets/sass/_base.scss */
+/* line 116, ../../app/assets/sass/_base.scss */
 input[type=text],
 input[type=email],
 input[type=file],
@@ -209,7 +210,7 @@ textarea {
   font-size: 0.875rem;
   font-family: Arial, Helvetica, sans-serif; }
   @media (min-width: 900px) {
-    /* line 115, ../../app/assets/sass/_base.scss */
+    /* line 116, ../../app/assets/sass/_base.scss */
     input[type=text],
     input[type=email],
     input[type=file],
@@ -217,7 +218,7 @@ textarea {
     textarea {
       font-size: 16px;
       font-size: 1rem; } }
-  /* line 127, ../../app/assets/sass/_base.scss */
+  /* line 128, ../../app/assets/sass/_base.scss */
   input[type=text].inline,
   input[type=email].inline,
   input[type=file].inline,
@@ -225,26 +226,26 @@ textarea {
   textarea.inline {
     width: auto; }
 
-/* line 131, ../../app/assets/sass/_base.scss */
+/* line 132, ../../app/assets/sass/_base.scss */
 input[readonly=readonly],
 input[disabled=disabled] {
   background-color: #fdd8d9;
   border: 1px solid #cc0a12; }
 
-/* line 136, ../../app/assets/sass/_base.scss */
+/* line 137, ../../app/assets/sass/_base.scss */
 input[type=checkbox] {
   width: 30px;
   height: 30px;
   vertical-align: middle; }
 
-/* line 141, ../../app/assets/sass/_base.scss */
+/* line 142, ../../app/assets/sass/_base.scss */
 input[type=submit] {
   cursor: pointer;
   padding-left: 20px;
   padding-right: 20px;
   font-weight: bold; }
 
-/* line 147, ../../app/assets/sass/_base.scss */
+/* line 148, ../../app/assets/sass/_base.scss */
 select {
   display: block;
   width: 100%;
@@ -252,37 +253,37 @@ select {
   font-size: 14px;
   font-size: 0.875rem; }
   @media (min-width: 900px) {
-    /* line 147, ../../app/assets/sass/_base.scss */
+    /* line 148, ../../app/assets/sass/_base.scss */
     select {
       font-size: 16px;
       font-size: 1rem; } }
-  /* line 155, ../../app/assets/sass/_base.scss */
+  /* line 156, ../../app/assets/sass/_base.scss */
   select.inline {
     display: inline-block; }
 
-/* line 159, ../../app/assets/sass/_base.scss */
+/* line 160, ../../app/assets/sass/_base.scss */
 strong {
   font-weight: bold; }
 
-/* line 163, ../../app/assets/sass/_base.scss */
+/* line 164, ../../app/assets/sass/_base.scss */
 #content {
   padding-top: 20px;
   font-size: 14px;
   font-size: 0.875rem; }
 
-/* line 167, ../../app/assets/sass/_base.scss */
+/* line 168, ../../app/assets/sass/_base.scss */
 .red {
   color: #cc0a12 !important; }
 
-/* line 170, ../../app/assets/sass/_base.scss */
+/* line 171, ../../app/assets/sass/_base.scss */
 .white {
   color: white !important; }
 
-/* line 173, ../../app/assets/sass/_base.scss */
+/* line 174, ../../app/assets/sass/_base.scss */
 .showjs {
   display: none; }
 
-/* line 176, ../../app/assets/sass/_base.scss */
+/* line 177, ../../app/assets/sass/_base.scss */
 .hidejs {
   display: block; }
 
@@ -1522,6 +1523,10 @@ ul.pagination {
 /* line 624, ../../app/assets/sass/_modules.scss */
 .js-block {
   display: none; }
+
+/* line 629, ../../app/assets/sass/_modules.scss */
+.prose p {
+  line-height: 2 !important; }
 
 /* line 1, ../../app/assets/sass/_header.scss */
 .mobile-user-details-container {

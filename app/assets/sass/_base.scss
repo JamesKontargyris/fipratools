@@ -51,6 +51,7 @@ h3 {
   padding:0 0 ($v-rhythm / 2);
   @include font-size(20);
   color:$blue;
+  line-height:1.5;
 }
 h4 {
   @include font-size(18);

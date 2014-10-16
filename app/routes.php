@@ -83,6 +83,7 @@ Route::get('roles', function()
 Route::group(['before' => 'auth'], function()
 {
 	Route::any('list/search', 'ListController@search');
+	Route::get('about', ['as' => 'list.about', 'uses' => 'ListController@about']);
 	Route::post('list/filter', ['as' => 'list.filter', 'uses' => 'ListController@filter']);
 	Route::resource('list', 'ListController');
 	Route::any('users/search', 'UsersController@search');

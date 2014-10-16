@@ -624,3 +624,8 @@ ul.pagination {
 .js-block {
   display:none;
 }
+
+//If the page is more word-y, use the prose class to add a little more leading
+.prose p {
+  line-height:2 !important;
+}

@@ -77,6 +77,16 @@ class ListController extends BaseController
 	}
 
 	/**
+	 * Display the about page.
+	 *
+	 * @return \Illuminate\View\View
+	 */
+	public function about()
+	{
+		return View::make('list.about');
+	}
+
+	/**
 	 * Get all data required to populate the add/edit user forms.
 	 *
 	 * @return bool

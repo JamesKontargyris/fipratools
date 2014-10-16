@@ -6,8 +6,6 @@
 
 @elseif(is_search())
 	<i class="fa fa-search"></i> Searching for {{ Session::has('list.SearchType') ? Session::get('list.SearchType') : '' }}: {{ $items->search_term }}
-@else
-	Clients List
 @endif
 @stop
 
