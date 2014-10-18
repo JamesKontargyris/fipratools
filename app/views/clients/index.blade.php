@@ -42,7 +42,7 @@
 							@if($user->hasRole('Administrator'))
 								<td colspan="4">Actions</td>
 							@else
-								<td colspan="3">Actions</td>
+								<td>Actions</td>
 							@endif
 						</tr>
 					</thead>
@@ -94,24 +94,27 @@
 											<button type="submit" class="grey-but" title="Add a unit link for this client"><i class="fa fa-link"></i></button>
 										{{ Form::close() }}
 									</td>
+									<td class="actions content-right">
+										{{ Form::open(['url' => 'client_archives/create', 'method' => 'get']) }}
+											{{ Form::hidden('client_id', $client->id) }}
+											<button type="submit" class="primary" title="Add an archive record for this client"><i class="fa fa-archive"></i></button>
+										{{ Form::close() }}
+									</td>
 								@endif
 
-								<td class="actions content-right">
-									{{ Form::open(['url' => 'client_archives/create', 'method' => 'get']) }}
-										{{ Form::hidden('client_id', $client->id) }}
-										<button type="submit" class="primary" title="Add an archive record for this client"><i class="fa fa-archive"></i></button>
-									{{ Form::close() }}
-								</td>
 								<td class="actions content-right">
 									{{ Form::open(['route' => array('clients.edit', $client->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" title="Edit this client"><i class="fa fa-pencil"></i></button>
 									{{ Form::close() }}
 								</td>
-								<td class="actions content-right">
-									{{ Form::open(['route' => array('clients.destroy', $client->id), 'method' => 'delete']) }}
-										<button type="submit" class="red-but delete-row" data-resource-type="client" title="Delete this client"><i class="fa fa-times"></i></button>
-									{{ Form::close() }}
-								</td>
+
+								@if($user->hasRole('Administrator'))
+									<td class="actions content-right">
+										{{ Form::open(['route' => array('clients.destroy', $client->id), 'method' => 'delete']) }}
+											<button type="submit" class="red-but delete-row" data-resource-type="client" title="Delete this client"><i class="fa fa-times"></i></button>
+										{{ Form::close() }}
+									</td>
+								@endif
 							</tr>
 						@endforeach
 					</tbody>

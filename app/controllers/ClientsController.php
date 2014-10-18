@@ -186,7 +186,7 @@ class ClientsController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
-		$this->check_perm( 'manage_clients' );
+		$this->check_role( 'Administrator' );
 
 		if ( $client = $this->getClient( $id ) )
 		{

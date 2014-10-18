@@ -242,6 +242,16 @@ class BaseController extends Controller
 		throw new PermissionDeniedException;
 	}
 
+	protected function check_role( $role )
+	{
+		if ( $this->user->hasRole( $role ) )
+		{
+			return true;
+		}
+
+		throw new PermissionDeniedException;
+	}
+
 	protected function is_request( $uri, $strict = false )
 	{
 		if ( $strict == true )

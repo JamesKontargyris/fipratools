@@ -157,28 +157,6 @@ class ClientLinksController extends \BaseController
 		return ClientLink::find( $id );
 	}
 
-	protected function getFormData()
-	{
-		$this->units = $this->getUnitsFormData();
-
-		return true;
-	}
-
-	/**
-	 * Get all the units in a select element-friendly collection.
-	 *
-	 * @return array
-	 */
-	protected function getUnitsFormData()
-	{
-		if ( ! Unit::getUnitsForFormSelect( true ) )
-		{
-			return [ '' => 'No units available to select' ];
-		}
-
-		return Unit::getUnitsForFormSelect( true );
-	}
-
 	/**
 	 * Respond to Ajax requests when creating a client link
 	 * User selects a unit, this function returns all clients added by that unit
