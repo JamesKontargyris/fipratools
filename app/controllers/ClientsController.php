@@ -209,7 +209,16 @@ class ClientsController extends \BaseController
 
 		if ( $search_term = $this->findSearchTerm() )
 		{
-			$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			//If the user is an administrator, search on all clients
+			//If not, search on only the clients for the user's Unit ID
+			if($this->user->hasRole('Administrator'))
+			{
+				$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
+			else
+			{
+				$items = Client::where('unit_id', '=', $this->user->unit_id)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
 
 			if( ! $this->checkForSearchResults($items)) return Redirect::route( $this->resource_key . '.index' );
 
