@@ -3,7 +3,7 @@
 class EditClientCommand
 {
 	public $name;
-	public $account_director;
+	public $account_director_id;
 	public $comments;
 	public $unit_id;
 	public $user_id;
@@ -12,11 +12,11 @@ class EditClientCommand
 	public $service_id;
 	public $status;
 
-	function __construct( $name, $account_director, $comments, $unit_id, $user_id, $sector_id, $type_id, $service_id, $status, $id )
+	function __construct( $name, $account_director_id, $comments, $unit_id, $user_id, $sector_id, $type_id, $service_id, $status, $id )
 	{
 
 		$this->name             = $name;
-		$this->account_director = $account_director;
+		$this->account_director_id = $account_director_id;
 		$this->comments         = $comments;
 		$this->unit_id          = $unit_id;
 		$this->user_id          = $user_id;

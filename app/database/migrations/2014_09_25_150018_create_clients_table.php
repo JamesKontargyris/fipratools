@@ -12,11 +12,11 @@ class CreateClientsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('clients', function($table)
+		Schema::create('clients', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('name');
-			$table->string('account_director');
+			$table->integer('account_director_id')->unsigned()->index();
 			$table->string('comments');
 			$table->integer('unit_id')->unsigned()->index();
 			$table->foreign('unit_id')->references('id')->on('units');

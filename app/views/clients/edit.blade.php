@@ -19,10 +19,6 @@ Editing Sector: {{ $client->name }}
 			{{ Form::label('name', 'Client name:', ['class' => 'required']) }}
 			{{ Form::text('name', isset($client->name) ? $client->name : '') }}
 		</div>
-		<div class="formfield">
-			{{ Form::label('account_director', 'The Account Director to speak to:', ['class' => 'required']) }}
-            {{ Form::text('account_director', isset($client->account_director) ? $client->account_director : '') }}
-		</div>
 		@if($user->hasRole('Administrator'))
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to unit:', ['class' => 'required']) }}
@@ -32,7 +28,14 @@ Editing Sector: {{ $client->name }}
 			{{ Form::hidden('unit_id', isset($client->unit_id) ? $client->unit_id : '') }}
 		@endif
 		{{ Form::hidden('user_id', isset($client->user_id) ? $client->user_id : '') }}
-
+		<div class="formfield">
+			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
+			{{ Form::select('account_director_id', $account_directors, isset($client->account_director_id) ? $client->account_director_id : '') }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('pr_client', 'Mainly PR client?', ['class' => 'required']) }}
+			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], isset($client->pr_client) ? $client->pr_client : 0) }}
+		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}
 			{{ Form::select('sector_id', $sectors, isset($client->sector_id) ? $client->sector_id : '') }}

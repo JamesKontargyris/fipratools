@@ -27,7 +27,7 @@ class ClientsController extends \BaseController
 		View::share( 'page_title', 'Clients' );
 		View::share( 'key', 'clients' );
 		$this->addEditClientForm = $addEditClientForm;
-		$this->client = $client;
+		$this->client            = $client;
 	}
 
 	/**
@@ -70,10 +70,11 @@ class ClientsController extends \BaseController
 		$this->getFormData();
 
 		return View::make( 'clients.create' )->with( [
-			'units'    => $this->units,
-			'sectors'  => $this->sectors,
-			'types'    => $this->types,
-			'services' => $this->services
+			'account_directors' => $this->account_directors,
+			'units'             => $this->units,
+			'sectors'           => $this->sectors,
+			'types'             => $this->types,
+			'services'          => $this->services
 		] );
 	}
 
@@ -113,8 +114,8 @@ class ClientsController extends \BaseController
 		if ( $client = Client::find( $id ) )
 		{
 
-			$linked_units = $this->client->getLinkedUnits($id);
-			$archives = ClientArchive::orderBy( 'start_date', 'DESC' )->where( 'client_id', '=', $id )->get();
+			$linked_units = $this->client->getLinkedUnits( $id );
+			$archives     = ClientArchive::orderBy( 'start_date', 'DESC' )->where( 'client_id', '=', $id )->get();
 
 			return View::make( 'clients.show' )->with( compact( 'client', 'archives', 'linked_units' ) );
 		} else
@@ -140,11 +141,12 @@ class ClientsController extends \BaseController
 			$this->getFormData();
 
 			return View::make( 'clients.edit' )->with( [
-				'units'    => $this->units,
-				'sectors'  => $this->sectors,
-				'types'    => $this->types,
-				'services' => $this->services,
-				'client'   => $client
+				'account_directors' => $this->account_directors,
+				'units'             => $this->units,
+				'sectors'           => $this->sectors,
+				'types'             => $this->types,
+				'services'          => $this->services,
+				'client'            => $client
 			] );
 		} else
 		{
@@ -211,16 +213,18 @@ class ClientsController extends \BaseController
 		{
 			//If the user is an administrator, search on all clients
 			//If not, search on only the clients for the user's Unit ID
-			if($this->user->hasRole('Administrator'))
+			if ( $this->user->hasRole( 'Administrator' ) )
 			{
 				$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			}
-			else
+			} else
 			{
-				$items = Client::where('unit_id', '=', $this->user->unit_id)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::where( 'unit_id', '=', $this->user->unit_id )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			}
 
-			if( ! $this->checkForSearchResults($items)) return Redirect::route( $this->resource_key . '.index' );
+			if ( ! $this->checkForSearchResults( $items ) )
+			{
+				return Redirect::route( $this->resource_key . '.index' );
+			}
 
 			$items->key         = 'clients';
 			$items->search_term = str_replace( '%', '', $search_term );
@@ -235,9 +239,9 @@ class ClientsController extends \BaseController
 	protected function getClient( $id )
 	{
 		$client = Client::find( $id );
-		if( ! $this->user->hasRole('Administrator') && $client->unit()->pluck('id') != $this->user->unit_id)
+		if ( ! $this->user->hasRole( 'Administrator' ) && $client->unit()->pluck( 'id' ) != $this->user->unit_id )
 		{
-			throw new PermissionDeniedException('clients');
+			throw new PermissionDeniedException( 'clients' );
 		}
 
 		return $client;

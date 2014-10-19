@@ -22,7 +22,7 @@
 		<h4>{{ $client->unit()->pluck('name') }}</h4>
 		<p>{{ $client->getLeadOfficeAddress() }}</p>
 		<h4>Account Director to talk to</h4>
-		<p>{{ $client->account_director }}</p>
+		<p>{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}</p>
 	</div>
 	<div class="col-6 last">
 		@if(count($linked_units))

@@ -102,6 +102,8 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('clients', 'ClientsController');
 	Route::resource('client_links', 'ClientLinksController');
 	Route::resource('client_archives', 'ClientArchivesController');
+	Route::any('account_directors/search', 'AccountDirectorsController@search');
+	Route::resource('account_directors', 'AccountDirectorsController');
 
 	Route::resource('reports', 'ReportsController');
 });

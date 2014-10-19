@@ -11,20 +11,24 @@ class AddEditClient extends FormValidator
 	 * @var array
 	 */
 	public $rules = [
-		'name'             => 'required|max:255',
-		'account_director' => 'required|max:255',
-		'sector_id'        => 'required|numeric',
-		'type_id'          => 'required|numeric',
-		'service_id'       => 'required|numeric',
-		'status'           => 'required'
+		'name'                => 'required|max:255',
+		'account_director_id' => 'required|numeric',
+		'pr_client'           => 'required|numeric',
+		'sector_id'           => 'required|numeric',
+		'type_id'             => 'required|numeric',
+		'service_id'          => 'required|numeric',
+		'status'              => 'required'
 	];
 
 	public $messages = [
-		'sector_id.required' => 'Please select a sector.',
-		'sector_id.numeric' => 'Please select a sector.',
-		'type_id.required' => 'Please select a type.',
-		'type_id.numeric' => 'Please select a type.',
-		'service_id.required' => 'Please select a service.',
-		'service_id.numeric' => 'Please select a service.',
+		'account_director_id.required' => 'Please select an Account Director',
+		'pr_client.required'           => 'Please indicate whether this is a PR client or not.',
+		'pr_client.numeric'            => 'Please indicate whether this is a PR client or not.',
+		'sector_id.required'           => 'Please select a sector.',
+		'sector_id.numeric'            => 'Please select a sector.',
+		'type_id.required'             => 'Please select a type.',
+		'type_id.numeric'              => 'Please select a type.',
+		'service_id.required'          => 'Please select a service.',
+		'service_id.numeric'           => 'Please select a service.',
 	];
 } 

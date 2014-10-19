@@ -1,6 +1,7 @@
 <?php
 
 use Laracasts\Flash\Flash;
+use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Sectors\Sector;
@@ -19,6 +20,7 @@ class BaseController extends Controller
 	protected $rows_list_filter_value;
 	protected $rows_hide_show_dormant;
 	protected $userFullName;
+	protected $account_directors;
 	protected $units;
 	protected $sectors;
 	protected $types;
@@ -107,8 +109,8 @@ class BaseController extends Controller
 	{
 		//Array of column names that will be sorted on, and how they should be ordered
 		$sort_on = [ 'az' => 'name.asc', 'za' => 'name.desc', 'newest' => 'id.desc', 'oldest' => 'id.asc' ];
-		//Different column names in the user table
-		$sort_on_users = [
+		//Different column names in the users and account_directors table
+		$sort_on_users_ads = [
 			'az'     => 'last_name.asc',
 			'za'     => 'last_name.desc',
 			'newest' => 'id.desc',
@@ -121,16 +123,16 @@ class BaseController extends Controller
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get( 'sort' );
-			if ( ! $this->is_request( 'users' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) )
+			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) )
 			{
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
 				return explode( '.', $sort_on[ $sort_term ] );
-			} elseif ( $this->is_request( 'users' ) )
+			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) )
 			{
-				Session::set( $key . '.rowsSort', $sort_on_users[ $sort_term ] );
+				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
-				return explode( '.', $sort_on_users[ $sort_term ] );
+				return explode( '.', $sort_on_users_ads[ $sort_term ] );
 			}
 		} //Session value exists for rowsSort?
 		elseif ( Session::get( $key . '.rowsSort' ) )
@@ -139,7 +141,7 @@ class BaseController extends Controller
 		} //If all else fails...
 		else
 		{
-			return ( $this->is_request( 'users' ) ) ? [ 'last_name', 'asc' ] : [ 'name', 'asc' ];
+			return ( $this->is_request( 'users' ) || $this->is_request('account_directors') ) ? [ 'last_name', 'asc' ] : [ 'name', 'asc' ];
 		}
 
 		return false;
@@ -298,8 +300,7 @@ class BaseController extends Controller
 				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
-		}
-		elseif(Input::has('filter_value') && Input::has('filter_field'))
+		} elseif ( Input::has( 'filter_value' ) && Input::has( 'filter_field' ) )
 		{
 			Session::set( $this->resource_key . '.SearchTerm', Input::get( 'filter_value' ) );
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
@@ -329,12 +330,28 @@ class BaseController extends Controller
 	 */
 	protected function getFormData()
 	{
-		$this->units    = $this->getUnitsFormData();
-		$this->sectors  = $this->getSectorsFormData();
-		$this->types    = $this->getTypesFormData();
-		$this->services = $this->getServicesFormData();
+		$this->account_directors = $this->getAccountDirectorsFormData();
+		$this->units             = $this->getUnitsFormData();
+		$this->sectors           = $this->getSectorsFormData();
+		$this->types             = $this->getTypesFormData();
+		$this->services          = $this->getServicesFormData();
 
 		return true;
+	}
+
+	/**
+	 * Get all the units in a select element-friendly collection.
+	 *
+	 * @return array
+	 */
+	protected function getAccountDirectorsFormData( $blank_entry = true, $blank_message = 'Please select...' )
+	{
+		if ( ! AccountDirector::getAccountDirectorsForFormSelect( $blank_entry, $blank_message ) )
+		{
+			return [ '' => 'No units available to select' ];
+		}
+
+		return AccountDirector::getAccountDirectorsForFormSelect( $blank_entry, $blank_message );
 	}
 
 	/**
