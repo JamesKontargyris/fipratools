@@ -14,7 +14,7 @@ class EditUser extends FormValidator
 		'first_name' => 'required|max:255',
 		'last_name'  => 'required|max:255',
 		'email'      => 'required|email|max:255|unique:users',
-		'password'   => 'confirmed|min:6|max:12',
+		'password'   => 'confirmed|min:3|max:12',
 		'unit_id'    => 'required|numeric',
 		'role_id'    => 'required|numeric'
 	];
