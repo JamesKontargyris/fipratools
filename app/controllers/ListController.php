@@ -6,10 +6,10 @@ class ListController extends BaseController
 {
 	public $resource_key = 'list';
 
-	function __construct( )
+	function __construct()
 	{
 		parent::__construct();
-		$this->check_perm('view_list');
+		$this->check_perm( 'view_list' );
 		View::share( 'page_title', 'Client List' );
 		View::share( 'key', 'list' );
 	}
@@ -22,15 +22,16 @@ class ListController extends BaseController
 		}
 
 		$this->getFormData();
-		$units    = $this->units;
-		$sectors  = $this->sectors;
-		$types    = $this->types;
-		$services = $this->services;
+		$account_directors = $this->account_directors;
+		$units             = $this->units;
+		$sectors           = $this->sectors;
+		$types             = $this->types;
+		$services          = $this->services;
 
-		$items = Client::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = Client::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'list';
 
-		return View::make( 'list.index' )->with( compact( 'items', 'units', 'sectors', 'types', 'services' ) );
+		return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'types', 'services' ) );
 	}
 
 	/**
@@ -42,15 +43,24 @@ class ListController extends BaseController
 	{
 		if ( $search_term = $this->findSearchTerm() )
 		{
-			if(Session::get( $this->resource_key . '.SearchType') == 'filter')
+			if ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' )
 			{
-				$items = Client::rowsListFilter($this->rows_list_filter_field, $this->rows_list_filter_value)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::rowsListFilter( $this->rows_list_filter_field, $this->rows_list_filter_value )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
-				$model_name = $this->getFilterModelName();
-				$model = new $model_name;
-				$items->filter_value = $model::find(Session::get($this->resource_key . '.rowsListFilterValue'))->name;
-			}
-			else
+				$model_name          = $this->getFilterModelName();
+				$model               = new $model_name;
+				//If filter is on account director, then the model will need to pull first_name and last_name from account _directors
+				//rather than just name.
+				if(strpos($model_name, 'Account_directors'))
+				{
+					$ad = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) );
+					$items->filter_value = $ad->first_name . ' ' . $ad->last_name;
+				}
+				else
+				{
+					$items->filter_value = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
+				}
+			} else
 			{
 				$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			}
@@ -64,15 +74,16 @@ class ListController extends BaseController
 			$items->key         = 'list';
 
 			$this->getFormData();
-			$units    = $this->units;
-			$sectors  = $this->sectors;
-			$types    = $this->types;
-			$services = $this->services;
+			$account_directors = $this->account_directors;
+			$units             = $this->units;
+			$sectors           = $this->sectors;
+			$types             = $this->types;
+			$services          = $this->services;
 
-			return View::make( 'list.index' )->with( compact( 'items', 'units', 'sectors', 'types', 'services' ) );
+			return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'types', 'services' ) );
 		} else
 		{
-			return Redirect::route('list.index');
+			return Redirect::route( 'list.index' );
 		}
 	}
 
@@ -83,7 +94,7 @@ class ListController extends BaseController
 	 */
 	public function about()
 	{
-		return View::make('list.about');
+		return View::make( 'list.about' );
 	}
 
 	/**
@@ -93,20 +104,28 @@ class ListController extends BaseController
 	 */
 	protected function getFormData()
 	{
-		$this->units    = $this->getUnitsFormData(true, 'Filter...');
-		$this->sectors  = $this->getSectorsFormData(true, 'Filter...');
-		$this->types    = $this->getTypesFormData(true, 'Filter...');
-		$this->services = $this->getServicesFormData(true, 'Filter...');
+		$this->account_directors = $this->getAccountDirectorsFormData( true, 'Filter...' );
+		$this->units             = $this->getUnitsFormData( true, 'Filter...' );
+		$this->sectors           = $this->getSectorsFormData( true, 'Filter...' );
+		$this->types             = $this->getTypesFormData( true, 'Filter...' );
+		$this->services          = $this->getServicesFormData( true, 'Filter...' );
 
 		return true;
 	}
 
 	protected function getFilterModelName()
 	{
-		//Use the filter field value to instantiate to corresponding class and get the filter value's name
-		$model_name = ucfirst(str_replace('_id', '', Session::get($this->resource_key . '.rowsListFilterField')));
+		//Use the filter field value to instantiate the corresponding class and get the filter value's name
+		$model_name        = ucfirst( str_replace( '_id', '', Session::get( $this->resource_key . '.rowsListFilterField' ) ) );
 		$model_name_plural = $model_name . 's';
-		$model_name_full = 'Leadofficelist\\' . $model_name_plural . '\\' .$model_name;
+		$model_explode = explode('_', $model_name);
+		$new_model_name = "";
+		foreach($model_explode as $part)
+		{
+			$new_model_name .= ucfirst($part);
+		}
+		$model_name_full   = 'Leadofficelist\\' . $model_name_plural . '\\' . $new_model_name;
+
 		return $model_name_full;
 	}
 }

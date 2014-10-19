@@ -3,7 +3,7 @@
 		<a class="filter-menu-icon-m" href="#">Filters</a>
 		<div class="col-12 filters">
 			<ul>
-				@if(is_request('clients'))
+				@if(is_request('clients') || is_request('list'))
 					<li>@include('layouts.partials.filters.rows_hide_show_dormant')</li>
 				@endif
 				<li>@include('layouts.partials.filters.rows_to_view')</li>

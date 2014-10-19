@@ -2,7 +2,7 @@
 
 @section('page-header')
 @if(is_filter())
-	<i class="fa fa-filter"></i> Filtering on {{ str_replace('_id', '', Session::get('list.rowsListFilterField')) }}: {{ $items->filter_value }}
+	<i class="fa fa-filter"></i> Filtering on {{ str_replace('_', ' ', str_replace('_id', '', Session::get('list.rowsListFilterField'))) }}: {{ $items->filter_value }}
 
 @elseif(is_search())
 	<i class="fa fa-search"></i> Searching for {{ Session::has('list.SearchType') ? Session::get('list.SearchType') : '' }}: {{ $items->search_term }}
@@ -25,6 +25,10 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
+							@if(Session::get( 'list.rowsHideShowDormant' ) == 'show')
+								<td rowspan="2" class="content-center show-s"></td>
+								<td rowspan="2" class="content-center hide-s">Status</td>
+							@endif
 							<td colspan="3" width="40%">Client name</td>
 							<td width="10%" class="hide-m">Sector</td>
 							<td width="10%" class="hide-m">Type</td>
@@ -69,12 +73,27 @@
 								{{ Form::close() }}
 							</td>
 							<td class="hide-m sub-header">
+								{{ Form::open(['url' => 'list/search']) }}
+									{{ Form::select('filter_value', $account_directors, null, ['class' => 'list-table-filter']) }}
+									{{ Form::hidden('filter_field', 'account_director_id') }}
+									{{ Form::hidden('filter_results', 'yes') }}
+									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
+								{{ Form::close() }}
 							</td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $client)
 							<tr>
+								@if(Session::get( 'list.rowsHideShowDormant' ) == 'show')
+									@if($client->status)
+										<td class="actions content-center status-active show-s"><i class="fa fa-circle fa-lg show-s"></i></td>
+										<td class="actions content-center status-active hide-s">Active</td>
+									@else
+										<td class="actions content-center status-dormant show-s"><i class="fa fa-circle-o fa-lg show-s"></i></td>
+										<td class="actions content-center status-dormant hide-s">Dormant</td>
+									@endif
+								@endif
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">
 									@if($client->archives()->count())
