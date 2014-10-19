@@ -42,8 +42,10 @@
 							@if($user->hasRole('Administrator'))
 								<td colspan="4">Actions</td>
 							@else
-								<td>Actions</td>
+								<td colspan="2">Actions</td>
 							@endif
+
+							<td class="hide-s">Toggle Status</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -115,6 +117,17 @@
 										{{ Form::close() }}
 									</td>
 								@endif
+
+								<td class="actions content-center hide-s">
+									{{ Form::open(['route' => array('clients.change_status', $client->id), 'method' => 'get']) }}
+										{{ Form::hidden('client_id', $client->id) }}
+										@if($client->status)
+											<button type="submit" class="green-but" title="Make this client dormant"><i class="fa fa-circle"></i></button>
+										@else
+											<button type="submit" class="grey-but" title="Make this client active"><i class="fa fa-circle-o"></i></button>
+										@endif
+									{{ Form::close() }}
+								</td>
 							</tr>
 						@endforeach
 					</tbody>

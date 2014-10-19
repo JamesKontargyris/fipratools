@@ -99,6 +99,7 @@ Route::group(['before' => 'auth'], function()
 	Route::any('services/search', 'ServicesController@search');
 	Route::resource('services', 'ServicesController');
 	Route::any('clients/search', 'ClientsController@search');
+	Route::any('clients/status', ['as' => 'clients.change_status', 'uses' => 'ClientsController@changeStatus']);
 	Route::resource('clients', 'ClientsController');
 	Route::resource('client_links', 'ClientLinksController');
 	Route::resource('client_archives', 'ClientArchivesController');

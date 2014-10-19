@@ -90,7 +90,13 @@
 								<td class="hide-m">{{ $client->type()->pluck('short_name') }}</td>
 								<td class="hide-m">{{ $client->service()->pluck('name') }}</td>
 								<td><a href="{{ route('units.show', ['id' => $client->unit()->pluck('id')]) }}"><strong>{{ $client->unit()->pluck('name') }}</strong></a></td>
-								<td class="hide-s">{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}</td>
+								<td class="hide-s">
+									@if($client->pr_client)
+										<em>Mainly PR Client ({{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }})</em>
+									@else
+										{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}
+									@endif
+								</td>
 							</tr>
 						@endforeach
 					</tbody>

@@ -67,6 +67,7 @@ class Client extends \BaseModel
 		$this->type_id             = $client->type_id;
 		$this->service_id          = $client->service_id;
 		$this->status              = $client->status;
+		$this->pr_client           = $client->pr_client;
 		$this->save();
 
 		return $this;
@@ -84,6 +85,7 @@ class Client extends \BaseModel
 		$update_client->type_id             = $client->type_id;
 		$update_client->service_id          = $client->service_id;
 		$update_client->status              = $client->status;
+		$update_client->pr_client           = $client->pr_client;
 		$update_client->save();
 
 		return $update_client;

@@ -236,6 +236,22 @@ class ClientsController extends \BaseController
 		}
 	}
 
+	public function changeStatus()
+	{
+		if($client = Client::find(Input::get('client_id')))
+		{
+			$client->status = ($client->status) ? 0 : 1;
+			$client->save();
+			Flash::message('Status for client "' . $client->name . '" updated.', 'info');
+		}
+		else
+		{
+			Flash::message('Client not found.', 'info');
+		}
+
+		return Redirect::route('clients.index');
+	}
+
 	protected function getClient( $id )
 	{
 		$client = Client::find( $id );

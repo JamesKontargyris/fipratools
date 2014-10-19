@@ -26,6 +26,15 @@
   border-bottom: 2px solid rgba(darken($grey, 40%), 0.6);
   @include dark-grad($grey, top, 10%);
 }
+.green-but {
+  @include primary-but();
+  background-color:lighten(#adff2f, 20%);
+  @include text-shadow(darken(green, 10%) 0 -1px);
+  border-top: 1px solid lighten(#adff2f, 10%);
+  border-bottom: 2px solid rgba(darken(#adff2f, 40%), 0.6);
+  @include dark-grad(lighten(#adff2f, 20%), top, 20%);
+  color:green;
+}
 
 .alert {
   position:relative;
@@ -431,6 +440,7 @@
         padding:0 5px;
         a {
           display:block;
+          padding:5px 0;
           line-height:1;
         }
       }
