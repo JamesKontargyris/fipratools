@@ -13,7 +13,7 @@ class AddUser extends FormValidator {
 		'first_name' => 'required|max:255',
 		'last_name' => 'required|max:255',
 		'email' => 'required|email|max:255|unique:users',
-		'password' => 'required|confirmed|min:3|max:12',
+		'password' => 'required|confirmed|min:3|max:20',
 		'unit_id' => 'required|numeric',
 		'role_id' => 'required|numeric'
 	];
