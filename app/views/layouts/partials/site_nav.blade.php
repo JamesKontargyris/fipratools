@@ -9,7 +9,7 @@
 		{{--<li class="{{ nav_item_is_active('reports') ? 'active' : '' }}"><a href="{{ route('reports.index') }}"><i class="fa fa-pie-chart"></i> <strong>Reports</strong></a></li>--}}
 	@endif
 	@if($user->hasRole('Administrator'))
-		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }}"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
+		<li class="{{ nav_item_is_active('logs') ? 'active' : '' }}"><a href="{{ url('logs') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
 	@endif
 	@if($user->can('manage_clients'))
 		<li class="{{ nav_item_is_active('clients') ? 'active' : '' }}">

@@ -66,6 +66,14 @@
         return false;
     });
 
+    //When the trash-logs button is clicked, show a confirmation dialogue box
+    //Continue with the trashing if the OK button is pressed. Otherwise, do nothing.
+    $('.trash-logs').on("click", function()
+    {
+        if(confirm("Are you sure you want to delete all event logs?")) { return true; }
+        return false;
+    });
+
     //If select-all button is clicked, select all checkboxes on page
     $('button.select-all, a.select-all').on('click', function()
     {

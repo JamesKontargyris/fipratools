@@ -387,6 +387,9 @@
           border-left:0;
           color:$grey;
         }
+        .event-log-icon {
+          padding-right:10px;
+        }
       }
       &:nth-child(even) {
         background-color:darken(white, 5%);

@@ -171,10 +171,22 @@ strong {
 .white {
   color:white !important;
 }
-
 .turquoise {
   color:$turquoise !important;
 }
+.green {
+  color:limegreen !important;
+}
+.orange {
+  color:darken(orange, 10%) !important;
+}
+.periwinkle {
+  color:$periwinkle !important;
+}
+.light-grey {
+  color:$light-grey !important;
+}
+
 .showjs {
 	display:none;
 }

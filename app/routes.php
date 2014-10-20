@@ -86,7 +86,7 @@ Route::group(['before' => 'auth'], function()
 	Route::get('about', ['as' => 'list.about', 'uses' => 'ListController@about']);
 	Route::post('list/filter', ['as' => 'list.filter', 'uses' => 'ListController@filter']);
 	Route::resource('list', 'ListController');
-	Route::controller('eventlog', 'EventLogController');
+	Route::controller('logs', 'EventLogController');
 	Route::any('users/search', 'UsersController@search');
 	Route::resource('users', 'UsersController');
 	Route::any('units/search', 'UnitsController@search');

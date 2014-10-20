@@ -4,6 +4,7 @@ use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Client_archives\ClientArchive;
 use Leadofficelist\Clients\Client;
+use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Forms\AddEditClient as AddEditClientForm;
 use Leadofficelist\Sectors\Sector;
@@ -95,6 +96,7 @@ class ClientsController extends \BaseController
 		$this->execute( 'Leadofficelist\Clients\AddClientCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
+		EventLog::add('Client created: ' . $input['name'], $this->user->getFullName(), Unit::find($input['unit_id'])->name, 'add');
 
 		return Redirect::route( 'clients.index' );
 	}
@@ -176,6 +178,7 @@ class ClientsController extends \BaseController
 		$this->execute( 'Leadofficelist\Clients\EditClientCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" updated.', 'success' );
+		EventLog::add('Client edited: ' . $input['name'], $this->user->getFullName(), Unit::find($input['unit_id'])->name, 'edit');
 
 		return Redirect::route( 'clients.index' );
 	}
@@ -196,7 +199,7 @@ class ClientsController extends \BaseController
 		{
 			Client::destroy( $id );
 			Flash::overlay( '"' . $client->name . '" deleted.', 'info' );
-
+			EventLog::add('Client deleted: ' . $client->name, $this->user->getFullName(), Unit::find($client->unit_id)->name, 'delete');
 		}
 
 		return Redirect::route( 'clients.index' );
@@ -243,8 +246,10 @@ class ClientsController extends \BaseController
 		if($client = Client::find(Input::get('client_id')))
 		{
 			$client->status = ($client->status) ? 0 : 1;
+			$status = ($client->status) ? 'active' : 'dormant';
 			$client->save();
 			Flash::message('Status for client "' . $client->name . '" updated.', 'info');
+			EventLog::add('Client status changed: ' . $client->name . ' is now ' . $status, $this->user->getFullName(), Unit::find($client->unit_id)->name, 'info');
 		}
 		else
 		{

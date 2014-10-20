@@ -1,6 +1,7 @@
 <?php
 
 use Laracasts\Flash\Flash;
+use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Forms\Login as LoginForm;
 
@@ -25,6 +26,7 @@ class LoginController extends \BaseController
 
 		if( ! Auth::attempt( ['email' => Input::get('email'), 'password' => Input::get('password')] ))
 		{
+			EventLog::add('Failed login attempt by ' . $input['email'], '-', '-', 'error');
 			throw new LoginFailedException;
 		}
 
