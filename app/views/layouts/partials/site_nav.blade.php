@@ -50,4 +50,10 @@
 			<a href="{{ route('services.create') }}" class="site-nav-extra-link" title="Add a new service"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
+	@if($user->hasRole('Administrator'))
+		<li class="{{ nav_item_is_active('account_directors') ? 'active' : '' }}">
+			<a href="{{ route('account_directors.index') }}" class="has-extra-link">Account Directors</a>
+			<a href="{{ route('account_directors.create') }}" class="site-nav-extra-link" title="Add a new account director"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
 </ul>
