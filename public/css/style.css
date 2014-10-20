@@ -279,11 +279,15 @@ strong {
 .white {
   color: white !important; }
 
-/* line 174, ../../app/assets/sass/_base.scss */
+/* line 175, ../../app/assets/sass/_base.scss */
+.turquoise {
+  color: #14b1cc !important; }
+
+/* line 178, ../../app/assets/sass/_base.scss */
 .showjs {
   display: none; }
 
-/* line 177, ../../app/assets/sass/_base.scss */
+/* line 181, ../../app/assets/sass/_base.scss */
 .hidejs {
   display: block; }
 

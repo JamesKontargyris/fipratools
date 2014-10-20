@@ -46,6 +46,12 @@ class AccountDirector extends \BaseModel
 			$ads[''] = $blank_message;
 		}
 
+		if(! is_request('list'))
+		{
+			//Add in a blank entry for mainly PR clients that are displayed differently on the front-end
+			$ads[''] = 'None - Mainly PR Client';
+		}
+
 		foreach (
 			AccountDirector::orderBy( 'last_name', 'ASC' )->get( [
 				'id',

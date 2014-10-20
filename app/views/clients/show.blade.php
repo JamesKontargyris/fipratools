@@ -6,7 +6,7 @@
 
 @section('page-nav')
 @if($user->unit_id == $client->unit_id)
-	<li><a href="/sectors/{{ $client->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this client</a></li>
+	<li><a href="/clients/{{ $client->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this client</a></li>
 @endif
 @stop
 
@@ -22,11 +22,19 @@
 		<h4>{{ $client->unit()->pluck('name') }}</h4>
 		<p>{{ $client->getLeadOfficeAddress() }}</p>
 		<h4>Account Director to talk to</h4>
-		@if($client->pr_client)
-			<p><em>Mainly PR Client ({{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }})</em></p>
-		@else
-			<p>{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}</p>
-		@endif
+		<p>
+			@if($client->pr_client)
+				<i class="fa fa-asterisk turquoise"></i>
+				@if($client->account_director_id > 0)
+					({{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }})
+				@endif
+				<br/><br/>
+
+				<em>Mainly PR client. For all RLMFinsbury PR clients, please contact either Rory Chisholm or John Gray in the first instance except where indicated in brackets above.</em>
+			@else
+				{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}
+			@endif
+		</p>
 	</div>
 	<div class="col-6 last">
 		@if(count($linked_units))

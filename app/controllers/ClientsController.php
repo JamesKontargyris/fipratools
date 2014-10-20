@@ -168,7 +168,7 @@ class ClientsController extends \BaseController
 
 		$input                                  = Input::all();
 		$input['id']                            = $id;
-		$this->addEditClientForm->rules['name'] = 'required|max:255|unique:clients,name,' . $id;
+		$this->addEditClientForm->rules['name'] = 'required|max:255|unique:clients,name,' . $id . ',id,unit_id,' . $input['unit_id'];
 		$this->addEditClientForm->validate( $input );
 
 		$this->execute( 'Leadofficelist\Clients\EditClientCommand', $input );

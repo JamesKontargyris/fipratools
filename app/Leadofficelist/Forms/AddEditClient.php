@@ -12,8 +12,8 @@ class AddEditClient extends FormValidator
 	 */
 	public $rules = [
 		'name'                => 'required|max:255',
-		'account_director_id' => 'required|numeric',
 		'pr_client'           => 'required|numeric',
+		'account_director_id' => 'required_if:pr_client,0|numeric',
 		'sector_id'           => 'required|numeric',
 		'type_id'             => 'required|numeric',
 		'service_id'          => 'required|numeric',
@@ -21,7 +21,7 @@ class AddEditClient extends FormValidator
 	];
 
 	public $messages = [
-		'account_director_id.required' => 'Please select an Account Director',
+		'account_director_id.required_if' => 'Please select an Account Director.',
 		'pr_client.required'           => 'Please indicate whether this is a PR client or not.',
 		'pr_client.numeric'            => 'Please indicate whether this is a PR client or not.',
 		'sector_id.required'           => 'Please select a sector.',
@@ -31,4 +31,4 @@ class AddEditClient extends FormValidator
 		'service_id.required'          => 'Please select a service.',
 		'service_id.numeric'           => 'Please select a service.',
 	];
-} 
+}

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-Editing Sector: {{ $client->name }}
+Editing Client: {{ $client->name }}
 @stop
 
 @section('page-nav')
@@ -29,12 +29,12 @@ Editing Sector: {{ $client->name }}
 		@endif
 		{{ Form::hidden('user_id', isset($client->user_id) ? $client->user_id : '') }}
 		<div class="formfield">
-			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
-			{{ Form::select('account_director_id', $account_directors, isset($client->account_director_id) ? $client->account_director_id : '') }}
-		</div>
-		<div class="formfield">
 			{{ Form::label('pr_client', 'Mainly PR client?', ['class' => 'required']) }}
 			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], isset($client->pr_client) ? $client->pr_client : 0) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
+			{{ Form::select('account_director_id', $account_directors, isset($client->account_director_id) ? $client->account_director_id : '') }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}

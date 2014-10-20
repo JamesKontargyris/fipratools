@@ -30,12 +30,12 @@ Add a Client
 		{{ Form::hidden('user_id', $user->id) }}
 
 		<div class="formfield">
-			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
-            {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
-		</div>
-		<div class="formfield">
 			{{ Form::label('pr_client', 'Mainly PR client?', ['class' => 'required']) }}
 			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], Input::old('pr_client')) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
+            {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}

@@ -14,7 +14,14 @@
 @include('layouts.partials.messages')
 
 
+
 @if(count($items) > 0)
+
+	<div class="row no-margin">
+		<div class="col-12">
+			<i class="fa fa-asterisk turquoise"></i> denotes mainly PR client. For all RLMFinsbury PR clients, please contact either Rory Chisholm or John Gray in the first instance except where indicated in brackets.
+		</div>
+	</div>
 	@include('layouts.partials.rows_nav')
 
 	@include('layouts.partials.filters')
@@ -111,7 +118,10 @@
 								<td><a href="{{ route('units.show', ['id' => $client->unit()->pluck('id')]) }}"><strong>{{ $client->unit()->pluck('name') }}</strong></a></td>
 								<td class="hide-s">
 									@if($client->pr_client)
-										<em>Mainly PR Client ({{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }})</em>
+										<i class="fa fa-asterisk turquoise"></i>
+										@if($client->account_director_id > 0)
+											({{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }})
+										@endif
 									@else
 										{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}
 									@endif
