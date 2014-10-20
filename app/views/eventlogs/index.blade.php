@@ -12,12 +12,12 @@ Event Log
 
 @include('layouts.partials.messages')
 
-<p><em>Times shown are CET.</em></p>
 @if(count($items) > 0)
 	@include('layouts.partials.pagination_container')
 	<section class="index-table-container">
 		<div class="row">
 			<div class="col-12">
+				<p><em>Times shown are CET.</em></p>
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
