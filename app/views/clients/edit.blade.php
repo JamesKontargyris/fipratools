@@ -22,15 +22,17 @@ Editing Client: {{ $client->name }}
 		@if($user->hasRole('Administrator'))
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to unit:', ['class' => 'required']) }}
-				{{ Form::select('unit_id', $units, isset($client->unit_id) ? $client->unit_id : '') }}
+				{{ Form::select('unit_id', $units, isset($client->unit_id) ? $client->unit_id : '', ['class' => 'unit-selection']) }}
 			</div>
 		@else
 			{{ Form::hidden('unit_id', isset($client->unit_id) ? $client->unit_id : '') }}
+			{{ Form::hidden('unit_name', $user->unit()->pluck('name')) }}
 		@endif
 		{{ Form::hidden('user_id', isset($client->user_id) ? $client->user_id : '') }}
-		<div class="formfield">
+
+		<div class="formfield show-uk">
 			{{ Form::label('pr_client', 'Mainly PR client?', ['class' => 'required']) }}
-			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], isset($client->pr_client) ? $client->pr_client : 0) }}
+			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], isset($client->pr_client) ? $client->pr_client : 0, ['disabled' => 'disabled', 'class' => 'pr-client-selection']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}

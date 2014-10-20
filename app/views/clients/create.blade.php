@@ -22,20 +22,21 @@ Add a Client
 		@if($user->hasRole('Administrator'))
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to unit:', ['class' => 'required']) }}
-				{{ Form::select('unit_id', $units, Input::old('unit_id')) }}
+				{{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'unit-selection']) }}
 			</div>
 		@else
 			{{ Form::hidden('unit_id', $user->unit()->pluck('id')) }}
+			{{ Form::hidden('unit_name', $user->unit()->pluck('name')) }}
 		@endif
 		{{ Form::hidden('user_id', $user->id) }}
 
-		<div class="formfield">
+		<div class="formfield show-uk">
 			{{ Form::label('pr_client', 'Mainly PR client?', ['class' => 'required']) }}
-			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], Input::old('pr_client')) }}
+			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], Input::old('pr_client'), ['disabled' => 'disabled', 'class' => 'pr-client-selection']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
-            {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
+			{{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}

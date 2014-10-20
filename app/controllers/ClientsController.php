@@ -89,9 +89,10 @@ class ClientsController extends \BaseController
 		$this->check_perm( 'manage_clients' );
 
 		$input = Input::all();
+		if( ! isset($input['pr_client'])) $input['pr_client'] = 0;
 		$this->addEditClientForm->validate( $input );
 
-		$this->execute( 'Leadofficelist\Clients\AddClientCommand' );
+		$this->execute( 'Leadofficelist\Clients\AddClientCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
 
@@ -168,6 +169,7 @@ class ClientsController extends \BaseController
 
 		$input                                  = Input::all();
 		$input['id']                            = $id;
+		if( ! isset($input['pr_client'])) $input['pr_client'] = 0;
 		$this->addEditClientForm->rules['name'] = 'required|max:255|unique:clients,name,' . $id . ',id,unit_id,' . $input['unit_id'];
 		$this->addEditClientForm->validate( $input );
 

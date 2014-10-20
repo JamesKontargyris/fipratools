@@ -3,7 +3,7 @@
 	// Show all elements with a class of showjs
 	$('.showjs').css('display', 'block');
     // Hide all elements with a class of hidejs
-    $('.hidejs').css('display', 'none');
+    $('.hidejs, .show-uk').css('display', 'none');
 	// Show all help buttons
 	$('.help').css('display', 'inline-block');
     // Hide all help boxes
@@ -126,7 +126,6 @@
 
         if($element.val() != "")
         {
-            console.log('Finding clients...');
             $.ajax({
                 url: "/getclients?unit_id=" + $element.val()
             })
@@ -145,5 +144,45 @@
             $clients_select.append('<option value="">Please select a unit...</option>');
         }
     }
+
+
+//    UK-specific client form add/edit controls
+    if($.trim($('.unit-selection option:selected').text()) == 'United Kingdom' || $.trim($('input[name=unit_name]').val()) == 'United Kingdom')
+    {
+        show_uk_client_form_section();
+    }
+
+    $('.unit-selection, .pr-client-selection').on('change', function()
+    {
+        if($.trim($('.unit-selection option:selected').text()) == 'United Kingdom' || $.trim($('input[name=unit_name]').val()) == 'United Kingdom')
+        {
+            show_uk_client_form_section();
+        }
+        else
+        {
+            hide_uk_client_form_section();
+        }
+    });
+
+    function show_uk_client_form_section()
+    {
+        $('.show-uk').slideDown();
+        $('.show-uk select, .show-uk input').removeAttr('disabled');
+        if($('select[name=pr_client]').val() == 1)
+        {
+            $('select[name=account_director_id]').find('option:first-child').val(0).text('None');
+        }
+        else
+        {
+            $('select[name=account_director_id]').find('option:first-child').val('').text('Please select...');
+        }
+    };
+
+    function hide_uk_client_form_section()
+    {
+        $('.show-uk').slideUp();
+        $('.show-uk select, .show-uk input').attr('disabled', 'disabled');
+        $('select[name=account_director_id]').find('option:first-child').val('').text('Please select...');
+    };
 
 })();

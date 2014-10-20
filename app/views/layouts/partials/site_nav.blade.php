@@ -1,12 +1,15 @@
 <ul class="site-nav-menu">
 	@if($user->can('view_list'))
-		<li class="{{ nav_item_is_active('list') ? 'active' : '' }}"><a href="{{ route('list.index') }}"><i class="fa fa-list"></i> <strong>Lead Office List</strong></a></li>
+		<li class="{{ nav_item_is_active('list') ? 'active' : '' }}"><a href="{{ route('list.index') }}"><i class="fa fa-th-list"></i> <strong>Lead Office List</strong></a></li>
 	@endif
 	@if($user->can('view_list') && ! $user->hasRole('Administrator'))
 		<li class="{{ nav_item_is_active('about') ? 'active' : '' }}"><a href="{{ route('list.about') }}"><i class="fa fa-info-circle"></i> <strong>About the List</strong></a></li>
 	@endif
 	@if($user->can('view_list'))
 		{{--<li class="{{ nav_item_is_active('reports') ? 'active' : '' }}"><a href="{{ route('reports.index') }}"><i class="fa fa-pie-chart"></i> <strong>Reports</strong></a></li>--}}
+	@endif
+	@if($user->hasRole('Administrator'))
+		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }}"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
 	@endif
 	@if($user->can('manage_clients'))
 		<li class="{{ nav_item_is_active('clients') ? 'active' : '' }}">
