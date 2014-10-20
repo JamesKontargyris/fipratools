@@ -11,7 +11,7 @@
 	@if($user->can('manage_clients'))
 		<li class="{{ nav_item_is_active('clients') ? 'active' : '' }}">
 			<a href="{{ route('clients.index') }}" class="{{ nav_item_is_active('clients') ? 'active' : '' }} has-extra-link">
-				@if($user->hasRole('Administrator'))
+				@if($user->hasRole('Administrator') || Request::is('clients/*'))
 					Clients
 				@else
 					Your Clients
