@@ -81,7 +81,11 @@
 							<h2>@yield('page-header')</h2>
 							<nav class="page-menu-nav">
 								<ul>
-									@yield('page-nav')
+									<li class="divider-right"><a class="print-button" href="#"><i class="fa fa-print"></i> Print this Page</a></li>
+									<li><a class="secondary" href="{{ url('reports/bysector') }}"><i class="fa fa-pie-chart"></i> By Sector</a></li>
+									<li><a class="secondary" href="{{ url('reports/byunit') }}"><i class="fa fa-pie-chart"></i> By Unit</a></li>
+									<li><a class="secondary" href="{{ url('reports/bytype') }}"><i class="fa fa-pie-chart"></i> By Type</a></li>
+									<li><a class="secondary" href="{{ url('reports/byservice') }}"><i class="fa fa-pie-chart"></i> By Service</a></li>
 								</ul>
 							</nav>
 							<a href="#" class="page-menu-icon-s">
@@ -118,6 +122,10 @@
 	<!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
+	<script>
+		{{--Colours used by the charts--}}
+		var colours = [ '#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c', '#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae', '#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24', '#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c', '#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae', '#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24', '#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c', '#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae', '#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24' ];
+	</script>
 	@yield('chart-script')
 
     </body>

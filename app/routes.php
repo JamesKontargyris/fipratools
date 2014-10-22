@@ -107,7 +107,7 @@ Route::group(['before' => 'auth'], function()
 	Route::any('account_directors/search', 'AccountDirectorsController@search');
 	Route::resource('account_directors', 'AccountDirectorsController');
 
-	Route::resource('reports', 'ReportsController');
+	Route::controller('reports', 'ReportsController');
 });
 
 //Ajax requests

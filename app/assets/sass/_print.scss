@@ -1,0 +1,80 @@
+@media print {
+  *:not(i) {
+    color:black !important;
+  }
+
+  .row,
+  #page-header,
+  .content-container,
+  #content {
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  h2 {
+    padding:0 !important;
+    margin-bottom:$v-rhythm;
+  }
+
+  .hide-m,
+  .hide-s {
+    display:block !important;
+  }
+
+  .index-table {
+    .hide-m,
+    .hide-s {
+      display:table-cell !important;
+      &.hide-print {
+        display:none !important;
+      }
+    }
+  }
+
+  .mobile-user-details-container,
+  .mobile-site-nav-container,
+  .site-nav-menu,
+  .mobile-nav-buttons,
+  footer,
+  .page-menu-icon-s,
+  .page-menu-nav,
+  .hide-print {
+    display:none !important;
+  }
+
+  .logo {
+    color:black !important;
+  }
+
+  @for $i from 1 through 12 {
+    .col-#{$i} {
+      float:none;
+      width: 100% !important;
+      margin-right:0;
+    }
+  }
+
+  .chart {
+    display:none;
+  }
+  .chart-print {
+    position:relative;
+    top:0;
+    left:0;
+  }
+
+  table, table tr, table tr td {
+    border-left:1px solid $grey !important;
+    border-bottom:1px solid $grey !important;
+  }
+
+  table {
+    border-top:1px solid $grey !important;
+    border-right:1px solid $grey !important;
+  }
+
+  .archive-count,
+  .client-links {
+    border:0 !important;
+  }
+}

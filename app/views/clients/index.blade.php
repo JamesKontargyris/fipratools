@@ -5,6 +5,7 @@
 @stop
 
 @section('page-nav')
+<li class="divider-right"><a class="print-button" href="#"><i class="fa fa-print"></i> Print this Page</a></li>
 <li><a href="{{ route('clients.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
 @if($user->hasRole('Administrator'))
 	<li><a href="{{ route('client_links.create') }}" class="secondary"><i class="fa fa-link"></i> Create a Client/Unit Link</a></li>
@@ -40,12 +41,12 @@
 							<td width="10%" class="hide-m">Service</td>
 
 							@if($user->hasRole('Administrator'))
-								<td colspan="4">Actions</td>
+								<td colspan="4" class="hide-print">Actions</td>
 							@else
-								<td>Actions</td>
+								<td class="hide-print">Actions</td>
 							@endif
 
-							<td class="hide-s">Toggle Status</td>
+							<td class="hide-s hide-print">Toggle Status</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -89,14 +90,14 @@
 								<td class="hide-m">{{ $client->service()->pluck('name') }}</td>
 
 								@if($user->hasRole('Administrator'))
-									<td class="actions content-center">
+									<td class="actions hide-print content-center">
 										{{ Form::open(['route' => 'client_links.create', 'method' => 'get']) }}
 											{{ Form::hidden('unit_1', $client->unit()->pluck('id')) }}
 											{{ Form::hidden('client_1', $client->id) }}
 											<button type="submit" class="grey-but" title="Add a unit link for this client"><i class="fa fa-link"></i></button>
 										{{ Form::close() }}
 									</td>
-									<td class="actions content-center">
+									<td class="actions hide-print content-center">
 										{{ Form::open(['url' => 'client_archives/create', 'method' => 'get']) }}
 											{{ Form::hidden('client_id', $client->id) }}
 											<button type="submit" class="primary" title="Add an archive record for this client"><i class="fa fa-archive"></i></button>
@@ -104,21 +105,21 @@
 									</td>
 								@endif
 
-								<td class="actions content-center">
+								<td class="actions hide-print content-center">
 									{{ Form::open(['route' => array('clients.edit', $client->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" title="Edit this client"><i class="fa fa-pencil"></i></button>
 									{{ Form::close() }}
 								</td>
 
 								@if($user->hasRole('Administrator'))
-									<td class="actions content-center">
+									<td class="actions hide-print content-center">
 										{{ Form::open(['route' => array('clients.destroy', $client->id), 'method' => 'delete']) }}
 											<button type="submit" class="red-but delete-row" data-resource-type="client" title="Delete this client"><i class="fa fa-times"></i></button>
 										{{ Form::close() }}
 									</td>
 								@endif
 
-								<td class="actions content-center hide-s">
+								<td class="actions hide-print content-center hide-s">
 									{{ Form::open(['route' => array('clients.change_status', $client->id), 'method' => 'get']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										@if($client->status)

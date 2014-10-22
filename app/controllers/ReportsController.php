@@ -1,18 +1,37 @@
 <?php
 
+use Leadofficelist\Sector_categories\Sector_category;
+use Leadofficelist\Sectors\Sector;
+use Leadofficelist\Services\Service;
+use Leadofficelist\Types\Type;
 use Leadofficelist\Units\Unit;
 
 class ReportsController extends \BaseController {
 
 	protected $resource_key = 'reports';
-	protected $colours = ['#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F','#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F',];
+	protected $colours = [
+		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+	];
 	/**
 	 * Display a listing of the resource.
 	 * GET /reports
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
+	{
+		return Redirect::to('reports/bysector');
+	}
+
+	public function getByunit()
 	{
 		$units = Unit::all();
 		$clients = [];
@@ -20,9 +39,9 @@ class ReportsController extends \BaseController {
 		$count = 0;
 		foreach($units as $unit)
 		{
-			$clients[] = ['unit_name' => $unit->name, 'client_count' => $unit->clients()->where('status', '=', 1)->count()];
+			$clients[] = ['unit_short_name' => $unit->short_name, 'unit_name' => $unit->name, 'client_count' => $unit->clients()->where('status', '=', 1)->count()];
 			$count++;
-			$total_clients += $unit->clients()->count();
+			$total_clients += $unit->clients()->where('status', '=', 1)->count();
 		}
 
 		uasort($clients, [$this, 'compare']);
@@ -30,80 +49,94 @@ class ReportsController extends \BaseController {
 		foreach($clients as &$client)
 		{
 			$client['id'] = $count;
-			$client['percentage'] = number_format(($client['client_count'] / $total_clients) * 100, 2, '.', ',') ;
+			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
 			$count++;
 		}
+
 		return View::make('reports.client_count_by_unit')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /reports/create
-	 *
-	 * @return Response
-	 */
-	public function create()
+	public function getBysector()
 	{
-		//
+		$sector_cats = Sector_category::all();
+		$clients = [];
+		$total_clients = 0;
+		$count = 0;
+		foreach($sector_cats as $sector_cat)
+		{
+			//Get all the sectors in this category, then iterate through them to get the client count in each sector
+			//Add the total to the clients array.
+			$sectors_in_category = Sector::where('category_id', '=', $sector_cat->id)->get();
+			$total_in_category = 0;
+			foreach($sectors_in_category as $sector)
+			{
+				$total_in_category += $sector->clients()->where('status', '=', 1)->count();
+			}
+			$clients[] = ['sector_name' => $sector_cat->name, 'client_count' => $total_in_category];
+			$count++;
+			$total_clients += $total_in_category;
+		}
+
+		uasort($clients, [$this, 'compare']);
+		$count = 0;
+		foreach($clients as &$client)
+		{
+			$client['id'] = $count;
+			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$count++;
+		}
+
+		return View::make('reports.client_count_by_sector')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /reports
-	 *
-	 * @return Response
-	 */
-	public function store()
+	public function getBytype()
 	{
-		//
+		$types = Type::all();
+		$clients = [];
+		$total_clients = 0;
+		$count = 0;
+		foreach($types as $type)
+		{
+			$clients[] = ['type_short_name' => $type->short_name, 'type_name' => $type->name, 'client_count' => $type->clients()->where('status', '=', 1)->count()];
+			$count++;
+			$total_clients += $type->clients()->where('status', '=', 1)->count();
+		}
+
+		uasort($clients, [$this, 'compare']);
+		$count = 0;
+		foreach($clients as &$client)
+		{
+			$client['id'] = $count;
+			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$count++;
+		}
+
+		return View::make('reports.client_count_by_type')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /reports/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
+	public function getByservice()
 	{
-		//
-	}
+		$services = Service::all();
+		$clients = [];
+		$total_clients = 0;
+		$count = 0;
+		foreach($services as $service)
+		{
+			$clients[] = ['service_name' => $service->name, 'client_count' => $service->clients()->where('status', '=', 1)->count()];
+			$count++;
+			$total_clients += $service->clients()->where('status', '=', 1)->count();
+		}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /reports/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+		uasort($clients, [$this, 'compare']);
+		$count = 0;
+		foreach($clients as &$client)
+		{
+			$client['id'] = $count;
+			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$count++;
+		}
 
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /reports/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /reports/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		return View::make('reports.client_count_by_service')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
 	}
 
 
@@ -123,6 +156,11 @@ class ReportsController extends \BaseController {
 		}
 
 		return ($a['client_count'] > $b['client_count']) ? -1 : 1;
+	}
+
+	public function missingMethod($parameters = [])
+	{
+		return Redirect::to('reports');
 	}
 
 }

@@ -20,6 +20,11 @@
         }
     });
 
+    $('.print-button').on('click', function()
+    {
+        window.print();
+    });
+
     $('.list-table-filter').on('change', function()
     {
         $(this).parent('form').submit();
