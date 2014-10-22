@@ -28,7 +28,7 @@ class ListController extends BaseController
 		$types             = $this->types;
 		$services          = $this->services;
 
-		$items      = Client::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'list';
 
 		return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'types', 'services' ) );
