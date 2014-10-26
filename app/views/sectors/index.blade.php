@@ -9,6 +9,9 @@
 <li><a href="{{ route('sector_categories.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Categories</a></li>
 @stop
 
+@section('export-nav')
+@stop
+
 @section('content')
 
 @include('layouts.partials.messages')

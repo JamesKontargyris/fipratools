@@ -12,6 +12,7 @@ class TypesController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'types';
+	protected $resource_permission = 'manage_types';
 	private $addEditTypeForm;
 
 	function __construct( AddEditTypeForm $addEditTypeForm )
@@ -183,6 +184,28 @@ class TypesController extends \BaseController
 		{
 			return View::make( 'types.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return Type::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			$items = Type::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate($this->rows_to_view);
+		}
+		else
+		{
+			$items = Type::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	protected function getType( $id )

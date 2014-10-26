@@ -114,3 +114,23 @@ function nav_item_is_active($uri)
 
 	return false;
 }
+
+function clean_key($key, $uppercase_all_words = true)
+{
+	if($uppercase_all_words)
+	{
+		$words = explode('_', $key);
+		$new_key = '';
+
+		foreach($words as $word)
+		{
+			$new_key .= ucfirst($word) . ' ';
+		}
+
+		return trim($new_key);
+	}
+	else
+	{
+		return str_replace('_', ' ', $key);
+	}
+}

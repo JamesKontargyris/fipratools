@@ -12,6 +12,7 @@ class AccountDirectorsController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'account_directors';
+	protected $resource_permission = 'manage_users';
 	private $addEditAccountDirectorForm;
 	private $search_term;
 
@@ -177,6 +178,32 @@ class AccountDirectorsController extends \BaseController
 		{
 			return Redirect::route( 'account_directors.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return AccountDirector::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$this->search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $this->search_term);
+
+			//Search on both first_name and last_name
+			$items = AccountDirector::where( function ( $query )
+			{
+				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+		else
+		{
+			$items = AccountDirector::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	protected function getAccountDirector( $id )

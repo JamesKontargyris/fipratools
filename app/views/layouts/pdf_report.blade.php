@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>{{ $heading1 }}</title>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
     <style>
     	body {
     		margin:0;
@@ -25,6 +26,10 @@
     	}
     	h5 {
     		font-size:10px;
+    	}
+
+    	.chart-print {
+    		width:600px; height:600px; display:block; margin:0 auto;
     	}
 
 		.index-table {
@@ -98,6 +103,29 @@
     </style>
 </head>
 <body>
+	<div style="display:block; text-align: center; padding-bottom:10px">
+    	<h1 style="display:inline-block; margin:0 auto;">{{ $heading1 }}</h1>
+    </div>
+
     @yield('content')
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script>
+		{{--Colours used by the charts--}}
+		var colours = [
+			'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+			'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+			'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+			'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+			'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+			'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+			'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+			'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+			'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+		];
+	</script>
+
+	@yield('chart-script')
 </body>
 </html>

@@ -20,6 +20,7 @@ class ReportsController extends \BaseController {
 		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
 		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
 	];
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /reports
@@ -33,30 +34,132 @@ class ReportsController extends \BaseController {
 
 	public function getByunit()
 	{
-		$units = Unit::all();
-		$clients = [];
-		$total_clients = 0;
-		$count = 0;
-		foreach($units as $unit)
-		{
-			$clients[] = ['unit_short_name' => $unit->short_name, 'unit_name' => $unit->name, 'client_count' => $unit->clients()->where('status', '=', 1)->count()];
-			$count++;
-			$total_clients += $unit->clients()->where('status', '=', 1)->count();
-		}
+		$data = $this->getClientsByUnit();
 
-		uasort($clients, [$this, 'compare']);
-		$count = 0;
-		foreach($clients as &$client)
-		{
-			$client['id'] = $count;
-			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
-			$count++;
-		}
-
-		return View::make('reports.client_count_by_unit')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
+		return View::make('reports.client_count_by_unit')->with(['report_type' => 'unit', 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
 	}
 
 	public function getBysector()
+	{
+		$data = $this->getClientsBySector();
+
+		return View::make('reports.client_count_by_sector')->with(['report_type' => 'sector', 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+	}
+
+	public function getBytype()
+	{
+		$data = $this->getClientsByType();
+
+		return View::make('reports.client_count_by_type')->with(['report_type' => 'type', 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+	}
+
+	public function getByservice()
+	{
+		$data = $this->getClientsByService();
+
+		return View::make('reports.client_count_by_service')->with(['report_type' => 'service', 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+	}
+
+	/**
+	 * Export report to PDF or Excel
+	 *
+	 * @return bool|\Illuminate\Http\RedirectResponse
+	 * @throws Exception
+	 */
+	public function getExport()
+	{
+		if(Input::has('filetype') && Input::has('report_type'))
+		{
+			switch(Input::get('filetype'))
+			{
+				case 'pdf':
+					$contents = $this->PDFExport(Input::get('report_type'));
+					$this->generatePDF($contents, $this->export_filename . '.pdf');
+					return true;
+					break;
+			}
+		}
+		else
+		{
+			Flash::message('Error: no file type given or cannot export to that file type.');
+			return Redirect::route($this->resource_key . '.index');
+		}
+	}
+
+	/**
+	 * Export a report to a PDF file
+	 *
+	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
+	 * @internal param string $permission
+	 * @internal param $items
+	 *
+	 * @return string
+	 */
+	protected function PDFExport($report_type)
+	{
+		$this->check_perm( 'view_list' );
+
+
+		if(isset($report_type))
+		{
+			switch($report_type)
+			{
+				case 'unit':
+					$data = $this->getClientsByUnit();
+					$heading1 = 'Active Clients by Unit';
+					$view = View::make('export.report_unit')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					return (string) $view;
+					break;
+
+				case 'type':
+					$data = $this->getClientsByType();
+					$heading1 = 'Active Clients by Type';
+					$view = View::make('export.report_type')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					return (string) $view;
+					break;
+
+				case 'service':
+					$data = $this->getClientsByService();
+					$heading1 = 'Active Clients by Service';
+					$view = View::make('export.report_service')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					return (string) $view;
+					break;
+
+				default:
+					$data = $this->getClientsBySector();
+					$heading1 = 'Active Clients by Sector';
+					$view = View::make('export.report_sector')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					return (string) $view;
+					break;
+			}
+		}
+		else
+		{
+			Flash::message('Error: no report type given or cannot export to that file type.');
+			return Redirect::route($this->resource_key . '.index');
+		}
+	}
+
+
+	/**
+	 * Used to compare values in an array uasort function
+	 *
+	 * @param $a
+	 * @param $b
+	 *
+	 * @return int
+	 */
+	protected function compare($a, $b)
+	{
+		if($a['client_count'] == $b['client_count'])
+		{
+			return 0;
+		}
+
+		return ($a['client_count'] > $b['client_count']) ? -1 : 1;
+	}
+
+	protected function getClientsBySector()
 	{
 		$sector_cats = Sector_category::all();
 		$clients = [];
@@ -86,10 +189,41 @@ class ReportsController extends \BaseController {
 			$count++;
 		}
 
-		return View::make('reports.client_count_by_sector')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
+		$data['clients'] = $clients;
+		$data['total_clients'] = $total_clients;
+
+		return $data;
 	}
 
-	public function getBytype()
+	protected function getClientsByUnit()
+	{
+		$units = Unit::all();
+		$clients = [];
+		$total_clients = 0;
+		$count = 0;
+		foreach($units as $unit)
+		{
+			$clients[] = ['unit_short_name' => $unit->short_name, 'unit_name' => $unit->name, 'client_count' => $unit->clients()->where('status', '=', 1)->count()];
+			$count++;
+			$total_clients += $unit->clients()->where('status', '=', 1)->count();
+		}
+
+		uasort($clients, [$this, 'compare']);
+		$count = 0;
+		foreach($clients as &$client)
+		{
+			$client['id'] = $count;
+			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$count++;
+		}
+
+		$data['clients'] = $clients;
+		$data['total_clients'] = $total_clients;
+
+		return $data;
+	}
+
+	protected function getClientsByType()
 	{
 		$types = Type::all();
 		$clients = [];
@@ -111,10 +245,13 @@ class ReportsController extends \BaseController {
 			$count++;
 		}
 
-		return View::make('reports.client_count_by_type')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
+		$data['clients'] = $clients;
+		$data['total_clients'] = $total_clients;
+
+		return $data;
 	}
 
-	public function getByservice()
+	protected function getClientsByService()
 	{
 		$services = Service::all();
 		$clients = [];
@@ -136,26 +273,10 @@ class ReportsController extends \BaseController {
 			$count++;
 		}
 
-		return View::make('reports.client_count_by_service')->with(['colours' => $this->colours, 'clients' => $clients, 'total_clients' => number_format($total_clients, 0, '.', ',')]);
-	}
+		$data['clients'] = $clients;
+		$data['total_clients'] = $total_clients;
 
-
-	/**
-	 * Used to compare values in an array uasort function
-	 *
-	 * @param $a
-	 * @param $b
-	 *
-	 * @return int
-	 */
-	protected function compare($a, $b)
-	{
-		if($a['client_count'] == $b['client_count'])
-		{
-			return 0;
-		}
-
-		return ($a['client_count'] > $b['client_count']) ? -1 : 1;
+		return $data;
 	}
 
 	public function missingMethod($parameters = [])

@@ -143,11 +143,24 @@
   nav {
     ul {
       @include horizontal-list();
+      &.small-font a {
+        @include font-size(12);
+        font-weight: $font-bold;
+      }
+      & + ul {
+        margin-top:$v-rhythm / 1.5;
+      }
       li {
         margin-right:5px;
+        padding:0;
         @include breakpoint($m-max) { display:block; width:100%; padding:10px 0 0 0; }
+        @include breakpoint($m) {
+          &.right {
+            float:right;
+          }
+        }
         a {
-          @include secondary-but();
+//          @include secondary-but();
           display:inline-block;
           line-height:1.1;
           @include breakpoint($m-max) {
@@ -156,8 +169,6 @@
               display:none;
             }
           }
-          @include font-size(12);
-          font-weight: $font-bold;
         }
         &.divider-right {
           @include breakpoint($l)

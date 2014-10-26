@@ -11,6 +11,7 @@ class ServicesController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'services';
+	protected $resource_permission = 'manage_services';
 	private $addEditServiceForm;
 
 	function __construct( AddEditServiceForm $addEditServiceForm )
@@ -181,6 +182,28 @@ class ServicesController extends \BaseController
 		{
 			return View::make( 'services.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return Service::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			$items = Service::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate($this->rows_to_view);
+		}
+		else
+		{
+			$items = Service::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	/**

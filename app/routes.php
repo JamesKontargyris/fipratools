@@ -2,6 +2,9 @@
 
 use Ignited\Pdf\Facades\Pdf;
 use Leadofficelist\Clients\Client;
+use Leadofficelist\Sector_categories\Sector_category;
+use Leadofficelist\Sectors\Sector;
+use Leadofficelist\Units\Unit;
 
 Route::get('/', ['as' => 'home', function()
 {
@@ -124,28 +127,61 @@ Route::group(['before' => 'auth'], function()
 	Route::post('list/filter', ['as' => 'list.filter', 'uses' => 'ListController@filter']);
 	Route::resource('list', 'ListController');
 	Route::controller('logs', 'EventLogController');
+
+	Route::any('users/export', 'UsersController@export');
 	Route::any('users/search', 'UsersController@search');
 	Route::resource('users', 'UsersController');
+
+	Route::any('units/export', 'UnitsController@export');
 	Route::any('units/search', 'UnitsController@search');
 	Route::resource('units', 'UnitsController');
+
+	Route::any('sectors/export', 'SectorsController@export');
 	Route::any('sectors/search', 'SectorsController@search');
 	Route::resource('sectors', 'SectorsController');
+
+	Route::any('sector_categories/export', 'SectorCategoriesController@export');
 	Route::any('sector_categories/search', 'SectorCategoriesController@search');
 	Route::resource('sector_categories', 'SectorCategoriesController');
+
+	Route::any('types/export', 'TypesController@export');
 	Route::any('types/search', 'TypesController@search');
 	Route::resource('types', 'TypesController');
+
+	Route::any('services/export', 'ServicesController@export');
 	Route::any('services/search', 'ServicesController@search');
 	Route::resource('services', 'ServicesController');
-	Route::any('clients/search', 'ClientsController@search');
+
 	Route::any('clients/export', 'ClientsController@export');
+	Route::any('clients/search', 'ClientsController@search');
 	Route::any('clients/status', ['as' => 'clients.change_status', 'uses' => 'ClientsController@changeStatus']);
 	Route::resource('clients', 'ClientsController');
+
 	Route::resource('client_links', 'ClientLinksController');
 	Route::resource('client_archives', 'ClientArchivesController');
+
+	Route::any('account_directors/export', 'AccountDirectorsController@export');
 	Route::any('account_directors/search', 'AccountDirectorsController@search');
 	Route::resource('account_directors', 'AccountDirectorsController');
 
 	Route::controller('reports', 'ReportsController');
+});
+
+Route::get('testreport', function()
+{
+	$colours = [
+		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+	];
+
+
 });
 
 //Ajax requests

@@ -13,6 +13,7 @@ class SectorsController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'sectors';
+	protected $resource_permission = 'manage_sectors';
 	private $addEditSectorForm;
 
 	function __construct( AddEditSectorForm $addEditSectorForm )
@@ -20,6 +21,7 @@ class SectorsController extends \BaseController
 		parent::__construct();
 
 		$this->check_perm( 'manage_sectors' );
+
 		$this->addEditSectorForm = $addEditSectorForm;
 
 		View::share( 'page_title', 'Sectors' );
@@ -179,6 +181,28 @@ class SectorsController extends \BaseController
 		{
 			return View::make( 'sectors.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return Sector::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			$items = Sector::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+		else
+		{
+			$items = Sector::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	protected function getSector($id)

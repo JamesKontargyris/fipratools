@@ -8,6 +8,9 @@
 <li><a href="{{ route('users.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a User</a></li>
 @stop
 
+@section('export-nav')
+@stop
+
 @section('content')
 
 @include('layouts.partials.messages')

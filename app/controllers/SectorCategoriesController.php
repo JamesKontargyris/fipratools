@@ -12,9 +12,7 @@ class SectorCategoriesController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'sector_categories';
-	/**
-	 * @var AddEditSectorCategory
-	 */
+	protected $resource_permission = 'manage_sectors';
 	private $addEditSectorCategoryForm;
 
 	function __construct( AddEditSectorCategoryForm $addEditSectorCategoryForm )
@@ -186,6 +184,29 @@ class SectorCategoriesController extends \BaseController
 		{
 			return View::make( 'sector_categories.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return Sector_category::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			//Search on both first_name and last_name
+			$items = Sector_category::where('name', '=', $search_term)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+		else
+		{
+			$items = Sector_category::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	protected function getSectorCategory( $id )

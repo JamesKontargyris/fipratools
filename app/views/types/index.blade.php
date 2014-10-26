@@ -8,6 +8,9 @@
 <li><a href="{{ route('types.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Type</a></li>
 @stop
 
+@section('export-nav')
+@stop
+
 @section('content')
 
 @include('layouts.partials.messages')

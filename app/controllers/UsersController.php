@@ -15,11 +15,13 @@ class UsersController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'users';
+	protected $resource_permission = 'manage_users';
 	protected $units;
 	protected $roles;
 	protected $fipriot_perms_list;
 	protected $admin_perms_list;
 	protected $manager_perms_list;
+	protected $export_filename;
 	private $addUserForm;
 	private $editUserForm;
 
@@ -30,9 +32,8 @@ class UsersController extends \BaseController
 		parent::__construct();
 
 		$this->addUserForm = $addUserForm;
-
-		$this->getFormData();
 		$this->editUserForm = $editUserForm;
+		$this->getFormData();
 
 		View::share( 'page_title', 'Units' );
 		View::share( 'key', 'users' );
@@ -239,6 +240,31 @@ class UsersController extends \BaseController
 			return Redirect::route( 'users.index' );
 		}
 
+	}
+
+	protected function getAll()
+	{
+		return User::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$this->search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $this->search_term);
+
+			$items = User::where( 'id', '!=', $this->user->id )->where( function ( $query )
+			{
+				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate($this->rows_to_view);
+		}
+		else
+		{
+				$items = User::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	/**

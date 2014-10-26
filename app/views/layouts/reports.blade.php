@@ -81,11 +81,15 @@
 							<h2>@yield('page-header')</h2>
 							<nav class="page-menu-nav">
 								<ul>
-									<li class="divider-right"><a class="print-button" href="#"><i class="fa fa-print"></i> Print this Page</a></li>
 									<li><a class="secondary" href="{{ url('reports/bysector') }}"><i class="fa fa-pie-chart"></i> By Sector</a></li>
 									<li><a class="secondary" href="{{ url('reports/byunit') }}"><i class="fa fa-pie-chart"></i> By Unit</a></li>
 									<li><a class="secondary" href="{{ url('reports/bytype') }}"><i class="fa fa-pie-chart"></i> By Type</a></li>
 									<li><a class="secondary" href="{{ url('reports/byservice') }}"><i class="fa fa-pie-chart"></i> By Service</a></li>
+								</ul>
+								<ul class="small-font">
+									<li><a href="/reports/export?filetype=pdf&report_type={{ $report_type }}" class="grey-but"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
+									<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
+									@yield('export-nav')
 								</ul>
 							</nav>
 							<a href="#" class="page-menu-icon-s">

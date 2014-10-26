@@ -1,5 +1,6 @@
 <?php
 
+use Ignited\Pdf\Facades\Pdf;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Clients\Client;
@@ -26,6 +27,7 @@ class BaseController extends Controller
 	protected $types;
 	protected $services;
 	protected $export_filename;
+	protected $search_term_clean;
 
 	/**
 	 * Array of filter keys to reset when "reset filters" is clicked
@@ -53,6 +55,116 @@ class BaseController extends Controller
 		$this->rows_list_filter_value = $this->getRowsListFilterValue( $this->resource_key );
 		$this->name_order             = $this->getNameOrder( $this->resource_key );
 		$this->rows_hide_show_dormant = $this->getRowsHideShowDormant( $this->resource_key );
+
+		$this->export_filename = $this->resource_key . '_' . date('y-m-d_G-i');
+	}
+
+	/**
+	 * Export data to PDF or Excel
+	 *
+	 * @return bool|\Illuminate\Http\RedirectResponse
+	 * @throws Exception
+	 */
+	public function export()
+	{
+		if(Input::has('filetype'))
+		{
+			switch(Input::get('filetype'))
+			{
+				case 'pdf_all':
+					$contents = $this->PDFExportAll($this->resource_permission, $this->getAll());
+					$this->generatePDF($contents, $this->export_filename . '.pdf');
+					return true;
+					break;
+
+				case 'pdf_selection':
+					$contents = $this->PDFExportSelection($this->resource_permission, $this->getSelection());
+					$this->generatePDF($contents, $this->export_filename . '_selection.pdf');
+					return true;
+					break;
+			}
+		}
+		else
+		{
+			Flash::message('Error: no file type given or cannot export to that file type.');
+			return Redirect::route($this->resource_key . '.index');
+		}
+	}
+
+	/**
+	 * Export all records for a resource to a PDF file
+	 *
+	 * @param string $permission
+	 * @param $items
+	 *
+	 * @return string
+	 * @throws PermissionDeniedException
+	 */
+	protected function PDFExportAll($permission = 'view_list', $items)
+	{
+		$this->check_perm( $permission );
+
+		$heading1 = 'All ' . clean_key($this->resource_key);
+		$heading2 = number_format($items->count(), 0) . ' total ' . clean_key($this->resource_key);
+		if(is_request('clients') || is_request('list')) {
+			$heading2 .= ' - ' . number_format($this->getActiveCount(), 0) . ' active, ' . number_format($this->getDormantCount(), 0) . ' dormant';
+		}
+		$view = View::make( 'export.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+
+		return (string) $view;
+	}
+
+	/**
+	 * Export a visible selection of records for a resource to a PDF file
+	 *
+	 * @param string $permission
+	 * @param $items
+	 *
+	 * @return string
+	 * @throws PermissionDeniedException
+	 */
+	protected function PDFExportSelection($permission = 'view_list', $items)
+	{
+		$this->check_perm( $permission );
+
+		$heading1 = ucfirst(clean_key($this->resource_key)) . ' Selection';
+		$heading2 = isset($this->search_term_clean) ?
+			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($this->resource_key) . ' when searching for ' . Session::get($this->resource_key . '.SearchType') . ' "' . $this->search_term_clean . '"' :
+			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($this->resource_key);
+		$view = View::make( 'export.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+
+		return (string) $view;
+	}
+
+	/**
+	 * Generate a PDF file
+	 *
+	 * @param $contents
+	 * @param $filename
+	 * @param bool $cover_page
+	 *
+	 * @throws Exception
+	 */
+	protected function generatePDF($contents, $filename, $cover_page = false)
+	{
+		$header_left = 'Fipra Lead Office List';
+		$footer_left = 'Generated at [time] on [date]';
+		$footer_center = 'Page [page] of [toPage]';
+		$footer_right = 'Private and Confidential';
+		$pdf = PDF::make();
+		$pdf->setOptions(array(
+			'orientation' => 'landscape',
+			'margin-top' => '15',
+			'header-font-size' => '8',
+			'header-spacing' => '5',
+			'header-left' => $header_left,
+			'footer-font-size' => '8',
+			'footer-left' => $footer_left,
+			'footer-center' => $footer_center,
+			'footer-right' => $footer_right,
+		));
+		$pdf->addPage($contents);
+		if(!$pdf->send()) throw new Exception('Could not create PDF: '.$pdf->getError());
 	}
 
 

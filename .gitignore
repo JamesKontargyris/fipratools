@@ -22,3 +22,5 @@ composer.phar
 
 #node.js
 /node_modules
+
+/.sass-cache

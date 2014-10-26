@@ -13,6 +13,8 @@ class UnitsController extends \BaseController
 	use CommanderTrait;
 
 	protected $resource_key = 'units';
+	protected $resource_permission = 'manage_units';
+	protected $export_filename;
 	private $addEditUnitForm;
 
 	public function __construct( AddEditUnitForm $addEditUnitForm )
@@ -199,6 +201,29 @@ class UnitsController extends \BaseController
 		{
 			return Redirect::route( 'units.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return Unit::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			$items = Unit::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+		else
+		{
+			$items = Unit::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+
+		return $items;
 	}
 
 	protected function getUnit( $id )
