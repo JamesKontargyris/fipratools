@@ -41,10 +41,10 @@ h1 {
 }
 h2 {
     padding:($v-rhythm / 2) 15px;
-    @include font-size(24);
+    @include font-size(22);
     color:white;
     @include breakpoint($m-max) {
-      @include font-size(18);
+      @include font-size(16);
       }
 }
 h3 {

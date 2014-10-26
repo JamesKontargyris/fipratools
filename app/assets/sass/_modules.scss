@@ -156,6 +156,8 @@
               display:none;
             }
           }
+          @include font-size(12);
+          font-weight: $font-bold;
         }
         &.divider-right {
           @include breakpoint($l)

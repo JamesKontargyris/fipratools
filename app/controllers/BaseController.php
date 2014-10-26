@@ -25,6 +25,8 @@ class BaseController extends Controller
 	protected $sectors;
 	protected $types;
 	protected $services;
+	protected $export_filename;
+
 	/**
 	 * Array of filter keys to reset when "reset filters" is clicked
 	 *

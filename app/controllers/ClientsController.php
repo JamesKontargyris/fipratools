@@ -1,5 +1,6 @@
 <?php
 
+use Ignited\Pdf\Facades\Pdf;
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Client_archives\ClientArchive;
@@ -27,6 +28,8 @@ class ClientsController extends \BaseController
 		parent::__construct();
 		View::share( 'page_title', 'Clients' );
 		View::share( 'key', 'clients' );
+
+		$this->export_filename = $this->resource_key . '_' . date('y-m-d_G-i');
 		$this->addEditClientForm = $addEditClientForm;
 		$this->client            = $client;
 	}
@@ -239,6 +242,105 @@ class ClientsController extends \BaseController
 		{
 			return Redirect::route( 'clients.index' );
 		}
+	}
+
+	public function export()
+	{
+		if(Input::has('filetype'))
+		{
+			switch(Input::get('filetype'))
+			{
+				case 'pdf_all':
+					$contents = $this->PDFExportAll();
+					$this->generatePDF($contents, $this->export_filename . '.pdf');
+					return true;
+					break;
+
+				case 'pdf_selection':
+					$contents = $this->PDFExportSelection();
+					$this->generatePDF($contents, $this->export_filename . '_selection.pdf');
+					return true;
+					break;
+			}
+		}
+		else
+		{
+			Flash::message('Error: cannot export to that file type.');
+			return Redirect::route('clients.index');
+		}
+	}
+
+	protected function generatePDF($contents, $filename)
+	{
+		$footer_left = 'Generated at [time] on [date]';
+		$footer_center = 'Page [page] of [toPage]';
+		$footer_right = 'Private and Confidential';
+		$pdf = PDF::make();
+		$pdf->setOptions(array(
+			'orientation' => 'landscape',
+			'footer-font-size' => '8',
+			'footer-left' => $footer_left,
+			'footer-center' => $footer_center,
+			'footer-right' => $footer_right,
+		));
+		$pdf->addPage($contents);
+		if(!$pdf->send()) throw new Exception('Could not create PDF: '.$pdf->getError());
+	}
+
+	protected function PDFExportAll()
+	{
+		if ( $this->user->hasRole( 'Administrator' ) )
+		{
+			$items = Client::all();
+			$active_count = Client::where('status', '=', 1)->count();
+			$dormant_count = Client::where('status', '=', 0)->count();
+
+		} else
+		{
+			$items = Client::where( 'unit_id', '=', $this->user->unit_id )->get();
+			$active_count = Client::where( 'unit_id', '=', $this->user->unit_id )->where('status', '=', 1)->count();
+			$dormant_count = Client::where( 'unit_id', '=', $this->user->unit_id )->where('status', '=', 0)->count();
+		}
+
+		$heading1 = $this->user->hasRole('Administrator') ?
+			'Clients: All' :
+			$this->user->unit()->pluck('name') . " Clients";
+		$heading2 = number_format($items->count(), 0) . ' total clients: ' . number_format($active_count, 0) . ' active, ' . number_format($dormant_count, 0) . ' dormant';
+		$view = View::make( 'export.clients', ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+
+		return (string) $view;
+	}
+
+	protected function PDFExportSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$search_term_clean = str_replace('%', '', $search_term);
+
+			if ( $this->user->hasRole( 'Administrator' ) )
+			{
+				$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			} else
+			{
+				$items = Client::where( 'unit_id', '=', $this->user->unit_id )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
+		}
+		elseif ( $this->user->hasRole( 'Administrator' ) )
+		{
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		} else
+		{
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		$heading1 = $this->user->hasRole('Administrator') ? 'Clients Selection' : $this->user->unit()->pluck('name') . " Clients Selection";
+		$heading2 = isset($search_term_clean) ?
+			'Showing ' . number_format($items->count(), 0) . ' clients when searching for ' . Session::get('clients.SearchType') . ' "' . $search_term_clean . '"' :
+			'Showing ' . number_format($items->count(), 0) . ' clients';
+		$view = View::make( 'export.clients', ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+
+		return (string) $view;
 	}
 
 	public function changeStatus()

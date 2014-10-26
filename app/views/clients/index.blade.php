@@ -5,7 +5,9 @@
 @stop
 
 @section('page-nav')
-<li class="divider-right"><a class="print-button" href="#"><i class="fa fa-print"></i> Print this Page</a></li>
+<li><a class="print-button" href="#"><i class="fa fa-print"></i> Print</a></li>
+<li><a href="/clients/export?filetype=pdf_all"><i class="fa fa-file-pdf-o"></i> Export All to PDF</a></li>
+<li class="divider-right"><a href="/clients/export?filetype=pdf_selection"><i class="fa fa-file-pdf-o"></i> Export Visible to PDF</a></li>
 <li><a href="{{ route('clients.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
 @if($user->hasRole('Administrator'))
 	<li><a href="{{ route('client_links.create') }}" class="secondary"><i class="fa fa-link"></i> Create a Client/Unit Link</a></li>

@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 	'production' => array('leadofficelist.fipra.com'),
-	'local' => array('James', '.local')
+	'local' => array('homestead', 'James')
 ));
 
 /*

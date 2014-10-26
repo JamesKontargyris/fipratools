@@ -10,7 +10,11 @@
         "laracasts/validation": "~1.0",
         "laracasts/commander": "~1.0",
         "laracasts/flash": "~1.0",
-        "doctrine/dbal": "~2.3"
+        "doctrine/dbal": "~2.3",
+        "ignited/laravel-pdf": "1.*",
+        "h4cc/wkhtmltopdf-i386": "0.12.*",
+        "h4cc/wkhtmltopdf-amd64": "0.12.*",
+        "maatwebsite/excel": "1.*"
 	},
 	"autoload": {
 		"classmap": [

@@ -119,6 +119,7 @@ return array(
 		'Laracasts\Commander\CommanderServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
+		'Ignited\Pdf\PdfServiceProvider',
 	),
 	/*
 	|--------------------------------------------------------------------------
@@ -184,7 +185,8 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
-		'Flash'             => 'Laracasts\Flash\Flash'
+		'Flash'             => 'Laracasts\Flash\Flash',
+		'PDF'               => 'Ignited\Pdf\Facades\Pdf',
 	),
 
 );

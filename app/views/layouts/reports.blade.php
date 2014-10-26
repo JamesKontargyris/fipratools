@@ -4,14 +4,14 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Fipra Lead Office List {{ isset($page_title) ? ' :: ' . $page_title : '' }}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/style.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <!--jQuery-->
        	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
        	<link rel="stylesheet" href="{{ asset('css/jquery.modal.css') }}" type="text/css" media="screen" />
@@ -124,7 +124,17 @@
 
 	<script>
 		{{--Colours used by the charts--}}
-		var colours = [ '#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c', '#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae', '#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24', '#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c', '#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae', '#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24', '#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#ccd3e5', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c', '#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#e6e9f2', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae', '#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#51545b', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24' ];
+		var colours = [
+                      		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+                      		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+                      		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+                      		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+                      		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+                      		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+                      		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
+                      		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
+                      		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
+                      	];
 	</script>
 	@yield('chart-script')
 
