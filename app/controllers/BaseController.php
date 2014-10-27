@@ -181,7 +181,7 @@ class BaseController extends Controller
 			$pdf->addPage($cover_page->render());
 		}
 		$pdf->addPage($contents);
-		if(!$pdf->send()) throw new Exception('Could not create PDF: '.$pdf->getError());
+		if(!$pdf->send($filename)) throw new Exception('Could not create PDF: '.$pdf->getError());
 	}
 
 
