@@ -2,7 +2,13 @@
 
 @section('content')
 <h1>{{ $heading1 }}</h1>
-<h4>{{ $heading2 }}</h4>
+<h4>
+	@if(Session::get('clients.rowsHideShowDormant') == 'show')
+		{{ $heading2 }}	– {{ number_format($active_count, 0)  }} active, {{ number_format($dormant_count, 0) }} dormant
+	@else
+		{{ str_replace('total', 'active', $heading2)  }}
+	@endif
+</h4>
 
 <h5><span class="fa fa-asterisk turquoise">*</span> denotes mainly PR client. For all RLMFinsbury PR clients, please contact either Rory Chisholm or John Gray in the first instance except where indicated in brackets.</h5>
 

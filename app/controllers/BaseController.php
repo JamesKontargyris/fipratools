@@ -104,15 +104,20 @@ class BaseController extends Controller
 	{
 		$this->check_perm( $permission );
 		$key = is_request('list') ? 'clients' : $this->resource_key;
+		//Clients and List specific variables
+		$active_count = 0;
+		$dormant_count = 0;
 
 		$heading1 = is_request('list') ?
 			'Full List' :
 			'All ' . clean_key($key);
+
 		$heading2 = number_format($items->count(), 0) . ' total ' . clean_key($key);
 		if(is_request('clients') || is_request('list')) {
-			$heading2 .= ' - ' . number_format($this->getActiveCount(), 0) . ' active, ' . number_format($this->getDormantCount(), 0) . ' dormant';
+			$active_count = $this->getActiveCount();
+			$dormant_count = $this->getDormantCount();
 		}
-		$view = View::make( 'export.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+		$view = View::make( 'export.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2, 'active_count' => $active_count, 'dormant_count' => $dormant_count,] );
 
 		return (string) $view;
 	}
@@ -176,7 +181,7 @@ class BaseController extends Controller
 			$pdf->addPage($cover_page->render());
 		}
 		$pdf->addPage($contents);
-		if(!$pdf->send($filename)) throw new Exception('Could not create PDF: '.$pdf->getError());
+		if(!$pdf->send()) throw new Exception('Could not create PDF: '.$pdf->getError());
 	}
 
 

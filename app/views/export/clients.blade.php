@@ -1,8 +1,16 @@
 @extends('layouts.pdf')
 
 @section('content')
-<h1>{{ $heading1 }}</h1>
-<h4>{{ $heading2 }}</h4>
+<h1>
+	{{ $heading1 }}
+</h1>
+<h4>
+	@if(Session::get('clients.rowsHideShowDormant') == 'show')
+		{{ $heading2 }}	– {{ number_format($active_count, 0)  }} active, {{ number_format($dormant_count, 0) }} dormant
+	@else
+		{{ str_replace('total', 'active', $heading2)  }}
+	@endif
+</h4>
 
 <table class="index-table">
 	<thead>

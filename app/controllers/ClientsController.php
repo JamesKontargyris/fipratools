@@ -248,11 +248,11 @@ class ClientsController extends \BaseController
 	{
 		if ( $this->user->hasRole( 'Administrator' ) )
 		{
-			return Client::all();
+			return Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->get();
 
 		} else
 		{
-			return Client::where( 'unit_id', '=', $this->user->unit_id )->get();
+			return Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'unit_id', '=', $this->user->unit_id )->get();
 		}
 	}
 
