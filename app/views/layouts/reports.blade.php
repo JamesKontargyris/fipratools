@@ -87,8 +87,8 @@
 									<li><a class="secondary" href="{{ url('reports/byservice') }}"><i class="fa fa-pie-chart"></i> By Service</a></li>
 								</ul>
 								<ul class="small-font">
-									<li><a href="/reports/export?filetype=pdf&report_type={{ $report_type }}" class="grey-but"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
-									<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
+									<li><a href="/reports/export?filetype=pdf&report_type={{ $report_type }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
+									<li><a class="print-button grey-but" href="#"><i class="fa fa-print pdf-export-button"></i> Print</a></li>
 									@yield('export-nav')
 								</ul>
 							</nav>
