@@ -12,10 +12,12 @@ class EventLogController extends \BaseController
 	}
 
 	public $resource_key = 'eventlog';
+	public $resource_permission = 'manage_users';
 
 	public function getIndex()
 	{
 		$items = EventLog::orderBy('created_at', 'DESC')->paginate(30);
+		$items->key = 'eventlog';
 		return View::make('eventlogs.index')->with(compact('items'));
 	}
 
@@ -33,5 +35,15 @@ class EventLogController extends \BaseController
 		Flash::overlay('Entry logs trashed.', 'info');
 
 		return Redirect::to('logs');
+	}
+
+	protected function getAll()
+	{
+		return EventLog::orderBy('created_at', 'DESC')->get();
+	}
+
+	protected function getSelection()
+	{
+		return EventLog::orderBy('created_at', 'DESC')->paginate(30);
 	}
 } 

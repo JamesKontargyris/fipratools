@@ -85,9 +85,9 @@
 								</ul>
 								@if(! is_request('client_links') && ! is_request('client_archives'))
 									<ul class="small-font">
+										<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
 										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but"><i class="fa fa-file-pdf-o"></i> Export All to PDF</a></li>
 										<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but"><i class="fa fa-file-pdf-o"></i> Export Visible to PDF</a></li>
-										<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
 										@yield('export-nav')
 									</ul>
 								@endif

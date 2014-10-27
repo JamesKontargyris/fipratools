@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>{{ $heading1 }}</title>
+    <meta charset="utf-8">
     <style>
     	body {
     		margin:0;
@@ -13,6 +14,7 @@
     	}
     	h1 {
     		font-size:18px;
+    		color:#00257f;
     	}
     	h2 {
     		font-size:14px;
@@ -26,6 +28,13 @@
     	h5 {
     		font-size:10px;
     	}
+    	.turquoise {
+          color: #14b1cc !important;
+        }
+        .fa-asterisk {
+        	font-weight: bold;
+        	font-size:24px;
+        }
 
 		.index-table {
 		margin-top:10px;
@@ -70,7 +79,7 @@
             /* line 392, ../../app/assets/sass/_modules.scss */
             .index-table tbody tr > td.archive-count, .index-table tbody tr > td.client-links {
               padding-right: 10px;
-              border-left: 0;
+              border-left: 0 !important;
               color: #5F697F; }
             /* line 398, ../../app/assets/sass/_modules.scss */
             .index-table tbody tr > td .event-log-icon {

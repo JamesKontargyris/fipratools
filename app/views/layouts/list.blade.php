@@ -75,18 +75,26 @@
         <section class="content-container">
 
 			<section id="content">
-				@if(is_search())
 					<div class="row">
 						<div class="col-12">
 							<div id="page-header">
-								<h2>@yield('page-header')</h2>
+								@if(is_search())
+									<h2>@yield('page-header')</h2>
+								@endif
+								<nav class="page-menu-nav">
+									<ul class="small-font">
+										<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but"><i class="fa fa-file-pdf-o"></i> Export All to PDF</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but"><i class="fa fa-file-pdf-o"></i> Export Visible to PDF</a></li>
+										@yield('export-nav')
+									</ul>
+								</nav>
 								<a href="#" class="page-menu-icon-s">
 									Actions <i class="fa fa-lg fa-caret-down"></i>
 								</a>
 							</div>
 						</div>
 					</div>
-				@endif
 
 				@yield('content')
 

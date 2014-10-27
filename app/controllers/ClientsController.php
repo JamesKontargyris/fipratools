@@ -265,10 +265,10 @@ class ClientsController extends \BaseController
 
 			if ( $this->user->hasRole( 'Administrator' ) )
 			{
-				$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			} else
 			{
-				$items = Client::where( 'unit_id', '=', $this->user->unit_id )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'unit_id', '=', $this->user->unit_id )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			}
 		}
 		elseif ( $this->user->hasRole( 'Administrator' ) )
@@ -310,29 +310,4 @@ class ClientsController extends \BaseController
 
 		return $client;
 	}
-
-	protected function getActiveCount()
-	{
-		if($this->user->hasRole('Administrator'))
-		{
-			return Client::where('status' , '=', 1)->count();
-		}
-		else
-		{
-			return Client::where('unit_id', '=', $this->user->unit_id)->where('status' , '=', 1)->count();
-		}
-	}
-
-	protected function getDormantCount()
-	{
-		if($this->user->hasRole('Administrator'))
-		{
-			return Client::where('status' , '=', 0)->count();
-		}
-		else
-		{
-			return Client::where('unit_id', '=', $this->user->unit_id)->where('status' , '=', 0)->count();
-		}
-	}
-
 }

@@ -5,6 +5,7 @@ use Leadofficelist\Clients\Client;
 class ListController extends BaseController
 {
 	public $resource_key = 'list';
+	public $resource_permission = 'view_list';
 
 	function __construct()
 	{
@@ -95,6 +96,28 @@ class ListController extends BaseController
 	public function about()
 	{
 		return View::make( 'list.about' );
+	}
+
+	protected function getAll()
+	{
+		return Client::all();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+		else
+		{
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	/**

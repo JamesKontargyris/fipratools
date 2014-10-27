@@ -103,9 +103,12 @@ class BaseController extends Controller
 	protected function PDFExportAll($permission = 'view_list', $items)
 	{
 		$this->check_perm( $permission );
+		$key = is_request('list') ? 'clients' : $this->resource_key;
 
-		$heading1 = 'All ' . clean_key($this->resource_key);
-		$heading2 = number_format($items->count(), 0) . ' total ' . clean_key($this->resource_key);
+		$heading1 = is_request('list') ?
+			'Full List' :
+			'All ' . clean_key($key);
+		$heading2 = number_format($items->count(), 0) . ' total ' . clean_key($key);
 		if(is_request('clients') || is_request('list')) {
 			$heading2 .= ' - ' . number_format($this->getActiveCount(), 0) . ' active, ' . number_format($this->getDormantCount(), 0) . ' dormant';
 		}
@@ -126,11 +129,12 @@ class BaseController extends Controller
 	protected function PDFExportSelection($permission = 'view_list', $items)
 	{
 		$this->check_perm( $permission );
+		$key = is_request('list') ? 'clients' : $this->resource_key;
 
 		$heading1 = ucfirst(clean_key($this->resource_key)) . ' Selection';
 		$heading2 = isset($this->search_term_clean) ?
-			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($this->resource_key) . ' when searching for ' . Session::get($this->resource_key . '.SearchType') . ' "' . $this->search_term_clean . '"' :
-			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($this->resource_key);
+			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key) . ' when searching for ' . Session::get($this->resource_key . '.SearchType') . ' "' . $this->search_term_clean . '"' :
+			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key);
 		$view = View::make( 'export.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
 
 		return (string) $view;
@@ -145,9 +149,9 @@ class BaseController extends Controller
 	 *
 	 * @throws Exception
 	 */
-	protected function generatePDF($contents, $filename, $cover_page = false)
+	protected function generatePDF($contents, $filename, $cover_page = true)
 	{
-		$header_left = 'Fipra Lead Office List';
+		$header_right = 'Fipra Lead Office List';
 		$footer_left = 'Generated at [time] on [date]';
 		$footer_center = 'Page [page] of [toPage]';
 		$footer_right = 'Private and Confidential';
@@ -157,12 +161,20 @@ class BaseController extends Controller
 			'margin-top' => '15',
 			'header-font-size' => '8',
 			'header-spacing' => '5',
-			'header-left' => $header_left,
+			'header-right' => $header_right,
 			'footer-font-size' => '8',
 			'footer-left' => $footer_left,
 			'footer-center' => $footer_center,
 			'footer-right' => $footer_right,
+			'image-quality' => '100',
+			'images'
 		));
+		if($cover_page)
+		{
+			$heading1 = 'About the Lead Office List';
+			$cover_page = View::make('export.coverpage')->with(compact('heading1'));
+			$pdf->addPage($cover_page->render());
+		}
 		$pdf->addPage($contents);
 		if(!$pdf->send()) throw new Exception('Could not create PDF: '.$pdf->getError());
 	}
@@ -526,5 +538,29 @@ class BaseController extends Controller
 		}
 
 		return Service::getServicesForFormSelect( $blank_entry, $blank_message );
+	}
+
+	protected function getActiveCount()
+	{
+		if($this->user->hasRole('Administrator'))
+		{
+			return Client::where('status' , '=', 1)->count();
+		}
+		else
+		{
+			return Client::where('unit_id', '=', $this->user->unit_id)->where('status' , '=', 1)->count();
+		}
+	}
+
+	protected function getDormantCount()
+	{
+		if($this->user->hasRole('Administrator'))
+		{
+			return Client::where('status' , '=', 0)->count();
+		}
+		else
+		{
+			return Client::where('unit_id', '=', $this->user->unit_id)->where('status' , '=', 0)->count();
+		}
 	}
 }

@@ -86,47 +86,22 @@ Route::get('roles', function()
 	//return "All done!";
 });
 
-Route::get('pdftest2', function()
+Route::get('coverpage', function()
 {
-	$user = Auth::user();
-	$items = Client::all();
-
-	$pdf = PDF::make();
-	$pdf->addPage('export.clients_all', ['items' => $items]);
-	$pdf->send();
-});
-
-Route::get('pdftest', function()
-{
-
-	class PDFExport {
-
-		protected $pdf;
-
-		public function export()
-		{
-			$user = Auth::user();
-			$items = Client::where('status', '=', 1)->where('unit_id', '=', $user->unit()->pluck('id'))->get();
-
-			//$this->pdf = PDF::loadView('export.clients_all', ['items' => $items, 'user' => $user, 'heading1' => "Heading 1", 'heading2' => "Heading 2"] );
-			$this->pdf = PDF::loadView('list.about');
-			//$this->pdf->loadHTML($view->render());
-			$this->pdf->stream();
-		}
-	}
-
-	$export = new PDFExport;
-	return $export->export();
-
+	$heading1 = 'Selection';
+	return View::make( 'export.coverpage', ['heading1' => $heading1] );
 });
 
 Route::group(['before' => 'auth'], function()
 {
+	Route::any('list/export', 'ListController@export');
 	Route::any('list/search', 'ListController@search');
 	Route::get('about', ['as' => 'list.about', 'uses' => 'ListController@about']);
 	Route::post('list/filter', ['as' => 'list.filter', 'uses' => 'ListController@filter']);
 	Route::resource('list', 'ListController');
-	Route::controller('logs', 'EventLogController');
+
+	Route::any('eventlog/export', 'EventLogController@export');
+	Route::controller('eventlog', 'EventLogController');
 
 	Route::any('users/export', 'UsersController@export');
 	Route::any('users/search', 'UsersController@search');
@@ -165,23 +140,6 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('account_directors', 'AccountDirectorsController');
 
 	Route::controller('reports', 'ReportsController');
-});
-
-Route::get('testreport', function()
-{
-	$colours = [
-		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
-		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
-		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
-		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
-		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
-		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
-		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
-		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
-		'#99aacc', '#385110', '#1a545e', '#2c245b', '#002f2c', '#083d06', '#262a32', '#510407', '#510046', '#512e00', '#5b4f24',
-	];
-
-
 });
 
 //Ajax requests
