@@ -56,7 +56,7 @@ class BaseController extends Controller
 		$this->name_order             = $this->getNameOrder( $this->resource_key );
 		$this->rows_hide_show_dormant = $this->getRowsHideShowDormant( $this->resource_key );
 
-		$this->export_filename = $this->resource_key . '_' . date('y-m-d_G-i');
+		$this->export_filename = date('ymd_H-i') . '_' . $this->resource_key;
 	}
 
 	/**

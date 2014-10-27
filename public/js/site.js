@@ -25,6 +25,12 @@
         window.print();
     });
 
+    $('.pdf-export-button').on('click', function()
+    {
+       $('#content').append('<div class="alert alert-overlay alert-info">Creating PDF – please wait. This can take several minutes.</div>');
+        $('.alert-overlay').hide().slideDown(200).delay(2000).slideUp(200);
+    });
+
     $('.list-table-filter').on('change', function()
     {
         $(this).parent('form').submit();
