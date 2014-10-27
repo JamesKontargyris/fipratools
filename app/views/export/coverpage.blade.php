@@ -15,7 +15,7 @@ About the Lead Office List
 	</tr>
 </table>
 
-<div style="width:48%; float:left; font-size:10px; line-height:2">
+<div style="width:48%; float:left; font-size:10px; line-height:1.6">
         <p>This list is <strong>confidential</strong> to members of the Fipra Network. It is <strong>under no circumstances</strong> to be used externally and you share in this responsibility.</p>
         <p><strong>This is NOT a client list</strong> – it is not even a list of clients served by the Fipra brand as many of the companies below are serviced under local unit names such as RLMFinsbury, CEC, First House, Six Year Plan etc. Additionally it lists other clients served by individual Special Advisers in their own right. This list serves as a tool to help you know which signed up Fipra Unit has the “lead” on current clients/projects (and therefore which unit has a relationship with firms you may be speaking to).</p>
 
@@ -27,7 +27,7 @@ About the Lead Office List
 
          <p>The Lead Office shown is also the unit that has a right to the agreed inter-unit discount or referral fee if the work is sub-contracted or referred. On rare occasions there are two lead offices for the same company – usually reporting to different parts of that company and with separate contractual relationships.</p>
 </div>
-<div style="width:48%; float:right; font-size:10px; line-height:2">
+<div style="width:48%; float:right; font-size:10px; line-height:1.6">
 	<p>We take conflicts seriously and sometimes these force hard commercial decisions. This list is the document you must refer to when pitching to new clients in any consideration of possible client conflicts within the Fipra group. It is not, however, a definitive guide to conflicts. To obtain certainty on conflict questions please refer to the Account Director concerned and where necessary to the Fipra Group Chairman who will help resolve conflict issues with you.</p>
 
              <p>Please therefore refer to this list before signing up a client. Listed here are principal national clients as well as cross border clients to minimise “crossed wires” and to ensure we are co-ordinated at all times. Where possible, do not contact or communicate with a client of another unit independently without a courtesy conversation beforehand with the relevant Account Director who may have useful tips for you.  In this way all of our contacts are at the disposal of everyone in the network with the minimum controls necessary to put on a united image as a single Fipra Network!  As a matter of courtesy, any unit carrying out New Business Development (NBD) activity or work in the “territory” of another unit, should – while free to do so – let the relevant home unit know.</p>
