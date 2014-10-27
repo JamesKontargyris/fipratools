@@ -5,6 +5,7 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
     <style>
     	body {
+    		font-family:Arial, sans-serif;
     		margin:0;
     		padding:0;
     	}
