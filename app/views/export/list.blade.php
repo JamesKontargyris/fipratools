@@ -3,7 +3,7 @@
 @section('content')
 <h1>{{ $heading1 }}</h1>
 <h4>
-	@if(Session::get('clients.rowsHideShowDormant') == 'show')
+	@if(Session::get('list.rowsHideShowDormant') == 'show')
 		{{ $heading2 }}	– {{ number_format($active_count, 0)  }} active, {{ number_format($dormant_count, 0) }} dormant
 	@else
 		{{ str_replace('total', 'active', $heading2)  }}
