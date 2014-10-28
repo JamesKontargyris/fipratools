@@ -21,7 +21,7 @@ Active Clients by Sector
 					<td class="content-center"><i class="fa fa-paint-brush"></i></td>
 					<td>Sector</td>
 					<td>Clients</td>
-					<td class="content-center hide-m">&percnt;</td>
+					<td class="hide-m">&percnt;</td>
 				</tr>
 				<tr>
 					<td colspan="4" class="sub-header">Active clients: {{ $total_clients }}</td>

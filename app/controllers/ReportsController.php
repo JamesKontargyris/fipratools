@@ -186,7 +186,7 @@ class ReportsController extends \BaseController {
 		foreach($clients as &$client)
 		{
 			$client['id'] = $count;
-			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
 			$count++;
 		}
 
@@ -214,7 +214,7 @@ class ReportsController extends \BaseController {
 		foreach($clients as &$client)
 		{
 			$client['id'] = $count;
-			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
 			$count++;
 		}
 
@@ -242,7 +242,7 @@ class ReportsController extends \BaseController {
 		foreach($clients as &$client)
 		{
 			$client['id'] = $count;
-			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
 			$count++;
 		}
 
@@ -270,7 +270,7 @@ class ReportsController extends \BaseController {
 		foreach($clients as &$client)
 		{
 			$client['id'] = $count;
-			$client['percentage'] = round(($client['client_count'] / $total_clients) * 100, 1) ;
+			$client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
 			$count++;
 		}
 
@@ -278,6 +278,11 @@ class ReportsController extends \BaseController {
 		$data['total_clients'] = $total_clients;
 
 		return $data;
+	}
+
+	protected function formatPercentage($client_count, $total_clients)
+	{
+		return number_format(round(($client_count / $total_clients) * 100, 1), 1);
 	}
 
 	public function missingMethod($parameters = [])
