@@ -27,13 +27,12 @@ a {
 h1, h2 {
 	font-family: Arial, Helvetica, sans-serif;
     line-height:1;
-  font-weight: bold;
-  letter-spacing: -1px;
 
 }
 h1 {
   @include font-size(26);
   color:$grey;
+  font-weight: bold;
   margin-bottom:$v-rhythm / 2;
   @include breakpoint($l) {
       margin-top:15px;

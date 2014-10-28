@@ -26,8 +26,9 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td rowspan="2" width="55%">User</td>
-							<td rowspan="2" width="10%" class="content-center hide-s">Role</td>
+							<td rowspan="2" width="40%">User</td>
+							<td rowspan="2" width="15%">Email</td>
+							<td rowspan="2" width="10%" class="hide-s">Role</td>
 							<td colspan="2" width="10%" class="content-center hide-s">Clients Added</td>
 							<td rowspan="2" colspan="2">Actions</td>
 						</tr>
@@ -46,7 +47,8 @@
 										{{ $list_user->getFullName(false) }}
 									@endif
 									</a></strong></td>
-								<td class="content-center hide-s">{{ $list_user->roles()->pluck('name') }}</td>
+								<td class="hide-s">{{ $list_user->email }}</td>
+								<td class="hide-s">{{ $list_user->roles()->pluck('name') }}</td>
 								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 1)->count(),0,0,',') }}</td>
 								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 0)->count(),0,0,',') }}</td>
 								<td class="actions content-right">

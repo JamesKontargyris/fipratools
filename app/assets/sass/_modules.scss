@@ -141,11 +141,14 @@
     @include breakpoint($m) { display:none; }
   }
   nav {
+    @include clearfix();
     ul {
       @include horizontal-list();
-      &.small-font a {
-        @include font-size(12);
-        font-weight: $font-bold;
+      @include breakpoint($l) {
+        &.small-font a {
+          @include font-size(12);
+          font-weight: $font-bold;
+        }
       }
       & + ul {
         margin-top:$v-rhythm / 1.5;
@@ -160,7 +163,6 @@
           }
         }
         a {
-//          @include secondary-but();
           display:inline-block;
           line-height:1.1;
           @include breakpoint($m-max) {
@@ -181,6 +183,15 @@
       }
     }
     @include breakpoint($m-max) { display:none; }
+    @include breakpoint($l) {
+      ul:last-child {
+        margin-top:0;
+        float:right;
+      }
+      ul:first-child {
+        float:left;
+      }
+    }
   }
 }
 

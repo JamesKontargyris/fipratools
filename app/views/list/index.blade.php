@@ -6,6 +6,8 @@
 
 @elseif(is_search())
 	<i class="fa fa-search"></i> Searching for {{ Session::has('list.SearchType') ? Session::get('list.SearchType') : '' }}: {{ $items->search_term }}
+@else
+	Active @if(Session::get('list.rowsHideShowDormant') == 'show') and Dormant @endif Clients
 @endif
 @stop
 
@@ -18,7 +20,7 @@
 @if(count($items) > 0)
 
 	<div class="row no-margin">
-		<div class="col-12">
+		<div class="col-12" style="font-size:12px">
 			<i class="fa fa-asterisk turquoise"></i> denotes mainly PR client. For all RLMFinsbury PR clients, please contact either Rory Chisholm or John Gray in the first instance except where indicated in brackets.
 		</div>
 	</div>
