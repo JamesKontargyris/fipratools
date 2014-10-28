@@ -854,7 +854,7 @@ strong {
     display: block;
     top: 8px;
     right: 10px; }
-    @media (min-width: 768px) {
+    @media (min-width: 900px) {
       /* line 135, ../../app/assets/sass/_modules.scss */
       #page-header .page-menu-icon-s {
         display: none; } }

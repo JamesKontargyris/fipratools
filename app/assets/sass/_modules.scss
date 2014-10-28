@@ -138,7 +138,7 @@
     display:block;
     top:8px;
     right:10px;
-    @include breakpoint($m) { display:none; }
+    @include breakpoint($l) { display:none; }
   }
   nav {
     @include clearfix();
