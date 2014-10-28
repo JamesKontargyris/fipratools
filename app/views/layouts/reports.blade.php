@@ -80,7 +80,7 @@
 						<div id="page-header">
 							<h2>@yield('page-header')</h2>
 							<nav class="page-menu-nav">
-								<ul>
+								<ul class="small-font">
 									<li><a class="secondary" href="{{ url('reports/bysector') }}"><i class="fa fa-pie-chart"></i> By Sector</a></li>
 									<li><a class="secondary" href="{{ url('reports/byunit') }}"><i class="fa fa-pie-chart"></i> By Unit</a></li>
 									<li><a class="secondary" href="{{ url('reports/bytype') }}"><i class="fa fa-pie-chart"></i> By Type</a></li>
