@@ -890,8 +890,8 @@ strong {
       @media (min-width: 900px) {
         /* line 148, ../../app/assets/sass/_modules.scss */
         #page-header nav ul.small-font a {
-          font-size: 12px;
-          font-size: 0.75rem;
+          font-size: 13px;
+          font-size: 0.8125rem;
           font-weight: bold; } }
       /* line 153, ../../app/assets/sass/_modules.scss */
       #page-header nav ul + ul {
