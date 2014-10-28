@@ -117,7 +117,7 @@ class BaseController extends Controller
 			$active_count = $this->getActiveCount();
 			$dormant_count = $this->getDormantCount();
 		}
-		$view = View::make( 'export.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2, 'active_count' => $active_count, 'dormant_count' => $dormant_count,] );
+		$view = View::make( 'export.pdf.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2, 'active_count' => $active_count, 'dormant_count' => $dormant_count,] );
 
 		return (string) $view;
 	}
@@ -177,7 +177,7 @@ class BaseController extends Controller
 		if($cover_page)
 		{
 			$heading1 = 'About the Lead Office List';
-			$cover_page = View::make('export.coverpage')->with(compact('heading1'));
+			$cover_page = View::make('export.pdf.coverpage')->with(compact('heading1'));
 			$pdf->addPage($cover_page->render());
 		}
 		$pdf->addPage($contents);

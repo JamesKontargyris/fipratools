@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('......layouts.pdf')
 
 @section('content')
 <h1>Event Log @if(Input::has('filetype') && Input::get('filetype') == 'pdf_selection') Selection @endif</h1>

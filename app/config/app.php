@@ -120,6 +120,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
 		'Ignited\Pdf\PdfServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
 	),
 	/*
 	|--------------------------------------------------------------------------
@@ -187,6 +188,7 @@ return array(
 		'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
 		'Flash'             => 'Laracasts\Flash\Flash',
 		'PDF'               => 'Ignited\Pdf\Facades\Pdf',
+		'Excel'             => 'Maatwebsite\Excel\Facades\Excel',
 	),
 
 );

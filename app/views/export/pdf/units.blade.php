@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('......layouts.pdf')
 
 @section('content')
 <h1>{{ $heading1 }}</h1>

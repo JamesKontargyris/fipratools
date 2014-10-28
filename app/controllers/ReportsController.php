@@ -9,6 +9,7 @@ use Leadofficelist\Units\Unit;
 class ReportsController extends \BaseController {
 
 	protected $resource_key = 'reports';
+	protected $resource_permision = 'view_list';
 	protected $colours = [
 		'#00257f', '#14b1cc', '#8dcc29', '#6f5ce5', '#007770', '#14990f', '#5F697F', '#cc0a12', '#cc00b0', '#cc7300', '#e5c75c',
 		'#3355cc', '#c6e694', '#a0e9f6', '#b7aef2', '#80bbb8', '#8acc87', '#afb4bf', '#e68589', '#e680d8', '#e6b980', '#f2e3ae',
@@ -107,28 +108,28 @@ class ReportsController extends \BaseController {
 				case 'unit':
 					$data = $this->getClientsByUnit();
 					$heading1 = 'Active Clients by Unit';
-					$view = View::make('export.report_unit')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					$view = View::make('export.pdf.report_unit')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
 					return (string) $view;
 					break;
 
 				case 'type':
 					$data = $this->getClientsByType();
 					$heading1 = 'Active Clients by Type';
-					$view = View::make('export.report_type')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					$view = View::make('export.pdf.report_type')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
 					return (string) $view;
 					break;
 
 				case 'service':
 					$data = $this->getClientsByService();
 					$heading1 = 'Active Clients by Service';
-					$view = View::make('export.report_service')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					$view = View::make('export.pdf.report_service')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
 					return (string) $view;
 					break;
 
 				default:
 					$data = $this->getClientsBySector();
 					$heading1 = 'Active Clients by Sector';
-					$view = View::make('export.report_sector')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					$view = View::make('export.pdf.report_sector')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
 					return (string) $view;
 					break;
 			}

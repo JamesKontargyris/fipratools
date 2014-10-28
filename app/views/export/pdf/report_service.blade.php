@@ -1,4 +1,4 @@
-@extends('layouts.pdf_report')
+@extends('......layouts.pdf_report')
 
 @section('content')
 <div id="chart_div_print" class="chart-print"></div>
@@ -7,9 +7,9 @@
 	<thead>
 		<tr>
 			<td class="content-center"><i class="fa fa-paint-brush"></i></td>
-			<td>Unit Name</td>
+			<td>Service</td>
 			<td>Clients</td>
-			<td class="content-center">&percnt;</td>
+			<td>&percnt;</td>
 		</tr>
 		<tr>
 			<td colspan="4" class="sub-header">Active clients: {{ $total_clients }}</td>
@@ -19,7 +19,7 @@
 		@foreach($clients as $client)
 			<tr>
 				<td class="actions content-center"><i class="fa fa-square fa-lg" style="color:{{ $colours[$client['id']] }}"></i></td>
-				<td>{{ $client['unit_name'] }}</td>
+				<td>{{ $client['service_name'] }}</td>
 				<td>{{ $client['client_count'] }}</td>
 				<td>{{ $client['percentage'] }}&percnt;</td>
 			</tr>
@@ -34,18 +34,18 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart1);
       function drawChart1() {
-		  var data = google.visualization.arrayToDataTable([
-			['Unit', 'Clients'],
-			@foreach($clients as $client)
-				['{{ $client['unit_short_name'] }}', {{ $client['client_count'] }}],
-			@endforeach
+        var data = google.visualization.arrayToDataTable([
+		  ['Service', 'Clients'],
+		  @foreach($clients as $client)
+			['{{ $client['service_name'] }}', {{ $client['client_count'] }}],
+		  @endforeach
 
-		  ]);
+		]);
 
         var optionsPrint = {
 		  legend: 'none',
 		  pieSliceText: 'label',
-		  pieSliceTextStyle: {color: 'white', fontSize: 9},
+		  pieSliceTextStyle: {color: 'white', fontSize: 14},
 		  chartArea:{left:0,top:0,width:'100%',height:'100%'},
 		  colors: colours
 		};

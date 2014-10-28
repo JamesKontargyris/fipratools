@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('......layouts.pdf')
 
 @section('page-header')
 About the Lead Office List
