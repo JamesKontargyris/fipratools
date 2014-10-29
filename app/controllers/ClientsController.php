@@ -219,6 +219,8 @@ class ClientsController extends \BaseController
 	{
 		$this->check_perm( 'manage_clients' );
 
+		$this->destroyCurrentPageNumber(true);
+
 		if ( $search_term = $this->findSearchTerm() )
 		{
 			//If the user is an administrator, search on all clients

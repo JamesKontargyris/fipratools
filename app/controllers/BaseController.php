@@ -201,6 +201,8 @@ class BaseController extends Controller
 			{
 				Session::forget( $this->resource_key . '.' . $key );
 			}
+			//Start again on page 1 of results
+			$this->destroyCurrentPageNumber();
 		}
 
 		return true;
@@ -420,6 +422,7 @@ class BaseController extends Controller
 			Session::forget( $this->resource_key . '.SearchTerm' );
 			Session::forget( $this->resource_key . '.SearchType' );
 			Session::forget( 'clear_search' );
+			$this->destroyCurrentPageNumber();
 		} elseif ( Session::has( $this->resource_key . '.SearchTerm' ) )
 		{
 			return true;
@@ -432,6 +435,9 @@ class BaseController extends Controller
 	{
 		if ( Input::has( 'search' ) )
 		{
+			//Start again on page 1 of the results
+			$this->destroyCurrentPageNumber();
+
 			if ( Input::has( 'letter' ) )
 			{
 				Session::set( $this->resource_key . '.SearchTerm', Input::get( 'search' ) . '%' );
