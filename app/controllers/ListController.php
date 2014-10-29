@@ -100,7 +100,7 @@ class ListController extends BaseController
 
 	protected function getAll()
 	{
-		return Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->get();
+		return Client::orderBy('name', 'ASC')->rowsHideShowDormant( $this->rows_hide_show_dormant )->get();
 	}
 
 	protected function getSelection()
