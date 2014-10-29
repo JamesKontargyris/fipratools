@@ -88,9 +88,11 @@
 										@if(! is_request('*/*', true) && ! is_request('about'))
 											<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export All to PDF</a></li>
 											<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export Visible to PDF</a></li>
+
+											@yield('export-nav')
+
 											<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
 										@endif
-										@yield('export-nav')
 									</ul>
 								@endif
 							</nav>

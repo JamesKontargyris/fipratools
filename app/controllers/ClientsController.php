@@ -286,6 +286,15 @@ class ClientsController extends \BaseController
 		return $items;
 	}
 
+	protected function getDuplicates()
+	{
+		$this->check_role('Administrator');
+
+		$items = Client::orderBy('name', 'ASC')->whereRaw('LOWER(name) IN (SELECT LOWER(name) FROM clients GROUP BY name HAVING count(name)>1)')->get();
+
+		return $items;
+	}
+
 	public function changeStatus()
 	{
 		if($client = Client::find(Input::get('client_id')))

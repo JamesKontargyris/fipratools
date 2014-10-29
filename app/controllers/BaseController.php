@@ -10,6 +10,7 @@ use Leadofficelist\Services\Service;
 use Leadofficelist\Types\Type;
 use Leadofficelist\Units\Unit;
 use Leadofficelist\Users\User;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class BaseController extends Controller
 {
@@ -84,6 +85,12 @@ class BaseController extends Controller
 					$this->generatePDF($contents, $this->export_filename . '_selection.pdf');
 					return true;
 					break;
+
+				case 'pdf_duplicates':
+					$contents = $this->PDFExportDuplicates($this->resource_permission, $this->getDuplicates());
+					$this->generatePDF($contents, $this->export_filename . '_duplicates.pdf');
+					return true;
+					break;
 			}
 		}
 		else
@@ -143,6 +150,34 @@ class BaseController extends Controller
 			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key) . ' when searching for ' . Session::get($this->resource_key . '.SearchType') . ' "' . $this->search_term_clean . '"' :
 			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key);
 		$view = View::make( 'export.pdf.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+
+		return (string) $view;
+	}
+
+	/**
+	 * Export a listing of duplicate resource records to a PDF file
+	 *
+	 * @param string $permission
+	 * @param $items
+	 *
+	 * @return string
+	 * @throws PermissionDeniedException
+	 */
+	protected function PDFExportDuplicates($permission = 'view_list', $items)
+	{
+		$this->check_perm( $permission );
+
+		$heading1 = 'Duplicated ' . ucfirst(clean_key($this->resource_key));
+		$heading2 = number_format($items->count(), 0) . ' total ' . clean_key($this->resource_key);
+		$active_count = 0; $dormant_count = 0;
+
+		if(is_request('list') || is_request('clients'))
+		{
+			$active_count = $this->getActiveCount();
+			$dormant_count = $this->getDormantCount();
+		}
+
+		$view = View::make( 'export.pdf.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2, 'active_count' => $active_count, 'dormant_count' => $dormant_count,] );
 
 		return (string) $view;
 	}
