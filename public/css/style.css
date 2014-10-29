@@ -1667,7 +1667,7 @@ ul.pagination {
       float: left;
       text-transform: uppercase;
       letter-spacing: 1px; }
-      @media (max-width: 320px) {
+      @media (max-width: 768px) {
         /* line 33, ../../app/assets/sass/_header.scss */
         #site-nav-container #site-nav .logo {
           padding-left: 10px; }
