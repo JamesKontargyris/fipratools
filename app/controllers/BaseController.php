@@ -47,7 +47,6 @@ class BaseController extends Controller
 			View::share( 'user_role', $this->user->roles()->pluck( 'name' ) );
 		}
 
-		$this->destroyCurrentPageNumber(true);
 		$this->setCurrentPageNumber();
 
 		$this->reset_sorting();

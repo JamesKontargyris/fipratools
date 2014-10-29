@@ -44,6 +44,8 @@ class ClientsController extends \BaseController
 	{
 		$this->check_perm( 'manage_clients' );
 
+		$this->destroyCurrentPageNumber(true);
+
 		if ( $this->searchCheck() )
 		{
 			return Redirect::to( $this->resource_key . '/search' );

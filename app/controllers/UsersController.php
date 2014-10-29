@@ -47,6 +47,8 @@ class UsersController extends \BaseController
 	 */
 	public function index()
 	{
+		$this->destroyCurrentPageNumber(true);
+
 		$this->check_perm( 'manage_users' );
 
 		if ( $this->searchCheck() )

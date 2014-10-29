@@ -34,6 +34,8 @@ class TypesController extends \BaseController
 	 */
 	public function index()
 	{
+		$this->destroyCurrentPageNumber(true);
+
 		if ( $this->searchCheck() )
 		{
 			return Redirect::to( $this->resource_key . '/search' );

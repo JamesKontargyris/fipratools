@@ -36,6 +36,8 @@ class SectorsController extends \BaseController
 	 */
 	public function index()
 	{
+		$this->destroyCurrentPageNumber(true);
+
 		if($this->searchCheck()) return Redirect::to($this->resource_key . '/search');
 
 		$items      = Sector::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );

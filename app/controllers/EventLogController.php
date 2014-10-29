@@ -16,6 +16,8 @@ class EventLogController extends \BaseController
 
 	public function getIndex()
 	{
+		$this->destroyCurrentPageNumber(true);
+
 		$items = EventLog::orderBy('created_at', 'DESC')->paginate(30);
 		$items->key = 'eventlog';
 		return View::make('eventlogs.index')->with(compact('items'));
