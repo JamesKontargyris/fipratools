@@ -47,6 +47,9 @@ class BaseController extends Controller
 			View::share( 'user_role', $this->user->roles()->pluck( 'name' ) );
 		}
 
+		$this->destroyCurrentPageNumber(true);
+		$this->setCurrentPageNumber();
+
 		$this->reset_sorting();
 		$this->rows_sort_order        = $this->getRowsSortOrder( $this->resource_key );
 		$this->rows_to_view           = $this->getRowsToView( $this->resource_key );
@@ -217,6 +220,8 @@ class BaseController extends Controller
 		//Value passed in and it is numeric?
 		if ( Input::has( 'view' ) && is_numeric( $value ) )
 		{
+			//A new view range has been passed in, so destroy the existing page number which will now be wrong
+			$this->destroyCurrentPageNumber();
 			Session::set( $key . '.rowsToView', $value );
 
 			return $value;
@@ -256,11 +261,13 @@ class BaseController extends Controller
 			$sort_term = Input::get( 'sort' );
 			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) )
 			{
+				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
 				return explode( '.', $sort_on[ $sort_term ] );
 			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) )
 			{
+				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
 				return explode( '.', $sort_on_users_ads[ $sort_term ] );
@@ -290,11 +297,13 @@ class BaseController extends Controller
 		//Value passed in and it is numeric?
 		if ( Input::has( 'dormant' ) && Input::get( 'dormant' ) == 'show' )
 		{
+			$this->destroyCurrentPageNumber();
 			Session::set( $key . '.rowsHideShowDormant', 'show' );
 
 			return 'show';
 		} elseif ( Input::has( 'dormant' ) && Input::get( 'dormant' ) == 'hide' )
 		{
+			$this->destroyCurrentPageNumber();
 			Session::set( $key . '.rowsHideShowDormant', 'hide' );
 
 			return 'hide';
@@ -328,6 +337,7 @@ class BaseController extends Controller
 		//Value passed in?
 		if ( Input::has( 'filter_field' ) )
 		{
+			$this->destroyCurrentPageNumber();
 			Session::set( $key . '.rowsListFilterField', Input::get( 'filter_field' ) );
 
 			return Input::get( 'filter_field' );
@@ -351,6 +361,7 @@ class BaseController extends Controller
 		//Value passed in?
 		if ( Input::has( 'filter_value' ) && is_numeric( Input::get( 'filter_value' ) ) )
 		{
+			$this->destroyCurrentPageNumber();
 			Session::set( $key . '.rowsListFilterValue', Input::get( 'filter_value' ) );
 
 			return Input::get( 'filter_value' );
@@ -567,5 +578,47 @@ class BaseController extends Controller
 		{
 			return Client::where('unit_id', '=', $this->user->unit_id)->where('status' , '=', 0)->count();
 		}
+	}
+
+	/**
+	 * Set the current page number for paginated results, so users can return to the same page
+	 * when they visit a client page, edit a client, change a client's status etc.
+	 * @return bool
+	 */
+	protected function setCurrentPageNumber()
+	{
+		//If a value for 'page' is passed in, set that as the current page number
+		if(Input::has('page')) { Session::set($this->resource_key . '.currentPageNumber', Input::get('page')); }
+		//If a session variable for the current page number exists, set that as the current page
+		if(Session::has($this->resource_key . '.currentPageNumber')) { Paginator::setCurrentPage(Session::get($this->resource_key . '.currentPageNumber')); }
+
+		return true;
+	}
+
+	/**
+	 * Delete the current page number stored in the session, either for the current resource or for every other resource
+	 * (used when moving from one resource index page to another, so the user lands back on page one when switching back again)
+	 * @param bool $for_other_resources
+	 *
+	 * @return bool
+	 */
+	protected function destroyCurrentPageNumber($for_other_resources = false)
+	{
+		$resources = ['list', 'clients', 'client_links', 'client_archives', 'users', 'units', 'sectors', 'sector_categories', 'types', 'services', 'account_directors', 'eventlogs'];
+
+		if($for_other_resources)
+		{
+			foreach($resources as $resource)
+			{
+				if($this->resource_key != $resource) Session::forget($resource . '.currentPageNumber');
+			}
+		}
+		else
+		{
+			Session::forget($this->resource_key . '.currentPageNumber');
+			Paginator::setCurrentPage(1);
+		}
+
+		return true;
 	}
 }
