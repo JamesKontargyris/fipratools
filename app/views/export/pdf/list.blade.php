@@ -15,13 +15,16 @@
 <table class="index-table">
 	<thead>
 		<tr>
-			<td colspan="2" width="40%">Client name</td>
+			<td colspan="2" width="35%">Client name</td>
 			<td width="10%">Sector</td>
-			<td width="10%">Type</td>
-			<td width="10%">Service</td>
+			<td width="5%">Type</td>
+			<td width="5%">Service</td>
 			<td width="10%">Lead Unit</td>
-			<td width="10%">AD to talk to</td>
-			<td width="10%">Status</td>
+			<td width="10%">AD</td>
+			<td width="15%">Comments</td>
+			@if(Session::get('list.rowsHideShowDormant') == 'show')
+				<td width="10%">Status</td>
+			@endif
 		</tr>
 	</thead>
 	<tbody>
@@ -47,10 +50,13 @@
 						{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}
 					@endif
 				</td>
-				@if($client->status)
-					<td class="status-active">Active</td>
-				@else
-					<td class="status-dormant">Dormant</td>
+				<td>{{ $client->comments }}</td>
+				@if(Session::get('list.rowsHideShowDormant') == 'show')
+					@if($client->status)
+						<td class="status-active">Active</td>
+					@else
+						<td class="status-dormant">Dormant</td>
+					@endif
 				@endif
 			</tr>
 		@endforeach
