@@ -1,4 +1,4 @@
-<section class="pagination-container">
+<section class="pagination-container hide-print">
 	@if($items->links() != '')
 		<div class="row">
 			<div class="col-12">

@@ -23,7 +23,7 @@ Archive records for {{ $client->name }}
 							<td width="15%" class="content-center">Start Date</td>
 							<td width="15%" class="content-center">End Date</td>
 							<td width="70%">Details</td>
-							<td colspan="2">Actions</td>
+							<td colspan="2" class="hide-print">Actions</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,13 +33,13 @@ Archive records for {{ $client->name }}
 								<td class="content-center">{{ date('j M Y', strtotime($client_archive->end_date)) }}</td>
 								<td>{{ $client_archive->comment }}</td>
 
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('client_archives.edit', $client_archive->id), 'method' => 'get']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										<button type="submit" class="primary" title="Edit this client archive record"><i class="fa fa-pencil"></i></button>
 									{{ Form::close() }}
 								</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('client_archives.destroy', $client_archive->id), 'method' => 'delete']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="sector" title="Delete this client archive record"><i class="fa fa-times"></i></button>

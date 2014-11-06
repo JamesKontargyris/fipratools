@@ -26,7 +26,7 @@
 							<td rowspan="2" width="40%">Last Name</td>
 							<td rowspan="2" width="40%">First Name</td>
 							<td colspan="2" width="20%" class="content-center hide-s">Clients</td>
-							<td rowspan="2" colspan="2">Actions</td>
+							<td rowspan="2" colspan="2" class="hide-print">Actions</td>
 						</tr>
 						<tr>
 							<td class="sub-header content-center hide-s">Active</td>
@@ -40,12 +40,12 @@
 								<td><strong>{{ $ad->first_name }}</strong></td>
 								<td class="content-center hide-s">{{ number_format($ad->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($ad->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('account_directors.edit', $ad->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>
 									{{ Form::close() }}
 								</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('account_directors.destroy', $ad->id), 'method' => 'delete']) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="account director"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}

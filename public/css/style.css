@@ -1839,6 +1839,10 @@ footer {
     color: black !important; }
 
   /* line 6, ../../app/assets/sass/_print.scss */
+  html, body {
+    height: auto !important; }
+
+  /* line 10, ../../app/assets/sass/_print.scss */
   .row,
   #page-header,
   .content-container,
@@ -1846,26 +1850,136 @@ footer {
     margin: 0 !important;
     padding: 0 !important; }
 
-  /* line 14, ../../app/assets/sass/_print.scss */
+  /* line 18, ../../app/assets/sass/_print.scss */
   h2 {
     padding: 0 !important;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-size: 1.75rem; }
 
-  /* line 19, ../../app/assets/sass/_print.scss */
+  /* line 24, ../../app/assets/sass/_print.scss */
   .hide-m,
   .hide-s {
     display: block !important; }
 
-  /* line 25, ../../app/assets/sass/_print.scss */
+  /* line 30, ../../app/assets/sass/_print.scss */
   .index-table .hide-m,
   .index-table .hide-s {
     display: table-cell !important; }
-    /* line 28, ../../app/assets/sass/_print.scss */
+    /* line 33, ../../app/assets/sass/_print.scss */
     .index-table .hide-m.hide-print,
     .index-table .hide-s.hide-print {
       display: none !important; }
 
-  /* line 34, ../../app/assets/sass/_print.scss */
+  /* line 39, ../../app/assets/sass/_print.scss */
+  .logo {
+    color: black !important; }
+    /* line 41, ../../app/assets/sass/_print.scss */
+    .logo span {
+      display: inline !important; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-1 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-2 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-3 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-4 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-5 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-6 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-7 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-8 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-9 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-10 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-11 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 47, ../../app/assets/sass/_print.scss */
+  .col-12 {
+    float: none;
+    width: 100% !important;
+    margin-right: 0; }
+
+  /* line 54, ../../app/assets/sass/_print.scss */
+  .chart {
+    display: none; }
+
+  /* line 57, ../../app/assets/sass/_print.scss */
+  .chart-print {
+    position: relative;
+    top: 0;
+    left: 0; }
+
+  /* line 63, ../../app/assets/sass/_print.scss */
+  table, table tr, table tr td {
+    border-left: 1px solid #5F697F !important;
+    border-bottom: 1px solid #5F697F !important; }
+
+  /* line 68, ../../app/assets/sass/_print.scss */
+  table {
+    border: 1px solid #5F697F !important; }
+
+  /* line 72, ../../app/assets/sass/_print.scss */
+  .rows-nav li {
+    margin-top: 20px;
+    text-align: left !important; }
+
+  /* line 77, ../../app/assets/sass/_print.scss */
+  .archive-count,
+  .client-links {
+    border: 0 !important; }
+
+  /* line 82, ../../app/assets/sass/_print.scss */
   .mobile-user-details-container,
   .mobile-site-nav-container,
   .site-nav-menu,
@@ -1874,105 +1988,4 @@ footer {
   .page-menu-icon-s,
   .page-menu-nav,
   .hide-print {
-    display: none !important; }
-
-  /* line 45, ../../app/assets/sass/_print.scss */
-  .logo {
-    color: black !important; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-1 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-2 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-3 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-4 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-5 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-6 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-7 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-8 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-9 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-10 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-11 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 50, ../../app/assets/sass/_print.scss */
-  .col-12 {
-    float: none;
-    width: 100% !important;
-    margin-right: 0; }
-
-  /* line 57, ../../app/assets/sass/_print.scss */
-  .chart {
-    display: none; }
-
-  /* line 60, ../../app/assets/sass/_print.scss */
-  .chart-print {
-    position: relative;
-    top: 0;
-    left: 0; }
-
-  /* line 66, ../../app/assets/sass/_print.scss */
-  table, table tr, table tr td {
-    border-left: 1px solid #5F697F !important;
-    border-bottom: 1px solid #5F697F !important; }
-
-  /* line 71, ../../app/assets/sass/_print.scss */
-  table {
-    border-top: 1px solid #5F697F !important;
-    border-right: 1px solid #5F697F !important; }
-
-  /* line 76, ../../app/assets/sass/_print.scss */
-  .archive-count,
-  .client-links {
-    border: 0 !important; } }
+    display: none !important; } }

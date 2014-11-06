@@ -3,6 +3,10 @@
     color:black !important;
   }
 
+  html, body {
+    height:auto !important;
+  }
+
   .row,
   #page-header,
   .content-container,
@@ -14,6 +18,7 @@
   h2 {
     padding:0 !important;
     margin-bottom:$v-rhythm;
+    @include font-size(28);
   }
 
   .hide-m,
@@ -31,19 +36,11 @@
     }
   }
 
-  .mobile-user-details-container,
-  .mobile-site-nav-container,
-  .site-nav-menu,
-  .mobile-nav-buttons,
-  footer,
-  .page-menu-icon-s,
-  .page-menu-nav,
-  .hide-print {
-    display:none !important;
-  }
-
   .logo {
     color:black !important;
+    span {
+      display:inline !important;
+    }
   }
 
   @for $i from 1 through 12 {
@@ -69,12 +66,27 @@
   }
 
   table {
-    border-top:1px solid $grey !important;
-    border-right:1px solid $grey !important;
+    border:1px solid $grey !important;
+  }
+
+  .rows-nav li {
+    margin-top:$v-rhythm;
+    text-align: left !important;
   }
 
   .archive-count,
   .client-links {
     border:0 !important;
+  }
+
+  .mobile-user-details-container,
+  .mobile-site-nav-container,
+  .site-nav-menu,
+  .mobile-nav-buttons,
+  footer,
+  .page-menu-icon-s,
+  .page-menu-nav,
+  .hide-print {
+    display:none !important;
   }
 }

@@ -30,7 +30,7 @@
 							<td rowspan="2" width="15%">Email</td>
 							<td rowspan="2" width="10%" class="hide-s">Role</td>
 							<td colspan="2" width="10%" class="content-center hide-s">Clients Added</td>
-							<td rowspan="2" colspan="2">Actions</td>
+							<td rowspan="2" colspan="2" class="hide-print">Actions</td>
 						</tr>
 						<tr>
 							<td class="sub-header content-center hide-s">Active</td>
@@ -51,12 +51,12 @@
 								<td class="hide-s">{{ $list_user->roles()->pluck('name') }}</td>
 								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 1)->count(),0,0,',') }}</td>
 								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 0)->count(),0,0,',') }}</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('users.edit', $list_user->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>
 									{{ Form::close() }}
 								</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('users.destroy', $list_user->id), 'method' => 'delete']) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="user"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}

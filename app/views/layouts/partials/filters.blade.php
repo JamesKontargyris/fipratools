@@ -1,4 +1,4 @@
-<section class="row no-margin">
+<section class="row no-margin hide-print">
 	<div class="col-12 filter-container">
 		<a class="filter-menu-icon-m" href="#">Filters</a>
 		<div class="col-12 filters">

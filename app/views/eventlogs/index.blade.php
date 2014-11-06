@@ -25,7 +25,7 @@ Event Log
 							<td width="15%">User</td>
 							<td width="15%">Unit</td>
 							<td width="25%">When</td>
-							<td></td>
+							<td class="hide-print"></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,7 +49,7 @@ Event Log
 								<td>{{ $log->user_name }}</td>
 								<td>{{ $log->unit_name }}</td>
 								<td>{{ date('d F Y \a\t g.ia', strtotime($log->created_at)) }}</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['url' => array('logs/delete'), 'method' => 'post']) }}
 										{{ Form::hidden('log_id', $log->id) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="log entry"><i class="fa fa-times"></i></button>

@@ -25,19 +25,19 @@
 					<thead>
 						<tr>
 							<td width="100%">Sector Category Name</td>
-							<td colspan="2">Actions</td>
+							<td colspan="2" class="hide-print">Actions</td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $sector_category)
 							<tr>
 								<td><strong>{{ $sector_category->name }}</strong></td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('sector_categories.edit', $sector_category->id), 'method' => 'get']) }}
 										<button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>
 									{{ Form::close() }}
 								</td>
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('sector_categories.destroy', $sector_category->id), 'method' => 'delete']) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="sector category"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}

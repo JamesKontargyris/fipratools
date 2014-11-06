@@ -26,7 +26,7 @@ Unit links for {{ $client->name }}
 					<thead>
 						<tr>
 							<td>Other units with contracts with this client</td>
-							<td>Actions</td>
+							<td class="hide-print">Actions</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,7 +34,7 @@ Unit links for {{ $client->name }}
 							<tr>
 								<td><strong>{{ $client_link->unit()->pluck('name') }}</strong></td>
 
-								<td class="actions content-right">
+								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('client_links.destroy', $client_link->id), 'method' => 'delete']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="sector" title="Delete this unit"><i class="fa fa-times"></i></button>

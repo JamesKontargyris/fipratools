@@ -35,7 +35,7 @@
 					<thead>
 						<tr>
 							@if(Session::get( 'list.rowsHideShowDormant' ) == 'show')
-								<td rowspan="2" class="content-center show-s"></td>
+								<td rowspan="2" class="content-center show-s hide-print"></td>
 								<td rowspan="2" class="content-center hide-s">Status</td>
 							@endif
 							<td colspan="3" width="40%">Client name</td>
@@ -45,7 +45,7 @@
 							<td width="15%">Lead Unit</td>
 							<td width="25%" class="hide-s">AD to talk to</td>
 						</tr>
-						<tr>
+						<tr class="hide-print">
 							<td class="hide-m sub-header" colspan="3">
 								@include('layouts.partials.filters.table-letter-filter')
 							</td>
@@ -96,10 +96,10 @@
 							<tr>
 								@if(Session::get( 'list.rowsHideShowDormant' ) == 'show')
 									@if($client->status)
-										<td class="actions content-center status-active show-s"><i class="fa fa-circle fa-lg show-s"></i></td>
+										<td class="actions content-center status-active show-s hide-print"><i class="fa fa-circle fa-lg show-s"></i></td>
 										<td class="actions content-center status-active hide-s">Active</td>
 									@else
-										<td class="actions content-center status-dormant show-s"><i class="fa fa-circle-o fa-lg show-s"></i></td>
+										<td class="actions content-center status-dormant show-s hide-print"><i class="fa fa-circle-o fa-lg show-s"></i></td>
 										<td class="actions content-center status-dormant hide-s">Dormant</td>
 									@endif
 								@endif
