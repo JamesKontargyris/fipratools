@@ -5,6 +5,7 @@ use Leadofficelist\Clients\Client;
 use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Units\Unit;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', ['as' => 'home', function()
 {
@@ -84,12 +85,6 @@ Route::get('roles', function()
 	//$new_fipriot->attachPermissions([$view_list->id]);
 	//
 	//return "All done!";
-});
-
-Route::get('coverpage', function()
-{
-	$heading1 = 'Selection';
-	return View::make( 'export.coverpage', ['heading1' => $heading1] );
 });
 
 Route::group(['before' => 'auth'], function()

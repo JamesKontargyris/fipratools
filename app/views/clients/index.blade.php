@@ -13,7 +13,7 @@
 
 @section('export-nav')
 @if($user->hasRole('Administrator'))
-	<li><a href="/{{ $items->key }}/export?filetype=pdf_duplicates" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export Duplicates to PDF</a></li>
+	<li><a href="/{{ $items->key }}/export?filetype=pdf_duplicates" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Duplicates</a></li>
 @endif
 @stop
 

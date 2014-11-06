@@ -10,6 +10,7 @@ use Leadofficelist\Services\Service;
 use Leadofficelist\Types\Type;
 use Leadofficelist\Units\Unit;
 use Leadofficelist\Users\User;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class BaseController extends Controller
@@ -72,23 +73,37 @@ class BaseController extends Controller
 	{
 		if(Input::has('filetype'))
 		{
+			$this->check_perm( $this->resource_permission );
+
 			switch(Input::get('filetype'))
 			{
 				case 'pdf_all':
-					$contents = $this->PDFExportAll($this->resource_permission, $this->getAll());
+					$contents = $this->PDFExportAll($this->getAll());
 					$this->generatePDF($contents, $this->export_filename . '.pdf');
 					return true;
 					break;
 
 				case 'pdf_selection':
-					$contents = $this->PDFExportSelection($this->resource_permission, $this->getSelection());
+					$contents = $this->PDFExportSelection($this->getSelection());
 					$this->generatePDF($contents, $this->export_filename . '_selection.pdf');
 					return true;
 					break;
 
 				case 'pdf_duplicates':
-					$contents = $this->PDFExportDuplicates($this->resource_permission, $this->getDuplicates());
+					$contents = $this->PDFExportDuplicates($this->getDuplicates());
 					$this->generatePDF($contents, $this->export_filename . '_duplicates.pdf');
+					return true;
+					break;
+
+				case 'excel_all':
+					$contents = $this->getAll();
+					$this->generateExcel($contents, $this->export_filename);
+					return true;
+					break;
+
+				case 'excel_selection':
+					$contents = $this->getSelection();
+					$this->generateExcel($contents, $this->export_filename . '_selection');
 					return true;
 					break;
 			}
@@ -103,15 +118,12 @@ class BaseController extends Controller
 	/**
 	 * Export all records for a resource to a PDF file
 	 *
-	 * @param string $permission
 	 * @param $items
 	 *
 	 * @return string
-	 * @throws PermissionDeniedException
 	 */
-	protected function PDFExportAll($permission = 'view_list', $items)
+	protected function PDFExportAll($items)
 	{
-		$this->check_perm( $permission );
 		$key = is_request('list') ? 'clients' : $this->resource_key;
 		//Clients and List specific variables
 		$active_count = 0;
@@ -134,15 +146,12 @@ class BaseController extends Controller
 	/**
 	 * Export a visible selection of records for a resource to a PDF file
 	 *
-	 * @param string $permission
 	 * @param $items
 	 *
 	 * @return string
-	 * @throws PermissionDeniedException
 	 */
-	protected function PDFExportSelection($permission = 'view_list', $items)
+	protected function PDFExportSelection($items)
 	{
-		$this->check_perm( $permission );
 		$key = is_request('list') ? 'clients' : $this->resource_key;
 
 		$heading1 = ucfirst(clean_key($this->resource_key)) . ' Selection';
@@ -157,16 +166,12 @@ class BaseController extends Controller
 	/**
 	 * Export a listing of duplicate resource records to a PDF file
 	 *
-	 * @param string $permission
 	 * @param $items
 	 *
 	 * @return string
-	 * @throws PermissionDeniedException
 	 */
-	protected function PDFExportDuplicates($permission = 'view_list', $items)
+	protected function PDFExportDuplicates($items)
 	{
-		$this->check_perm( $permission );
-
 		$heading1 = 'Duplicated ' . ucfirst(clean_key($this->resource_key));
 		$heading2 = number_format($items->count(), 0) . ' total ' . clean_key($this->resource_key);
 		$active_count = 0; $dormant_count = 0;
@@ -221,6 +226,36 @@ class BaseController extends Controller
 		if(!$pdf->send($filename)) throw new Exception('Could not create PDF: '.$pdf->getError());
 	}
 
+
+	/**
+	 * Generate an Excel file
+	 *
+	 * @param $contents
+	 * @param $filename
+	 *
+	 */
+	protected function generateExcel($contents, $filename)
+	{
+		global $items;
+		$items = $contents;
+
+		Excel::create($filename, function($excel) {
+
+			$excel->sheet(clean_key($this->resource_key), function($sheet) {
+				global $items;
+				$user = Auth::user();
+
+				//If the main lead office list is being exported, it contains a message in the first cell
+				//Merge some cells so the messages doesn't make the first column too wide
+				if(is_request('list')) $sheet->mergeCells('A1:G1');
+				$sheet->loadView('export.excel.' . $this->resource_key)->with(['items' => $items, 'user' => $user]);
+
+			});
+
+			$excel->download('xls');
+
+		});
+	}
 
 	/**
 	 * If reset_sorting is set to yes, reset all session keys
