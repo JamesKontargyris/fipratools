@@ -1964,22 +1964,25 @@ footer {
   table, table tr, table tr td {
     border-left: 1px solid #5F697F !important;
     border-bottom: 1px solid #5F697F !important; }
+    /* line 66, ../../app/assets/sass/_print.scss */
+    table:last-child, table tr:last-child, table tr td:last-child {
+      border-right: 1px solid #5F697F !important; }
 
-  /* line 68, ../../app/assets/sass/_print.scss */
+  /* line 71, ../../app/assets/sass/_print.scss */
   table {
     border: 1px solid #5F697F !important; }
 
-  /* line 72, ../../app/assets/sass/_print.scss */
+  /* line 75, ../../app/assets/sass/_print.scss */
   .rows-nav li {
     margin-top: 20px;
     text-align: left !important; }
 
-  /* line 77, ../../app/assets/sass/_print.scss */
+  /* line 80, ../../app/assets/sass/_print.scss */
   .archive-count,
   .client-links {
     border: 0 !important; }
 
-  /* line 82, ../../app/assets/sass/_print.scss */
+  /* line 85, ../../app/assets/sass/_print.scss */
   .mobile-user-details-container,
   .mobile-site-nav-container,
   .site-nav-menu,
