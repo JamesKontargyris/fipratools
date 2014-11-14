@@ -36,7 +36,7 @@ class EventLogController extends \BaseController
 		EventLog::truncate();
 		Flash::overlay('Entry logs trashed.', 'info');
 
-		return Redirect::to('logs');
+		return Redirect::to('eventlog');
 	}
 
 	protected function getAll()
