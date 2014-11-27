@@ -39,7 +39,7 @@ Route::filter('auth', function()
 	if (Auth::guest())
 	{
 		Flash::message('Please log in to access this area.');
-		return Redirect::to('login');
+		return Redirect::guest('login');
 	}
 });
 
