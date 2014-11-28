@@ -14,7 +14,8 @@
         "ignited/laravel-pdf": "1.*",
         "h4cc/wkhtmltopdf-i386": "0.12.*",
         "h4cc/wkhtmltopdf-amd64": "0.12.*",
-        "maatwebsite/excel": "1.*"
+        "maatwebsite/excel": "1.*",
+        "pda/pheanstalk": "3.0.2"
 	},
 	"autoload": {
 		"classmap": [
