@@ -15,7 +15,7 @@
         "h4cc/wkhtmltopdf-i386": "0.12.*",
         "h4cc/wkhtmltopdf-amd64": "0.12.*",
         "maatwebsite/excel": "1.*",
-        "pda/pheanstalk": "3.0.2",
+        "pda/pheanstalk": "2.1.0",
         "guzzlehttp/guzzle": "5.*"
 	},
 	"autoload": {
