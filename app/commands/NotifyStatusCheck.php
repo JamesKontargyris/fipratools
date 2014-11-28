@@ -76,7 +76,7 @@ class NotifyStatusCheck extends Command
 					$data['first_name'] = $user->first_name;
 					$data['last_name']  = $user->last_name;
 					$data['full_name']  = $user->first_name . ' ' . $user->last_name;
-					$data['email']      = 'james.kontargyris@fipra.com';
+					$data['email']      = $user->email;
 					//$data['email']      = $user->email;
 					$data['count']     = $count;
 					$data['usernames'] = $usernames;
