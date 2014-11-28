@@ -2,10 +2,18 @@
 <html lang="en-US">
 	<head>
 		<meta charset="utf-8">
+		<style>
+		* {
+			font-family:arial, sans-serif;
+			line-height:1.4;
+		}
+		</style>
 	</head>
 	<body>
 		<h2>Fipra Lead Office List</h2>
 		<h3>Please check and update the status of your clients</h3>
+
+		<p>Dear {{ $first_name }},</p>
 
 		<p>In order to keep our Lead Office List as up-to-date and relevant as possible, it is important that client data is regularly monitored for validity and accuracy.</p>
 

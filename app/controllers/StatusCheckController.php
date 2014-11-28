@@ -3,6 +3,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Leadofficelist\Clients\Client;
+use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 
 class StatusCheckController extends BaseController
@@ -28,6 +29,7 @@ class StatusCheckController extends BaseController
 	public function postIndex()
 	{
 		$this->execute( 'Leadofficelist\Clients\EditClientStatusCommand');
+		Eventlog::add('Client status check completed', $this->user->first_name . ' ' . $this->user->last_name, $this->user->unit()->pluck('name'), 'info' );
 
 		return View::make('status_check.success');
 	}
