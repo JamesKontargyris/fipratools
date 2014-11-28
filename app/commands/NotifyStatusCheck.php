@@ -54,10 +54,10 @@ class NotifyStatusCheck extends Command
 				$data['full_name']  = $user->first_name . ' ' . $user->last_name;
 				$data['email']      = $user->email;
 
-				//Mail::queue('emails.status_check.status_check_reminder', $data, function($message) use ($data)
-				//{
-				//	$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - Client Status Check');
-				//});
+				Mail::queue('emails.status_check.status_check_reminder', $data, function($message) use ($data)
+				{
+					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - Client Status Check');
+				});
 
 				$count ++;
 				$emails[]    = $data['email'];
