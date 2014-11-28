@@ -1462,18 +1462,27 @@ ul.square {
 /* line 598, ../../app/assets/sass/_modules.scss */
 .datepicker {
   background: url(../img/iconCalendar.gif) no-repeat 10px center;
-  padding-left: 40px !important;
-  padding: 5px 10px; }
+  padding: 5px 10px;
+  padding-left: 40px !important; }
 
 /* line 604, ../../app/assets/sass/_modules.scss */
+.ui-datepicker {
+  font-size: 14px !important; }
+  /* line 606, ../../app/assets/sass/_modules.scss */
+  .ui-datepicker .ui-datepicker-month,
+  .ui-datepicker .ui-datepicker-year {
+    font-size: 12px !important;
+    float: left !important; }
+
+/* line 613, ../../app/assets/sass/_modules.scss */
 .pagination-container {
   margin: 20px 0; }
   @media (max-width: 900px) {
-    /* line 604, ../../app/assets/sass/_modules.scss */
+    /* line 613, ../../app/assets/sass/_modules.scss */
     .pagination-container {
       text-align: center; } }
 
-/* line 610, ../../app/assets/sass/_modules.scss */
+/* line 619, ../../app/assets/sass/_modules.scss */
 ul.pagination {
   margin: 0;
   padding: 0;
@@ -1500,15 +1509,15 @@ ul.pagination {
     ul.pagination li.last {
       padding-right: 0; }
   @media (max-width: 900px) {
-    /* line 610, ../../app/assets/sass/_modules.scss */
+    /* line 619, ../../app/assets/sass/_modules.scss */
     ul.pagination {
       display: inline-block;
       margin: 0 auto; } }
-  /* line 617, ../../app/assets/sass/_modules.scss */
+  /* line 626, ../../app/assets/sass/_modules.scss */
   ul.pagination li {
     padding: 0 !important;
     margin-right: 5px; }
-    /* line 620, ../../app/assets/sass/_modules.scss */
+    /* line 629, ../../app/assets/sass/_modules.scss */
     ul.pagination li a {
       cursor: pointer;
       padding: 5px 10px;
@@ -1532,7 +1541,7 @@ ul.pagination {
       /* line 19, ../../app/assets/sass/_mixins.scss */
       ul.pagination li a:hover {
         opacity: 0.8; }
-    /* line 627, ../../app/assets/sass/_modules.scss */
+    /* line 636, ../../app/assets/sass/_modules.scss */
     ul.pagination li.active span {
       cursor: pointer;
       padding: 5px 10px;
@@ -1556,7 +1565,7 @@ ul.pagination {
       /* line 19, ../../app/assets/sass/_mixins.scss */
       ul.pagination li.active span:hover {
         opacity: 0.8; }
-    /* line 634, ../../app/assets/sass/_modules.scss */
+    /* line 643, ../../app/assets/sass/_modules.scss */
     ul.pagination li.disabled span {
       cursor: pointer;
       padding: 5px 10px;
@@ -1574,41 +1583,41 @@ ul.pagination {
       ul.pagination li.disabled span:hover {
         opacity: 0.8; }
     @media (max-width: 768px) {
-      /* line 640, ../../app/assets/sass/_modules.scss */
+      /* line 649, ../../app/assets/sass/_modules.scss */
       ul.pagination li.link, ul.pagination li.disabled {
         display: none; } }
 
-/* line 649, ../../app/assets/sass/_modules.scss */
+/* line 658, ../../app/assets/sass/_modules.scss */
 .euro-field:before {
   content: "Ôé¼"; }
 
-/* line 654, ../../app/assets/sass/_modules.scss */
+/* line 663, ../../app/assets/sass/_modules.scss */
 .divider-pipe {
   padding: 0 10px;
   color: #e6e6e6; }
 
-/* line 659, ../../app/assets/sass/_modules.scss */
+/* line 668, ../../app/assets/sass/_modules.scss */
 .border-box {
   border: 1px solid #dee0e6;
   padding: 20px 15px;
   margin-bottom: 20px; }
-  /* line 663, ../../app/assets/sass/_modules.scss */
+  /* line 672, ../../app/assets/sass/_modules.scss */
   .border-box.fill {
     background-color: #fbfbfc; }
 
-/* line 668, ../../app/assets/sass/_modules.scss */
+/* line 677, ../../app/assets/sass/_modules.scss */
 .chart {
   width: 100%;
   height: 500px; }
   @media (min-width: 900px) {
-    /* line 668, ../../app/assets/sass/_modules.scss */
+    /* line 677, ../../app/assets/sass/_modules.scss */
     .chart {
       height: 600px; }
-      /* line 673, ../../app/assets/sass/_modules.scss */
+      /* line 682, ../../app/assets/sass/_modules.scss */
       .chart.large {
         height: 800px; } }
 
-/* line 678, ../../app/assets/sass/_modules.scss */
+/* line 687, ../../app/assets/sass/_modules.scss */
 .chart-print {
   overflow: hidden;
   *zoom: 1;
@@ -1618,11 +1627,11 @@ ul.pagination {
   width: 450px;
   height: 450px; }
 
-/* line 688, ../../app/assets/sass/_modules.scss */
+/* line 697, ../../app/assets/sass/_modules.scss */
 .js-block {
   display: none; }
 
-/* line 693, ../../app/assets/sass/_modules.scss */
+/* line 702, ../../app/assets/sass/_modules.scss */
 .prose p {
   line-height: 2 !important; }
 

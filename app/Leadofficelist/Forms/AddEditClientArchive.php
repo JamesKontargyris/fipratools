@@ -11,16 +11,17 @@ class AddEditClientArchive extends FormValidator
 	 * @var array
 	 */
 	public $rules = [
-		'start_date' => 'required|date',
-		'end_date'   => 'required|date',
-		'comment'    => 'required',
+		'date'             => 'required|date',
+		'unit'             => 'required|max:255',
+		'account_director' => 'required|max:255',
+		'comment'          => 'required',
 	];
 
 	public $messages = [
-		'start_date.required' => 'Please enter a start date.',
-		'start_date.date'     => 'Please enter a valid start date.',
-		'end_date.required'   => 'Please enter an end date.',
-		'end_date.date'       => 'Please enter a valid end date.',
-		'comment.required'    => 'Please enter details for this archive record.',
+		'date.required'             => 'Please enter a date.',
+		'date.date'                 => 'Please enter a valid date.',
+		'unit.required'             => 'Please enter a Unit name.',
+		'account_director.required' => 'Please enter an Account Director\'s name.',
+		'comment.required'          => 'Please enter a comment for this archive record.',
 	];
 } 

@@ -18,14 +18,16 @@
 
 <div class="row">
 	<div class="col-6">
-		<h4>Address:</h4>
-		<p>
-			{{ $unit->address1 }}<br/>
-			{{ ! empty($unit->address2) ? $unit->address2 . '<br/>' : '' }}
-			{{ ! empty($unit->address3) ? $unit->address3 . '<br/>' : '' }}
-			{{ ! empty($unit->address4) ? $unit->address4 . '<br/>' : '' }}
-			{{ $unit->post_code }}
-		</p>
+		@if( ! empty($unit->address1))
+			<h4>Address:</h4>
+			<p>
+				{{ $unit->address1 }}<br/>
+				{{ ! empty($unit->address2) ? $unit->address2 . '<br/>' : '' }}
+				{{ ! empty($unit->address3) ? $unit->address3 . '<br/>' : '' }}
+				{{ ! empty($unit->address4) ? $unit->address4 . '<br/>' : '' }}
+				{{ $unit->post_code }}
+			</p>
+		@endif
 		@if( ! empty($unit->phone))
 			<h4>Telephone:</h4>
 			<p>{{ $unit->phone }}</p>
@@ -36,7 +38,7 @@
 		@endif
 		@if( ! empty($unit->email))
 			<h4>Email:</h4>
-			<p>{{ $unit->email }}</p>
+			<p><a href="mailto:{{ $unit->email }}">{{ $unit->email }}</a></p>
 		@endif
 	</div>
 	<div class="col-6 last">

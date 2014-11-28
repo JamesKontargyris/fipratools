@@ -135,6 +135,7 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('account_directors', 'AccountDirectorsController');
 
 	Route::controller('reports', 'ReportsController');
+	Route::controller('statuscheck', 'StatusCheckController');
 });
 
 //Ajax requests

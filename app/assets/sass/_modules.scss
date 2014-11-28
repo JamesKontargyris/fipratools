@@ -597,8 +597,17 @@ ul.square {
 }
 .datepicker {
   background:url(../img/iconCalendar.gif) no-repeat 10px center;
-  padding-left:40px !important;
   padding:$v-rhythm / 4 10px;
+  padding-left:40px !important;
+}
+
+.ui-datepicker {
+  font-size:14px !important;
+  .ui-datepicker-month,
+  .ui-datepicker-year {
+    font-size:12px !important;
+    float:left !important;
+  }
 }
 
 .pagination-container {

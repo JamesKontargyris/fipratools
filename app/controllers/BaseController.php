@@ -457,9 +457,24 @@ class BaseController extends Controller
 		throw new PermissionDeniedException;
 	}
 
+	/**
+	 * Check if the logged in user has a particular role
+	 *
+	 * @param $role
+	 *
+	 * @return bool
+	 * @throws PermissionDeniedException
+	 */
 	protected function check_role( $role )
 	{
-		if ( $this->user->hasRole( $role ) )
+		if(is_array($role))
+		{
+			foreach($role as $r)
+			{
+				if($this->user->hasRole( $r )) return true;
+			}
+		}
+		elseif ( $this->user->hasRole( $role ) )
 		{
 			return true;
 		}

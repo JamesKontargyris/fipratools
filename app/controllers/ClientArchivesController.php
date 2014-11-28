@@ -40,7 +40,7 @@ class ClientArchivesController extends \BaseController
 
 		if(Input::has('client_id'))
 		{
-			$items = ClientArchive::orderBy('start_date', 'DESC')->where('client_id', '=', Input::get('client_id'))->get();
+			$items = ClientArchive::orderBy('date', 'DESC')->where('client_id', '=', Input::get('client_id'))->get();
 			$client = Client::find(Input::get('client_id'));
 		}
 

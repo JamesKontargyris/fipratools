@@ -123,7 +123,7 @@ class ClientsController extends \BaseController
 		{
 
 			$linked_units = $this->client->getLinkedUnits( $id );
-			$archives     = ClientArchive::orderBy( 'start_date', 'DESC' )->where( 'client_id', '=', $id )->get();
+			$archives     = ClientArchive::orderBy( 'date', 'DESC' )->where( 'client_id', '=', $id )->get();
 
 			return View::make( 'clients.show' )->with( compact( 'client', 'archives', 'linked_units' ) );
 		} else

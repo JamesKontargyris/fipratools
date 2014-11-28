@@ -1,5 +1,6 @@
 <?php namespace Leadofficelist\Clients;
 
+use App;
 use Leadofficelist\Units\Unit;
 
 class Client extends \BaseModel
@@ -89,6 +90,36 @@ class Client extends \BaseModel
 		$update_client->save();
 
 		return $update_client;
+	}
+
+	/**
+	 * Change a client's status
+	 *
+	 * @param $id
+	 * @param $status
+	 *
+	 * @return bool
+	 */
+	public function updateStatus($id, $status)
+	{
+		//Ensure $status is an integer, either 1 or 0
+		$status = ($status == 1 || strtolower($status) == 'active') ? 1 : 0;
+		//Set $status_text as the wording equivalent
+		$status_text = ($status == 1) ? 'Active' : 'Dormant';
+		//Get the client using $id
+		$client = $this->where('id', '=', $id)->first();
+
+		//If the client status is different...
+		if($client->status != $status)
+		{
+			//Update the status and save the model
+			$client->status = $status;
+			$client->save();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public function getLeadOfficeAddress()

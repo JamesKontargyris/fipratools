@@ -15,22 +15,21 @@ Add an archive record for {{ $client->name }}
 
 {{ Form::open(['route' => 'client_archives.store']) }}
 <div class="row">
-	<div class="col-12">
-		<h3>This record covers:</h3>
-		<div class="col-6">
-			<div class="formfield">
-				{{ Form::label('start_date', 'Start date:', ['class' => 'required']) }}
-				{{ Form::text('start_date', Input::old('start_date'), ['class' => 'datepicker', 'id' => 'start_date']) }}
-			</div>
-		</div>
-		<div class="col-6 last">
-			<div class="formfield">
-				{{ Form::label('end_date', 'End date:', ['class' => 'required']) }}
-				{{ Form::text('end_date', Input::old('end_date'), ['class' => 'datepicker', 'id' => 'end_date']) }}
-			</div>
+	<div class="col-9">
+		<div class="formfield">
+			{{ Form::label('date', 'Date:', ['class' => 'required']) }}
+			{{ Form::text('date', Input::old('date'), ['class' => 'datepicker', 'id' => 'date']) }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('comment', 'Details:', ['class' => 'required']) }}
+			{{ Form::label('unit', 'Unit:', ['class' => 'required']) }}
+			{{ Form::text('unit', (Input::old('unit')) ? Input::old('unit') : $client->unit()->pluck('name'), [ 'id' => 'unit']) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('account_director', 'Account Director:', ['class' => 'required']) }}
+			{{ Form::text('account_director', (Input::old('account_director')) ? Input::old('account_director') : $client->account_director()->pluck('first_name') . ' ' . $client->account_director()->pluck('last_name'), ['id' => 'account_director']) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('comment', 'Comment:', ['class' => 'required']) }}
 			{{ Form::textarea('comment', Input::old('comment'), ['cols' => '5']) }}
 		</div>
 		{{ Form::hidden('client_id', $client->id) }}

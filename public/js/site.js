@@ -9,15 +9,11 @@
     // Hide all help boxes
     $('.help-box').css('display', 'none');
     //Show the datepicker
-    var dates = $("#start_date, #end_date").datepicker({
+    var dates = $("#date").datepicker({
         dateFormat: "d MM yy",
-        numberOfMonths: 1,
-        onSelect: function(selectedDate) {
-            var option = this.id == "start_date" ? "minDate" : "maxDate",
-                instance = $(this).data("datepicker"),
-                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
-            dates.not(this).datepicker("option", option, date);
-        }
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1
     });
 
     $('.print-button').on('click', function()
@@ -80,6 +76,14 @@
     $('.delete-row').on("click", function()
     {
         if(confirm("Are you sure you want to delete this " + $(this).data('resource-type') + '?')) { return true; }
+        return false;
+    });
+
+    //When the confirm button is clicked on the status check page, show a confirmation dialogue box
+    //Continue with the confirmation if the OK button is pressed. Otherwise, do nothing.
+    $('.status-check-confirm').on("click", function()
+    {
+        if(confirm("I confirm all client status details are correct and up-to-date.")) { return true; }
         return false;
     });
 

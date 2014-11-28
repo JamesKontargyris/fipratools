@@ -72,17 +72,36 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="15%" class="content-center">Start Date</td>
-							<td width="15%" class="content-center">End Date</td>
-							<td width="70%">Details</td>
+							<td width="15%" class="content-center">Date</td>
+							<td width="15%" class="content-center">Unit</td>
+							<td width="15%" class="content-center">Account Director</td>
+							<td width="55%">Comment</td>
+							@if($user->hasRole('Administrator'))
+								<td colspan="2" class="actions"></td>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($archives as $client_archive)
 							<tr>
-								<td class="content-center">{{ date('j M Y', strtotime($client_archive->start_date)) }}</td>
-								<td class="content-center">{{ date('j M Y', strtotime($client_archive->end_date)) }}</td>
+								<td class="content-center">{{ date('j M Y', strtotime($client_archive->date)) }}</td>
+								<td class="content-center">{{ $client_archive->unit }}</td>
+								<td class="content-center">{{ $client_archive->account_director }}</td>
 								<td>{{ $client_archive->comment }}</td>
+								@if($user->hasRole('Administrator'))
+									<td class="actions content-right hide-print">
+										{{ Form::open(['route' => array('client_archives.edit', $client_archive->id), 'method' => 'get']) }}
+											{{ Form::hidden('client_id', $client->id) }}
+											<button type="submit" class="primary" title="Edit this client archive record"><i class="fa fa-pencil"></i></button>
+										{{ Form::close() }}
+									</td>
+									<td class="actions content-right hide-print">
+										{{ Form::open(['route' => array('client_archives.destroy', $client_archive->id), 'method' => 'delete']) }}
+											{{ Form::hidden('client_id', $client->id) }}
+											<button type="submit" class="red-but delete-row" data-resource-type="client archive record" title="Delete this client archive record"><i class="fa fa-times"></i></button>
+										{{ Form::close() }}
+									</td>
+								@endif
 							</tr>
 						@endforeach
 					</tbody>

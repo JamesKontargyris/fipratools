@@ -2,18 +2,21 @@
 
 class AddClientArchiveCommand
 {
-	public $start_date;
-	public $end_date;
+
+	public $date;
+	public $unit;
+	public $account_director;
 	public $comment;
 	public $client_id;
 
-	function __construct( $start_date, $end_date, $comment, $client_id )
+	function __construct( $date, $unit, $account_director, $comment, $client_id )
 	{
 
-		$this->start_date = $start_date;
-		$this->end_date   = $end_date;
-		$this->comment    = $comment;
-		$this->client_id  = $client_id;
+		$this->date = $date;
+		$this->unit = $unit;
+		$this->account_director = $account_director;
+		$this->comment = $comment;
+		$this->client_id = $client_id;
 	}
 
 

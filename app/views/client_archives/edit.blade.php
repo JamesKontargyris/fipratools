@@ -14,22 +14,21 @@ Edit archive record for {{ $client->name }}
 
 {{ Form::open(['method' => 'PUT', 'url' => 'client_archives/' . $client_archive->id]) }}
 <div class="row">
-	<div class="col-12">
-		<h3>This record covers:</h3>
-		<div class="col-6">
-			<div class="formfield">
-				{{ Form::label('start_date', 'Start date:', ['class' => 'required']) }}
-				{{ Form::text('start_date', isset($client_archive->start_date) ? date('j F Y', strtotime($client_archive->start_date)) : '', ['class' => 'datepicker start_date']) }}
-			</div>
-		</div>
-		<div class="col-6 last">
-			<div class="formfield">
-				{{ Form::label('end_date', 'End date:', ['class' => 'required']) }}
-				{{ Form::text('end_date', isset($client_archive->end_date) ? date('j F Y', strtotime($client_archive->end_date)) : '', ['class' => 'datepicker end_date']) }}
-			</div>
+	<div class="col-9">
+		<div class="formfield">
+			{{ Form::label('date', 'Date:', ['class' => 'required']) }}
+			{{ Form::text('date', isset($client_archive->date) ? date('j F Y', strtotime($client_archive->date)) : '', ['class' => 'datepicker', 'id' => 'date']) }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('comment', 'Details:', ['class' => 'required']) }}
+			{{ Form::label('unit', 'Unit:', ['class' => 'required']) }}
+			{{ Form::text('unit', isset($client_archive->unit) ? $client_archive->unit : '', [ 'id' => 'unit']) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('account_director', 'Account Director:', ['class' => 'required']) }}
+			{{ Form::text('account_director', isset($client_archive->account_director) ? $client_archive->account_director : '', ['id' => 'account_director']) }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('comment', 'Comment:', ['class' => 'required']) }}
 			{{ Form::textarea('comment', isset($client_archive->comment) ? $client_archive->comment : '', ['cols' => '5']) }}
 		</div>
 		{{ Form::hidden('client_id', $client->id) }}
