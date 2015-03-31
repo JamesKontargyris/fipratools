@@ -65,7 +65,7 @@ class ListController extends BaseController
 				}
 			} else
 			{
-				$items = Client::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::where( 'name', 'LIKE', $search_term )->rowsHideShowDormant( Session::get($this->resource_key . '.rowsHideShowDormant') )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			}
 
 			if ( ! $this->checkForSearchResults( $items ) )

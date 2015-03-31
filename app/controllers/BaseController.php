@@ -363,7 +363,7 @@ class BaseController extends Controller
 	 */
 	protected function getRowsHideShowDormant( $key )
 	{
-		//If the value passed in is 'all', set the valye to 99999. Otherwise,
+		//If the value passed in is 'all', set the value to 99999. Otherwise,
 		//use the value passed in, which should be numeric
 		//Value passed in and it is numeric?
 		if ( Input::has( 'dormant' ) && Input::get( 'dormant' ) == 'show' )
