@@ -4,7 +4,10 @@
 		<div class="col-12 filters">
 			<ul>
 				@if(is_request('clients') || is_request('list'))
-					<li>@include('layouts.partials.filters.rows_hide_show_dormant')</li>
+					<li>
+                        @include('layouts.partials.filters.rows_hide_show_dormant')
+                        @include('layouts.partials.filters.rows_hide_show_active')
+					</li>
 				@endif
 				<li>@include('layouts.partials.filters.rows_to_view')</li>
 				<li>@include('layouts.partials.filters.rows_sort_order')</li>

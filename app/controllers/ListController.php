@@ -31,7 +31,7 @@ class ListController extends BaseController
 		$types             = $this->types;
 		$services          = $this->services;
 
-		$items      = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsHideShowActive( $this->rows_hide_show_active )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'list';
 
 		return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'types', 'services' ) );
@@ -65,7 +65,7 @@ class ListController extends BaseController
 				}
 			} else
 			{
-				$items = Client::where( 'name', 'LIKE', $search_term )->rowsHideShowDormant( Session::get($this->resource_key . '.rowsHideShowDormant') )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::where( 'name', 'LIKE', $search_term )->rowsHideShowDormant( Session::get($this->resource_key . '.rowsHideShowDormant') )->rowsHideShowActive( Session::get($this->resource_key . '.rowsHideShowActive') )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			}
 
 			if ( ! $this->checkForSearchResults( $items ) )
@@ -102,7 +102,7 @@ class ListController extends BaseController
 
 	protected function getAll()
 	{
-		return Client::orderBy('name', 'ASC')->rowsHideShowDormant( $this->rows_hide_show_dormant )->get();
+		return Client::orderBy('name', 'ASC')->rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsHideShowActive( $this->rows_hide_show_active )->get();
 	}
 
 	protected function getSelection()
@@ -112,11 +112,11 @@ class ListController extends BaseController
 			$search_term = $this->findSearchTerm();
 			$this->search_term_clean = str_replace('%', '', $search_term);
 
-			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsHideShowActive( $this->rows_hide_show_active )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 		else
 		{
-			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsHideShowActive( $this->rows_hide_show_active )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 
 		return $items;

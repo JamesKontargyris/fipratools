@@ -23,6 +23,16 @@ class BaseModel extends Eloquent
 		return $query;
 	}
 
+    public function scopeRowsHideShowActive( $query, $active )
+    {
+        if($active == 'hide')
+        {
+            return $query->where( 'status', '!=', 1 );
+        }
+
+        return $query;
+    }
+
 	public function scopeRowsListFilter( $query, $field, $value )
 	{
 		return $query->where( $field, '=', (int) $value );

@@ -7,7 +7,10 @@
 @elseif(is_search())
 	<i class="fa fa-search"></i> Searching for {{ Session::has('list.SearchType') ? Session::get('list.SearchType') : '' }}: {{ $items->search_term }}
 @else
-	Active @if(Session::get('list.rowsHideShowDormant') == 'show') and Dormant @endif Clients
+    @if(Session::get('list.rowsHideShowActive') == 'show') Active @endif
+    @if(Session::get('list.rowsHideShowActive') == 'show' && Session::get('list.rowsHideShowDormant') == 'show') and @endif
+    @if(Session::get('list.rowsHideShowDormant') == 'show') Dormant @endif
+    Clients
 @endif
 @stop
 
@@ -34,11 +37,7 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							@if(Session::get( 'list.rowsHideShowDormant' ) == 'show')
-								<td rowspan="2" class="content-center show-s hide-print"></td>
-								<td rowspan="2" class="content-center hide-s">Status</td>
-							@endif
-							<td colspan="3" width="40%">Client name</td>
+							<td colspan="4" width="40%">Client name</td>
 							<td width="10%" class="hide-m">Sector</td>
 							<td width="10%" class="hide-m">Type</td>
 							<td width="10%" class="hide-m">Service</td>
@@ -46,7 +45,7 @@
 							<td width="25%" class="hide-s">AD to talk to</td>
 						</tr>
 						<tr class="hide-print">
-							<td class="hide-m sub-header" colspan="3">
+							<td class="hide-m sub-header" colspan="4">
 								@include('layouts.partials.filters.table-letter-filter')
 							</td>
 							<td class="hide-m sub-header">
@@ -93,16 +92,12 @@
 					</thead>
 					<tbody>
 						@foreach($items as $client)
-							<tr>
-								@if(Session::get( 'list.rowsHideShowDormant' ) == 'show')
-									@if($client->status)
-										<td class="actions content-center status-active show-s hide-print"><i class="fa fa-circle fa-lg show-s"></i></td>
-										<td class="actions content-center status-active hide-s">Active</td>
-									@else
-										<td class="actions content-center status-dormant show-s hide-print"><i class="fa fa-circle-o fa-lg show-s"></i></td>
-										<td class="actions content-center status-dormant hide-s">Dormant</td>
-									@endif
-								@endif
+							<tr @if( ! $client->status) class="dormant" @endif>
+                                @if($client->status)
+                                    <td class="actions content-center status-active hide-print"><i class="fa fa-check-circle fa-lg"></i></td>
+                                @else
+                                    <td class="actions content-center status-dormant hide-print"><i class="fa fa-times-circle fa-lg"></i></td>
+                                @endif
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">
 									@if($client->archives()->count())

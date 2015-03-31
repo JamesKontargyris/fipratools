@@ -33,10 +33,6 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							@if(Session::get( 'clients.rowsHideShowDormant' ) == 'show')
-								<td class="content-center show-s"></td>
-								<td class="content-center hide-s">Status</td>
-							@endif
 							<td colspan="3" width="60%">Client name</td>
 							@if($user->hasRole('Administrator'))
 								<td width="10%" class="hide-s">Unit</td>
@@ -56,16 +52,7 @@
 					</thead>
 					<tbody>
 						@foreach($items as $client)
-							<tr>
-								@if(Session::get( 'clients.rowsHideShowDormant' ) == 'show')
-									@if($client->status)
-										<td class="actions content-center status-active show-s"><i class="fa fa-circle fa-lg show-s"></i></td>
-										<td class="actions content-center status-active hide-s">Active</td>
-									@else
-										<td class="actions content-center status-dormant show-s"><i class="fa fa-circle-o fa-lg show-s"></i></td>
-										<td class="actions content-center status-dormant hide-s">Dormant</td>
-									@endif
-								@endif
+							<tr @if( ! $client->status) class="dormant" @endif>
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">
 									@if($client->archives()->count())
@@ -128,9 +115,9 @@
 									{{ Form::open(['route' => array('clients.change_status', $client->id), 'method' => 'get']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										@if($client->status)
-											<button type="submit" class="green-but" title="Make this client dormant"><i class="fa fa-circle"></i></button>
+											<button type="submit" class="green-but" title="Make this client dormant"><i class="fa fa-check-circle fa-lg"></i></button>
 										@else
-											<button type="submit" class="grey-but" title="Make this client active"><i class="fa fa-circle-o"></i></button>
+											<button type="submit" class="grey-but" title="Make this client active"><i class="fa fa-times-circle fa-lg"></i></button>
 										@endif
 									{{ Form::close() }}
 								</td>
