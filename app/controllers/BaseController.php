@@ -158,7 +158,7 @@ class BaseController extends Controller
 		$heading2 = isset($this->search_term_clean) ?
 			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key) . ' when searching for ' . Session::get($this->resource_key . '.SearchType') . ' "' . $this->search_term_clean . '"' :
 			'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key);
-		$view = View::make( 'export.pdf.' . $this->resource_key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
+		$view = View::make( 'export.pdf.' . $key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2] );
 
 		return (string) $view;
 	}
