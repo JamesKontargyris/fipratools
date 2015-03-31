@@ -62,10 +62,10 @@ class BaseController extends Controller
         $this->rows_hide_show_active = $this->getRowsHideShowActive($this->resource_key);
 
 
-        if($this->rows_hide_show_dormant == 'hide' && $this->rows_hide_show_active == 'hide')
-        {
-            $this->rows_hide_show_active = 'show';
-        }
+//        if($this->rows_hide_show_dormant == 'hide' && $this->rows_hide_show_active == 'hide')
+//        {
+//            $this->rows_hide_show_active = 'show';
+//        }
 
         $this->export_filename = date('ymd_H-i') . '_' . $this->resource_key;
     }
@@ -412,6 +412,7 @@ class BaseController extends Controller
         }
 
         //If all else fails...
+        Session::set($key . '.rowsHideShowDormant', 'hide');
         return 'hide';
     }
 
@@ -437,6 +438,7 @@ class BaseController extends Controller
         }
 
         //If all else fails...
+        Session::set($key . '.rowsHideShowActive', 'show');
         return 'show';
     }
 
