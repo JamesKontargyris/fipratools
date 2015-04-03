@@ -48,7 +48,7 @@ class ListController extends BaseController
 		{
 			if ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' )
 			{
-				$items = Client::rowsListFilter( $this->rows_list_filter_field, $this->rows_list_filter_value )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = Client::rowsListFilter( $this->rows_list_filter_field, $this->rows_list_filter_value )->rowsHideShowDormant( Session::get($this->resource_key . '.rowsHideShowDormant') )->rowsHideShowActive( Session::get($this->resource_key . '.rowsHideShowActive'))->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
 				$model_name          = $this->getFilterModelName();
 				$model               = new $model_name;
