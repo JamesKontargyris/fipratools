@@ -53,8 +53,9 @@ Editing Client: {{ $client->name }}
 	</div>
 	<div class="col-4 last">
 		<div class="formfield">
-			{{ Form::label('status', 'Current status:', ['class' => 'required']) }}
-			{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], isset($client->status) ? $client->status : '') }}
+			{{--{{ Form::label('status', 'Current status:', ['class' => 'required']) }}--}}
+			{{--{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], isset($client->status) ? $client->status : '') }}--}}
+            {{ Form::hidden('status', $client->status) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('comments', 'Comments:') }}

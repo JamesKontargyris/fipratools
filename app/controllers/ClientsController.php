@@ -1,8 +1,10 @@
 <?php
 
+use Carbon\Carbon;
 use Ignited\Pdf\Facades\Pdf;
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
+use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Client_archives\ClientArchive;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Eventlogs\EventLog;
@@ -303,7 +305,9 @@ class ClientsController extends \BaseController
 			$status = ($client->status) ? 'active' : 'dormant';
 			$client->save();
 			Flash::message('Status for client "' . $client->name . '" updated.', 'info');
-			EventLog::add('Client status changed: ' . $client->name . ' is now ' . $status, $this->user->getFullName(), Unit::find($client->unit_id)->name, 'info');
+			EventLog::add('Client status changed: ' . $client->name . ' is now ' . $status, $this->user->getFullName(),$client->unit->name, 'info');
+
+            $this->execute( 'Leadofficelist\Client_archives\AddClientArchiveCommand', ['date' => Carbon::now(), 'unit' => $client->unit->name, 'account_director' => AccountDirector::find($client->account_director_id)->getFullName(), 'comment' => 'Became ' . $status, 'client_id' => $client->id] );
 		}
 		else
 		{

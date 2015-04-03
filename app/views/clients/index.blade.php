@@ -33,7 +33,7 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td colspan="3" width="60%">Client name</td>
+							<td colspan="4" width="60%">Client name</td>
 							@if($user->hasRole('Administrator'))
 								<td width="10%" class="hide-s">Unit</td>
 							@endif
@@ -42,17 +42,21 @@
 							<td width="10%" class="hide-m">Service</td>
 
 							@if($user->hasRole('Administrator'))
-								<td colspan="4" class="hide-print">Actions</td>
+								<td colspan="5" class="hide-print">Actions</td>
 							@else
 								<td class="hide-print">Actions</td>
 							@endif
 
-							<td class="hide-s hide-print">Toggle Status</td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $client)
 							<tr @if( ! $client->status) class="dormant" @endif>
+                                @if($client->status)
+                                    <td class="actions content-center status-active hide-print"><i class="fa fa-check-circle fa-lg"></i></td>
+                                @else
+                                    <td class="actions content-center status-dormant hide-print"><i class="fa fa-times-circle fa-lg"></i></td>
+                                @endif
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">
 									@if($client->archives()->count())
@@ -111,13 +115,13 @@
 									</td>
 								@endif
 
-								<td class="actions hide-print content-center hide-s">
+								<td class="actions hide-print content-center">
 									{{ Form::open(['route' => array('clients.change_status', $client->id), 'method' => 'get']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										@if($client->status)
-											<button type="submit" class="green-but" title="Make this client dormant"><i class="fa fa-check-circle fa-lg"></i></button>
+											<button type="submit" class="grey-but" title="Make this client dormant" onClick="return confirm('Are you no longer working with this client, and are you sure you want to make this client Dormant?')"><i class="fa fa-times-circle fa-lg"></i>&nbsp;&nbsp;Make Dormant</button>
 										@else
-											<button type="submit" class="grey-but" title="Make this client active"><i class="fa fa-times-circle fa-lg"></i></button>
+											<button type="submit" class="primary" title="Make this client active"><i class="fa fa-check-circle fa-lg"></i>&nbsp;&nbsp;Make Active</button>
 										@endif
 									{{ Form::close() }}
 								</td>

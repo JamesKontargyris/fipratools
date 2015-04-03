@@ -26,7 +26,7 @@
 	color:white;
 	border:0;
 	background-color:$blue;
-	@include text-shadow(darken($blue, 10%) 0 -1px);
+//	@include text-shadow(darken($blue, 10%) 0 -1px);
 	border-top: 1px solid lighten($blue, 10%);
 	border-bottom: 2px solid rgba(darken($blue, 40%), 0.6);
 	@include dark-grad($blue, top, 10%);

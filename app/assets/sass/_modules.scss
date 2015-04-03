@@ -13,7 +13,7 @@
 .red-but {
   @include primary-but();
   background-color:$red;
-  @include text-shadow(darken($red, 10%) 0 -1px);
+//  @include text-shadow(darken($red, 10%) 0 -1px);
   border-top: 1px solid lighten($red, 10%);
   border-bottom: 2px solid rgba(darken($red, 40%), 0.6);
   @include dark-grad($red, top, 10%);
@@ -21,14 +21,13 @@
 .grey-but {
   @include primary-but();
   background-color:$grey;
-  @include text-shadow(darken($grey, 10%) 0 -1px);
+//  @include text-shadow(darken($grey, 10%) 0 -1px);
   border-top: 1px solid lighten($grey, 10%);
   border-bottom: 2px solid rgba(darken($grey, 40%), 0.6);
   @include dark-grad($grey, top, 10%);
 }
 .green-but {
   @include primary-but();
-  @include text-shadow(darken(green, 10%) 0 -1px);
   border-top: 1px solid lighten(#adff2f, 10%);
   border-bottom: 2px solid rgba(darken(#adff2f, 40%), 0.6);
   @include dark-grad(lighten(#adff2f, 35%), top, 20%);
@@ -412,6 +411,9 @@
           padding:5px;
           width:1%;
           white-space:nowrap;
+        }
+        &.actions {
+          button { width:100%; text-align: left; }
         }
         &.archive-count,
         &.client-links {
