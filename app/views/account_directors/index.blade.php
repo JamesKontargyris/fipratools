@@ -23,8 +23,8 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td rowspan="2" width="40%">Last Name</td>
-							<td rowspan="2" width="40%">First Name</td>
+                            <td rowspan="2" width="40%">First Name</td>
+                            <td rowspan="2" width="40%">Last Name</td>
 							<td colspan="2" width="20%" class="content-center hide-s">Clients</td>
 							<td rowspan="2" colspan="2" class="hide-print">Actions</td>
 						</tr>
@@ -36,8 +36,8 @@
 					<tbody>
 						@foreach($items as $ad)
 							<tr>
-								<td><strong>{{ $ad->last_name }}</strong></td>
-								<td><strong>{{ $ad->first_name }}</strong></td>
+                                <td><strong>{{ $ad->first_name }}</strong></td>
+                                <td><strong>{{ $ad->last_name }}</strong></td>
 								<td class="content-center hide-s">{{ number_format($ad->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($ad->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
 								<td class="actions content-right hide-print">

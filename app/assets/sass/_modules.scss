@@ -413,7 +413,7 @@
           white-space:nowrap;
         }
         &.actions {
-          button { width:100%; text-align: left; }
+          .full-width { width:100%; text-align: left; }
         }
         &.archive-count,
         &.client-links {

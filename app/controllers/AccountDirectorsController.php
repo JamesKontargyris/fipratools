@@ -164,7 +164,7 @@ class AccountDirectorsController extends \BaseController
 			//Search on both first_name and last_name
 			$items = AccountDirector::where( function ( $query )
 			{
-				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+				$query->where( 'first_name', 'LIKE', $this->search_term );
 			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
 			if ( ! $this->checkForSearchResults( $items ) )

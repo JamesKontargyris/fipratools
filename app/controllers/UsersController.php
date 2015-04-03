@@ -56,7 +56,7 @@ class UsersController extends \BaseController
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 
-		$items      = User::where( 'id', '!=', $this->user->id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = User::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'users';
 
 		return View::make( 'users.index' )->with( compact( 'items' ) );

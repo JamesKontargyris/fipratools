@@ -1266,7 +1266,7 @@ strong {
         width: 1%;
         white-space: nowrap; }
       /* line 416, ../../app/assets/sass/_modules.scss */
-      .index-table tbody tr > td.actions button {
+      .index-table tbody tr > td.actions .full-width {
         width: 100%;
         text-align: left; }
       /* line 418, ../../app/assets/sass/_modules.scss */

@@ -119,9 +119,9 @@
 									{{ Form::open(['route' => array('clients.change_status', $client->id), 'method' => 'get']) }}
 										{{ Form::hidden('client_id', $client->id) }}
 										@if($client->status)
-											<button type="submit" class="grey-but" title="Make this client dormant" onClick="return confirm('Are you no longer working with this client, and are you sure you want to make this client Dormant?')"><i class="fa fa-times-circle fa-lg"></i>&nbsp;&nbsp;Make Dormant</button>
+											<button type="submit" class="grey-but full-width" title="Make this client dormant" onClick="return confirm('Are you no longer working with this client, and are you sure you want to make this client Dormant?')"><i class="fa fa-times-circle fa-lg"></i>&nbsp;&nbsp;Make Dormant</button>
 										@else
-											<button type="submit" class="primary" title="Make this client active"><i class="fa fa-check-circle fa-lg"></i>&nbsp;&nbsp;Make Active</button>
+											<button type="submit" class="primary full-width" title="Make this client active"><i class="fa fa-check-circle fa-lg"></i>&nbsp;&nbsp;Make Active</button>
 										@endif
 									{{ Form::close() }}
 								</td>
