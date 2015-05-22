@@ -16,7 +16,7 @@
        	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
        	<link rel="stylesheet" href="{{ asset('css/jquery.modal.css') }}" type="text/css" media="screen" />
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        @include('layouts.partials.favicon')
     </head>
     <body>
         <!--[if lt IE 7]>
