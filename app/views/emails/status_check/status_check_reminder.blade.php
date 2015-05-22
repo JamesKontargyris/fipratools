@@ -15,9 +15,8 @@
 
 		<p>Dear {{ $first_name }},</p>
 
-		<p>As a Head of Unit, and in preparation for the upcoming Network meeting in Washington DC, I ask you to visit
-            <a href="http://leadofficelist.fipra.com/clients">leadofficelist.fipra.com/clients</a> in the next five working days in order to confirm and update the information we hold for the clients you have listed for your Unit.</p>
-        <p>Though most units are using the Lead office list system, not every unit is up-to-date. Unfortunately unless we all do this the tool is less useful so please do not ignore this appeal to keep our Lead Office List as up-to-date, relevant, valid and accurate as possible for it to be useful at the network meeting. The information you provide gives us our overall network-wide statistics.</p>
+		<p>As a Head of Unit, I ask you to visit <a href="http://leadofficelist.fipra.com/clients">leadofficelist.fipra.com/clients</a> in order to confirm and update the information we hold for the clients you have listed for your Unit.</p>
+        <p>Though most units are using the Lead office list system, not every unit is up-to-date. Unfortunately unless we all do this the tool is less useful so please do not ignore this appeal to keep our Lead Office List as up-to-date, relevant, valid and accurate as possible for it to be useful. The information you provide gives us our overall network-wide statistics.</p>
 
 		<p>Simply log in with your Fipra email address and your Lead Office List password and you will be brought to the <strong><em>Your Clients</em></strong> tab to make your units additions and to change client status to dormant/active where required.</p>
 
