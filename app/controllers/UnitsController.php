@@ -152,7 +152,7 @@ class UnitsController extends \BaseController
 		$input                                      = Input::all();
 		$input['id']                                = $id;
 		$this->addEditUnitForm->rules['name']       = 'required|max:255|unique:units,name,' . $id;
-		$this->addEditUnitForm->rules['short_name'] = 'required|max:255|unique:units,short_name,' . $id;
+		$this->addEditUnitForm->rules['short_name'] = 'required|max:50|unique:units,short_name,' . $id;
 		$this->addEditUnitForm->validate( $input );
 
 		$this->execute( 'Leadofficelist\Units\EditUnitCommand', $input );

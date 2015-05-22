@@ -11,6 +11,7 @@ class AddUnit extends FormValidator {
 	 */
 	protected $rules = [
 		'name'     => 'required|max:255|unique:units',
+		'short_name'     => 'required|max:50|unique:units',
 		'address1' => 'required|max:255',
 		'address2' => 'max:255',
 		'address3' => 'max:255',

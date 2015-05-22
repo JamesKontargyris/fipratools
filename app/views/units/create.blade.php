@@ -33,7 +33,7 @@ Add a Unit
 	</div>
 	<div class="col-6 last">
 		<div class="formfield">
-			{{ Form::label('short_name', 'Short Name:') }}
+			{{ Form::label('short_name', 'Short Name:', ['class' => 'required']) }}
 			{{ Form::text('short_name', Input::old('short_name')) }}
 		</div>
 		<div class="formfield">
