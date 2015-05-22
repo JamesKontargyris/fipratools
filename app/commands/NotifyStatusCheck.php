@@ -38,7 +38,7 @@ class NotifyStatusCheck extends Command
 	 */
 	public function fire()
 	{
-		$users     = User::orderBy('last_name')->get();
+		$users     = User::orderBy('first_name')->get();
 		$data      = [ ];
 		$count     = 0;
 		$emails    = [ ];
@@ -56,7 +56,7 @@ class NotifyStatusCheck extends Command
 
 				Mail::queue('emails.status_check.status_check_reminder', $data, function($message) use ($data)
 				{
-					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - Client Status Check');
+					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - please check your lead office list information');
 				});
 
 				$count ++;

@@ -47,7 +47,7 @@ class AccountDirector extends \BaseModel
 		}
 
 		foreach (
-			AccountDirector::orderBy( 'last_name', 'ASC' )->get( [
+			AccountDirector::orderBy( 'first_name', 'ASC' )->get( [
 				'id',
 				'first_name',
 				'last_name'
