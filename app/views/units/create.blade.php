@@ -20,7 +20,7 @@ Add a Unit
 			{{ Form::text('name', Input::old('name')) }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('address', 'Address:', ['class' => 'required']) }}
+			{{ Form::label('address', 'Address:') }}
 			{{ Form::text('address1', Input::old('address1')) }}
 			{{ Form::text('address2', Input::old('address2')) }}
 			{{ Form::text('address3', Input::old('address3')) }}
@@ -48,6 +48,10 @@ Add a Unit
 			{{ Form::label('email', 'Email:') }}
 			{{ Form::email('email', Input::old('email')) }}
 		</div>
+        <div class="formfield">
+            {{ Form::label('unit_group', 'Reporting Group:', ['class' => 'required']) }}
+            {{ Form::select('unit_group', $unit_groups, Input::old('unit_group'), ['class' => 'required']) }}
+        </div>
 	</div>
 </div>
 

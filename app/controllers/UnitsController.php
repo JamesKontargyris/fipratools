@@ -5,6 +5,7 @@ use Laracasts\Flash\Flash;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
+use Leadofficelist\Unit_groups\Unit_group;
 use Leadofficelist\Units\Unit;
 
 class UnitsController extends \BaseController
@@ -61,7 +62,9 @@ class UnitsController extends \BaseController
 	{
 		$this->check_perm( 'manage_units' );
 
-		return View::make( 'units.create' );
+        $unit_groups = $this->getUnitGroups();
+
+		return View::make( 'units.create', compact('unit_groups') );
 
 	}
 
@@ -126,7 +129,8 @@ class UnitsController extends \BaseController
 
 		if ( $unit = $this->getUnit( $id ) )
 		{
-			return View::make( 'units.edit' )->with( compact( 'unit' ) );
+            $unit_groups = $this->getUnitGroups();
+			return View::make( 'units.edit' )->with( compact( 'unit', 'unit_groups' ) );
 		} else
 		{
 			throw new ResourceNotFoundException( 'units' );
@@ -232,4 +236,15 @@ class UnitsController extends \BaseController
 	{
 		return Unit::find( $id );
 	}
+
+    protected function getUnitGroups()
+    {
+        $unit_groups = ['' => 'None'];
+        foreach(Unit_group::orderBy('name')->get() as $unit_group)
+        {
+            $unit_groups[$unit_group->id] = $unit_group->name;
+        }
+
+        return $unit_groups;
+    }
 }

@@ -106,6 +106,10 @@ Route::group(['before' => 'auth'], function()
 	Route::any('units/search', 'UnitsController@search');
 	Route::resource('units', 'UnitsController');
 
+    Route::any('unit_groups/export', 'UnitGroupsController@export');
+    Route::any('unit_groups/search', 'UnitGroupsController@search');
+    Route::resource('unit_groups', 'UnitGroupsController');
+
 	Route::any('sectors/export', 'SectorsController@export');
 	Route::any('sectors/search', 'SectorsController@search');
 	Route::resource('sectors', 'SectorsController');

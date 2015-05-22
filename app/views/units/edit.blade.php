@@ -20,7 +20,7 @@ Editing Unit: {{ $unit->name }}
 			{{ Form::text('name', isset($unit->name) ? $unit->name : '') }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('address', 'Address:', ['class' => 'required']) }}
+			{{ Form::label('address', 'Address:') }}
 			{{ Form::text('address1', isset($unit->address1) ? $unit->address1 : '') }}
 			{{ Form::text('address2', isset($unit->address2) ? $unit->address2 : '') }}
 			{{ Form::text('address3', isset($unit->address3) ? $unit->address3 : '') }}
@@ -48,6 +48,10 @@ Editing Unit: {{ $unit->name }}
 			{{ Form::label('email', 'Email:') }}
 			{{ Form::email('email', isset($unit->email) ? $unit->email : '') }}
 		</div>
+        <div class="formfield">
+            {{ Form::label('unit_group', 'Reporting Group:', ['class' => 'required']) }}
+            {{ Form::select('unit_group', $unit_groups, isset($unit->unit_group_id) ? $unit->unit_group_id : '', ['class' => 'required']) }}
+        </div>
 	</div>
 </div>
 

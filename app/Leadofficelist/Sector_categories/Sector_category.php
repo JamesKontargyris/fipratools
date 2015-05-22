@@ -11,8 +11,7 @@ class Sector_category extends \BaseModel
 	}
 
 	/**
-	 * Add a new sector category if a new one is passed in,
-	 * otherwise return the existing one.
+	 * Add a new sector category
 	 *
 	 * @param $command
 	 *
@@ -27,7 +26,8 @@ class Sector_category extends \BaseModel
 	}
 
 	/**
-	 * Add a sector category when a sector is added
+	 * Add a new sector category if a new one is passed in,
+     * otherwise return the existing one.
 	 *
 	 * @param $command
 	 *

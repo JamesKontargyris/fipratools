@@ -13,7 +13,7 @@ class AddEditUnit extends FormValidator
 	public $rules = [
 		'name'       => 'required|max:255|unique:units',
 		'short_name' => 'required|max:255|unique:units',
-		'address1'   => 'required|max:255',
+		'address1'   => 'max:255',
 		'address2'   => 'max:255',
 		'address3'   => 'max:255',
 		'address4'   => 'max:255',
@@ -24,6 +24,6 @@ class AddEditUnit extends FormValidator
 
 	protected $messages = [
 		'short_name.required' => 'Please enter a short name for this unit (e.g. UK for United Kingdom).',
-		'address1.required'   => 'The first line of the address is required.'
+//		'address1.required'   => 'The first line of the address is required.'
 	];
 } 

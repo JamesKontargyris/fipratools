@@ -12,9 +12,10 @@ class AddUnitCommand
 	public $postcode;
 	public $phone;
 	public $fax;
-	public $email;
+    public $email;
+    public $unit_group;
 
-	function __construct( $name, $short_name, $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email )
+    function __construct( $name, $short_name, $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email, $unit_group )
 	{
 
 		$this->name       = $name;
@@ -27,7 +28,8 @@ class AddUnitCommand
 		$this->phone      = $phone;
 		$this->fax        = $fax;
 		$this->email      = $email;
-	}
+        $this->unit_group = $unit_group;
+    }
 
 
 } 

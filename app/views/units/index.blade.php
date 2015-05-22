@@ -6,6 +6,7 @@
 
 @section('page-nav')
 <li><a href="{{ route('units.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Unit</a></li>
+<li><a href="{{ route('unit_groups.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Unit Reporting Groups</a></li>
 @stop
 
 @section('export-nav')
@@ -29,7 +30,8 @@
 						<tr>
 							<td rowspan="2" width="40%">Unit Name</td>
 							<td rowspan="2" width="10%">Short Name</td>
-							<td rowspan="2" width="30%" class="hide-m">Address</td>
+							<td rowspan="2" width="10%">Reporting Group</td>
+							<td rowspan="2" width="20%" class="hide-m">Address</td>
 							<td colspan="2" class="content-center hide-s">Clients</td>
 							<td rowspan="2" width="5%" class="content-center hide-s">Users</td>
 							<td rowspan="2" colspan="2" class="hide-print">Actions</td>
@@ -45,6 +47,7 @@
 							<tr>
 								<td><a href="{{ route('units.show', ['id' => $unit->id]) }}"><strong>{{ $unit->name }}</strong></a></td>
 								<td>{{ $unit->short_name }}</td>
+								<td class="hide-m">{{ $unit->unit_group_id ? $unit->unit_group()->first()->name : '-'; }}</td>
 								<td class="hide-m">{{ $unit->addressOneLine() }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
