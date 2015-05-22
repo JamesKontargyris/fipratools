@@ -1,2 +1,2 @@
 <link rel="shortcut icon" href="{{{ asset('img/favicon/favicon.ico') }}}" type="image/vnd.microsoft.icon" />
-<link rel="icon" href="{{{ asset('img/favicon/favicon.ico') }}}" type="image/vnd.microsoft.icon" /> 
+<link rel="icon" href="{{{ asset('img/favicon/favicon.ico') }}}" type="image/vnd.microsoft.icon" />

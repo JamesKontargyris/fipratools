@@ -83,15 +83,15 @@ class NotifyStatusCheck extends Command
 
 					Mail::queue( 'emails.status_check.status_check_summary', $data, function ( $message ) use ( $data )
 					{
-						$message->to( $data['email'], $data['full_name'] )->subject( 'Fipra Lead Office List - Client Status Check Summary' );
+						$message->to( $data['email'], $data['full_name'] )->subject( 'Fipra Lead Office List - Email Notification Summary' );
 					} );
 				}
 			}
 
-			$this->info( 'Client status check email notification sent to ' . $count . ' Head of Unit users: ' . implode( ', ', $usernames ) . '.' );
+			$this->info( 'Head of Unit email notification sent to ' . $count . ' Head of Unit users: ' . implode( ', ', $usernames ) . '.' );
 		} else
 		{
-			$this->info( 'Client status check email notification sent to 0 Head of Unit users.' );
+			$this->info( 'Head of Unit email notification sent to 0 Head of Unit users.' );
 		}
 	}
 
