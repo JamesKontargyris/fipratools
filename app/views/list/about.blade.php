@@ -7,7 +7,7 @@ About the Lead Office List
 @section('content')
 <div class="row prose">
 	<div class="col-9">
-        <p>This app and the list is contains are <strong>confidential</strong> to members of the Fipra Network. They are <strong>under no circumstances</strong> to be used externally and you share in this responsibility.</p>
+        <p>This app and the list it contains are <strong>confidential</strong> to members of the Fipra Network. They are <strong>under no circumstances</strong> to be used externally and you share in this responsibility.</p>
 
         <p><strong>This is NOT a client list</strong> – it is not even a list of clients served by the Fipra brand as many of the companies below are serviced under local unit names such as RLMFinsbury, CEC, First House, Six Year Plan etc. Additionally it lists other clients served by individual Special Advisers in their own right.</p>
         

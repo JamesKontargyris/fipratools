@@ -7,7 +7,7 @@
 <table class="index-table">
 	<thead>
 		<tr>
-			<td rowspan="2" width="40%">Unit Name</td>
+			<td rowspan="2" width="40%">Name</td>
 			<td rowspan="2" width="10%">Short Name</td>
 			<td rowspan="2" width="30%">Address</td>
 			<td colspan="2" class="content-center">Clients</td>

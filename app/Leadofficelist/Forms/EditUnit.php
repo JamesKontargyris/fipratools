@@ -10,6 +10,7 @@ class EditUnit extends FormValidator {
 	 * @var array
 	 */
 	protected $rules = [
+        'network_type'     => 'required',
 		'address1' => 'required|max:255',
 		'address2' => 'max:255',
 		'address3' => 'max:255',
@@ -21,6 +22,7 @@ class EditUnit extends FormValidator {
 	];
 
 	protected $messages = [
+        'network_type.required' => 'Please select a Network Member type.',
 		'address1.required' => 'The first line of the address is required.'
 	];
 } 

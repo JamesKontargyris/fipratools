@@ -11,6 +11,7 @@ class AddUnit extends FormValidator {
 	 */
 	protected $rules = [
 		'name'     => 'required|max:255|unique:units',
+		'network_type'     => 'required',
 		'short_name'     => 'required|max:50|unique:units',
 		'address1' => 'required|max:255',
 		'address2' => 'max:255',
@@ -23,6 +24,7 @@ class AddUnit extends FormValidator {
 	];
 
 	protected $messages = [
+		'network_type.required' => 'Please select a Network Member type.',
 		'address1.required' => 'The first line of the address is required.'
 	];
 } 

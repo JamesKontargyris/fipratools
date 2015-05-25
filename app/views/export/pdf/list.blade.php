@@ -10,7 +10,9 @@
 	@endif
 </h4>
 
-<h5><span class="fa fa-asterisk turquoise">*</span> denotes mainly PR client. For all RLMFinsbury PR clients, please contact either Rory Chisholm or John Gray in the first instance except where indicated in brackets.</h5>
+<div style="font-weight:bold; text-align: center;">
+    A Dormant Client is one last billed over three months and up to 12 months ago.
+</div>
 
 <table class="index-table">
 	<thead>
@@ -19,7 +21,7 @@
 			<td width="10%">Sector</td>
 			<td width="5%">Type</td>
 			<td width="5%">Service</td>
-			<td width="10%">Lead Unit</td>
+			<td width="10%">Lead Network Member</td>
 			<td width="10%">AD</td>
 			<td width="15%">Comments</td>
 			@if(Session::get('list.rowsHideShowDormant') == 'show')

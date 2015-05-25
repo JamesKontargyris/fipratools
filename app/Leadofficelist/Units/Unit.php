@@ -35,6 +35,7 @@ class Unit extends \BaseModel
     public function add($unit)
     {
         $this->name = $unit->name;
+        $this->network_type_id = $unit->network_type;
         $this->short_name = $unit->short_name;
         $this->address1 = $unit->address1;
         $this->address2 = $unit->address2;
@@ -54,6 +55,7 @@ class Unit extends \BaseModel
     {
         $update_unit = $this->find($unit->id);
         $update_unit->name = $unit->name;
+        $update_unit->network_type_id = $unit->network_type;
         $update_unit->short_name = $unit->short_name;
         $update_unit->address1 = $unit->address1;
         $update_unit->address2 = $unit->address2;
