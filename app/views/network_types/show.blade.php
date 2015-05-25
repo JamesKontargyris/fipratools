@@ -1,0 +1,1 @@
+/home/vagrant/code/fipra/fipraleadofficelist/app/views/network_types/show.blade.php

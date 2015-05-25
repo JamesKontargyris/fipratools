@@ -106,6 +106,10 @@ Route::group(['before' => 'auth'], function()
 	Route::any('units/search', 'UnitsController@search');
 	Route::resource('units', 'UnitsController');
 
+    Route::any('network_types/export', 'NetworkTypesController@export');
+    Route::any('network_types/search', 'NetworkTypesController@search');
+    Route::resource('network_types', 'NetworkTypesController');
+
     Route::any('unit_groups/export', 'UnitGroupsController@export');
     Route::any('unit_groups/search', 'UnitGroupsController@search');
     Route::resource('unit_groups', 'UnitGroupsController');

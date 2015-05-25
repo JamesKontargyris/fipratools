@@ -24,7 +24,7 @@ class ResourceNotFoundException extends \Exception
 	{
 		($this->resource_key == 'sector_categories') ? $key = 'sector category ' : $key = $this->resource_key;
 		//Return error message with singular version of resource key
-		return 'Sorry, that ' . substr($key, 0, -1) . ' does not exist.';
+		return 'Sorry, that ' . str_replace('_', ' ', substr($key, 0, -1)) . ' does not exist.';
 	}
 
 }

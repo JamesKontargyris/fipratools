@@ -27,6 +27,11 @@ class Unit extends \BaseModel
         return $this->belongsTo('Leadofficelist\Unit_groups\Unit_group');
     }
 
+    public function network_type()
+    {
+        return $this->belongsTo('Leadofficelist\Network_types\Network_type');
+    }
+
     public function add($unit)
     {
         $this->name = $unit->name;
