@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-Add a Unit
+Add a Network Member
 @stop
 
 @section('page-nav')
@@ -16,9 +16,13 @@ Add a Unit
 <div class="row">
 	<div class="col-6">
 		<div class="formfield">
-			{{ Form::label('name', 'Unit Name:', ['class' => 'required']) }}
+			{{ Form::label('name', 'Name:', ['class' => 'required']) }}
 			{{ Form::text('name', Input::old('name')) }}
 		</div>
+        <div class="formfield">
+            {{ Form::label('network_type', 'Type:', ['class' => 'required']) }}
+            {{ Form::select('network_type', $network_types, Input::old('network_type'), ['class' => 'required']) }}
+        </div>
 		<div class="formfield">
 			{{ Form::label('address', 'Address:') }}
 			{{ Form::text('address1', Input::old('address1')) }}
@@ -49,7 +53,7 @@ Add a Unit
 			{{ Form::email('email', Input::old('email')) }}
 		</div>
         <div class="formfield">
-            {{ Form::label('unit_group', 'Reporting Group:', ['class' => 'required']) }}
+            {{ Form::label('unit_group', 'Reporting Group:') }}
             {{ Form::select('unit_group', $unit_groups, Input::old('unit_group'), ['class' => 'required']) }}
         </div>
 	</div>

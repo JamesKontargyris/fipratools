@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-    Editing Unit Reporting Group: {{ $unit_group->name }}
+    Editing Reporting Group: {{ $unit_group->name }}
 @stop
 
 @section('page-nav')

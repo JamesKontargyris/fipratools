@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-Editing Unit: {{ $unit->name }}
+Editing: {{ $unit->name }}
 @stop
 
 @section('page-nav')
@@ -19,6 +19,10 @@ Editing Unit: {{ $unit->name }}
 			{{ Form::label('name', 'Unit Name:', ['class' => 'required']) }}
 			{{ Form::text('name', isset($unit->name) ? $unit->name : '') }}
 		</div>
+        <div class="formfield">
+            {{ Form::label('network_type', 'Type:', ['class' => 'required']) }}
+            {{ Form::select('network_type', $network_types, isset($unit->network_type_id) ? $unit->network_type_id : '', ['class' => 'required']) }}
+        </div>
 		<div class="formfield">
 			{{ Form::label('address', 'Address:') }}
 			{{ Form::text('address1', isset($unit->address1) ? $unit->address1 : '') }}

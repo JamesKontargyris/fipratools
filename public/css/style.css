@@ -1627,6 +1627,10 @@ ul.pagination {
 .prose p {
   line-height: 2 !important; }
 
+/* line 710, ../../app/assets/sass/_modules.scss */
+.page-menu-nav ul li {
+  margin-bottom: 10px; }
+
 /* line 1, ../../app/assets/sass/_header.scss */
 .mobile-user-details-container {
   padding: 20px 10px;

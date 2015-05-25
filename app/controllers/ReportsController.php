@@ -1,5 +1,6 @@
 <?php
 
+use Leadofficelist\Network_types\Network_type;
 use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Services\Service;
@@ -201,7 +202,7 @@ class ReportsController extends \BaseController {
 	{
 //        First, get all units that are not included in a unit group (i.e. unit_group_id equals 0)
 //        Then grab the number of clients assigned to each unit
-		$units = Unit::where('unit_group_id', '=', 0)->get();
+		$units = Unit::where('unit_group_id', '=', 0)->where('network_type_id', '=', Network_type::where('name', '=', 'Unit')->first()->id)->get();
 		$clients = [];
 		$total_clients = 0;
 		$count = 0;
@@ -216,7 +217,7 @@ class ReportsController extends \BaseController {
         foreach($unit_groups as $group)
         {
 //            Get all the units in the current group and find out how many clients they have between them
-            $units_in_group = Unit::where('unit_group_id', '=', $group->id)->get();
+            $units_in_group = Unit::where('unit_group_id', '=', $group->id)->where('network_type_id', '=', Network_type::where('name', '=', 'Unit')->first()->id)->get();
             $group_client_count = 0;
             foreach($units_in_group as $group_unit)
             {

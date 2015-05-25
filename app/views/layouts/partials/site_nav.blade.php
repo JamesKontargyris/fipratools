@@ -2,7 +2,7 @@
 	@if($user->can('view_list'))
 		<li class="{{ nav_item_is_active('list') ? 'active' : '' }}"><a href="{{ route('list.index') }}"><i class="fa fa-th-list"></i> <strong>Lead Office List</strong></a></li>
 	@endif
-	@if($user->can('view_list') && ! $user->hasRole('Administrator'))
+	@if($user->can('view_list'))
 		<li class="{{ nav_item_is_active('about') ? 'active' : '' }}"><a href="{{ route('list.about') }}"><i class="fa fa-info-circle"></i> <strong>About the List</strong></a></li>
 	@endif
 	@if($user->can('view_list'))
@@ -31,7 +31,7 @@
 	@endif
 	@if($user->can('manage_units'))
 		<li class="{{ nav_item_is_active('units') ? 'active' : '' }}">
-			<a href="{{ route('units.index') }}" class="has-extra-link">Units</a>
+			<a href="{{ route('units.index') }}" class="has-extra-link">Network</a>
 			<a href="{{ route('units.create') }}" class="site-nav-extra-link" title="Add a new Unit"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
@@ -55,7 +55,7 @@
 	@endif
 	@if($user->hasRole('Administrator'))
 		<li class="{{ nav_item_is_active('account_directors') ? 'active' : '' }}">
-			<a href="{{ route('account_directors.index') }}" class="has-extra-link">Account Directors</a>
+			<a href="{{ route('account_directors.index') }}" class="has-extra-link">ADs</a>
 			<a href="{{ route('account_directors.create') }}" class="site-nav-extra-link" title="Add a new account director"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif

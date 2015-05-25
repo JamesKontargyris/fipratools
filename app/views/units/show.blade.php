@@ -6,7 +6,7 @@
 
 @section('page-nav')
 @if($user->can('manage_units'))
-	<li><a href="/units/{{ $unit->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this unit</a></li>
+	<li><a href="/units/{{ $unit->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this {{ $unit->network_type()->first()->name }}</a></li>
 @endif
 @stop
 
@@ -54,7 +54,7 @@
 </div>
 
 <div class="row">
-	<h3>Active clients linked to this unit</h3>
+	<h3>Active clients linked to this {{ $unit->network_type()->first()->name }}</h3>
 </div>
 
  @if(count($clients) > 0)

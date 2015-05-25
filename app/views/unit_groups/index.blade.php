@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('page-header')
-    @if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @else Unit Reporting Group Overview @endif
+    @if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @else Network Member Reporting Group Overview @endif
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('units.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Units Overview</a></li>
-    <li><a href="{{ route('unit_groups.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Unit Reporting Group</a></li>
+    <li><a href="{{ route('units.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Network Members Overview</a></li>
+    <li><a href="{{ route('unit_groups.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Reporting Group</a></li>
 @stop
 
 @section('content')

@@ -1,12 +1,13 @@
 @extends('layouts.master')
 
 @section('page-header')
-@if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @else Units Overview @endif
+@if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @else Network Members Overview @endif
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('units.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Unit</a></li>
-<li><a href="{{ route('unit_groups.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Unit Reporting Groups</a></li>
+<li><a href="{{ route('units.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Member</a></li>
+<li><a href="{{ route('unit_groups.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Groups</a></li>
+<li><a href="{{ route('network_types.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Network Types</a></li>
 @stop
 
 @section('export-nav')
@@ -28,10 +29,10 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td rowspan="2" width="40%">Unit Name</td>
+							<td rowspan="2" width="40%">Name</td>
 							<td rowspan="2" width="10%">Short Name</td>
-							<td rowspan="2" width="10%">Reporting Group</td>
-							<td rowspan="2" width="20%" class="hide-m">Address</td>
+							<td rowspan="2" width="15%">Reporting Group</td>
+							<td rowspan="2" width="15%" class="hide-m">Type</td>
 							<td colspan="2" class="content-center hide-s">Clients</td>
 							<td rowspan="2" width="5%" class="content-center hide-s">Users</td>
 							<td rowspan="2" colspan="2" class="hide-print">Actions</td>
@@ -47,8 +48,8 @@
 							<tr>
 								<td><a href="{{ route('units.show', ['id' => $unit->id]) }}"><strong>{{ $unit->name }}</strong></a></td>
 								<td>{{ $unit->short_name }}</td>
-								<td class="hide-m">{{ $unit->unit_group_id ? $unit->unit_group()->first()->name : '-'; }}</td>
-								<td class="hide-m">{{ $unit->addressOneLine() }}</td>
+								<td class="hide-m">{{ $unit->unit_group_id ? $unit->unit_group()->first()->name : '-' }}</td>
+								<td class="hide-m">{{ $unit->network_type_id ? $unit->network_type()->first()->name : '-' }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($unit->users()->count(),0,'.',',') }}</td>
@@ -59,7 +60,7 @@
 								</td>
 								<td class="actions content-right hide-print">
 									{{ Form::open(['route' => array('units.destroy', $unit->id), 'method' => 'delete']) }}
-										<button type="submit" class="red-but delete-row" data-resource-type="unit"><i class="fa fa-times"></i></button>
+										<button type="submit" class="red-but delete-row" data-resource-type="Network Member"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}
 								</td>
 								</td>

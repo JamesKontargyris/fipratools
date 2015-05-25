@@ -16,11 +16,11 @@
     <div class="row">
         <div class="col-6">
             <div class="formfield">
-                {{ Form::label('name', 'Unit Group Name:', ['class' => 'required']) }}
+                {{ Form::label('name', 'Network Member Group Name:', ['class' => 'required']) }}
                 {{ Form::text('name', Input::old('name')) }}
             </div>
             <div class="formfield">
-                {{ Form::label('short_name', 'Unit Group Short Name:', ['class' => 'required']) }}
+                {{ Form::label('short_name', 'Network Member Group Short Name:', ['class' => 'required']) }}
                 {{ Form::text('short_name', Input::old('short_name')) }}
             </div>
         </div>

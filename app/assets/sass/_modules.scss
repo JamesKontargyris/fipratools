@@ -706,3 +706,7 @@ ul.pagination {
 .prose p {
   line-height:2 !important;
 }
+
+.page-menu-nav ul li {
+  margin-bottom:$v-rhythm * 0.5;
+}

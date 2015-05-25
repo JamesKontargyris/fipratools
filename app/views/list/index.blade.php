@@ -2,7 +2,7 @@
 
 @section('page-header')
 @if(is_filter())
-	<i class="fa fa-filter"></i> Filtering on {{ str_replace('_', ' ', str_replace('_id', '', Session::get('list.rowsListFilterField'))) }}: {{ $items->filter_value }}
+	<i class="fa fa-filter"></i> Filtering on: {{ $items->filter_value }}
 
 @elseif(is_search())
 	<i class="fa fa-search"></i> Searching for {{ Session::has('list.SearchType') ? Session::get('list.SearchType') : '' }}: {{ $items->search_term }}
@@ -41,7 +41,7 @@
 							<td width="10%" class="hide-m">Sector</td>
 							<td width="10%" class="hide-m">Type</td>
 							<td width="10%" class="hide-m">Service</td>
-							<td width="15%">Lead Unit</td>
+							<td width="15%">Lead Member</td>
 							<td width="25%" class="hide-s">AD to talk to</td>
 						</tr>
 						<tr class="hide-print">

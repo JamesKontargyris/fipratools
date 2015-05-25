@@ -18,7 +18,7 @@
 
 <div class="row">
 	<div class="col-6 border-box fill">
-		<h3>Lead Unit</h3>
+		<h3>Lead Network Member</h3>
 		<h4>{{ $client->unit()->pluck('name') }}</h4>
 		<p>{{ $client->getLeadOfficeAddress() }}</p>
 		<h4>Account Director to talk to</h4>

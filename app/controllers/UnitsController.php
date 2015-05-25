@@ -5,6 +5,7 @@ use Laracasts\Flash\Flash;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditUnit as AddEditUnitForm;
+use Leadofficelist\Network_types\Network_type;
 use Leadofficelist\Unit_groups\Unit_group;
 use Leadofficelist\Units\Unit;
 
@@ -24,7 +25,7 @@ class UnitsController extends \BaseController
 
 		$this->addEditUnitForm = $addEditUnitForm;
 
-		View::share( 'page_title', 'Units' );
+		View::share( 'page_title', 'Network Members' );
 		View::share( 'key', 'units' );
 	}
 
@@ -63,8 +64,9 @@ class UnitsController extends \BaseController
 		$this->check_perm( 'manage_units' );
 
         $unit_groups = $this->getUnitGroups();
+        $network_types = $this->getNetworkTypes();
 
-		return View::make( 'units.create', compact('unit_groups') );
+		return View::make( 'units.create', compact('unit_groups', 'network_types') );
 
 	}
 
@@ -130,7 +132,8 @@ class UnitsController extends \BaseController
 		if ( $unit = $this->getUnit( $id ) )
 		{
             $unit_groups = $this->getUnitGroups();
-			return View::make( 'units.edit' )->with( compact( 'unit', 'unit_groups' ) );
+            $network_types = $this->getNetworkTypes();
+			return View::make( 'units.edit' )->with( compact( 'unit', 'unit_groups', 'network_types' ) );
 		} else
 		{
 			throw new ResourceNotFoundException( 'units' );
@@ -246,5 +249,16 @@ class UnitsController extends \BaseController
         }
 
         return $unit_groups;
+    }
+
+    protected function getNetworkTypes()
+    {
+        $network_types = ['' => 'Please select...'];
+        foreach(Network_type::orderBy('name')->get() as $network_type)
+        {
+            $network_types[$network_type->id] = $network_type->name;
+        }
+
+        return $network_types;
     }
 }
