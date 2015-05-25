@@ -11,11 +11,11 @@
 	</head>
 	<body>
 		<h2>Fipra Lead Office List</h2>
-		<h3>Notification Sent: Head of Unit Client Status Check</h3>
+		<h3>Notification Sent: Client Status Check</h3>
 
 		<p>Dear {{ $first_name }},</p>
 
-		<p>An email notification has just been sent to all Lead Office List Head of Unit users asking them to perform a client status check on clients assigned to their Unit.</p>
+		<p>An email notification has just been sent to all Lead Office List {{ $user_type }} users asking them to perform a client status check on clients assigned to them.</p>
 
 		<p>There were {{ $count }} users contacted:</p>
 

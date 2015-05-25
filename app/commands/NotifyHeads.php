@@ -4,7 +4,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class NotifyStatusCheck extends Command
+class NotifyHeads extends Command
 {
 
 	/**
@@ -12,20 +12,19 @@ class NotifyStatusCheck extends Command
 	 *
 	 * @var string
 	 */
-	protected $name = 'notify:statuscheck';
+	protected $name = 'notify:heads';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Send an email to all heads of unit asking them to do a client status check.';
+	protected $description = 'Send an email to all Heads of Unit asking them to do a client status check.';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return \NotifyStatusCheck
-	 */
+    /**
+     * Create a new command instance.
+     *
+     */
 	public function __construct()
 	{
 		parent::__construct();
@@ -54,7 +53,7 @@ class NotifyStatusCheck extends Command
 				$data['full_name']  = $user->first_name . ' ' . $user->last_name;
 				$data['email']      = $user->email;
 
-				Mail::queue('emails.status_check.status_check_reminder', $data, function($message) use ($data)
+				Mail::queue('emails.status_check.headofunit_status_check_reminder', $data, function($message) use ($data)
 				{
 					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - please check your lead office list information');
 				});
@@ -102,7 +101,7 @@ class NotifyStatusCheck extends Command
 	 */
 	protected function getArguments()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -112,7 +111,7 @@ class NotifyStatusCheck extends Command
 	 */
 	protected function getOptions()
 	{
-		return array();
+		return [];
 	}
 
 }
