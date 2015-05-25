@@ -20,7 +20,8 @@ class UsersController extends \BaseController
 	protected $roles;
 	protected $fipriot_perms_list;
 	protected $admin_perms_list;
-	protected $manager_perms_list;
+	protected $head_perms_list;
+	protected $spad_perms_list;
 	protected $export_filename;
 	private $addUserForm;
 	private $editUserForm;
@@ -78,8 +79,9 @@ class UsersController extends \BaseController
 			'units'             => $this->units,
 			'roles'             => $this->roles,
 			'admin_perms_list'  => $this->admin_perms_list,
-			'manager_perms_list' => $this->manager_perms_list,
-			'fipriot_perms_list' => $this->fipriot_perms_list
+			'head_perms_list' => $this->head_perms_list,
+			'fipriot_perms_list' => $this->fipriot_perms_list,
+			'spad_perms_list' => $this->spad_perms_list
 		] );
 	}
 
@@ -157,8 +159,9 @@ class UsersController extends \BaseController
 				'units'             => $this->units,
 				'roles'             => $this->roles,
 				'admin_perms_list'  => $this->admin_perms_list,
-				'manager_perms_list' => $this->manager_perms_list,
-				'fipriot_perms_list' => $this->fipriot_perms_list
+				'head_perms_list' => $this->head_perms_list,
+				'fipriot_perms_list' => $this->fipriot_perms_list,
+                'spad_perms_list' => $this->spad_perms_list
 			] );
 		} else
 		{
@@ -291,8 +294,9 @@ class UsersController extends \BaseController
 		$this->units             = $this->getUnitsFormData();
 		$this->roles             = $this->getRolesFormData();
 		$this->admin_perms_list  = $this->getPerms( 'Administrator' );
-		$this->manager_perms_list = $this->getPerms( 'Head of Unit' );
+		$this->head_perms_list = $this->getPerms( 'Head of Unit' );
 		$this->fipriot_perms_list = $this->getPerms( 'Fipriot' );
+        $this->spad_perms_list = $this->getPerms('Special Adviser');
 
 		return true;
 	}
