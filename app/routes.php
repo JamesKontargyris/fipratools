@@ -23,12 +23,16 @@ Route::get('roles', function()
 	//$new_admin->save();
 	//
 	//$new_manager = new Role;
-	//$new_manager->name = "Unit Manager";
+	//$new_manager->name = "Head of Unit";
 	//$new_manager->save();
 	//
 	//$new_fipriot = new Role;
 	//$new_fipriot->name = "Fipriot";
 	//$new_fipriot->save();
+//
+    $new_spad = new Role;
+    $new_spad->name = "Special Adviser";
+    $new_spad->save();
 	//
 	//$manage_users = new Permission;
 	//$manage_users->name = "manage_users";
@@ -81,7 +85,8 @@ Route::get('roles', function()
 	//$view_list->save();
 	//
 	//$new_admin->attachPermissions([$manage_users->id, $manage_units->id, $manage_sectors->id, $manage_services->id, $manage_types->id, $manage_clients->id, $manage_client_links->id, $manage_client_archives->id, $manage_reports->id, $view_list->id]);
-	//$new_manager->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
+//	$new_manager->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
+	$new_spad->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
 	//$new_fipriot->attachPermissions([$view_list->id]);
 	//
 	//return "All done!";
