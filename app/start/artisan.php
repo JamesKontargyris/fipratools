@@ -11,4 +11,5 @@
 |
 */
 
-Artisan::add(new NotifyStatusCheck);
+Artisan::add(new NotifySpadsCheck);
+Artisan::add(new NotifySpadsLogin);

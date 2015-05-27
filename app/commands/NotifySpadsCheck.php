@@ -4,7 +4,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class NotifySpads extends Command
+class NotifySpadsCheck extends Command
 {
 
 	/**
@@ -12,7 +12,7 @@ class NotifySpads extends Command
 	 *
 	 * @var string
 	 */
-	protected $name = 'notify:spads';
+	protected $name = 'notify:spadscheck';
 
 	/**
 	 * The console command description.
@@ -37,13 +37,13 @@ class NotifySpads extends Command
 	 */
 	public function fire()
 	{
-		$users     = User::orderBy('first_name')->get();
+		$users     = User::all();
 		$data      = [ ];
 		$count     = 0;
 		$emails    = [ ];
 		$usernames = [ ];
 
-		//Send emails to Head of Unit users
+		//Send emails to Special Adviser users
 		foreach ( $users as $user )
 		{
 			if ( $user->hasRole( 'Special Adviser' ) )
@@ -55,7 +55,7 @@ class NotifySpads extends Command
 
 				Mail::queue('emails.status_check.specialadviser_status_check_reminder', $data, function($message) use ($data)
 				{
-					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - please check your lead office list information');
+					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List');
 				});
 
 				$count ++;
@@ -80,14 +80,14 @@ class NotifySpads extends Command
 					$data['usernames'] = $usernames;
                     $data['user_type'] = 'Special Adviser';
 
-					Mail::queue( 'emails.status_check.status_check_summary', $data, function ( $message ) use ( $data )
-					{
-						$message->to( $data['email'], $data['full_name'] )->subject( 'Fipra Lead Office List - Email Notification Summary' );
-					} );
+//					Mail::queue( 'emails.status_check.status_check_summary', $data, function ( $message ) use ( $data )
+//					{
+//						$message->to( $data['email'], $data['full_name'] )->subject( 'Fipra Lead Office List - Email Notification Summary' );
+//					} );
 				}
 			}
 
-			$this->info( 'Email notification sent to ' . $count . ' Special Adviser users: ' . implode( ', ', $usernames ) . '.' );
+			$this->info( 'Email notification sent to ' . $count . ' Special Adviser user(s): ' . implode( ', ', $usernames ) . '.' );
 		} else
 		{
 			$this->info( 'Email notification sent to 0 Special Adviser users.' );

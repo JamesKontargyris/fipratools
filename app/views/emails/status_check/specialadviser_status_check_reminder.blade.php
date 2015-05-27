@@ -11,25 +11,31 @@
 	</head>
 	<body>
 		<h2>Fipra Lead Office List</h2>
-		<h3>Please check your lead office list information</h3>
 
 		<p>Dear {{ $first_name }},</p>
 
-		<p>As a Special Adviser, I ask you to visit <a href="http://leadofficelist.fipra.com/clients">leadofficelist.fipra.com/clients</a> in order to confirm and update the information we hold for the clients you have listed for your Unit.</p>
-        <p>Though most units are using the Lead office list system, not every unit is up-to-date. Unfortunately unless we all do this the tool is less useful so please do not ignore this appeal to keep our Lead Office List as up-to-date, relevant, valid and accurate as possible for it to be useful. The information you provide gives us our overall network-wide statistics.</p>
+        <p>As you will know, we have for over 10 years requested that all Fipra Units list their clients on our "lead office list" which was, last year, turned from a paper based system into a handy App to which everyone in Fipra including all Special Advisers have access.
+        </p>
 
-		<p>Simply log in with your Fipra email address and your Lead Office List password and you will be brought to the <strong><em>Your Clients</em></strong> tab to make your units additions and to change client status to dormant/active where required.</p>
+        <p>This information has proven very useful not only to find connections to and advise about potential client companies but also to help spot and manage conflicts as we all work for different interests. In short it is a list of who to call about who. Please note that the app contains all clients serviced since 2007, simply marking those that have not been billed in the last 3 months as dormant. You can therefore look up all current and past relationships.</p>
 
-        <p>The system now contains your historical information from years past, showing, for example, when a company may have been a client of yours and who was Account Director. There is no need to check this information - but it is important that only active clients are clicked as active. You can toggle between views, showing just your active clients or by clicking Show Dormant you will see all of the clients you have ever listed.</p>
+        <p>Up until now, we have not routinely asked all Special Advisers to declare their clients for this list in the same way, which created a blind spot in the system that we recently noticed.
+        </p>
 
-        <p><strong>Please note:</strong> A Dormant Client is one last billed over three months and up to 12 months ago. An active one is one that has had a bill from your unit within the last three months.</p>
+        <p>From this month therefore, we are asking you to declare any clients you may be serving in a personal capacity so that these show up here. The idea is to be super up-to-date by our Washington meeting - though please note the list is live and you can make any of your contacts active or dormant as circumstances change.
+        </p>
 
-        <p>If you are new to using the system or you simply need a reminder on what it's all about just click on the <strong><em>About the List</em></strong> tab.</p>
+        <p>As a Special Adviser, please therefore visit and familiarise yourself once more with <a href="http://leadofficelist.fipra.com">leadofficelist.fipra.com</a></p>
 
-        <p>You can visit <a href="http://leadofficelist.fipra.com">leadofficelist.fipra.com</a> at any time in order to view the greater list. The information is live and very useful to conflict check any company.</p>
-        <p><strong>Please remember, the Lead Office List, information contained in our online system and any reports produced therein, is <span style="color:red;">STRICTLY CONFIDENTIAL</span> to members of the Fipra Network and should be treated with the utmost discretion and confidentiality.</strong></p>
+        <p>In the next five working days please ADD any other fee paying clients you may have to the system.</p>
 
-        <p>If you'd like a reminder of your password or need any help at all, please don't hesitate to contact me.</p>
+        <p>You will shortly receive an email with your log-in details and further information about navigating and using the system.</p>
+
+        <p>You can visit <a href="http://leadofficelist.fipra.com">leadofficelist.fipra.com</a> at any time in order to view the list.</p>
+
+        <p><strong>Please note that the Lead Office List, information contained in our online app and any reports produced therein, is <span style="color:red;">STRICTLY CONFIDENTIAL</span> to members of the Fipra Network and should be treated with the utmost discretion and confidentiality.</strong></p>
+
+        <p>If you need any help at all, please don't hesitate to contact me. </p>
 
 		<p>Many thanks,<br/>Claire</p>
 
