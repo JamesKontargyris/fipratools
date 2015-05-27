@@ -28,7 +28,7 @@ class EventLogController extends \BaseController
 		EventLog::destroy(Input::get('log_id'));
 		Flash::overlay('Log entry deleted.', 'info');
 
-		return Redirect::to('logs');
+		return Redirect::to('eventlog');
 	}
 
 	public function getTrash()

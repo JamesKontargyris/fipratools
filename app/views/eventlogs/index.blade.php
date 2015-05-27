@@ -50,7 +50,7 @@ Event Log
 								<td>{{ $log->unit_name }}</td>
 								<td>{{ date('d F Y \a\t g.ia', strtotime($log->created_at)) }}</td>
 								<td class="actions content-right hide-print">
-									{{ Form::open(['url' => array('logs/delete'), 'method' => 'post']) }}
+									{{ Form::open(['url' => array('eventlog/delete'), 'method' => 'post']) }}
 										{{ Form::hidden('log_id', $log->id) }}
 										<button type="submit" class="red-but delete-row" data-resource-type="log entry"><i class="fa fa-times"></i></button>
 									{{ Form::close() }}
