@@ -25,7 +25,7 @@ Editing Type: {{ $type->name }}
 		</div>
         <div class="formfield">
             {{ Form::label('type_category', 'Reporting Category:', ['class' => 'required']) }}
-            {{ Form::select('type_category', $type_categories, isset($type->type_category_id) ? $type->type_category_id : '', ['class' => 'required']) }}
+            {{ Form::select('type_category', $type_categories, isset($type->category_id) ? $type->category_id : '', ['class' => 'required']) }}
         </div>
 	</div>
 </div>

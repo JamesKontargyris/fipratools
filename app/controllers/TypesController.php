@@ -221,7 +221,7 @@ class TypesController extends \BaseController
 
     protected function getTypeCategories()
     {
-        $type_categories = ['0' => 'None'];
+        $type_categories = [0 => 'None'];
         foreach(Type_category::orderBy('name')->get() as $type_category)
         {
             $type_categories[$type_category->id] = $type_category->name;

@@ -4,6 +4,7 @@ use Leadofficelist\Network_types\Network_type;
 use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Services\Service;
+use Leadofficelist\Type_categories\Type_category;
 use Leadofficelist\Types\Type;
 use Leadofficelist\Unit_groups\Unit_group;
 use Leadofficelist\Units\Unit;
@@ -247,30 +248,50 @@ class ReportsController extends \BaseController {
 
 	protected function getClientsByType()
 	{
-		$types = Type::all();
-		$clients = [];
-		$total_clients = 0;
-		$count = 0;
-		foreach($types as $type)
-		{
-			$clients[] = ['type_short_name' => $type->short_name, 'type_name' => $type->name, 'client_count' => $type->clients()->where('status', '=', 1)->count()];
-			$count++;
-			$total_clients += $type->clients()->where('status', '=', 1)->count();
-		}
+        //        First, get all types that are not included in a type category (i.e. category_id equals 0)
+        //        Then grab the number of clients assigned to each type
+        $types = Type::where('category_id', '=', 0)->get();
+        $clients = [];
+        $total_clients = 0;
+        $count = 0;
+        foreach($types as $type)
+        {
+            $clients[] = ['type_short_name' => $type->short_name, 'type_name' => $type->name, 'client_count' => $type->clients()->where('status', '=', 1)->count()];
+            $count++;
+            $total_clients += $type->clients()->where('status', '=', 1)->count();
+        }
 
-		uasort($clients, [$this, 'compare']);
-		$count = 0;
-		foreach($clients as &$client)
-		{
-			$client['id'] = $count;
-			$client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
-			$count++;
-		}
+        //        Second, get all the type categories and work out how many clients are assigned to the types in each group
+        $type_categories = Type_category::all();
+        foreach($type_categories as $type_cat)
+        {
+            //            Get all the units in the current group and find out how many clients they have between them
+            $types_in_category = Type::where('category_id', '=', $type_cat->id)->get();
+            $type_cat_client_count = 0;
+            foreach($types_in_category as $type)
+            {
+                $type_cat_client_count += $type->clients()->where('status', '=', 1)->count();
+            }
 
-		$data['clients'] = $clients;
-		$data['total_clients'] = $total_clients;
+            //            Add the current group into the clients array with the other types
+            $clients[] = ['type_short_name' => $type_cat->short_name, 'type_name' => $type_cat->name, 'client_count' => $type_cat_client_count];
+            $total_clients += $type_cat_client_count;
+        }
 
-		return $data;
+        //        Sort the clients into order, highest number of clients first
+        uasort($clients, [$this, 'compare']);
+        $count = 0;
+        foreach($clients as &$client)
+        {
+            $client['id'] = $count;
+            $client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
+            $count++;
+        }
+
+        $data['clients'] = $clients;
+        $data['total_clients'] = $total_clients;
+
+        return $data;
 	}
 
 	protected function getClientsByService()
