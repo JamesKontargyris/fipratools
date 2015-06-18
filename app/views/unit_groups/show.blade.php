@@ -12,10 +12,10 @@
 
     @include('layouts.partials.messages')
 
+    <div class="row">
+        <h3>Units in this group:</h3>
+    </div>
     @if(count($items) > 0)
-        <div class="row">
-            <h3>Units in this group:</h3>
-        </div>
 
         <section class="index-table-container">
             <div class="row">

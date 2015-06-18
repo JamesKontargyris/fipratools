@@ -5,6 +5,7 @@ use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditType as AddEditTypeForm;
+use Leadofficelist\Type_categories\Type_category;
 use Leadofficelist\Types\Type;
 
 class TypesController extends \BaseController
@@ -55,7 +56,8 @@ class TypesController extends \BaseController
 	 */
 	public function create()
 	{
-		return View::make( 'types.create' );
+        $type_categories = $this->getTypeCategories();
+		return View::make( 'types.create' )->with(compact('type_categories'));
 	}
 
 	/**
@@ -111,7 +113,8 @@ class TypesController extends \BaseController
 	{
 		if ( $type = $this->getType( $id ) )
 		{
-			return View::make( 'types.edit' )->with( compact( 'type' ) );
+            $type_categories = $this->getTypeCategories();
+			return View::make( 'types.edit' )->with( compact( 'type', 'type_categories' ) );
 		} else
 		{
 			throw new ResourceNotFoundException( 'types' );
@@ -131,6 +134,7 @@ class TypesController extends \BaseController
 		$input                                = Input::all();
 		$input['id']                          = $id;
 		$this->addEditTypeForm->rules['name'] = 'required|max:255|unique:types,name,' . $id;
+		$this->addEditTypeForm->rules['short_name'] = 'required|max:255|unique:types,short_name,' . $id;
 		$this->addEditTypeForm->validate( $input );
 
 		$this->execute( 'Leadofficelist\Types\EditTypeCommand', $input );
@@ -214,4 +218,15 @@ class TypesController extends \BaseController
 	{
 		return Type::find( $id );
 	}
+
+    protected function getTypeCategories()
+    {
+        $type_categories = ['0' => 'None'];
+        foreach(Type_category::orderBy('name')->get() as $type_category)
+        {
+            $type_categories[$type_category->id] = $type_category->name;
+        }
+
+        return $type_categories;
+    }
 }

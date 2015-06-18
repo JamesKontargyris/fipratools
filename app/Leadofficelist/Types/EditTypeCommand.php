@@ -2,15 +2,17 @@
 
 class EditTypeCommand
 {
-	public $name;
-	public $short_name;
-	public $id;
+    public $name;
+    public $short_name;
+    public $type_category;
+    public $id;
 
-	function __construct( $name, $short_name, $id )
-	{
-		$this->name       = $name;
-		$this->short_name = $short_name;
-		$this->id         = $id;
-	}
+    function __construct($name, $short_name, $type_category, $id)
+    {
+        $this->name = $name;
+        $this->short_name = $short_name;
+        $this->type_category = $type_category;
+        $this->id = $id;
+    }
 
 }

@@ -23,6 +23,10 @@ Editing Type: {{ $type->name }}
 			{{ Form::label('short_name', 'Type Name:', ['class' => 'required']) }}
 			{{ Form::text('short_name', isset($type->short_name) ? $type->short_name : '') }}
 		</div>
+        <div class="formfield">
+            {{ Form::label('type_category', 'Reporting Category:', ['class' => 'required']) }}
+            {{ Form::select('type_category', $type_categories, isset($type->type_category_id) ? $type->type_category_id : '', ['class' => 'required']) }}
+        </div>
 	</div>
 </div>
 

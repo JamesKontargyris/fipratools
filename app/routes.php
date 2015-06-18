@@ -131,6 +131,10 @@ Route::group(['before' => 'auth'], function()
 	Route::any('types/search', 'TypesController@search');
 	Route::resource('types', 'TypesController');
 
+    Route::any('type_categories/export', 'TypeCategoriesController@export');
+    Route::any('type_categories/search', 'TypeCategoriesController@search');
+    Route::resource('type_categories', 'TypeCategoriesController');
+
 	Route::any('services/export', 'ServicesController@export');
 	Route::any('services/search', 'ServicesController@search');
 	Route::resource('services', 'ServicesController');

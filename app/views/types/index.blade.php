@@ -6,6 +6,7 @@
 
 @section('page-nav')
 <li><a href="{{ route('types.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Type</a></li>
+<li><a href="{{ route('type_categories.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Categories</a></li>
 @stop
 
 @section('export-nav')
@@ -27,7 +28,8 @@
 					<thead>
 						<tr>
 							<td rowspan="2" width="60%">Type Name</td>
-							<td rowspan="2" width="20%">ShortName</td>
+							<td rowspan="2" width="10%">Short Name</td>
+							<td rowspan="2" width="10%">Reporting Category</td>
 							<td colspan="2" width="20%" class="content-center hide-s">Clients</td>
 							<td rowspan="2" colspan="2" class="hide-print">Actions</td>
 						</tr>
@@ -41,6 +43,7 @@
 							<tr>
 								<td><strong><a href="{{ route('types.show', ['id' => $type->id]) }}">{{ $type->name }}</a></strong></td>
 								<td>{{ $type->short_name }}</td>
+                                <td class="hide-m">{{ $type->category_id ? $type->type_category()->first()->name : '-' }}</td>
 								<td class="content-center hide-s">{{ number_format($type->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($type->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
 								<td class="actions content-right hide-print">

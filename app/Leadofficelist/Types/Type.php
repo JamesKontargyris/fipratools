@@ -10,10 +10,16 @@ class Type extends \BaseModel
 		return $this->belongsTo( '\Leadofficelist\Clients\Client', 'id', 'type_id' );
 	}
 
+    public function type_category()
+    {
+        return $this->belongsTo( '\Leadofficelist\Type_categories\Type_category', 'category_id', 'id' );
+    }
+
 	public function add( $type )
 	{
 		$this->name       = $type->name;
 		$this->short_name = $type->short_name;
+		$this->category_id = $type->type_category;
 		$this->save();
 
 		return $this;
@@ -24,6 +30,7 @@ class Type extends \BaseModel
 		$update_type             = $this->find( $type->id );
 		$update_type->name       = $type->name;
 		$update_type->short_name = $type->short_name;
+		$update_type->category_id = $type->type_category;
 		$update_type->save();
 
 		return $update_type;
