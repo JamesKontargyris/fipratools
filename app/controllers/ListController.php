@@ -122,6 +122,27 @@ class ListController extends BaseController
 		return $items;
 	}
 
+	protected function getFiltered()
+	{
+		$items = Client::rowsListFilter( $this->rows_list_filter_field, $this->rows_list_filter_value )->rowsHideShowDormant( Session::get($this->resource_key . '.rowsHideShowDormant') )->rowsHideShowActive( Session::get($this->resource_key . '.rowsHideShowActive'))->rowsSortOrder( $this->rows_sort_order )->get();
+
+		$model_name          = $this->getFilterModelName();
+		$model               = new $model_name;
+		//If filter is on account director, then the model will need to pull first_name and last_name from account _directors
+		//rather than just name.
+		if(strpos($model_name, 'Account_directors'))
+		{
+			$ad = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) );
+			$items->filter_value = $ad->first_name . ' ' . $ad->last_name;
+		}
+		else
+		{
+			$items->filter_value = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
+		}
+
+		return $items;
+	}
+
 	/**
 	 * Get all data required to populate the add/edit user forms.
 	 *

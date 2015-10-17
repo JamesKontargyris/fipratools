@@ -22,7 +22,10 @@
 			<td>Sector</td>
 			<td>Type</td>
 			<td>Service</td>
-			@if(Session::get('list.rowsHideShowDormant') == 'show')
+			@if($key == 'list')
+				<td width="10%">AD</td>
+			@endif
+			@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
 				<td width="10%">Status</td>
 			@endif
 		</tr>
@@ -39,7 +42,10 @@
 				<td>{{ $client->sector()->pluck('name') }}</td>
 				<td>{{ $client->type()->pluck('short_name') }}</td>
 				<td>{{ $client->service()->pluck('name') }}</td>
-				@if(Session::get('list.rowsHideShowDormant') == 'show')
+				@if($key == 'list')
+					<td>{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}</td>
+				@endif
+				@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
 					@if($client->status)
 						<td class="status-active">Active</td>
 					@else

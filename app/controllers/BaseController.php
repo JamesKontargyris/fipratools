@@ -94,6 +94,12 @@ class BaseController extends Controller
                     return true;
                     break;
 
+                case 'pdf_filtered':
+                    $contents = $this->PDFExportFiltered($this->getFiltered());
+                    $this->generatePDF($contents, $this->export_filename . '_filtered.pdf');
+                    return true;
+                    break;
+
                 case 'pdf_duplicates':
                     $contents = $this->PDFExportDuplicates($this->getDuplicates());
                     $this->generatePDF($contents, $this->export_filename . '_duplicates.pdf');
@@ -174,6 +180,30 @@ class BaseController extends Controller
                 $this->resource_key . '.SearchType'
             ) . ' "' . $this->search_term_clean . '"' :
             'Showing ' . number_format($items->count(), 0) . ' ' . clean_key($key);
+        $view = View::make('export.pdf.' . $key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2]);
+
+        return (string)$view;
+    }
+
+    /**
+     * Export a filtered selection of records from the main list to a PDF file
+     *
+     * @param $items
+     *
+     * @return string
+     */
+    protected function PDFExportFiltered($items)
+    {
+        $key = is_request('list') ? 'clients' : $this->resource_key;
+
+        $heading1 = ucfirst(clean_key($this->resource_key)) . ' Selection';
+        if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show') {
+            $heading2 = 'Showing ' . number_format($items->count(), 0) . ' active and dormant ' . clean_key($key) . ' filtering on: ' . $items->filter_value;
+        } elseif(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') != 'show') {
+            $heading2 = 'Showing ' . number_format($items->count(), 0) . ' dormant ' . clean_key($key) . ' filtering on: ' . $items->filter_value;
+        } else {
+            $heading2 = 'Showing ' . number_format($items->count(), 0) . ' active ' . clean_key($key) . ' filtering on: ' . $items->filter_value;
+        }
         $view = View::make('export.pdf.' . $key, ['items' => $items, 'heading1' => $heading1, 'heading2' => $heading2]);
 
         return (string)$view;

@@ -24,7 +24,7 @@
 			<td width="10%">Lead Network Member</td>
 			<td width="10%">AD</td>
 			<td width="15%">Comments</td>
-			@if(Session::get('list.rowsHideShowDormant') == 'show')
+			@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
 				<td width="10%">Status</td>
 			@endif
 		</tr>
