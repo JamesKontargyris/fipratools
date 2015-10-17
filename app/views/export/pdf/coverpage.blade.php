@@ -43,7 +43,6 @@ About the Lead Office List
 
         <p style='color:red; font-weight: bold'>STRICTLY CONFIDENTIAL</p>";
 
-{{--    Convert content to two columns --}}
     $columnContent = ContentToTwoColumns($content);
 ?>
 
