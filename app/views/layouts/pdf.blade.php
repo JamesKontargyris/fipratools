@@ -105,6 +105,12 @@
             background-color: white;
             color: #d3d3d3;
             border: 1px solid white; }
+          .index-table thead, .index-table tfoot {
+            display: table-row-group;
+          }
+        .index-table tr td, .index-table tr th {
+          page-break-inside: avoid;
+        }
     </style>
 </head>
 <body>

@@ -144,10 +144,10 @@ class BaseController extends Controller
         $view = View::make(
             'export.pdf.' . $key,
             [
-                'items'         => $items,
-                'heading1'      => $heading1,
-                'heading2'      => $heading2,
-                'active_count'  => $active_count,
+                'items' => $items,
+                'heading1' => $heading1,
+                'heading2' => $heading2,
+                'active_count' => $active_count,
                 'dormant_count' => $dormant_count,
             ]
         );
@@ -201,10 +201,10 @@ class BaseController extends Controller
         $view = View::make(
             'export.pdf.' . $key,
             [
-                'items'         => $items,
-                'heading1'      => $heading1,
-                'heading2'      => $heading2,
-                'active_count'  => $active_count,
+                'items' => $items,
+                'heading1' => $heading1,
+                'heading2' => $heading2,
+                'active_count' => $active_count,
                 'dormant_count' => $dormant_count,
             ]
         );
@@ -225,22 +225,25 @@ class BaseController extends Controller
     {
         $header_right = 'Fipra Lead Office List';
         $footer_left = 'Generated at [time] on [date]';
-        $footer_center = 'Page [page] of [toPage]';
+//        $footer_center = 'Page [page] of [toPage]';
+        $footer_center = 'Page [page]';
         $footer_right = 'Private and Confidential';
         $pdf = PDF::make();
         $pdf->setOptions(
             array(
-                'orientation'      => 'landscape',
-                'margin-top'       => '15',
+                'orientation' => 'landscape',
+                'margin-top' => '15',
                 'header-font-size' => '8',
-                'header-spacing'   => '5',
-                'header-right'     => $header_right,
+                'header-spacing' => '5',
+                'header-right' => $header_right,
+                'margin-bottom' => '15',
+                'footer-spacing' => '5',
                 'footer-font-size' => '8',
-                'footer-left'      => $footer_left,
-                'footer-center'    => $footer_center,
-                'footer-right'     => $footer_right,
-                'image-quality'    => '100',
-                'images'
+                'footer-left' => $footer_left,
+                'footer-center' => $footer_center,
+                'footer-right' => $footer_right,
+                'image-quality' => '100',
+                'images',
             )
         );
         if ($cover_page) {
@@ -351,8 +354,8 @@ class BaseController extends Controller
         $sort_on = ['az' => 'name.asc', 'za' => 'name.desc', 'newest' => 'id.desc', 'oldest' => 'id.asc'];
         //Different column names in the users and account_directors table
         $sort_on_users_ads = [
-            'az'     => 'last_name.asc',
-            'za'     => 'last_name.desc',
+            'az' => 'last_name.asc',
+            'za' => 'last_name.desc',
             'newest' => 'id.desc',
             'oldest' => 'id.asc'
         ];
