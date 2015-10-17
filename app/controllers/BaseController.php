@@ -117,6 +117,12 @@ class BaseController extends Controller
                     $this->generateExcel($contents, $this->export_filename . '_selection');
                     return true;
                     break;
+
+                case 'excel_filtered':
+                    $contents = $this->getFiltered();
+                    $this->generateExcel($contents, $this->export_filename . '_filtered');
+                    return true;
+                    break;
             }
         } else {
             Flash::message('Error: no file type given or cannot export to that file type.');

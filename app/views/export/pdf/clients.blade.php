@@ -23,7 +23,8 @@
 			<td>Type</td>
 			<td>Service</td>
 			@if($key == 'list')
-				<td width="10%">AD</td>
+				<td>AD</td>
+				<td>Comments</td>
 			@endif
 			@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
 				<td width="10%">Status</td>
@@ -44,6 +45,7 @@
 				<td>{{ $client->service()->pluck('name') }}</td>
 				@if($key == 'list')
 					<td>{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}</td>
+					<td>{{ $client->comments }}</td>
 				@endif
 				@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
 					@if($client->status)
