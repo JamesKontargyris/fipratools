@@ -18,7 +18,7 @@ Icon
 composer.phar
 # composer.lock
 .env.*.php
-.env.php
+# .env.php
 
 #node.js
 /node_modules
