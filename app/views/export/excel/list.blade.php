@@ -2,8 +2,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
-<h5>* denotes mainly PR client. For all RLMFinsbury PR clients, please contact either Rory Chisholm or John Gray in the first instance except where indicated in brackets.</h5>
-
 <table>
 	<thead>
 		<tr>

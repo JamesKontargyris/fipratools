@@ -7,7 +7,7 @@ About the Lead Office List
 @section('content')
 <table width="100%">
 	<tr>
-		<td style="width:1%"><img src="http://fipra.com/styles/siteimages/logo2.gif" alt="Fipra" style="vertical-align:middle; width:38px; height:62px; padding-right:10px;"/></td>
+		<td style="width:1%"><img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" alt="Fipra" style="vertical-align:middle; width:72px; height:72px; padding-right:10px;"/></td>
 		<td>
 			<h1>Lead Office List</h1>
 		</td>
