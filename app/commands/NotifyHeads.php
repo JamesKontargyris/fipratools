@@ -7,110 +7,105 @@ use Symfony\Component\Console\Input\InputArgument;
 class NotifyHeads extends Command
 {
 
-	/**
-	 * The console command name.
-	 *
-	 * @var string
-	 */
-	protected $name = 'notify:heads';
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = 'notify:heads';
 
-	/**
-	 * The console command description.
-	 *
-	 * @var string
-	 */
-	protected $description = 'Send an email to all Heads of Unit asking them to do a client status check.';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Send an email to all Heads of Unit asking them to do a client status check.';
 
     /**
      * Create a new command instance.
      *
      */
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function fire()
-	{
-		$users     = User::orderBy('first_name')->get();
-		$data      = [];
-		$count     = 0;
-		$emails    = [];
-		$usernames = [];
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function fire()
+    {
+        $this->info('Sending emails, please wait...');
 
-		//Send emails to Head of Unit users
-		foreach ( $users as $user )
-		{
-			if ( $user->hasRole( 'Head of Unit' ) )
-			{
-				$data['first_name'] = $user->first_name;
-				$data['last_name']  = $user->last_name;
-				$data['full_name']  = $user->first_name . ' ' . $user->last_name;
-				$data['email']      = $user->email;
+        $users = User::orderBy('first_name')->get();
+        $data = [];
+        $data['user_type'] = "Heads of Unit";
+        $count = 0;
+        $emails = [];
+        $usernames = [];
 
-				Mail::queue('emails.status_check.headofunit_status_check_reminder', $data, function($message) use ($data)
-				{
-					$message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - please check your lead office list information');
-				});
+        //Send emails to Head of Unit users
+        foreach ($users as $user) {
+            if ($user->hasRole('Head of Unit')) {
+                $data['first_name'] = $user->first_name;
+                $data['last_name'] = $user->last_name;
+                $data['full_name'] = $user->first_name . ' ' . $user->last_name;
+                $data['email'] = $user->email;
 
-				$count ++;
-				$emails[]    = $data['email'];
-				$usernames[] = $data['full_name'];
-			}
+                Mail::queue('emails.status_check.headofunit_status_check_reminder', $data, function ($message) use ($data) {
+                    $message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - please check your lead office list information');
+                });
 
-		}
+                $count++;
+                $emails[] = $data['email'];
+                $usernames[] = $data['full_name'];
+            }
 
-		//Send email summary to Administrators, if at least 1 user was contacted
-		if ( $count > 0 )
-		{
-			foreach ( $users as $user )
-			{
-				if ( $user->hasRole( 'Administrator' ) )
-				{
-					$data['first_name'] = $user->first_name;
-					$data['last_name']  = $user->last_name;
-					$data['full_name']  = $user->first_name . ' ' . $user->last_name;
-					$data['email']      = $user->email;
-					$data['count']     = $count;
-					$data['usernames'] = $usernames;
+        }
 
-					Mail::queue( 'emails.status_check.status_check_summary', $data, function ( $message ) use ( $data )
-					{
-						$message->to( $data['email'], $data['full_name'] )->subject( 'Fipra Lead Office List - Email Notification Summary' );
-					} );
-				}
-			}
+        //Send email summary to Administrators, if at least 1 user was contacted
+        if ($count > 0) {
+            foreach ($users as $user) {
+                if ($user->hasRole('Administrator')) {
+                    $data['first_name'] = $user->first_name;
+                    $data['last_name'] = $user->last_name;
+                    $data['full_name'] = $user->first_name . ' ' . $user->last_name;
+                    $data['email'] = $user->email;
+                    $data['count'] = $count;
+                    $data['usernames'] = $usernames;
 
-			$this->info( 'Head of Unit email notification sent to ' . $count . ' Head of Unit users: ' . implode( ', ', $usernames ) . '.' );
-		} else
-		{
-			$this->info( 'Head of Unit email notification sent to 0 Head of Unit users.' );
-		}
-	}
+                    Mail::queue('emails.status_check.status_check_summary', $data, function ($message) use ($data) {
+                        $message->to($data['email'], $data['full_name'])->subject('Fipra Lead Office List - Email Notification Summary');
+                    });
+                }
+            }
 
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [];
-	}
+            $this->info('Head of Unit email notification sent to ' . $count . ' Head of Unit users: ' . implode(', ', $usernames) . '.');
+        } else {
+            $this->info('Head of Unit email notification sent to 0 Head of Unit users.');
+        }
+    }
 
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [];
-	}
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [];
+    }
 
 }
