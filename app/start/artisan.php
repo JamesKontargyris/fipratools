@@ -13,3 +13,4 @@
 
 Artisan::add(new NotifySpadsCheck);
 Artisan::add(new NotifySpadsLogin);
+Artisan::add(new NotifyHeads);
