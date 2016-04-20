@@ -38,10 +38,10 @@ class NotifyHeads extends Command
 	public function fire()
 	{
 		$users     = User::orderBy('first_name')->get();
-		$data      = [ ];
+		$data      = [];
 		$count     = 0;
-		$emails    = [ ];
-		$usernames = [ ];
+		$emails    = [];
+		$usernames = [];
 
 		//Send emails to Head of Unit users
 		foreach ( $users as $user )
@@ -76,7 +76,6 @@ class NotifyHeads extends Command
 					$data['last_name']  = $user->last_name;
 					$data['full_name']  = $user->first_name . ' ' . $user->last_name;
 					$data['email']      = $user->email;
-					//$data['email']      = $user->email;
 					$data['count']     = $count;
 					$data['usernames'] = $usernames;
 
