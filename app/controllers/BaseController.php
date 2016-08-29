@@ -41,6 +41,20 @@ class BaseController extends Controller
 
     function __construct()
     {
+//    	Check to see if a new section has been visited from the super menu
+//	    via a 'section' variable in the query string.
+//	    If so, update the session variable.
+//	    If no section is set, default to list section.
+	    if( ! Session::has('section')) Session::put('section', 'list');
+
+	    if(isset($_GET['section'])) {
+		    if($_GET['section'] != 'case' && $_GET['section'] != 'survey') {
+		    	Session::put('section', 'list');
+		    } else {
+			    Session::put('section', $_GET['section']);
+		    }
+	    }
+
         $this->user = Auth::user();
         if (isset($this->user->id)) {
             View::share('user', $this->user);

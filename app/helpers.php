@@ -108,6 +108,19 @@ function is_request($uri, $strict = false)
 	return $request_is;
 }
 
+function section_is() {
+	return Session::get('section');
+}
+
+function current_section_name() {
+	$sections = [
+		'list' => 'Lead Office List',
+		'case' => 'Case Studies',
+		'survey' => 'Knowledge Survey'
+	];
+	return $sections[Session::get('section')];
+}
+
 function nav_item_is_active($uri)
 {
 	if(is_request($uri)) return true;

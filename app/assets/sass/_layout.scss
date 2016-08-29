@@ -17,8 +17,9 @@ $susy: (
   .desktop {
     display:none;
   }
-  @include breakpoint($l) {
+  @include breakpoint($m) {
     .mobile {
+      @include clearfix();
       display:none;
     }
     .desktop {

@@ -1,0 +1,1 @@
+<title>Fipra Portal :: {{ current_section_name() }} {{ isset($page_title) ? ' :: ' . $page_title : '' }}</title>

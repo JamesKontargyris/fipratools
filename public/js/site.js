@@ -1,5 +1,12 @@
 (function(){
 
+    //If the logo and title section is tapped, toggle the super menu and title arrow direction
+    $('.logo').on('click', function()
+    {
+        $('.super-menu__container').slideToggle();
+        $('.logo > span > i').toggleClass('fa-caret-down fa-caret-up');
+    })
+
 	// Show all elements with a class of showjs
 	$('.showjs').css('display', 'block');
     // Hide all elements with a class of hidejs
