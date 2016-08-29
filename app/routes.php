@@ -100,6 +100,8 @@ Route::group(['before' => 'auth'], function()
 	Route::post('list/filter', ['as' => 'list.filter', 'uses' => 'ListController@filter']);
 	Route::resource('list', 'ListController');
 
+	Route::resource('cases', 'CasesController');
+
 	Route::any('eventlog/export', 'EventLogController@export');
 	Route::controller('eventlog', 'EventLogController');
 
