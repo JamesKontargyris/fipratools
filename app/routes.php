@@ -113,6 +113,9 @@ Route::get('roles', function()
 
 Route::group(['before' => 'auth'], function()
 {
+	// Temporary Knowledge Survey route
+	Route::any('survey', 'PagesController@survey');
+
 	Route::any('list/export', 'ListController@export');
 	Route::any('list/search', 'ListController@search');
 	Route::get('about', ['as' => 'list.about', 'uses' => 'ListController@about']);

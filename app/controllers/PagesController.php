@@ -9,4 +9,9 @@ class PagesController extends \BaseController {
 	{
 		return View::make('home');
 	}
+
+	public function survey()
+	{
+		return View::make('survey');
+	}
 } 
