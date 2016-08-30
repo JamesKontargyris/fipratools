@@ -3,7 +3,7 @@
 		<li class="{{ nav_item_is_active('list') ? 'active' : '' }}"><a href="{{ route('list.index') }}"><i class="fa fa-th-list"></i> <strong>The List</strong></a></li>
 	@endif
 	@if($user->can('view_list') && section_is() == 'case')
-		<li class="{{ nav_item_is_active('case') ? 'active' : '' }}"><a href="{{ route('cases.index') }}"><i class="fa fa-th-list"></i> <strong>All Case Studies</strong></a></li>
+		<li class="{{ nav_item_is_active('caselist') ? 'active' : '' }}"><a href="{{ route('caselist.index') }}"><i class="fa fa-th-list"></i> <strong>All Case Studies</strong></a></li>
 	@endif
 	@if($user->can('view_list') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('about') ? 'active' : '' }}"><a href="{{ route('list.about') }}"><i class="fa fa-info-circle"></i> <strong>About the List</strong></a></li>

@@ -73,4 +73,39 @@ class CaseStudy extends \BaseModel {
 
 		return $update_case;
 	}
+
+	public static function getYearsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
+	{
+		$years = [ ];
+		//Remove whitespace from $prefix and add a space on the end, so there is a space
+		//between the prefix and the unit name
+		$prefix = trim( $prefix ) . ' ';
+		//If $blank_entry == true, add a blank "Please select..." option
+		if ( $blank_entry )
+		{
+			$years[''] = $blank_message;
+		}
+
+		// Get all years and delete duplicates, then sort into descending order
+		$unique_years = array_unique(CaseStudy::all()->lists('year'));
+		ksort($unique_years);
+
+		foreach ($unique_years as $year)
+		{
+			$years[ $year ] = $prefix . $year;
+		}
+
+
+
+		if ( $blank_entry && count( $years ) == 1 )
+		{
+			return false;
+		} elseif ( ! $blank_entry && count( $years ) == 0 )
+		{
+			return false;
+		} else
+		{
+			return $years;
+		}
+	}
 }

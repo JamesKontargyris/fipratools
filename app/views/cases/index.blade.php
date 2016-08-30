@@ -28,11 +28,12 @@
                         <thead>
                         <tr>
                             <td width="60%">Title</td>
+                            <td width="5%">Year</td>
                             @if($user->hasRole('Administrator'))
                                 <td width="10%" class="hide-s">Unit</td>
                             @endif
-                            <td width="15%" class="hide-m">Sector</td>
-                            <td width="15%" class="hide-m">Product(s)</td>
+                            <td width="10%" class="hide-m">Sector</td>
+                            <td width="10%" class="hide-m">Product(s)</td>
                             <td width="10%" class="hide-m">Location</td>
 
                             @if($user->hasRole('Administrator'))
@@ -47,6 +48,7 @@
                         @foreach($items as $casestudy)
                             <tr>
                                 <td><strong><a href="{{ route('cases.show', ['id' => $casestudy->id]) }}">{{ $casestudy->name }}</a></strong></td>
+                                <td>{{ $casestudy->year }}</td>
 
                                 @if($user->hasRole('Administrator'))
                                     <td class="hide-s"><strong><a href="/units/{{ $casestudy->unit()->pluck('id') }}">{{ $casestudy->unit()->pluck('name') }}</a></strong></td>

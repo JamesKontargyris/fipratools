@@ -122,6 +122,11 @@ Route::group(['before' => 'auth'], function()
 	Route::post('list/filter', ['as' => 'list.filter', 'uses' => 'ListController@filter']);
 	Route::resource('list', 'ListController');
 
+	Route::any('caselist/export', 'CaseListController@export');
+	Route::any('caselist/search', 'CaseListController@search');
+	Route::post('caselist/filter', ['as' => 'caselist.filter', 'uses' => 'CaseListController@filter']);
+	Route::resource('caselist', 'CaseListController');
+
 	Route::any('cases/export', 'CasesController@export');
 	Route::any('cases/search', 'CasesController@search');
 	Route::resource('cases', 'CasesController');

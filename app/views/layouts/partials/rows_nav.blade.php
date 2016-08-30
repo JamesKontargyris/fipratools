@@ -8,11 +8,11 @@
 			<li class="hide-m hide-print">Page {{ str_replace('Page ', '', number_format($items->getCurrentPage(),0, 0, ',')) }} of {{ str_replace('Page ', '', number_format($items->getLastPage(),0, 0, ',')) }}</li>
 			<li class="search-container hide-print">
 				{{ Form::open(['url' => $items->key . '/search']) }}
-					{{ Form::text('search', null, ['placeholder' => "Search " . str_replace('_', ' ', $items->key) . "..."]) }}
+					{{ Form::text('search', null, ['placeholder' => "Search..."]) }}
 					<button type="submit" class="search-but"><i class="fa fa-search"></i></button>
 				{{ Form::close() }}
 			</li>
-			@if(is_filter())
+			@if(is_filter($items->key))
 				<li class="hide-print"><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Filter</a></li>
 			@elseif(is_search())
 				<li class="hide-print"><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Search</a></li>

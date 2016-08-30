@@ -5,7 +5,7 @@
 				<ul class="super-menu">
 					<li class="super-menu__logo hide-s"><img src="{{ asset('img/fipra_logo_s.png') }}" alt="Fipra" style="vertical-align:middle"/></li>
 					<li class="super-menu__item hide-print"><a href="/list?section=list" class="super-menu__link <?php if(Session::get('section') == 'list') : ?> active<?php endif; ?>">Lead Office List</a></li>
-					<li class="super-menu__item hide-print"><a href="/list?section=case" class="super-menu__link <?php if(Session::get('section') == 'case') : ?> active<?php endif; ?>">Case Studies</a></li>
+					<li class="super-menu__item hide-print"><a href="/caselist?section=case" class="super-menu__link <?php if(Session::get('section') == 'case') : ?> active<?php endif; ?>">Case Studies</a></li>
 					<li class="super-menu__item hide-print"><a href="/survey?section=survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?>">Knowledge Survey</a></li>
 				</ul>
 			</div>

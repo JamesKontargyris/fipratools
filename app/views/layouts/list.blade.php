@@ -19,10 +19,7 @@
 									<h2>@yield('page-header')</h2>
 								<nav class="page-menu-nav">
 									<ul class="small-font">
-										@if($user->can('manage_clients'))
-											<li><a href="{{ route('clients.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
-										@endif
-										<li><a href="{{ url('reports') }}" class="secondary"><i class="fa fa-pie-chart"></i> View Reports</a></li>
+                                        @yield('page-nav')
 									</ul>
 									<ul class="small-font">
 										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>

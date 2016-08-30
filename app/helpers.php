@@ -94,9 +94,9 @@ function is_search()
 	return false;
 }
 
-function is_filter()
+function is_filter($key = 'list')
 {
-	if(Session::get('list.SearchType') == 'filter') { return true; }
+	if(Session::get($key . '.SearchType') == 'filter') { return true; }
 
 	return false;
 }

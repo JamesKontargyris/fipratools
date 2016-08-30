@@ -3,6 +3,7 @@
 use Ignited\Pdf\Facades\Pdf;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Account_directors\AccountDirector;
+use Leadofficelist\Cases\CaseStudy;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Locations\Location;
@@ -33,6 +34,7 @@ class BaseController extends Controller
     protected $services;
     protected $locations;
     protected $products;
+    protected $years;
     protected $export_filename;
     protected $search_term_clean;
 
@@ -664,6 +666,7 @@ class BaseController extends Controller
         $this->services = $this->getServicesFormData();
         $this->locations = $this->getLocationsFormData();
         $this->products = $this->getProductsFormData();
+        $this->years = $this->getYearsFormData();
 
         return true;
     }
@@ -770,6 +773,23 @@ class BaseController extends Controller
 		}
 
 		return Product::getProductsForFormSelect($blank_entry, $blank_message);
+	}
+
+	/**
+	 * Get all case study years in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getYearsFormData($blank_entry = false, $blank_message = 'Please select...')
+	{
+		if (! CaseStudy::getYearsForFormSelect($blank_entry, $blank_message)) {
+			return ['' => 'No years available to select'];
+		}
+
+		return CaseStudy::getYearsForFormSelect($blank_entry, $blank_message);
 	}
 
     protected function getActiveCount()

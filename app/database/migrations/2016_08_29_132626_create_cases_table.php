@@ -26,7 +26,6 @@ class CreateCasesTable extends Migration {
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->integer('location_id')->unsigned()->index();
-			$table->foreign('location_id')->references('id')->on('locations');
 			$table->integer('account_director_id')->unsigned()->index();
 			$table->foreign('account_director_id')->references('id')->on('account_directors');
 			$table->integer('sector_id')->unsigned()->index();
