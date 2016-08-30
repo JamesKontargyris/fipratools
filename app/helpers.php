@@ -1,5 +1,6 @@
 <?php
 
+use Leadofficelist\Products\Product;
 use Leadofficelist\Users\User;
 
 function display_page_title($default = 'Lead Office List')
@@ -252,4 +253,17 @@ function countOpenClosedTags($html){
     //Create an array to return the open and close counts.
     $numTags = array($numOpened, $numClosed);
     return $numTags;
+}
+
+// Use an array of product IDs to get product names,
+// then return a comma-separated string of all names
+function get_pretty_product_names($product_ids)
+{
+	$product_names = [];
+	foreach($product_ids as $product_id)
+	{
+		$product_names[] = Product::find($product_id)->pluck('name');
+	}
+
+	return implode(', ', $product_names);
 }

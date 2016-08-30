@@ -1,4 +1,4 @@
-<?php
+<?php namespace Leadofficelist\Products;
 
 class Product extends \BaseModel {
 	protected $fillable = ['name'];

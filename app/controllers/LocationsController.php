@@ -3,6 +3,7 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditLocation as AddEditLocationForm;
+use Leadofficelist\Locations\Location;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class LocationsController extends \BaseController {

@@ -32,7 +32,7 @@
                                 <td width="10%" class="hide-s">Unit</td>
                             @endif
                             <td width="15%" class="hide-m">Sector</td>
-                            <td width="15%" class="hide-m">Product</td>
+                            <td width="15%" class="hide-m">Product(s)</td>
                             <td width="10%" class="hide-m">Location</td>
 
                             @if($user->hasRole('Administrator'))
@@ -46,14 +46,14 @@
                         <tbody>
                         @foreach($items as $casestudy)
                             <tr>
-                                <td><strong><a href="{{ route('cases.show', ['id' => $casestudy->id]) }}">{{ $casestudy->title }}</a></strong></td>
+                                <td><strong><a href="{{ route('cases.show', ['id' => $casestudy->id]) }}">{{ $casestudy->name }}</a></strong></td>
 
                                 @if($user->hasRole('Administrator'))
                                     <td class="hide-s"><strong><a href="/units/{{ $casestudy->unit()->pluck('id') }}">{{ $casestudy->unit()->pluck('name') }}</a></strong></td>
                                 @endif
 
                                 <td class="hide-m">{{ $casestudy->sector()->pluck('name') }}</td>
-                                <td class="hide-m">{{ $casestudy->product()->pluck('name') }}</td>
+                                <td class="hide-m">{{ get_pretty_product_names(unserialize($casestudy->product_id)); }}</td>
                                 <td class="hide-m">{{ $casestudy->location()->pluck('name') }}</td>
 
                                 <td class="actions hide-print content-center">

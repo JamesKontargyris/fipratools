@@ -4,7 +4,7 @@ use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 use Leadofficelist\Cases\CaseStudy;
 
-class AddCaseCommandHandler implements CommandHandler {
+class EditCaseCommandHandler implements CommandHandler {
 
 	use DispatchableTrait;
 
@@ -24,7 +24,7 @@ class AddCaseCommandHandler implements CommandHandler {
 	 */
 	public function handle($command) {
 
-		$this->case->add($command);
+		$this->case->edit($command);
 
 		return $this->case;
 	}

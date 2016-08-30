@@ -1,7 +1,10 @@
 <?php
 
 use Laracasts\Commander\CommanderTrait;
+use Leadofficelist\Cases\CaseStudy;
+use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Forms\AddEditCase as AddEditCaseForm;
+use Leadofficelist\Units\Unit;
 
 class CasesController extends \BaseController {
 
@@ -19,7 +22,7 @@ class CasesController extends \BaseController {
 		View::share( 'key', 'cases' );
 
 		$this->addEditCaseForm = $addEditCaseForm;
-		$this->case              = $case;
+		$this->case            = $case;
 	}
 
 	/**
@@ -37,7 +40,14 @@ class CasesController extends \BaseController {
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 
-		$items      = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		if ( $this->user->hasRole( 'Administrator' ) )
+		{
+			$items = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		} else
+		{
+			$items = CaseStudy::where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
 		$items->key = 'cases';
 
 		return View::make( 'cases.index' )->with( compact( 'items' ) );
@@ -78,7 +88,7 @@ class CasesController extends \BaseController {
 		$this->execute( 'Leadofficelist\Cases\AddCaseCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
-		EventLog::add('Case study created: ' . $input['name'], $this->user->getFullName(), Unit::find($input['unit_id'])->name, 'add');
+		EventLog::add( 'Case study created: ' . $input['name'], $this->user->getFullName(), Unit::find( $input['unit_id'] )->name, 'add' );
 
 		return Redirect::route( 'cases.index' );
 	}
@@ -104,7 +114,20 @@ class CasesController extends \BaseController {
 	 * @return Response
 	 */
 	public function edit( $id ) {
-		//
+		$this->getFormData();
+
+		if ( $case = $this->getCase( $id ) ) {
+			return View::make( 'cases.edit' )->with( [
+				'account_directors' => $this->account_directors,
+				'units'             => $this->units,
+				'sectors'           => $this->sectors,
+				'locations'         => $this->locations,
+				'products'          => $this->products,
+				'case'             => $case
+			] );;
+		} else {
+			throw new ResourceNotFoundException( 'cases' );
+		}
 	}
 
 	/**
@@ -116,7 +139,15 @@ class CasesController extends \BaseController {
 	 * @return Response
 	 */
 	public function update( $id ) {
-		//
+		$input       = Input::all();
+		$input['id'] = $id;
+		$this->addEditCaseForm->validate( $input );
+
+		$this->execute( 'Leadofficelist\Cases\EditCaseCommand', $input );
+
+		Flash::overlay( 'Case study updated.', 'success' );
+
+		return Redirect::route( 'cases.index' );
 	}
 
 	/**
@@ -128,7 +159,59 @@ class CasesController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy( $id ) {
-		//
+		if ( $case = $this->getCase( $id ) )
+		{
+			CaseStudy::destroy( $id );
+			Flash::overlay( '"' . $case->name . '" has been deleted.', 'info' );
+
+			return Redirect::route( 'cases.index' );
+		} else
+		{
+			throw new ResourceNotFoundException( 'cases' );
+		}
+	}
+
+
+	/**
+	 * Process a case study search.
+	 *
+	 * @return $this
+	 */
+	public function search() {
+		if ( $search_term = $this->findSearchTerm() ) {
+			$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if ( ! $this->checkForSearchResults( $items ) ) {
+				return Redirect::route( $this->resource_key . '.index' );
+			}
+			$items->search_term = str_replace( '%', '', $search_term );
+			$items->key         = 'cases';
+
+			return View::make( 'cases.index' )->with( compact( 'items' ) );
+		} else {
+			return View::make( 'cases.index' );
+		}
+	}
+
+	protected function getAll() {
+		return CaseStudy::all();
+	}
+
+	protected function getSelection() {
+		if ( $this->searchCheck() ) {
+			$search_term             = $this->findSearchTerm();
+			$this->search_term_clean = str_replace( '%', '', $search_term );
+
+			$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		} else {
+			$items = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
+	}
+
+	protected function getCase( $id ) {
+		return CaseStudy::find( $id );
 	}
 
 }

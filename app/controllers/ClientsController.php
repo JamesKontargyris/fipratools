@@ -146,18 +146,26 @@ class ClientsController extends \BaseController
 	{
 		$this->check_perm( 'manage_clients' );
 
-		if ( $client = $this->getClient( $id ) )
+		if ( $client = $this->getClient( $id ))
 		{
-			$this->getFormData();
+			// Check permissions
+			if( $this->user->hasRole('Administrator') || $this->user->id == $client->user_id)
+			{
+				$this->getFormData();
 
-			return View::make( 'clients.edit' )->with( [
-				'account_directors' => $this->account_directors,
-				'units'             => $this->units,
-				'sectors'           => $this->sectors,
-				'types'             => $this->types,
-				'services'          => $this->services,
-				'client'            => $client
-			] );
+				return View::make( 'clients.edit' )->with( [
+					'account_directors' => $this->account_directors,
+					'units'             => $this->units,
+					'sectors'           => $this->sectors,
+					'types'             => $this->types,
+					'services'          => $this->services,
+					'client'            => $client
+				] );
+			} else
+			{
+				throw new PermissionDeniedException('clients');
+			}
+
 		} else
 		{
 			throw new ResourceNotFoundException( 'clients' );

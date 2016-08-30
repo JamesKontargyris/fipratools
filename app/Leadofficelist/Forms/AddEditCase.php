@@ -20,7 +20,7 @@ class AddEditCase extends FormValidator {
 		'location_id'         => 'numeric',
 		'account_director_id' => 'required',
 		'sector_id'           => 'required|numeric',
-		'product_id'          => 'required|numeric'
+		'product_id'          => 'required'
 	];
 
 	public $messages = [
@@ -38,8 +38,8 @@ class AddEditCase extends FormValidator {
 		'account_director_id.numeric'  => 'Please select an Account Director.',
 		'sector_id.required'           => 'Please select a sector.',
 		'sector_id.numeric'            => 'Please select a sector.',
-		'product_id.required'          => 'Please select a product.',
-		'product_id.numeric'           => 'Please select a product.',
+		'product_id.required'          => 'Please select at least one product.',
+		'product_id.numeric'           => 'Please select at least one product.',
 		'max'                          => 'Too many characters. Please reduce the text.'
 	];
 }

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Leadofficelist\Locations;
 
 class Location extends \BaseModel {
 	protected $fillable = [ 'name' ];
@@ -15,7 +15,7 @@ class Location extends \BaseModel {
 		}
 
 		foreach (
-			Product::orderBy( 'name', 'ASC' )->get( [
+			Location::orderBy( 'name', 'ASC' )->get( [
 				'id',
 				'name'
 			] ) as $location

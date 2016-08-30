@@ -5,6 +5,8 @@ use Laracasts\Flash\Flash;
 use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Locations\Location;
+use Leadofficelist\Products\Product;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Services\Service;
 use Leadofficelist\Types\Type;
@@ -761,7 +763,7 @@ class BaseController extends Controller
 	 *
 	 * @return array
 	 */
-	protected function getProductsFormData($blank_entry = true, $blank_message = 'Please select...')
+	protected function getProductsFormData($blank_entry = false, $blank_message = 'Please select...')
 	{
 		if (!Product::getProductsForFormSelect($blank_entry, $blank_message)) {
 			return ['' => 'No products available to select'];

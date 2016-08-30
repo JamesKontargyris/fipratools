@@ -48,7 +48,6 @@
                 </div>
             @else
                 {{ Form::hidden('unit_id', $user->unit()->pluck('id')) }}
-                {{ Form::hidden('unit_name', $user->unit()->pluck('name')) }}
             @endif
             {{ Form::hidden('user_id', $user->id) }}
 
@@ -65,8 +64,8 @@
                 {{ Form::select('location_id', $locations, Input::old('location_id')) }}
             </div>
             <div class="formfield">
-                {{ Form::label('product_id', 'Product:', ['class' => 'required']) }}
-                {{ Form::select('product_id', $products, Input::old('product_id')) }}
+                {{ Form::label('product_id', 'Product(s):', ['class' => 'required']) }}
+                {{ Form::select('product_id[]', $products, Input::old('product_id'), ['id' => 'product_select', 'multiple' => 'multiple']) }}
             </div>
         </div>
     </div>

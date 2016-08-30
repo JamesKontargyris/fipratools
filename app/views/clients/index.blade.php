@@ -44,7 +44,7 @@
 							@if($user->hasRole('Administrator'))
 								<td colspan="5" class="hide-print">Actions</td>
 							@else
-								<td class="hide-print">Actions</td>
+								<td colspan="2" class="hide-print">Actions</td>
 							@endif
 
 						</tr>

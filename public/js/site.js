@@ -122,6 +122,10 @@
         return false;
     });
 
+    // Make the products select box a nicer multi-select box
+    $('#product_select').multiSelect();
+
+
     //Alerts
     $('.alert button.close').on('click', function() { $('.alert-container').slideUp(500); });
 
