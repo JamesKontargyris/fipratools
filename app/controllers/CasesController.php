@@ -102,7 +102,16 @@ class CasesController extends \BaseController {
 	 * @return Response
 	 */
 	public function show( $id ) {
-		//
+		$this->check_perm( 'view_list' );
+
+		if ( $case = CaseStudy::find( $id ) )
+		{
+
+			return View::make( 'cases.show' )->with( compact( 'case' ) );
+		} else
+		{
+			throw new ResourceNotFoundException( 'cases' );
+		}
 	}
 
 	/**

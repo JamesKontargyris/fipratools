@@ -38,7 +38,7 @@
 							<td width="10%" class="hide-m">Sector</td>
 							<td width="10%" class="hide-m">Product(s)</td>
 							<td width="10%" class="hide-m">Location</td>
-							<td width="10%" class="hide-m">Unit</td>
+							<td width="10%" class="hide-s">Unit</td>
 							<td width="15%" class="hide-s">AD to talk to</td>
 						</tr>
 						<tr class="hide-print">
@@ -101,7 +101,7 @@
 								<td class="hide-m">{{ $case->sector()->pluck('name') }}</td>
 								<td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
 								<td class="hide-m">{{ $case->location()->pluck('name') }}</td>
-								<td><a href="{{ route('units.show', ['id' => $case->unit()->pluck('id')]) }}"><strong>{{ $case->unit()->pluck('name') }}</strong></a></td>
+								<td class="hide-s"><a href="{{ route('units.show', ['id' => $case->unit()->pluck('id')]) }}"><strong>{{ $case->unit()->pluck('name') }}</strong></a></td>
 								<td class="hide-s">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
 							</tr>
 						@endforeach

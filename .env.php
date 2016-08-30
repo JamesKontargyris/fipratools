@@ -3,7 +3,7 @@
 return array(
 
     'DB_HOST' => 'localhost',
-    'DB_NAME' => 'leadofficelist',
+    'DB_NAME' => 'portal',
     'DB_USERNAME' => 'forge',
     'DB_PASSWORD' => 'PYkQdZF70EdfqceEb9U0',
     'PDF_BIN' => '/vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64',

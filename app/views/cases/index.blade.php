@@ -46,29 +46,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($items as $casestudy)
+                        @foreach($items as $case)
                             <tr>
-                                <td><strong><a href="{{ route('cases.show', ['id' => $casestudy->id]) }}">{{ $casestudy->name }}</a></strong></td>
-                                <td>{{ $casestudy->year }}</td>
+                                <td><strong><a href="{{ route('cases.show', ['id' => $case->id]) }}">{{ $case->name }}</a></strong></td>
+                                <td>{{ $case->year }}</td>
 
                                 @if($user->hasRole('Administrator'))
-                                    <td class="hide-s"><strong><a href="/units/{{ $casestudy->unit()->pluck('id') }}">{{ $casestudy->unit()->pluck('name') }}</a></strong></td>
+                                    <td class="hide-s"><strong><a href="/units/{{ $case->unit()->pluck('id') }}">{{ $case->unit()->pluck('name') }}</a></strong></td>
                                 @endif
 
-                                <td class="hide-m">{{ $casestudy->sector()->pluck('name') }}</td>
-                                <td class="hide-m">{{ get_pretty_product_names(unserialize($casestudy->product_id)); }}</td>
-                                <td class="hide-m">{{ $casestudy->location()->pluck('name') }}</td>
-                                <td class="hide-m">{{ $casestudy->account_director()->pluck('first_name') }} {{ $casestudy->account_director()->pluck('last_name') }}</td>
+                                <td class="hide-m">{{ $case->sector()->pluck('name') }}</td>
+                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
+                                <td class="hide-m">{{ $case->location()->pluck('name') }}</td>
+                                <td class="hide-m">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
 
                                 <td class="actions hide-print content-center">
-                                    {{ Form::open(['route' => array('cases.edit', $casestudy->id), 'method' => 'get']) }}
+                                    {{ Form::open(['route' => array('cases.edit', $case->id), 'method' => 'get']) }}
                                     <button type="submit" class="primary" title="Edit this case study"><i class="fa fa-pencil"></i></button>
                                     {{ Form::close() }}
                                 </td>
 
                                 @if($user->hasRole('Administrator'))
                                     <td class="actions hide-print content-center">
-                                        {{ Form::open(['route' => array('cases.destroy', $casestudy->id), 'method' => 'delete']) }}
+                                        {{ Form::open(['route' => array('cases.destroy', $case->id), 'method' => 'delete']) }}
                                         <button type="submit" class="red-but delete-row" data-resource-type="case study" title="Delete this case study"><i class="fa fa-times"></i></button>
                                         {{ Form::close() }}
                                     </td>
