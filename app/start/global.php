@@ -18,14 +18,14 @@ use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 
-ClassLoader::addDirectories(array(
+ClassLoader::addDirectories( array(
 
-	app_path().'/commands',
-	app_path().'/controllers',
-	app_path().'/models',
-	app_path().'/database/seeds',
+	app_path() . '/commands',
+	app_path() . '/controllers',
+	app_path() . '/models',
+	app_path() . '/database/seeds',
 
-));
+) );
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ ClassLoader::addDirectories(array(
 |
 */
 
-Log::useFiles(storage_path().'/logs/laravel.log');
+Log::useFiles( storage_path() . '/logs/laravel.log' );
 
 /*
 |--------------------------------------------------------------------------
@@ -53,52 +53,51 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 |
 */
 
-App::error(function(Exception $exception, $code)
-{
-	Log::error($exception);
-});
+App::error( function ( Exception $exception, $code ) {
+	Log::error( $exception );
+} );
 
-App::error(function(FormValidationException $exception)
-{
-	Log::error($exception);
-	return Redirect::back()->withInput()->withErrors($exception->getErrors());
-});
+App::error( function ( FormValidationException $exception ) {
+	Log::error( $exception );
 
-App::error(function(PermissionDeniedException $exception)
-{
-	Log::error($exception);
-	Flash::error('Sorry - you do not have access to that page.');
+	return Redirect::back()->withInput()->withErrors( $exception->getErrors() );
+} );
 
-	if($exception->getKey())
-	{
-		return Redirect::route($exception->getKey() . '.index');
+App::error( function ( PermissionDeniedException $exception ) {
+	Log::error( $exception );
+	Flash::error( 'Sorry - you do not have access to that page.' );
+
+	if ( $exception->getKey() ) {
+		return Redirect::route( $exception->getKey() . '.index' );
+	} else {
+		if ( section_is() == 'case' ) {
+			return Redirect::route( 'caselist.index' );
+
+		} else {
+			return Redirect::route( 'list.index' );
+		}
 	}
-	else
-	{
-		return Redirect::route('list.index');
-	}
-});
+} );
 
-App::error(function(LoginFailedException $exception)
-{
-	Log::error($exception);
+App::error( function ( LoginFailedException $exception ) {
+	Log::error( $exception );
 
-	return Redirect::back()->withInput()->withErrors('Incorrect login details entered. Please try again.');
-});
+	return Redirect::back()->withInput()->withErrors( 'Incorrect login details entered. Please try again.' );
+} );
 
-App::error(function(ResourceNotFoundException $exception)
-{
-	Log::error($exception);
-	Flash::error($exception->getErrorMessage());
+App::error( function ( ResourceNotFoundException $exception ) {
+	Log::error( $exception );
+	Flash::error( $exception->getErrorMessage() );
+
 	return Redirect::route( $exception->getResourceKey() . '.index' );
-});
+} );
 
-App::error(function(CannotEditException $exception)
-{
-	Log::error($exception);
-	Flash::error($exception->getErrorMessage());
+App::error( function ( CannotEditException $exception ) {
+	Log::error( $exception );
+	Flash::error( $exception->getErrorMessage() );
+
 	return Redirect::route( $exception->getResourceKey() . '.index' );
-});
+} );
 
 /*
 |--------------------------------------------------------------------------
@@ -111,10 +110,9 @@ App::error(function(CannotEditException $exception)
 |
 */
 
-App::down(function()
-{
-	return Response::make("Be right back!", 503);
-});
+App::down( function () {
+	return Response::make( "Be right back!", 503 );
+} );
 
 /*
 |--------------------------------------------------------------------------
@@ -127,7 +125,7 @@ App::down(function()
 |
 */
 
-require app_path().'/filters.php';
+require app_path() . '/filters.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -138,4 +136,4 @@ require app_path().'/filters.php';
 |
 */
 
-require app_path().'/helpers.php';
+require app_path() . '/helpers.php';

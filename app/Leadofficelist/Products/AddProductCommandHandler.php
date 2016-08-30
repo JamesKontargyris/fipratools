@@ -2,9 +2,8 @@
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
-use Leadofficelist\Sector_categories\Sector_category;
 use Location;
-use Product;
+use Leadofficelist\Products\Product;
 
 class AddProductCommandHandler implements CommandHandler {
 

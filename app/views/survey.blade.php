@@ -8,5 +8,5 @@ Knowledge Survey
 @stop
 
 @section('content')
-    Knowledge Survey coming soon!
+    Knowledge Survey coming soon.
 @stop

@@ -160,16 +160,16 @@ class BaseController extends Controller
      */
     protected function PDFExportAll($items)
     {
-        $key = is_request('list') ? 'clients' : $this->resource_key;
+	    $key = is_request('list') ? 'clients' : is_request('caselist') ? 'case_studies' : $this->resource_key;
         //Clients and List specific variables
         $active_count = 0;
         $dormant_count = 0;
 
-        $heading1 = is_request('list') ?
+        $heading1 = is_request('list') || is_request('caselist') ?
             'Full List' :
             'All ' . clean_key($key);
 
-        $heading2 = number_format($items->count(), 0) . ' total ' . clean_key($key);
+        $heading2 = number_format($items->count(), 0) . ' total ' . (is_request('caselist') ? 'Case Studies' : clean_key($key));
         if (is_request('clients') || is_request('list')) {
             $active_count = $this->getActiveCount();
             $dormant_count = $this->getDormantCount();
@@ -197,9 +197,9 @@ class BaseController extends Controller
      */
     protected function PDFExportSelection($items)
     {
-        $key = is_request('list') ? 'clients' : $this->resource_key;
+        $key = is_request('list') ? 'clients' : is_request('caselist') ? 'case_studies' : $this->resource_key;
 
-        $heading1 = ucfirst(clean_key($this->resource_key)) . ' Selection';
+        $heading1 = ucfirst(clean_key($key)) . ' Selection';
         $heading2 = isset($this->search_term_clean) ?
             'Showing ' . number_format($items->count(), 0) . ' ' . clean_key(
                 $key
@@ -221,9 +221,9 @@ class BaseController extends Controller
      */
     protected function PDFExportFiltered($items)
     {
-        $key = is_request('list') ? 'clients' : $this->resource_key;
+	    $key = is_request('list') ? 'clients' : is_request('caselist') ? 'case_studies' : $this->resource_key;
 
-        $heading1 = ucfirst(clean_key($this->resource_key)) . ' Selection';
+        $heading1 = ucfirst(clean_key($key)) . ' Selection';
         if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show') {
             $heading2 = 'Showing ' . number_format($items->count(), 0) . ' active and dormant ' . clean_key($key) . ' filtering on: ' . $items->filter_value;
         } elseif(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') != 'show') {

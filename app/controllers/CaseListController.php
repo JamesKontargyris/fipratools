@@ -1,6 +1,8 @@
 <?php
 
+use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Cases\CaseStudy;
+use Leadofficelist\Products\Product;
 
 class CaseListController extends BaseController {
 	public $resource_key = 'caselist';
@@ -10,7 +12,7 @@ class CaseListController extends BaseController {
 		parent::__construct();
 		$this->check_perm( 'view_list' );
 		View::share( 'page_title', 'All Case Studies' );
-		View::share( 'key', 'case studies' );
+		View::share( 'key', 'caselist' );
 	}
 
 	public function index() {
@@ -26,7 +28,7 @@ class CaseListController extends BaseController {
 		$sectors           = $this->sectors;
 		$locations         = $this->locations;
 		$products          = $this->products;
-		$years          = $this->years;
+		$years             = $this->years;
 
 		$items      = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'caselist';
@@ -48,14 +50,23 @@ class CaseListController extends BaseController {
 				//If filter is an account director, then the model will need to pull first_name and last_name from account _directors
 				//rather than just name.
 				if ( strpos( $model_name, 'Account_directors' ) ) {
-					$model      = new $model_name;
-					$ad                  = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) );
+					$ad                  = AccountDirector::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) );
 					$items->filter_value = $ad->first_name . ' ' . $ad->last_name;
-				} elseif(strpos($model_name, 'Years')) {
+
+				} elseif ( strpos( $model_name, 'Years' ) ) {
+					// If the filter is years, no need to instantiate a model as it is just a field dealt with by the CaseStudy model
 					$items->filter_value = Session::get( $this->resource_key . '.rowsListFilterValue' );
-				}
-				else {
-					$model      = new $model_name;
+
+				} elseif ( strpos( $model_name, 'Products' ) ) {
+//					If the filter is a product, we need to compare the keyword to the serialized product array
+//					Re-run the query on that basis
+					$term = '%"' . Session::get($this->resource_key . '.SearchTerm') . '"%';
+					$items        = CaseStudy::where( 'product_id', 'LIKE', $term)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+					$items->filter_value = Product::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
+
+				} else {
+					$model               = new $model_name;
 					$items->filter_value = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
 				}
 			} else {
@@ -75,12 +86,34 @@ class CaseListController extends BaseController {
 			$sectors           = $this->sectors;
 			$locations         = $this->locations;
 			$products          = $this->products;
-			$years          = $this->years;
+			$years             = $this->years;
 
 			return View::make( 'caselist.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'locations', 'products', 'years' ) );
 		} else {
 			return Redirect::route( 'caselist.index' );
 		}
+	}
+
+	protected function getAll()
+	{
+		return CaseStudy::orderBy('name', 'ASC')->get();
+	}
+
+	protected function getSelection()
+	{
+		if ( $this->searchCheck() )
+		{
+			$search_term = $this->findSearchTerm();
+			$this->search_term_clean = str_replace('%', '', $search_term);
+
+			$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+		else
+		{
+			$items = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
 	}
 
 	protected function getFiltered() {
@@ -90,14 +123,13 @@ class CaseListController extends BaseController {
 		//If filter is an account director, then the model will need to pull first_name and last_name from account _directors
 		//rather than just name.
 		if ( strpos( $model_name, 'Account_directors' ) ) {
-			$model      = new $model_name;
+			$model               = new $model_name;
 			$ad                  = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) );
 			$items->filter_value = $ad->first_name . ' ' . $ad->last_name;
-		} elseif(strpos($model_name, 'Years')) {
+		} elseif ( strpos( $model_name, 'Years' ) ) {
 			$items->filter_value = 'Years';
-		}
-		else {
-			$model      = new $model_name;
+		} else {
+			$model               = new $model_name;
 			$items->filter_value = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
 		}
 
@@ -115,9 +147,9 @@ class CaseListController extends BaseController {
 		$this->sectors           = $this->getSectorsFormData( true, 'Filter...' );
 		$this->types             = $this->getTypesFormData( true, 'Filter...' );
 		$this->services          = $this->getServicesFormData( true, 'Filter...' );
-		$this->locations          = $this->getLocationsFormData( true, 'Filter...' );
+		$this->locations         = $this->getLocationsFormData( true, 'Filter...' );
 		$this->products          = $this->getProductsFormData( true, 'Filter...' );
-		$this->years          = $this->getYearsFormData( true, 'Filter...' );
+		$this->years             = $this->getYearsFormData( true, 'Filter...' );
 
 		return true;
 	}

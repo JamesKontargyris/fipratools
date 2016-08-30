@@ -35,6 +35,7 @@
                             <td width="10%" class="hide-m">Sector</td>
                             <td width="10%" class="hide-m">Product(s)</td>
                             <td width="10%" class="hide-m">Location</td>
+                            <td width="10%" class="hide-m">AD</td>
 
                             @if($user->hasRole('Administrator'))
                                 <td colspan="2" class="hide-print">Actions</td>
@@ -57,6 +58,7 @@
                                 <td class="hide-m">{{ $casestudy->sector()->pluck('name') }}</td>
                                 <td class="hide-m">{{ get_pretty_product_names(unserialize($casestudy->product_id)); }}</td>
                                 <td class="hide-m">{{ $casestudy->location()->pluck('name') }}</td>
+                                <td class="hide-m">{{ $casestudy->account_director()->pluck('first_name') }} {{ $casestudy->account_director()->pluck('last_name') }}</td>
 
                                 <td class="actions hide-print content-center">
                                     {{ Form::open(['route' => array('cases.edit', $casestudy->id), 'method' => 'get']) }}

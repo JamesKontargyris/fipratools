@@ -262,7 +262,7 @@ function get_pretty_product_names($product_ids)
 	$product_names = [];
 	foreach($product_ids as $product_id)
 	{
-		$product_names[] = Product::find($product_id)->pluck('name');
+		$product_names[] = Product::find($product_id)->name;
 	}
 
 	return implode(', ', $product_names);
