@@ -1,7 +1,8 @@
 <?php
 
-class Product extends \Eloquent {
+class Product extends \BaseModel {
 	protected $fillable = ['name'];
+	public $timestamps = false;
 
 	public static function getProductsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
 	{
@@ -37,5 +38,20 @@ class Product extends \Eloquent {
 		{
 			return $products;
 		}
+	}
+
+	public function add( $product ) {
+		$this->name = $product->name;
+		$this->save();
+
+		return $this;
+	}
+
+	public function edit( $product ) {
+		$update_product       = $this->find( $product->id );
+		$update_product->name = $product->name;
+		$update_product->save();
+
+		return $update_product;
 	}
 }

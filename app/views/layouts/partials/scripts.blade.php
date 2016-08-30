@@ -10,5 +10,6 @@
 {{--Site JS--}}
 <script src="{{ asset('js/site.js?141001') }}"></script>
 <script src="{{ asset('js/reports.js?141021') }}"></script>
+<script src="{{ asset('js/lou-multi-select/js/jquery.multi-select.js') }}"></script>
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>

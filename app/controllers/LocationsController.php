@@ -142,7 +142,7 @@ class LocationsController extends \BaseController {
 
 
 	/**
-	 * Process a sector search.
+	 * Process a location search.
 	 *
 	 * @return $this
 	 */
