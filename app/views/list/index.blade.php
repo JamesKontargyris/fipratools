@@ -94,9 +94,9 @@
 						@foreach($items as $client)
 							<tr @if( ! $client->status) class="dormant" @endif>
                                 @if($client->status)
-                                    <td class="actions content-center status-active hide-print"><i class="fa fa-check-circle fa-lg"></i></td>
+                                    <td class="actions content-center status-active"><i class="fa fa-check-circle fa-lg"></i></td>
                                 @else
-                                    <td class="actions content-center status-dormant hide-print"><i class="fa fa-times-circle fa-lg"></i></td>
+                                    <td class="actions content-center status-dormant"><i class="fa fa-times-circle fa-lg"></i></td>
                                 @endif
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">

@@ -144,7 +144,7 @@
       @include horizontal-list();
       @include breakpoint($l) {
         &.small-font a {
-          @include font-size(13);
+          @include font-size(12);
           font-weight: $font-bold;
         }
       }
@@ -258,6 +258,7 @@
 .filter-container {
   background-color:darken(white, 5%);
   .filters {
+    @include font-size(12);
     @include breakpoint($l-max) { display:none; padding:($v-rhythm / 2) 0; }
     & > ul {
       @include clearfix();
@@ -325,6 +326,7 @@
 }
 .filter-but {
   background-color:darken(white, 15%);
+  @include font-size(12);
   @include dark-grad(white, top, 15%);
   border:1px solid white;
   padding:5px 10px;

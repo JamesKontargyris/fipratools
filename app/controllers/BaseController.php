@@ -29,6 +29,8 @@ class BaseController extends Controller
     protected $sectors;
     protected $types;
     protected $services;
+    protected $locations;
+    protected $products;
     protected $export_filename;
     protected $search_term_clean;
 
@@ -656,6 +658,8 @@ class BaseController extends Controller
         $this->sectors = $this->getSectorsFormData();
         $this->types = $this->getTypesFormData();
         $this->services = $this->getServicesFormData();
+        $this->locations = $this->getLocationsFormData();
+        $this->products = $this->getProductsFormData();
 
         return true;
     }
@@ -717,7 +721,7 @@ class BaseController extends Controller
     }
 
     /**
-     * Get all the types in a select element-friendly collection.
+     * Get all the services in a select element-friendly collection.
      *
      * @return array
      */
@@ -729,6 +733,40 @@ class BaseController extends Controller
 
         return Service::getServicesForFormSelect($blank_entry, $blank_message);
     }
+
+	/**
+	 * Get all the locations in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getLocationsFormData($blank_entry = true, $blank_message = 'Please select...')
+	{
+		if (!Location::getLocationsForFormSelect($blank_entry, $blank_message)) {
+			return ['' => 'No locations available to select'];
+		}
+
+		return Location::getLocationsForFormSelect($blank_entry, $blank_message);
+	}
+
+	/**
+	 * Get all the products in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getProductsFormData($blank_entry = true, $blank_message = 'Please select...')
+	{
+		if (!Product::getProductsForFormSelect($blank_entry, $blank_message)) {
+			return ['' => 'No products available to select'];
+		}
+
+		return Product::getProductsForFormSelect($blank_entry, $blank_message);
+	}
 
     protected function getActiveCount()
     {

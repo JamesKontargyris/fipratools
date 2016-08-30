@@ -2,14 +2,14 @@
 	@if($user->can('view_list') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('list') ? 'active' : '' }}"><a href="{{ route('list.index') }}"><i class="fa fa-th-list"></i> <strong>The List</strong></a></li>
 	@endif
+	@if($user->can('view_list') && section_is() == 'case')
+		<li class="{{ nav_item_is_active('case') ? 'active' : '' }}"><a href="{{ route('cases.index') }}"><i class="fa fa-th-list"></i> <strong>All Case Studies</strong></a></li>
+	@endif
 	@if($user->can('view_list') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('about') ? 'active' : '' }}"><a href="{{ route('list.about') }}"><i class="fa fa-info-circle"></i> <strong>About the List</strong></a></li>
 	@endif
 	@if($user->can('view_list') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('reports') ? 'active' : '' }}"><a href="{{ url('reports') }}"><i class="fa fa-pie-chart"></i> <strong>Reports</strong></a></li>
-	@endif
-	@if($user->hasRole('Administrator'))
-		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }}"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
 	@endif
 	@if($user->can('manage_clients') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('clients') ? 'active' : '' }}">
@@ -21,6 +21,30 @@
 				@endif
 			</a>
 			<a href="{{ route('clients.create') }}" class="site-nav-extra-link" title="Add a new client"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
+	@if($user->can('manage_cases') && section_is() == 'case')
+		<li class="{{ nav_item_is_active('cases') ? 'active' : '' }}">
+			<a href="{{ route('cases.index') }}" class="{{ nav_item_is_active('cases') ? 'active' : '' }} has-extra-link">
+				@if($user->hasRole('Administrator') || Request::is('cases/*'))
+					Manage Case Studies
+				@else
+					Your Case Studies
+				@endif
+			</a>
+			<a href="{{ route('cases.create') }}" class="site-nav-extra-link" title="Add a new case study"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
+	@if($user->can('manage_locations')  && section_is() == 'case')
+		<li class="{{ nav_item_is_active('locations') ? 'active' : '' }}">
+			<a href="{{ route('locations.index') }}" class="has-extra-link">Locations</a>
+			<a href="{{ route('locations.create') }}" class="site-nav-extra-link" title="Add a new location"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
+	@if($user->can('manage_products')  && section_is() == 'case')
+		<li class="{{ nav_item_is_active('products') ? 'active' : '' }}">
+			<a href="{{ route('products.index') }}" class="has-extra-link">Products</a>
+			<a href="{{ route('products.create') }}" class="site-nav-extra-link" title="Add a new product"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
 	@if($user->can('manage_units')  && (section_is() == 'list' || section_is() == 'case'))
@@ -58,5 +82,8 @@
 			<a href="{{ route('users.index') }}" class="has-extra-link">Users</a>
 			<a href="{{ route('users.create') }}" class="site-nav-extra-link" title="Add a new user"><i class="fa fa-plus-circle"></i></a>
 		</li>
+	@endif
+	@if($user->hasRole('Administrator'))
+		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }}"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
 	@endif
 </ul>

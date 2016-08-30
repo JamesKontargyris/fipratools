@@ -89,7 +89,26 @@ Route::get('roles', function()
 //	$new_spad->attachPermissions([$manage_clients->id, $manage_client_archives->id, $view_list->id]);
 	//$new_fipriot->attachPermissions([$view_list->id]);
 	//
-	//return "All done!";
+
+//	$manage_locations = new Permission;
+//	$manage_locations->name = "manage_locations";
+//	$manage_locations->display_name = "Manage Locations";
+//	$manage_locations->save();
+//
+//	$manage_products = new Permission;
+//	$manage_products->name = "manage_products";
+//	$manage_products->display_name = "Manage Locations";
+//	$manage_products->save();
+
+//	$manage_cases = new Permission;
+//	$manage_cases->name = "manage_cases";
+//	$manage_cases->display_name = "Manage Cases";
+//	$manage_cases->save();
+////
+//	Role::find(1)->attachPermissions([$manage_cases->id]);
+//	Role::find(2)->attachPermissions([$manage_cases->id]);
+//
+//	return "All done!";
 });
 
 Route::group(['before' => 'auth'], function()
@@ -101,6 +120,8 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('list', 'ListController');
 
 	Route::resource('cases', 'CasesController');
+	Route::resource('locations', 'LocationsController');
+	Route::resource('products', 'ProductsController');
 
 	Route::any('eventlog/export', 'EventLogController@export');
 	Route::controller('eventlog', 'EventLogController');

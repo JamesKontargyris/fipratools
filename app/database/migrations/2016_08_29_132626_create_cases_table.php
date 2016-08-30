@@ -15,13 +15,16 @@ class CreateCasesTable extends Migration {
 		Schema::create('cases', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('title');
+			$table->string('name');
+			$table->integer('year');
 			$table->string('background');
 			$table->string('challenges');
 			$table->string('strategy');
 			$table->string('result');
 			$table->integer('unit_id')->unsigned()->index();
 			$table->foreign('unit_id')->references('id')->on('units');
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users');
 			$table->integer('location_id')->unsigned()->index();
 			$table->foreign('location_id')->references('id')->on('locations');
 			$table->integer('account_director_id')->unsigned()->index();
