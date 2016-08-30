@@ -120,7 +120,11 @@ Route::group(['before' => 'auth'], function()
 	Route::resource('list', 'ListController');
 
 	Route::resource('cases', 'CasesController');
+
+	Route::any('locations/export', 'LocationsController@export');
+	Route::any('locations/search', 'LocationsController@search');
 	Route::resource('locations', 'LocationsController');
+
 	Route::resource('products', 'ProductsController');
 
 	Route::any('eventlog/export', 'EventLogController@export');

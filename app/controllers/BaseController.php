@@ -96,29 +96,30 @@ class BaseController extends Controller
     {
         if (Input::has('filetype')) {
             $this->check_perm($this->resource_permission);
+	        $cover_page = (section_is() == 'list') ? true : false;
 
             switch (Input::get('filetype')) {
                 case 'pdf_all':
                     $contents = $this->PDFExportAll($this->getAll());
-                    $this->generatePDF($contents, $this->export_filename . '.pdf');
+                    $this->generatePDF($contents, $this->export_filename . '.pdf', $cover_page);
                     return true;
                     break;
 
                 case 'pdf_selection':
                     $contents = $this->PDFExportSelection($this->getSelection());
-                    $this->generatePDF($contents, $this->export_filename . '_selection.pdf');
+                    $this->generatePDF($contents, $this->export_filename . '_selection.pdf', $cover_page);
                     return true;
                     break;
 
                 case 'pdf_filtered':
                     $contents = $this->PDFExportFiltered($this->getFiltered());
-                    $this->generatePDF($contents, $this->export_filename . '_filtered.pdf');
+                    $this->generatePDF($contents, $this->export_filename . '_filtered.pdf', $cover_page);
                     return true;
                     break;
 
                 case 'pdf_duplicates':
                     $contents = $this->PDFExportDuplicates($this->getDuplicates());
-                    $this->generatePDF($contents, $this->export_filename . '_duplicates.pdf');
+                    $this->generatePDF($contents, $this->export_filename . '_duplicates.pdf', false);
                     return true;
                     break;
 
@@ -275,7 +276,8 @@ class BaseController extends Controller
      */
     protected function generatePDF($contents, $filename, $cover_page = true)
     {
-        $header_right = 'Fipra Lead Office List';
+
+        $header_right = 'Fipra ' . current_section_name();
         $footer_left = 'Generated at [time] on [date]';
 //        $footer_center = 'Page [page] of [toPage]';
         $footer_center = 'Page [page]';
@@ -334,7 +336,7 @@ class BaseController extends Controller
 
                         //If the main lead office list is being exported, it contains a message in the first cell
                         //Merge some cells so the messages doesn't make the first column too wide
-                        if (is_request('list')) {
+                        if (is_request('list') && section_is() == 'list') {
                             $sheet->mergeCells('A1:G1');
                         }
                         $sheet->loadView('export.excel.' . $this->resource_key)->with(
