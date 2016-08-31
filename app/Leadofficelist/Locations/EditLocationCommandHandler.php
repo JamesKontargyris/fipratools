@@ -2,7 +2,7 @@
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
-use Location;
+use Leadofficelist\Locations\Location;
 
 class EditLocationCommandHandler implements CommandHandler {
 
