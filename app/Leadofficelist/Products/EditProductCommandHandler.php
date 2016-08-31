@@ -3,7 +3,7 @@
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 use Location;
-use Product;
+use Leadofficelist\Products\Product;
 
 class EditProductCommandHandler implements CommandHandler {
 
