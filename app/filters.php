@@ -38,6 +38,7 @@ Route::filter('auth', function()
 	// Slight change to redirect to login route
 	if (Auth::guest())
 	{
+		Session::forget('section');
 		Flash::message('Please log in to access this area.');
 		return Redirect::guest('login');
 	}

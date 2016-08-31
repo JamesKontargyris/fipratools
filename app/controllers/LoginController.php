@@ -30,7 +30,7 @@ class LoginController extends \BaseController
 			throw new LoginFailedException;
 		}
 
-		return Redirect::intended('/');
+		return Redirect::to('/');
 	}
 
 	public function logout()
