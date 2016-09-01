@@ -141,7 +141,7 @@
     @include clearfix();
     ul {
       @include horizontal-list();
-      @include breakpoint($l) {
+      @include breakpoint($m) {
         &.small-font a {
           @include font-size(12);
           font-weight: $font-bold;
