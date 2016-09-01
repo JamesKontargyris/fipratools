@@ -13,7 +13,6 @@
 			@endif
 			<td width="15%" class="hide-m">Sector</td>
 			<td width="15%" class="hide-m">Product(s)</td>
-			<td width="10%" class="hide-m">Location</td>
 		</tr>
 	</thead>
 	<tbody>
@@ -27,7 +26,6 @@
 
 				<td>{{ $casestudy->sector()->pluck('name') }}</td>
 				<td>{{ get_pretty_product_names(unserialize($casestudy->product_id)); }}</td>
-				<td>{{ $casestudy->location()->pluck('name') }}</td>
 			</tr>
 		@endforeach
 	</tbody>
