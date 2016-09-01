@@ -22,7 +22,7 @@ class AddCaseCommand {
 		$this->unit_id             = $unit_id;
 		$this->account_director_id = $account_director_id;
 		$this->sector_id           = $sector_id;
-		$this->product_id          = $product_id;
+		$this->product_id          = (array)$product_id;
 		$this->user_id             = $user_id;
 	}
 
