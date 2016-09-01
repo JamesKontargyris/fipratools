@@ -12,7 +12,7 @@ class EditCaseCommand {
 	public $product_id;
 	public $user_id;
 
-	function __construct( $name, $year, $challenges, $strategy, $result, $unit_id, $account_director_id, $sector_id, $location_id, $product_id, $user_id, $id ) {
+	function __construct( $name, $year, $challenges, $strategy, $result, $unit_id, $account_director_id, $sector_id, $product_id, $user_id, $id ) {
 
 		$this->name                = trim($name);
 		$this->year                = trim($year);
