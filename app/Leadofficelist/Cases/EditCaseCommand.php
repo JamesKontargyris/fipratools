@@ -14,11 +14,11 @@ class EditCaseCommand {
 
 	function __construct( $name, $year, $challenges, $strategy, $result, $unit_id, $account_director_id, $sector_id, $location_id, $product_id, $user_id, $id ) {
 
-		$this->name                = $name;
-		$this->year                = $year;
-		$this->challenges          = $challenges;
-		$this->strategy            = $strategy;
-		$this->result              = $result;
+		$this->name                = trim($name);
+		$this->year                = trim($year);
+		$this->challenges          = trim($challenges);
+		$this->strategy            = trim($strategy);
+		$this->result              = trim($result);
 		$this->unit_id             = $unit_id;
 		$this->account_director_id = $account_director_id;
 		$this->sector_id           = $sector_id;

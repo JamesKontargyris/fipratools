@@ -7,7 +7,7 @@ class EditSectorCategoryCommand
 
 	function __construct( $name, $id )
 	{
-		$this->name = $name;
+		$this->name = trim($name);
 		$this->id   = $id;
 	}
 

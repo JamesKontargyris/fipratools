@@ -15,12 +15,12 @@ class EditUserCommand
 	function __construct( $first_name, $last_name, $email, $password, $unit_id, $role_id, $id )
 	{
 
-		$this->first_name = $first_name;
-		$this->last_name  = $last_name;
-		$this->email      = $email;
+		$this->first_name = trim($first_name);
+		$this->last_name  = trim($last_name);
+		$this->email      = trim($email);
 		$this->password   = $password;
 		$this->unit_id    = $unit_id;
-		$this->role_id    = $role_id;
+		$this->role_id = $role_id;
 		$this->id         = $id;
 	}
 

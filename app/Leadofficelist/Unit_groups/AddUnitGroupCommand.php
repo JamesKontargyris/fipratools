@@ -7,8 +7,8 @@ class AddUnitGroupCommand
 
 	function __construct( $name, $short_name )
 	{
-		$this->name = $name;
-		$this->short_name = $short_name;
+		$this->name = trim($name);
+		$this->short_name = trim($short_name);
 	}
 
 

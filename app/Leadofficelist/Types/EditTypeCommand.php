@@ -9,8 +9,8 @@ class EditTypeCommand
 
     function __construct($name, $short_name, $type_category, $id)
     {
-        $this->name = $name;
-        $this->short_name = $short_name;
+	    $this->name = trim($name);
+	    $this->short_name = trim($short_name);
         $this->type_category = $type_category;
         $this->id = $id;
     }

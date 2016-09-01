@@ -16,9 +16,9 @@ class AddClientCommand
 	function __construct( $name, $account_director_id, $comments, $unit_id, $user_id, $sector_id, $type_id, $service_id, $status, $pr_client )
 	{
 
-		$this->name                = $name;
+		$this->name                = trim($name);
 		$this->account_director_id = $account_director_id;
-		$this->comments            = $comments;
+		$this->comments            = trim($comments);
 		$this->unit_id             = $unit_id;
 		$this->user_id             = $user_id;
 		$this->sector_id           = $sector_id;

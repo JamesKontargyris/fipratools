@@ -1,14 +1,12 @@
 <?php namespace Leadofficelist\Sectors;
 
-class AddSectorCommand
-{
+class AddSectorCommand {
 	public $name;
 	public $category;
 	public $new_category;
 
-	function __construct( $name, $category, $new_category )
-	{
-		$this->name         = $name;
+	function __construct( $name, $category, $new_category ) {
+		$this->name         = trim( $name );
 		$this->category     = $category;
 		$this->new_category = $new_category;
 	}
