@@ -27,14 +27,13 @@
                     <table width="100%" class="index-table">
                         <thead>
                         <tr>
-                            <td width="60%">Title</td>
+                            <td width="60%">Background</td>
                             <td width="5%">Year</td>
                             @if($user->hasRole('Administrator'))
                                 <td width="10%" class="hide-s">Unit</td>
                             @endif
                             <td width="10%" class="hide-m">Sector</td>
                             <td width="10%" class="hide-m">Product(s)</td>
-                            <td width="10%" class="hide-m">Location</td>
                             <td width="10%" class="hide-m">AD</td>
 
                             @if($user->hasRole('Administrator'))
@@ -57,7 +56,6 @@
 
                                 <td class="hide-m">{{ $case->sector()->pluck('name') }}</td>
                                 <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
-                                <td class="hide-m">{{ $case->location()->pluck('name') }}</td>
                                 <td class="hide-m">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
 
                                 <td class="actions hide-print content-center">

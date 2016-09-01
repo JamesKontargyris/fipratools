@@ -13,7 +13,7 @@
     </div>
 </section>
 
-<section id="site-nav-container">
+<section id="site-nav-container" class="section-{{ section_is(); }}">
     <nav id="site-nav" class="container">
         <div class="mobile">
             <div class="row no-margin">

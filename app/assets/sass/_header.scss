@@ -4,16 +4,16 @@
 }
 .mobile-site-nav-container {
   @include font-size(13);
-  background-color:$periwinkle;
+  //background-color:$periwinkle;
   .site-nav-menu {
     li {
-      border-bottom:1px solid lighten($grey, 20%);
+      border-bottom:1px solid rgba(white, 0.2);
       &:last-child {
         border:0;
       }
       a {
         display:block;
-        color:$blue;
+        color:white;
         text-align: center;
         padding:$v-rhythm * 0.7 10px;
         &.site-nav-extra-link {
@@ -31,8 +31,21 @@
   overflow: visible;
   position:relative;
   background-color: $grey;
-  @include dark-grad($grey, top, 10%);
   color:darken(white, 5%);
+  padding-top:$v-rhythm;
+
+  &.section-list {
+    background-color: $turquoise;
+  }
+
+  &.section-case {
+    background-color: $violet;
+  }
+
+  &.section-survey {
+    background-color: $green;
+  }
+
   #site-nav {
     .logo {
       float:left;
@@ -63,7 +76,10 @@
         padding-left:10px;
         li {
           &:hover {
-            background-color:darken($grey, 15%);
+            background-color:rgba(white, 0.25);
+          }
+          &.hang-right {
+            float:right;
           }
           &.active {
             background-color: white;
@@ -75,12 +91,14 @@
             }
           }
           a {
+            color:white;
+            display:inline-block;
+            padding:($v-rhythm / 2) 10px;
+
             &:hover {
               color:white;
             }
-            display:inline-block;
-            color:lighten($grey, 40%);
-            padding:($v-rhythm / 2) 10px;
+
             &.has-extra-link {
               padding-right:0;
             }

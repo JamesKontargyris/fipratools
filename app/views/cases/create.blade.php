@@ -16,16 +16,8 @@
     <div class="row">
         <div class="col-6">
             <div class="formfield">
-                {{ Form::label('name', 'Case study title:', ['class' => 'required']) }}
+                {{ Form::label('name', 'Basic background on case:', ['class' => 'required']) }}
                 {{ Form::text('name', Input::old('name')) }}
-            </div>
-            <div class="formfield">
-                {{ Form::label('year', 'Year:', ['class' => 'required']) }}
-                {{ Form::text('year', Input::old('year')) }}
-            </div>
-            <div class="formfield">
-                {{ Form::label('background', 'Basic background on case:', ['class' => 'required']) }}
-                {{ Form::text('background', Input::old('background')) }}
             </div>
             <div class="formfield">
                 {{ Form::label('challenges', 'Challenges facing client / Fipra:', ['class' => 'required']) }}
@@ -38,6 +30,10 @@
             <div class="formfield">
                 {{ Form::label('result', 'End result:', ['class' => 'required']) }}
                 {{ Form::text('result', Input::old('result')) }}
+            </div>
+            <div class="formfield">
+                {{ Form::label('year', 'Year:', ['class' => 'required']) }}
+                {{ Form::text('year', Input::old('year')) }}
             </div>
         </div>
         <div class="col-6 last">
@@ -58,10 +54,6 @@
             <div class="formfield">
                 {{ Form::label('sector_id', 'Sector:', ['class' => 'required']) }}
                 {{ Form::select('sector_id', $sectors, Input::old('sector_id')) }}
-            </div>
-            <div class="formfield">
-                {{ Form::label('location_id', 'Location (if different to Unit\'s jurisdiction):') }}
-                {{ Form::select('location_id', $locations, Input::old('location_id')) }}
             </div>
             <div class="formfield">
                 {{ Form::label('product_id', 'Product(s):', ['class' => 'required']) }}

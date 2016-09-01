@@ -3,7 +3,7 @@
 use Leadofficelist\Products\Product;
 use Leadofficelist\Users\User;
 
-function display_page_title($default = 'Lead Office List')
+function display_page_title($default = 'Fipra Portal')
 {
 	if(isset($page_title)) {
 		echo $page_title;

@@ -33,11 +33,10 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="40%">Title</td>
+							<td width="40%">Background</td>
 							<td width="5%">Year</td>
 							<td width="10%" class="hide-m">Sector</td>
 							<td width="10%" class="hide-m">Product(s)</td>
-							<td width="10%" class="hide-m">Location</td>
 							<td width="10%" class="hide-s">Unit</td>
 							<td width="15%" class="hide-s">AD to talk to</td>
 						</tr>
@@ -69,14 +68,6 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
-									{{ Form::select('filter_value', $locations, null, ['class' => 'list-table-filter']) }}
-									{{ Form::hidden('filter_field', 'location_id') }}
-									{{ Form::hidden('filter_results', 'yes') }}
-									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
-								{{ Form::close() }}
-							</td>
-							<td class="hide-m sub-header">
-								{{ Form::open(['url' => 'caselist/search']) }}
 									{{ Form::select('filter_value', $units, null, ['class' => 'list-table-filter']) }}
 									{{ Form::hidden('filter_field', 'unit_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
@@ -100,7 +91,6 @@
 								<td>{{ $case->year }}</td>
 								<td class="hide-m">{{ $case->sector()->pluck('name') }}</td>
 								<td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
-								<td class="hide-m">{{ $case->location()->pluck('name') }}</td>
 								<td class="hide-s"><a href="{{ route('units.show', ['id' => $case->unit()->pluck('id')]) }}"><strong>{{ $case->unit()->pluck('name') }}</strong></a></td>
 								<td class="hide-s">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
 							</tr>

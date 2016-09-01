@@ -99,18 +99,25 @@ $susy: (
 }
 
 .hide-s {
-  display:none;
-  @include breakpoint($m)
+  //display:none;
+  @include breakpoint($m-max)
   {
-    display:block;
+    display:none;
   }
 }
 
 .hide-m {
-  display:none;
+   //display:none;
+   @include breakpoint($m-l)
+   {
+     display:none;
+   }
+ }
+
+.hide-l {
   @include breakpoint($l)
   {
-    display:block;
+    display:none;
   }
 }
 

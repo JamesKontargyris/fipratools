@@ -17,12 +17,16 @@
 .super-menu {
   list-style: none;
   @include horizontal-list();
-  @include font-size(13);
-  margin-top:10px;
+  @include font-size(16);
+  margin-top:15px;
 
   &:not(:last-of-type) {
     //margin-right:10px;
     //border-right:1px solid $grey;
+  }
+
+  @include breakpoint($m-l) {
+    @include font-size(13);
   }
 
   @include breakpoint($m-max) {
@@ -52,15 +56,31 @@
   .super-menu__link:link, .super-menu__link:visited {
     display:block;
     color:white;
-    padding: $v-rhythm * 0.5 13px;
+    padding: $v-rhythm 13px;
+
+    @include breakpoint($m-l) {
+      padding: ($v-rhythm / 1.7) 13px;
+    }
 
     &:hover {
-      color:shade(white, 20%);
+      color:darken(white, 20%);
     }
 
     &.active {
       background-color:$grey;
       font-weight:bold;
+
+      &.section-list {
+        background-color: $turquoise;
+      }
+
+      &.section-case {
+        background-color: $violet;
+      }
+
+      &.section-survey {
+        background-color: $green;
+      }
     }
   }
 }
@@ -69,8 +89,8 @@
   text-align:right;
   color:white;
   @include font-size(12);
-  padding:($v-rhythm * 0.5) 13px 0 13px;
-  line-height:1.3;
+  padding:$v-rhythm 13px 0 13px;
+  line-height:1.6;
 
   @include breakpoint($m-max) {
     display:none;

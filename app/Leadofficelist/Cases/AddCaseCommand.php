@@ -3,7 +3,6 @@
 class AddCaseCommand {
 	public $name;
 	public $year;
-	public $background;
 	public $challenges;
 	public $strategy;
 	public $result;
@@ -14,11 +13,10 @@ class AddCaseCommand {
 	public $product_id;
 	public $user_id;
 
-	function __construct( $name, $year, $background, $challenges, $strategy, $result, $unit_id, $account_director_id, $sector_id, $location_id, $product_id, $user_id ) {
+	function __construct( $name, $year, $challenges, $strategy, $result, $unit_id, $account_director_id, $sector_id, $location_id, $product_id, $user_id ) {
 
 		$this->name                = $name;
 		$this->year                = $year;
-		$this->background          = $background;
 		$this->challenges          = $challenges;
 		$this->strategy            = $strategy;
 		$this->result              = $result;

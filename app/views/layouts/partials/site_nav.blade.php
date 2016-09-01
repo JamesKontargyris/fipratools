@@ -35,12 +35,6 @@
 			<a href="{{ route('cases.create') }}" class="site-nav-extra-link" title="Add a new case study"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
-	@if($user->can('manage_locations')  && section_is() == 'case')
-		<li class="{{ nav_item_is_active('locations') ? 'active' : '' }}">
-			<a href="{{ route('locations.index') }}" class="has-extra-link">Locations</a>
-			<a href="{{ route('locations.create') }}" class="site-nav-extra-link" title="Add a new location"><i class="fa fa-plus-circle"></i></a>
-		</li>
-	@endif
 	@if($user->can('manage_products')  && section_is() == 'case')
 		<li class="{{ nav_item_is_active('products') ? 'active' : '' }}">
 			<a href="{{ route('products.index') }}" class="has-extra-link">Products</a>
@@ -77,13 +71,13 @@
 			<a href="{{ route('account_directors.create') }}" class="site-nav-extra-link" title="Add a new account director"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
+	@if($user->hasRole('Administrator'))
+		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }} hang-right"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
+	@endif
 	@if($user->can('manage_users'))
-		<li class="{{ nav_item_is_active('users') ? 'active' : '' }}">
+		<li class="{{ nav_item_is_active('users') ? 'active' : '' }} hang-right">
 			<a href="{{ route('users.index') }}" class="has-extra-link">Users</a>
 			<a href="{{ route('users.create') }}" class="site-nav-extra-link" title="Add a new user"><i class="fa fa-plus-circle"></i></a>
 		</li>
-	@endif
-	@if($user->hasRole('Administrator'))
-		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }}"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
 	@endif
 </ul>

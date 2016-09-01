@@ -128,7 +128,6 @@
   padding-bottom:$v-rhythm / 2;
   position:relative;
   background-color: $blue;
-  @include dark-grad($blue, top, 10%);
   color:white;
   .page-menu-icon-s {
     color:white;

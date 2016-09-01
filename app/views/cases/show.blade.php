@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-    {{ $case->name }} ({{ $case->year }})
+    {{ $case->name }}
 @stop
 
 @section('page-nav')
@@ -17,10 +17,6 @@
     <div class="row">
         <div class="col-6" style="font-size:18px; line-height:30px;">
             <div class="border-box fill">
-                <h5 style="color:gray">Background</h5>
-                <p style="padding-bottom:0;">{{ $case->background }}</p>
-            </div>
-            <div class="border-box fill">
                 <h5 style="color:gray">Challenges facing client/Fipra</h5>
                 <p style="padding-bottom:0;">{{ $case->challenges }}</p>
             </div>
@@ -34,6 +30,7 @@
             </div>
         </div>
         <div class="col-6 last" style="font-size:18px; line-height:30px;">
+            <p><strong>Year:</strong> {{ $case->year }}</p>
             <p><strong>Unit:</strong> {{ $case->unit()->pluck('name') }}</p>
             <p><strong>AD to talk to:</strong> {{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</p>
             <p><strong>Sector:</strong> {{ $case->sector()->pluck('name') }}</p>

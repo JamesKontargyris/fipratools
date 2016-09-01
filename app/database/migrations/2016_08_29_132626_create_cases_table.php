@@ -15,9 +15,8 @@ class CreateCasesTable extends Migration {
 		Schema::create('cases', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name');
+			$table->string('name'); // acts as the background to the case study
 			$table->integer('year');
-			$table->string('background');
 			$table->string('challenges');
 			$table->string('strategy');
 			$table->string('result');
@@ -25,7 +24,6 @@ class CreateCasesTable extends Migration {
 			$table->foreign('unit_id')->references('id')->on('units');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->integer('location_id')->unsigned()->index();
 			$table->integer('account_director_id')->unsigned()->index();
 			$table->foreign('account_director_id')->references('id')->on('account_directors');
 			$table->integer('sector_id')->unsigned()->index();
