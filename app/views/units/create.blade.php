@@ -14,7 +14,7 @@ Add a Network Member
 
 {{ Form::open(['route' => 'units.store']) }}
 <div class="row">
-	<div class="col-6">
+	<div class="col-4">
 		<div class="formfield">
 			{{ Form::label('name', 'Name:', ['class' => 'required']) }}
 			{{ Form::text('name', Input::old('name')) }}
@@ -35,7 +35,7 @@ Add a Network Member
             {{ Form::text('postcode', Input::old('postcode')) }}
 		</div>
 	</div>
-	<div class="col-6 last">
+	<div class="col-4">
 		<div class="formfield">
 			{{ Form::label('short_name', 'Short Name:', ['class' => 'required']) }}
 			{{ Form::text('short_name', Input::old('short_name')) }}
@@ -56,6 +56,15 @@ Add a Network Member
             {{ Form::label('unit_group', 'Reporting Group:') }}
             {{ Form::select('unit_group', $unit_groups, Input::old('unit_group'), ['class' => 'required']) }}
         </div>
+	</div>
+	<div class="col-4 last">
+		<div class="formfield">
+			{{ Form::label('show_list', 'Available in:', ['class' => 'required']) }}
+			{{ Form::hidden('show_list', 0) }}
+			<p>{{ Form::checkbox('show_list', input::old('show_list'), true) }} Lead Office List</p>
+			{{ Form::hidden('show_case', 0) }}
+			<p>{{ Form::checkbox('show_case', input::old('show_case'), true) }} Case Studies</p>
+		</div>
 	</div>
 </div>
 

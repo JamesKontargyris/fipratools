@@ -2,6 +2,8 @@
 	<tr>
 		@if(is_request('users'))
 			<td>First / last name begins with:</td>
+		@elseif(is_request('account_directors'))
+			<td>First name begins with:</td>
 		@else
 			<td>Begins with:</td>
 		@endif

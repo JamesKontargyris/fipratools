@@ -19,6 +19,8 @@ class AccountDirector extends \BaseModel
 	{
 		$this->first_name = $account_director->first_name;
 		$this->last_name  = $account_director->last_name;
+		$this->show_list  = $account_director->show_list;
+		$this->show_case  = $account_director->show_case;
 		$this->save();
 
 		return $this;
@@ -29,6 +31,8 @@ class AccountDirector extends \BaseModel
 		$update_account_director             = $this->find( $account_director->id );
 		$update_account_director->first_name = $account_director->first_name;
 		$update_account_director->last_name  = $account_director->last_name;
+		$update_account_director->show_list  = $account_director->show_list;
+		$update_account_director->show_case  = $account_director->show_case;
 		$update_account_director->save();
 
 		return $update_account_director;
@@ -47,7 +51,7 @@ class AccountDirector extends \BaseModel
 		}
 
 		foreach (
-			AccountDirector::orderBy( 'first_name', 'ASC' )->get( [
+			AccountDirector::where('show_' . section_is(), '=', 1)->orderBy( 'first_name', 'ASC' )->get( [
 				'id',
 				'first_name',
 				'last_name'

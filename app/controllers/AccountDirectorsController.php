@@ -122,7 +122,11 @@ class AccountDirectorsController extends \BaseController
 	{
 		$input                                                 = Input::all();
 		$input['id']                                           = $id;
-		$this->addEditAccountDirectorForm->rules['first_name'] = 'required|max:255|unique:account_directors,first_name,NULL,id,first_name,' . $input['first_name'] . ',last_name,' . $input['last_name'];
+
+		// If the first and/or last name has/have been changed, add a validation rule to ensure they are unique
+		if(Input::get('first_name_old') != Input::get('first_name') || Input::get('last_name_old') != Input::get('last_name')) {
+			$this->addEditAccountDirectorForm->rules['first_name'] = 'required|max:255|unique:account_directors,first_name,NULL,id,first_name,' . $input['first_name'] . ',last_name,' . $input['last_name'];
+		}
 		$this->addEditAccountDirectorForm->validate( $input );
 
 		$this->execute( 'Leadofficelist\Account_directors\EditAccountDirectorCommand', $input );
@@ -165,7 +169,7 @@ class AccountDirectorsController extends \BaseController
 			$items = AccountDirector::where( function ( $query )
 			{
 				$query->where( 'first_name', 'LIKE', $this->search_term );
-			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			} )->orWhere('last_name', 'LIKE', $this->search_term)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
 			if ( ! $this->checkForSearchResults( $items ) )
 			{

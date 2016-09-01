@@ -46,6 +46,8 @@ class Unit extends \BaseModel
         $this->fax = $unit->fax;
         $this->email = $unit->email;
         $this->unit_group_id = $unit->unit_group;
+        $this->show_list = $unit->show_list;
+        $this->show_case = $unit->show_case;
         $this->save();
 
         return $this;
@@ -66,6 +68,8 @@ class Unit extends \BaseModel
         $update_unit->fax = $unit->fax;
         $update_unit->email = $unit->email;
         $update_unit->unit_group_id = $unit->unit_group;
+        $update_unit->show_list = $unit->show_list;
+        $update_unit->show_case = $unit->show_case;
         $update_unit->save();
 
         //$this->raise(new UnitWasAdded($unit));
@@ -85,7 +89,7 @@ class Unit extends \BaseModel
             $units[''] = $blank_message;
         }
 
-        foreach (Unit::orderBy('name', 'ASC')->get(['id', 'name']) as $unit) {
+        foreach (Unit::orderBy('name', 'ASC')->where('show_' . section_is(), '=', 1)->get(['id', 'name']) as $unit) {
             $units[$unit->id] = $prefix . $unit->name;
         }
 

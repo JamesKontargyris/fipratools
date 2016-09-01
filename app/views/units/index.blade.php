@@ -6,8 +6,10 @@
 
 @section('page-nav')
 <li><a href="{{ route('units.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Member</a></li>
-<li><a href="{{ route('unit_groups.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Groups</a></li>
-<li><a href="{{ route('network_types.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Network Types</a></li>
+@if(section_is() == 'list')
+	<li><a href="{{ route('unit_groups.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Groups</a></li>
+@endif
+	<li><a href="{{ route('network_types.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Network Types</a></li>
 @stop
 
 @section('export-nav')

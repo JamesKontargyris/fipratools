@@ -15,8 +15,10 @@ class EditUnitCommand
     public $fax;
     public $email;
     public $unit_group;
+	public $show_list;
+	public $show_case;
 
-    function __construct($name, $network_type, $short_name, $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email, $unit_group, $id)
+	function __construct($name, $network_type, $short_name, $address1, $address2, $address3, $address4, $postcode, $phone, $fax, $email, $unit_group, $show_list, $show_case, $id)
     {
         $this->name = $name;
         $this->network_type = $network_type;
@@ -29,8 +31,10 @@ class EditUnitCommand
         $this->phone = $phone;
         $this->fax = $fax;
         $this->email = $email;
-        $this->id = $id;
-        $this->unit_group = $unit_group;
+	    $this->unit_group = $unit_group;
+	    $this->show_list = (int)(bool)$show_list;
+	    $this->show_case = (int)(bool)$show_case;
+	    $this->id = $id;
     }
 
 }

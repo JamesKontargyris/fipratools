@@ -14,7 +14,7 @@ Editing: {{ $unit->name }}
 
 {{ Form::open(['method' => 'PUT', 'url' => 'units/' . $unit->id]) }}
 <div class="row">
-	<div class="col-6">
+	<div class="col-4">
 		<div class="formfield">
 			{{ Form::label('name', 'Unit Name:', ['class' => 'required']) }}
 			{{ Form::text('name', isset($unit->name) ? $unit->name : '') }}
@@ -35,7 +35,7 @@ Editing: {{ $unit->name }}
             {{ Form::text('postcode', isset($unit->post_code) ? $unit->post_code : '') }}
 		</div>
 	</div>
-	<div class="col-6 last">
+	<div class="col-4">
 		<div class="formfield">
 			{{ Form::label('short_name', 'Short Name:', ['class' => 'required']) }}
 			{{ Form::text('short_name', isset($unit->short_name) ? $unit->short_name : '') }}
@@ -56,6 +56,15 @@ Editing: {{ $unit->name }}
             {{ Form::label('unit_group', 'Reporting Group:', ['class' => 'required']) }}
             {{ Form::select('unit_group', $unit_groups, isset($unit->unit_group_id) ? $unit->unit_group_id : '', ['class' => 'required']) }}
         </div>
+	</div>
+	<div class="col-4 last">
+		<div class="formfield">
+			{{ Form::label('show_list', 'Available in:', ['class' => 'required']) }}
+			{{ Form::hidden('show_list', 0) }}
+			<p>{{ Form::checkbox('show_list', isset($unit->show_list) ? : '', ($unit->show_list == 1) ? ['checked' => 'checked'] : []) }} Lead Office List</p>
+			{{ Form::hidden('show_case', 0) }}
+			<p>{{ Form::checkbox('show_case', isset($unit->show_case) ? : '', ($unit->show_case == 1) ? ['checked' => 'checked'] : []) }} Case Studies</p>
+		</div>
 	</div>
 </div>
 
