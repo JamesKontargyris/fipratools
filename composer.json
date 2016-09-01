@@ -16,7 +16,8 @@
         "h4cc/wkhtmltopdf-amd64": "0.12.*",
         "maatwebsite/excel": "1.*",
         "pda/pheanstalk": "2.1.0",
-        "guzzlehttp/guzzle": "5.*"
+        "guzzlehttp/guzzle": "5.*",
+		"rych/random": "^0.1.0"
 	},
 	"autoload": {
 		"classmap": [

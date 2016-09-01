@@ -137,3 +137,16 @@ require app_path() . '/filters.php';
 */
 
 require app_path() . '/helpers.php';
+
+/*
+|--------------------------------------------------------------------------
+| Custom validation rules
+|--------------------------------------------------------------------------
+|
+| Register custom validation rules.
+|
+*/
+Validator::resolver(function($translator, $data, $rules, $messages)
+{
+	return new Leadofficelist\Validation\CustomValidator($translator, $data, $rules, $messages);
+});

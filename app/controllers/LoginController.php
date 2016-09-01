@@ -30,6 +30,16 @@ class LoginController extends \BaseController
 			throw new LoginFailedException;
 		}
 
+		$user = Auth::user();
+
+		// Has the user changed their password to something memorable?
+		if( ! $user->changed_password )
+		{
+			// Temp password used for changing the password
+			Session::put('temp_pass', $user->password);
+			return Redirect::to('/password/change');
+		}
+
 		return Redirect::to('/');
 	}
 

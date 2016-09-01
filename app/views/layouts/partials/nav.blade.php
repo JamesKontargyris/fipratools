@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             Logged in as <strong>{{ $user_full_name }}</strong><br/>
-            {{ $user_unit }} &bull; {{ $user_role }}<br/><a href="/logout" class="primary">Logout</a>
+            {{ $user_unit }} &bull; {{ $user_role }}<br/><a href="/password/change" class="primary">Change Password</a><br/><a href="/logout" class="primary">Logout</a>
         </div>
     </div>
 </section>

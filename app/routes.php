@@ -116,6 +116,9 @@ Route::group(['before' => 'auth'], function()
 	// Temporary Knowledge Survey route
 	Route::any('survey', 'PagesController@survey');
 
+	Route::get('password/change', 'PasswordController@getChange');
+	Route::post('password/change', 'PasswordController@postChange');
+
 	Route::any('list/export', 'ListController@export');
 	Route::any('list/search', 'ListController@search');
 	Route::get('about', ['as' => 'list.about', 'uses' => 'ListController@about']);
@@ -193,6 +196,8 @@ Route::group(['before' => 'auth'], function()
 	Route::controller('reports', 'ReportsController');
 	Route::controller('statuscheck', 'StatusCheckController');
 });
+
+Route::controller('password', 'PasswordController');
 
 //Ajax requests
 Route::get('/getclients', 'ClientLinksController@getClientsByUnit');

@@ -23,6 +23,8 @@
 				{{ Form::submit('Login', ['class' => 'primary']) }}
 			</div>
 		{{ Form::close() }}
+
+		<p><a href="/password/reset">Forgotten your password?</a></p>
 	</div>
 </div>
 @stop

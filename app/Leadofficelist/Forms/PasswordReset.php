@@ -2,7 +2,7 @@
 
 use Laracasts\Validation\FormValidator;
 
-class Login extends FormValidator {
+class PasswordReset extends FormValidator {
 
 	/**
 	 * Validation rules for logging in a user

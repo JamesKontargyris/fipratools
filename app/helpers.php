@@ -119,7 +119,7 @@ function current_section_name() {
 		'case' => 'Case Studies',
 		'survey' => 'Knowledge Survey'
 	];
-	return $sections[Session::get('section')];
+	return $sections[Session::get('section') ? Session::get('section') : 'list'];
 }
 
 function nav_item_is_active($uri)

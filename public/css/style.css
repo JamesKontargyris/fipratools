@@ -2112,19 +2112,15 @@ footer {
   color: white;
   font-size: 12px;
   font-size: 0.75rem;
-  padding: 20px 13px 0 13px;
+  padding: 7px 13px 0 13px;
   line-height: 1.6; }
-  @media (min-width: 769px) and (max-width: 900px) {
-    /* line 88, ../../app/assets/sass/_supermenu.scss */
-    .super-menu__user-details {
-      padding: 7px 13px 0 13px; } }
   @media (max-width: 769px) {
     /* line 88, ../../app/assets/sass/_supermenu.scss */
     .super-menu__user-details {
       display: none; } }
-  /* line 103, ../../app/assets/sass/_supermenu.scss */
+  /* line 102, ../../app/assets/sass/_supermenu.scss */
   .super-menu__user-details a:link, .super-menu__user-details a:visited {
     color: #14b1cc; }
-    /* line 105, ../../app/assets/sass/_supermenu.scss */
+    /* line 104, ../../app/assets/sass/_supermenu.scss */
     .super-menu__user-details a:link:hover, .super-menu__user-details a:visited:hover {
       color: #108ea3; }

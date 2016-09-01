@@ -89,11 +89,10 @@
   text-align:right;
   color:white;
   @include font-size(12);
-  padding:$v-rhythm 13px 0 13px;
+  padding:7px 13px 0 13px;
   line-height:1.6;
 
   @include breakpoint($m-l) {
-    padding:7px 13px 0 13px;
   }
 
   @include breakpoint($m-max) {
