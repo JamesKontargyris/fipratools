@@ -19,7 +19,7 @@ class ChangeCommentsFieldInClientsTableToLongText extends Migration {
 
 		Schema::table('clients', function(Blueprint $table)
 		{
-			$table->longText('comments')->after('account_director');
+			$table->longText('comments')->after('account_director_id');
 		});
 	}
 
@@ -37,7 +37,7 @@ class ChangeCommentsFieldInClientsTableToLongText extends Migration {
 
 		Schema::table('clients', function(Blueprint $table)
 		{
-			$table->string('comments')->after('account_director');
+			$table->string('comments')->after('account_director_id');
 		});
 	}
 
