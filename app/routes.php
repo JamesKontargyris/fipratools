@@ -197,7 +197,5 @@ Route::group(['before' => 'auth'], function()
 	Route::controller('statuscheck', 'StatusCheckController');
 });
 
-Route::controller('password', 'PasswordController');
-
 //Ajax requests
 Route::get('/getclients', 'ClientLinksController@getClientsByUnit');

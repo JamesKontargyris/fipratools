@@ -36,7 +36,7 @@
 							<td width="40%">Background</td>
 							<td width="5%">Year</td>
 							<td width="10%" class="hide-m">Sector</td>
-							<td width="10%" class="hide-m">Product(s)</td>
+							<td width="20%" class="hide-m">Product(s)</td>
 							<td width="10%" class="hide-s">Unit</td>
 							<td width="15%" class="hide-s">AD to talk to</td>
 						</tr>

@@ -259,11 +259,11 @@ function countOpenClosedTags($html){
 // then return a comma-separated string of all names
 function get_pretty_product_names($product_ids)
 {
-	if( ! count($product_ids)) {
+	if( is_array($product_ids) && count($product_ids) >= 1) {
 		$product_names = [];
 		foreach($product_ids as $product_id)
 		{
-			$product_names[] = Product::find($product_id)->name;
+			if($product_id) $product_names[] = Product::find($product_id)->name;
 		}
 
 		return implode(', ', $product_names);

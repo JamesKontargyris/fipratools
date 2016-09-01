@@ -16,16 +16,8 @@
     <div class="row">
         <div class="col-6">
             <div class="formfield">
-                {{ Form::label('name', 'Case study title:', ['class' => 'required']) }}
+                {{ Form::label('name', 'Basic background on case:', ['class' => 'required']) }}
                 {{ Form::text('name', isset($case->name) ? $case->name : '') }}
-            </div>
-            <div class="formfield">
-                {{ Form::label('year', 'Year:', ['class' => 'required']) }}
-                {{ Form::text('year', isset($case->year) ? $case->year : '') }}
-            </div>
-            <div class="formfield">
-                {{ Form::label('background', 'Basic background on case:', ['class' => 'required']) }}
-                {{ Form::text('background', isset($case->background) ? $case->background : '') }}
             </div>
             <div class="formfield">
                 {{ Form::label('challenges', 'Challenges facing client / Fipra:', ['class' => 'required']) }}
@@ -38,6 +30,10 @@
             <div class="formfield">
                 {{ Form::label('result', 'End result:', ['class' => 'required']) }}
                 {{ Form::text('result', isset($case->result) ? $case->result : '') }}
+            </div>
+            <div class="formfield">
+                {{ Form::label('year', 'Year:', ['class' => 'required']) }}
+                {{ Form::text('year', isset($case->year) ? $case->year : '') }}
             </div>
         </div>
         <div class="col-6 last">
@@ -58,10 +54,6 @@
             <div class="formfield">
                 {{ Form::label('sector_id', 'Sector:', ['class' => 'required']) }}
                 {{ Form::select('sector_id', $sectors, isset($case->sector_id) ? $case->sector_id : '') }}
-            </div>
-            <div class="formfield">
-                {{ Form::label('location_id', 'Location (if different to Unit\'s jurisdiction):') }}
-                {{ Form::select('location_id', $locations, isset($case->location_id) ? $case->location_id : '') }}
             </div>
             <div class="formfield">
                 {{ Form::label('product_id', 'Product(s):', ['class' => 'required']) }}

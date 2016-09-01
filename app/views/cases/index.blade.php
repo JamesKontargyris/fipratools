@@ -27,13 +27,13 @@
                     <table width="100%" class="index-table">
                         <thead>
                         <tr>
-                            <td width="60%">Background</td>
+                            <td width="40%">Background</td>
                             <td width="5%">Year</td>
                             @if($user->hasRole('Administrator'))
                                 <td width="10%" class="hide-s">Unit</td>
                             @endif
                             <td width="10%" class="hide-m">Sector</td>
-                            <td width="10%" class="hide-m">Product(s)</td>
+                            <td width="30%" class="hide-m">Product(s)</td>
                             <td width="10%" class="hide-m">AD</td>
 
                             @if($user->hasRole('Administrator'))
