@@ -15,7 +15,7 @@
 			<section id="content">
 					<div class="row">
 						<div class="col-12">
-							<div id="page-header">
+							<div id="page-header" class="section-{{ section_is() }}">
 									<h2>@yield('page-header')</h2>
 								<nav class="page-menu-nav">
 									<ul class="small-font">

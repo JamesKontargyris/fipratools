@@ -92,7 +92,7 @@
   padding:$v-rhythm 13px 0 13px;
   line-height:1.6;
 
-  @include breakpoint($m) {
+  @include breakpoint($m-l) {
     padding:7px 13px 0 13px;
   }
 

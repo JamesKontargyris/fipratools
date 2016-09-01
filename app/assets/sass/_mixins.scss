@@ -40,7 +40,7 @@
 	@include but();
 	color:$blue;
 	border:1px solid darken($light-grey, 5%);
-	border-bottom: 2px solid rgba(darken($light-grey, 10%), 0.6);
+	border-bottom: 2px solid rgba($grey, 0.6);
 	@include light-grad(darken(white, 10%), top, 20%);
 }
 

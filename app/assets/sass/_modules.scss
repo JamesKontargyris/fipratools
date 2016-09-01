@@ -130,22 +130,34 @@
   background-color: $blue;
   color:white;
   .page-menu-icon-s {
-    color:white;
+    color:black;
     position:absolute;
     display:block;
     top:8px;
     right:10px;
     @include breakpoint($l) { display:none; }
   }
+
+  &.section-list {
+    h2 { color:darken($turquoise, 10%); }
+    background-color: desaturate(lighten($turquoise, 45%), 25%);
+  }
+  &.section-case {
+    h2 { color:darken($violet, 10%); }
+    background-color: desaturate(lighten($violet, 25%), 25%);
+  }
+  &.section-survey {
+    h2 { color:darken($green, 10%); }
+    background-color: desaturate(lighten($green, 40%), 25%);
+  }
+
   nav {
     @include clearfix();
     ul {
       @include horizontal-list();
-      @include breakpoint($m) {
-        &.small-font a {
-          @include font-size(12);
-          font-weight: $font-bold;
-        }
+      &.small-font a {
+        @include font-size(12);
+        font-weight: $font-bold;
       }
       & + ul {
         margin-top:$v-rhythm / 1.5;
@@ -709,5 +721,5 @@ ul.pagination {
 }
 
 .page-menu-nav ul li {
-  margin-bottom:$v-rhythm * 0.5;
+  margin-bottom:$v-rhythm * 0.25;
 }
