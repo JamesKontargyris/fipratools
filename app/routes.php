@@ -111,6 +111,8 @@ Route::get('roles', function()
 //	return "All done!";
 });
 
+Route::controller('password', 'PasswordController');
+
 Route::group(['before' => 'auth'], function()
 {
 	// Temporary Knowledge Survey route
