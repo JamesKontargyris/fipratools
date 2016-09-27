@@ -1,6 +1,7 @@
 <?php
 
 use Leadofficelist\Products\Product;
+use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Users\User;
 
 function display_page_title($default = 'Fipra Portal')
@@ -267,6 +268,23 @@ function get_pretty_product_names($product_ids)
 		}
 
 		return implode(', ', $product_names);
+	}
+
+	return false;
+}
+
+// Use an array of sector IDs to get sector names,
+// then return a comma-separated string of all names
+function get_pretty_sector_names($sector_ids)
+{
+	if( is_array($sector_ids) && count($sector_ids) >= 1) {
+		$sector_names = [];
+		foreach($sector_ids as $sector_id)
+		{
+			if($sector_id) $sector_names[] = Sector::find($sector_id)->name;
+		}
+
+		return implode(', ', $sector_names);
 	}
 
 	return false;

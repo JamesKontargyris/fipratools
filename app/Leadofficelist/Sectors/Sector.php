@@ -19,6 +19,8 @@ class Sector extends \BaseModel
 	{
 		$this->name        = $sector->name;
 		$this->category_id = $sector->category_id;
+		$this->show_list  = $sector->show_list;
+		$this->show_case  = $sector->show_case;
 		$this->save();
 
 		return $this;
@@ -29,6 +31,8 @@ class Sector extends \BaseModel
 		$update_sector              = $this->find( $sector->id );
 		$update_sector->name        = $sector->name;
 		$update_sector->category_id = $sector->category_id;
+		$update_sector->show_list  = $sector->show_list;
+		$update_sector->show_case  = $sector->show_case;
 		$update_sector->save();
 
 		return $update_sector;
@@ -46,7 +50,7 @@ class Sector extends \BaseModel
 			$sectors[''] = $blank_message;
 		}
 
-		foreach ( Sector::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $sector )
+		foreach ( Sector::where('show_' . section_is(), '=', 1)->orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $sector )
 		{
 			$sectors[ $sector->id ] = $prefix . $sector->name;
 		}

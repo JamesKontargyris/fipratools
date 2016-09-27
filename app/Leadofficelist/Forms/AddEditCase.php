@@ -17,7 +17,7 @@ class AddEditCase extends FormValidator {
 		'result'              => 'required|max:255',
 		'unit_id'             => 'required|numeric',
 		'account_director_id' => 'required',
-		'sector_id'           => 'required|numeric',
+		'sector_id'           => 'required',
 		'product_id'          => 'required'
 	];
 

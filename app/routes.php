@@ -134,6 +134,8 @@ Route::group(['before' => 'auth'], function()
 
 	Route::any('cases/export', 'CasesController@export');
 	Route::any('cases/search', 'CasesController@search');
+	Route::any('cases/status_approve', 'CasesController@approve');
+	Route::any('cases/status_disapprove', 'CasesController@disapprove');
 	Route::resource('cases', 'CasesController');
 
 	Route::any('locations/export', 'LocationsController@export');

@@ -30,8 +30,15 @@
   @include primary-but();
   border-top: 1px solid lighten(#adff2f, 10%);
   border-bottom: 2px solid rgba(darken(#adff2f, 40%), 0.6);
-  @include dark-grad(lighten(#adff2f, 35%), top, 20%);
+  @include dark-grad(lighten(#adff2f, 20%), top, 10%);
   color:green;
+}
+.orange-but {
+  @include primary-but();
+  border-top: 1px solid lighten(orange, 10%);
+  border-bottom: 2px solid rgba(darken(orange, 40%), 0.6);
+  @include dark-grad(lighten(orange, 20%), top, 10%);
+  color:black;
 }
 
 .alert {
@@ -353,6 +360,7 @@
 .index-table {
   width:100%;
   @include font-size(12);
+  line-height:1.2;
   tr > td {
     border-left:1px solid darken(white, 10%);
     vertical-align: middle;
@@ -723,3 +731,7 @@ ul.pagination {
 .page-menu-nav ul li {
   margin-bottom:$v-rhythm * 0.25;
 }
+
+
+.status--pending { color: orange; }
+.status--active { color: green; }

@@ -124,6 +124,8 @@
 
     // Make the products select box a nicer multi-select box
     $('#product_select').multiSelect();
+    // Make the sector select box a nicer multi-select box
+    $('#sector_select').multiSelect();
 
 
     //Alerts

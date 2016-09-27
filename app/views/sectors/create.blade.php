@@ -28,6 +28,15 @@ Add a Sector
 			{{ Form::text('new_category', Input::old('new_category'), ['class' => 'new-category']) }}
 		</div>
 	</div>
+	<div class="col-6 last">
+		<div class="formfield">
+			{{ Form::label('show_list', 'Available in:', ['class' => 'required']) }}
+			{{ Form::hidden('show_list', 0) }}
+			<p>{{ Form::checkbox('show_list', input::old('show_list'), true) }} Lead Office List</p>
+			{{ Form::hidden('show_case', 0) }}
+			<p>{{ Form::checkbox('show_case', input::old('show_case'), true) }} Case Studies</p>
+		</div>
+	</div>
 </div>
 
 <div class="row">

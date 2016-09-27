@@ -3,6 +3,7 @@
 use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Cases\CaseStudy;
 use Leadofficelist\Products\Product;
+use Leadofficelist\Sectors\Sector;
 
 class CaseListController extends BaseController {
 	public $resource_key = 'caselist';
@@ -30,7 +31,7 @@ class CaseListController extends BaseController {
 		$products          = $this->products;
 		$years             = $this->years;
 
-		$items      = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = CaseStudy::where('status', '=', 1)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'caselist';
 
 		return View::make( 'caselist.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'locations', 'products', 'years' ) );
@@ -65,6 +66,13 @@ class CaseListController extends BaseController {
 
 					$items->filter_value = Product::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
 
+				} elseif ( strpos( $model_name, 'Sectors' ) ) {
+//					If the filter is a sector, we need to compare the keyword to the serialized sector array
+//					Re-run the query on that basis
+					$term  = '%"' . Session::get( $this->resource_key . '.SearchTerm' ) . '"%';
+					$items = CaseStudy::where( 'sector_id', 'LIKE', $term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+					$items->filter_value = Sector::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
 				} else {
 					$model               = new $model_name;
 					$items->filter_value = $model::find( Session::get( $this->resource_key . '.rowsListFilterValue' ) )->name;
@@ -96,7 +104,7 @@ class CaseListController extends BaseController {
 
 	protected function getAll()
 	{
-		return CaseStudy::orderBy('name', 'ASC')->get();
+		return CaseStudy::where('status', '=', 1)->orderBy('id', 'DESC')->get();
 	}
 
 	protected function getSelection()
@@ -106,7 +114,7 @@ class CaseListController extends BaseController {
 			$search_term = $this->findSearchTerm();
 			$this->search_term_clean = str_replace('%', '', $search_term);
 
-			$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = CaseStudy::where('status', '=', 1)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 		else
 		{

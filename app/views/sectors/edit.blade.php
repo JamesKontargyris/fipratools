@@ -28,6 +28,15 @@ Editing Sector: {{ $sector->name }}
 			{{ Form::text('new_category', null, ['class' => 'new-category']) }}
 		</div>
 	</div>
+	<div class="col-6 last">
+		<div class="formfield">
+			{{ Form::label('show_list', 'Available in:', ['class' => 'required']) }}
+			{{ Form::hidden('show_list', 0) }}
+			<p>{{ Form::checkbox('show_list', isset($sector->show_list) ? : '', ($sector->show_list == 1) ? ['checked' => 'checked'] : []) }} Lead Office List</p>
+			{{ Form::hidden('show_case', 0) }}
+			<p>{{ Form::checkbox('show_case', isset($sector->show_case) ? : '', ($sector->show_case == 1) ? ['checked' => 'checked'] : []) }} Case Studies</p>
+		</div>
+	</div>
 </div>
 
 <div class="row">

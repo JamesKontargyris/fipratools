@@ -26,8 +26,7 @@ class CreateCasesTable extends Migration {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->integer('account_director_id')->unsigned()->index();
 			$table->foreign('account_director_id')->references('id')->on('account_directors');
-			$table->integer('sector_id')->unsigned()->index();
-			$table->foreign('sector_id')->references('id')->on('sectors');
+			$table->string('sector_id');
 			$table->string('product_id');
 			$table->timestamps();
 		});

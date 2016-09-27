@@ -13,6 +13,8 @@
     @include('layouts.partials.messages')
 
     {{ Form::open(['method' => 'PUT', 'url' => 'cases/' . $case->id]) }}
+    {{ Form::hidden('status', isset($case->status) ? $case->status : 0) }}
+
     <div class="row">
         <div class="col-6">
             <div class="formfield">
@@ -35,8 +37,10 @@
                 {{ Form::label('year', 'Year:', ['class' => 'required']) }}
                 {{ Form::text('year', isset($case->year) ? $case->year : '') }}
             </div>
-        </div>
-        <div class="col-6 last">
+            <div class="formfield">
+                {{ Form::label('client', 'Client (leave blank if anonymous):') }}
+                {{ Form::text('client', isset($case->client) ? $case->client : '') }}
+            </div>
             @if($user->hasRole('Administrator'))
                 <div class="formfield">
                     {{ Form::label('unit_id', 'Link to Unit:', ['class' => 'required']) }}
@@ -51,9 +55,11 @@
                 {{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
                 {{ Form::select('account_director_id', $account_directors, isset($case->account_director_id) ? $case->account_director_id : '') }}
             </div>
+        </div>
+        <div class="col-6 last">
             <div class="formfield">
-                {{ Form::label('sector_id', 'Sector:', ['class' => 'required']) }}
-                {{ Form::select('sector_id', $sectors, isset($case->sector_id) ? $case->sector_id : '') }}
+                {{ Form::label('sector_id', 'Sector(s):', ['class' => 'required']) }}
+                {{ Form::select('sector_id[]', $sectors, isset($case->sector_id) ? unserialize($case->sector_id) : '', ['id' => 'sector_select', 'multiple' => 'multiple']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('product_id', 'Product(s):', ['class' => 'required']) }}

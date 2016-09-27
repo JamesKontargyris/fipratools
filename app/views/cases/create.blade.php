@@ -13,6 +13,14 @@
     @include('layouts.partials.messages')
 
     {{ Form::open(['route' => 'cases.store']) }}
+    {{--If the current user is an Administrator, automatically approve this case study--}}
+    @if($user->hasRole('Administrator'))
+        {{ Form::hidden('status', 1) }}
+    @else
+        {{--Otherwise, mark it as pending--}}
+        {{ Form::hidden('status', 0) }}
+    @endif
+
     <div class="row">
         <div class="col-6">
             <div class="formfield">
@@ -35,8 +43,10 @@
                 {{ Form::label('year', 'Year:', ['class' => 'required']) }}
                 {{ Form::text('year', Input::old('year')) }}
             </div>
-        </div>
-        <div class="col-6 last">
+            <div class="formfield">
+                {{ Form::label('client', 'Client (leave blank if anonymous):') }}
+                {{ Form::text('client', Input::old('client')) }}
+            </div>
             @if($user->hasRole('Administrator'))
                 <div class="formfield">
                     {{ Form::label('unit_id', 'Link to Unit:', ['class' => 'required']) }}
@@ -51,9 +61,11 @@
                 {{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
                 {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
             </div>
+        </div>
+        <div class="col-6 last">
             <div class="formfield">
-                {{ Form::label('sector_id', 'Sector:', ['class' => 'required']) }}
-                {{ Form::select('sector_id', $sectors, Input::old('sector_id')) }}
+                {{ Form::label('sector_id', 'Sector(s):', ['class' => 'required']) }}
+                {{ Form::select('sector_id[]', $sectors, Input::old('sector_id'), ['id' => 'sector_select', 'multiple' => 'multiple']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('product_id', 'Product(s):', ['class' => 'required']) }}

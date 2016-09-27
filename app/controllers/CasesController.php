@@ -3,6 +3,8 @@
 use Laracasts\Commander\CommanderTrait;
 use Leadofficelist\Cases\CaseStudy;
 use Leadofficelist\Eventlogs\EventLog;
+use Leadofficelist\Exceptions\CannotEditException;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditCase as AddEditCaseForm;
 use Leadofficelist\Units\Unit;
 
@@ -40,17 +42,18 @@ class CasesController extends \BaseController {
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 
-		if ( $this->user->hasRole( 'Administrator' ) )
-		{
-			$items = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-		} else
-		{
-			$items = CaseStudy::where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		if ( $this->user->hasRole( 'Administrator' ) ) {
+			$items = CaseStudy::where('status', '=', 1)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items_pending = CaseStudy::where('status', '=', 0)->orderBy('id', 'DESC')->get();
+		} else {
+			$items = CaseStudy::where('status', '=', 1)->where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			$items_pending = CaseStudy::where('status', '=', 0)->where( 'unit_id', '=', $this->user->unit_id )->orderBy('id', 'DESC')->get();
 		}
 
 		$items->key = 'cases';
 
-		return View::make( 'cases.index' )->with( compact( 'items' ) );
+		return View::make( 'cases.index' )->with( compact( 'items', 'items_pending' ) );
 	}
 
 	/**
@@ -104,12 +107,10 @@ class CasesController extends \BaseController {
 	public function show( $id ) {
 		$this->check_perm( 'view_list' );
 
-		if ( $case = CaseStudy::find( $id ) )
-		{
+		if ( $case = CaseStudy::find( $id ) ) {
 
 			return View::make( 'cases.show' )->with( compact( 'case' ) );
-		} else
-		{
+		} else {
 			throw new ResourceNotFoundException( 'cases' );
 		}
 	}
@@ -132,7 +133,7 @@ class CasesController extends \BaseController {
 				'sectors'           => $this->sectors,
 				'locations'         => $this->locations,
 				'products'          => $this->products,
-				'case'             => $case
+				'case'              => $case
 			] );;
 		} else {
 			throw new ResourceNotFoundException( 'cases' );
@@ -168,15 +169,45 @@ class CasesController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy( $id ) {
-		if ( $case = $this->getCase( $id ) )
-		{
+		if ( $case = $this->getCase( $id ) ) {
 			CaseStudy::destroy( $id );
 			Flash::overlay( '"' . $case->name . '" has been deleted.', 'info' );
 
 			return Redirect::route( 'cases.index' );
-		} else
-		{
+		} else {
 			throw new ResourceNotFoundException( 'cases' );
+		}
+	}
+
+	public function approve() {
+		$case_id = Input::get( 'case_id' );
+
+		if ( $case_id ) {
+			if ( CaseStudy::change_status( $case_id, 1 ) ) {
+				Flash::overlay( 'Case study approved.', 'success' );
+				return Redirect::route('cases.index');
+			} else {
+				throw new CannotEditException;
+			}
+		}
+		else {
+			throw new ResourceNotFoundException;
+		}
+	}
+
+	public function disapprove() {
+		$case_id = Input::get( 'case_id' );
+
+		if ( $case_id ) {
+			if ( CaseStudy::change_status( $case_id, 0 ) ) {
+				Flash::overlay( 'Case study disapproved.', 'success' );
+				return Redirect::route('cases.index');
+			} else {
+				throw new CannotEditException;
+			}
+		}
+		else {
+			throw new ResourceNotFoundException;
 		}
 	}
 

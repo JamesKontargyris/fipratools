@@ -33,15 +33,16 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="40%">Background</td>
 							<td width="5%">Year</td>
-							<td width="10%" class="hide-m">Sector</td>
+							<td width="10%" class="hide-m">Sector(s)</td>
 							<td width="20%" class="hide-m">Product(s)</td>
 							<td width="10%" class="hide-s">Unit</td>
 							<td width="15%" class="hide-s">AD to talk to</td>
+							<td width="15%">Client where disclosable</td>
+							<td width="20%">Background</td>
+							<td width="5%" class="hide-print"></td>
 						</tr>
 						<tr class="hide-print">
-							<td class="hide-m sub-header"></td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
 								{{ Form::select('filter_value', $years, null, ['class' => 'list-table-filter']) }}
@@ -82,17 +83,22 @@
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
 								{{ Form::close() }}
 							</td>
+							<td class="hide-m sub-header"></td>
+							<td class="hide-m sub-header"></td>
+							<td class="hide-m sub-header hide-print"></td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $case)
 							<tr>
-								<td><strong><a href="{{ route('cases.show', ['id' => $case->id]) }}">{{ $case->name }}</a></strong></td>
 								<td>{{ $case->year }}</td>
-								<td class="hide-m">{{ $case->sector()->pluck('name') }}</td>
+								<td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)); }}</td>
 								<td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
 								<td class="hide-s"><a href="{{ route('units.show', ['id' => $case->unit()->pluck('id')]) }}"><strong>{{ $case->unit()->pluck('name') }}</strong></a></td>
 								<td class="hide-s">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
+								<td>{{ ! $case->client ? 'Anonymous' : $case->client }}</td>
+								<td>{{ $case->name }}</td>
+								<td class="hide-print"><strong><a href="{{ route('cases.show', ['id' => $case->id]) }}">View</a></strong></td>
 							</tr>
 						@endforeach
 					</tbody>
