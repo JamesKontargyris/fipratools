@@ -219,15 +219,16 @@ class CasesController extends \BaseController {
 	 */
 	public function search() {
 		if ( $search_term = $this->findSearchTerm() ) {
-			$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = CaseStudy::where('status', '=', 1)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items_pending = CaseStudy::where('status', '=', 0)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
-			if ( ! $this->checkForSearchResults( $items ) ) {
+			if ( ! $this->checkForSearchResults( $items ) && ! $this->checkForSearchResults( $items_pending ) ) {
 				return Redirect::route( $this->resource_key . '.index' );
 			}
 			$items->search_term = str_replace( '%', '', $search_term );
 			$items->key         = 'cases';
 
-			return View::make( 'cases.index' )->with( compact( 'items' ) );
+			return View::make( 'cases.index' )->with( compact( 'items', 'items_pending' ) );
 		} else {
 			return View::make( 'cases.index' );
 		}
