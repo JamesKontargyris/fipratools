@@ -704,7 +704,7 @@ class BaseController extends Controller
      *
      * @return array
      */
-    protected function getSectorsFormData($blank_entry = true, $blank_message = 'Please select...')
+    protected function getSectorsFormData($blank_entry = false, $blank_message = 'Please select...')
     {
         if (!Sector::getSectorsForFormSelect($blank_entry, $blank_message)) {
             return ['' => 'No sectors available to select'];
