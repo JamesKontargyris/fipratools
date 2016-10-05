@@ -5,10 +5,15 @@
 	{{ $heading1 }}
 </h1>
 <h4>
-	@if(Session::get('clients.rowsHideShowDormant') == 'show')
-		{{ $heading2 }}	– {{ number_format($active_count, 0)  }} active, {{ number_format($dormant_count, 0) }} dormant
-	@else
-		{{ str_replace('total', 'active', $heading2)  }}
+	@if(isset($heading2)) {{ $heading2 }} @endif
+	@if(Session::get('clients.rowsHideShowActive') == 'show' && isset($active_count))
+		{{ number_format($active_count, 0)  }} active clients
+	@endif
+	@if(Session::get('clients.rowsHideShowActive') == 'show' && Session::get('clients.rowsHideShowDormant') == 'show' && isset($active_count) && isset($dormant_count))
+		|
+	@endif
+	@if(Session::get('clients.rowsHideShowDormant') == 'show' && isset($dormant_count))
+		{{ number_format($dormant_count, 0)  }} dormant clients
 	@endif
 </h4>
 
@@ -17,7 +22,7 @@
 		<tr>
 			<td>Client name</td>
 			@if($user->hasRole('Administrator'))
-				<td>Unit</td>
+				<td>Lead Network Member</td>
 			@endif
 			<td>Sector</td>
 			<td>Type</td>
@@ -26,7 +31,7 @@
 				<td>AD</td>
 				<td>Comments</td>
 			@endif
-			@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
+			@if(Session::get('list.rowsHideShowDormant') == 'show' || Session::get('list.rowsHideShowActive') == 'show')
 				<td width="10%">Status</td>
 			@endif
 		</tr>
@@ -37,7 +42,7 @@
 				<td><strong>{{ $client->name }}</strong></td>
 
 				@if($user->hasRole('Administrator'))
-					<td><strong>{{ $client->unit()->pluck('name') }}</strong></td>
+					<td>{{ $client->unit()->pluck('name') }}</td>
 				@endif
 
 				<td>{{ $client->sector()->pluck('name') }}</td>
@@ -47,7 +52,7 @@
 					<td>{{ $client->account_director()->pluck('first_name') }} {{ $client->account_director()->pluck('last_name') }}</td>
 					<td>{{ $client->comments }}</td>
 				@endif
-				@if(Session::get('list.rowsHideShowDormant') == 'show' && Session::get('list.rowsHideShowActive') == 'show')
+				@if(Session::get('list.rowsHideShowDormant') == 'show' || Session::get('list.rowsHideShowActive') == 'show')
 					@if($client->status)
 						<td class="status-active">Active</td>
 					@else

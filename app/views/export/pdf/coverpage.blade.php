@@ -5,14 +5,16 @@ About the Lead Office List
 @stop
 
 @section('content')
-<table width="100%">
-	<tr>
-		<td style="width:1%"><img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" alt="Fipra" style="vertical-align:middle; width:72px; height:72px; padding-right:10px;"/></td>
-		<td>
-			<h1>Lead Office List</h1>
-		</td>
-	</tr>
-</table>
+	<div style="padding: 10px; margin-bottom:10px; background-color: #efefef;">
+		<table width="100%">
+			<tr>
+				<td style="width:1%"><img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" alt="Fipra" align="middle" style="width:42px; height:42px; padding-right:10px;"/></td>
+				<td>
+					<h2>About the Lead Office List</h2>
+				</td>
+			</tr>
+		</table>
+	</div>
 
 <?php
     $content = "<p>This app and the list it contains are <strong>confidential</strong> to members of the Fipra Network. They are <strong>under no circumstances</strong> to be used externally and you share in this responsibility.</p>

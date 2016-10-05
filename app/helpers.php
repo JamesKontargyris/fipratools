@@ -117,7 +117,7 @@ function section_is() {
 function current_section_name() {
 	$sections = [
 		'list' => 'Lead Office List',
-		'case' => 'Case Studies',
+		'case' => 'Case Study Database',
 		'survey' => 'Knowledge Survey'
 	];
 	return $sections[Session::get('section') ? Session::get('section') : 'list'];

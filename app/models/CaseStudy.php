@@ -23,9 +23,9 @@ class CaseStudy extends \BaseModel {
 		return $this->hasOne( '\Leadofficelist\Units\Unit', 'id', 'unit_id' );
 	}
 
-//	public function sector() {
-//		return $this->hasOne( '\Leadofficelist\Sectors\Sector', 'id', 'sector_id' );
-//	}
+	public function sector() {
+		return $this->hasOne( '\Leadofficelist\Sectors\Sector', 'id', 'sector_id' );
+	}
 
 	public function account_director() {
 		return $this->hasOne( '\Leadofficelist\Account_directors\AccountDirector', 'id', 'account_director_id' );

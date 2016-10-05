@@ -23,7 +23,7 @@
 								</ul>
 								@if(! is_request('client_links') && ! is_request('client_archives'))
 									<ul class="small-font">
-										@if(! is_request('*/*', true) && ! is_request('about') && ! is_request('survey'))
+										@if(! is_request('about') && ! is_request('survey'))
 											<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>
 											<!-- if this is the main list and a filter is in place, substitute an export filtered button for the the export visible button -->
 											<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Visible</a></li>
