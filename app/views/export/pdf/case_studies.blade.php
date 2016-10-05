@@ -7,7 +7,7 @@
 <table width="100%" class="index-table">
 	<thead>
 		<tr>
-			<td width="55%">Title</td>
+			<td width="55%">Details</td>
 			<td width="5%">Year</td>
 			<td width="10%" class="hide-s">Unit</td>
 			<td width="15%" class="hide-m">Sector(s)</td>
@@ -18,7 +18,16 @@
 	<tbody>
 		@foreach($items as $casestudy)
 			<tr>
-				<td><strong>{{ $casestudy->name }}</strong></td>
+				<td>
+					<strong>Background</strong><br>
+                    {{ $casestudy->name }}<br><br>
+                    <strong>Challenges facing client/Fipra</strong><br>
+                    {{ $casestudy->challenges }}<br><br>
+                    <strong>What Fipra did to overcome the challenges</strong><br>
+                    {{ $casestudy->strategy }}<br><br>
+                    <strong>End result</strong><br>
+                    {{ $casestudy->result }}
+				</td>
 				<td><strong>{{ $casestudy->year }}</strong></td>
 				<td><strong>{{ $casestudy->unit()->pluck('name') }}</strong></td>
 				<td>{{ get_pretty_sector_names(unserialize($casestudy->sector_id)); }}</td>

@@ -1,4 +1,4 @@
-@extends('......layouts.pdf')
+@extends('layouts.pdf')
 
 @section('content')
 <h1>{{ $heading1 }}</h1>
@@ -7,25 +7,29 @@
 <table width="100%" class="index-table">
 	<thead>
 		<tr>
-			<td width="60%">Title</td>
-			@if($user->hasRole('Administrator'))
+			<td width="50%">Background</td>
+			<td width="10%">Year</td>
+			<td width="10%" class="hide-m">Sector(s)</td>
+			<td width="10%" class="hide-m">Product(s)</td>
+		@if($user->hasRole('Administrator'))
 				<td width="10%" class="hide-s">Unit</td>
 			@endif
-			<td width="15%" class="hide-m">Sector</td>
-			<td width="15%" class="hide-m">Product(s)</td>
+			<td width="10%">AD</td>
+			<td width="10%">Client</td>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach($items as $casestudy)
 			<tr>
 				<td><strong>{{ $casestudy->name }}</strong></td>
-
-				@if($user->hasRole('Administrator'))
-					<td><strong>{{ $casestudy->unit()->pluck('name') }}</strong></td>
-				@endif
-
-				<td>{{ $casestudy->sector()->pluck('name') }}</td>
+				<td>{{ $casestudy->year }}</td>
+				<td>{{ get_pretty_sector_names(unserialize($casestudy->sector_id)); }}</td>
 				<td>{{ get_pretty_product_names(unserialize($casestudy->product_id)); }}</td>
+			@if($user->hasRole('Administrator'))
+					<td>{{ $casestudy->unit()->pluck('name') }}</td>
+				@endif
+				<td>{{ $casestudy->account_director()->pluck('first_name') }} {{ $casestudy->account_director()->pluck('last_name') }}</td>
+				<td>{{ ($casestudy->client) ? $casestudy->client : 'Anonymous' }}</td>
 			</tr>
 		@endforeach
 	</tbody>
