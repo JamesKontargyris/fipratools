@@ -371,9 +371,9 @@ class BaseController extends Controller {
 
 						//If the main lead office list is being exported, it contains a message in the first cell
 						//Merge some cells so the messages doesn't make the first column too wide
-						if ( is_request( 'list' ) && section_is() == 'list' ) {
-							$sheet->mergeCells( 'A1:G1' );
-						}
+//						if ( is_request( 'list' ) && section_is() == 'list' ) {
+//							$sheet->mergeCells( 'A1:G1' );
+//						}
 						$sheet->loadView( 'export.excel.' . $this->resource_key )->with(
 							[ 'items' => $items, 'user' => $user ]
 						);

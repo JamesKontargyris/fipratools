@@ -9,7 +9,7 @@ About the Lead Office List
 	<div class="col-9">
         <p>This app and the list it contains are <strong>confidential</strong> to members of the Fipra Network. They are <strong>under no circumstances</strong> to be used externally and you share in this responsibility.</p>
 
-        <p><strong>This is NOT a client list</strong> – it is not even a list of clients served by the Fipra brand as many of the companies below are serviced under local unit names such as RLMFinsbury, CEC, First House, Six Year Plan etc. Additionally it lists other clients served by individual Special Advisers in their own right.</p>
+        <p><strong>This is NOT a client list</strong> – it is not even a list of clients served by the Fipra brand as many of the companies below are serviced under local unit names such as CEC, First House, Six Year Plan etc. Additionally it lists other clients served by individual Special Advisers in their own right.</p>
         
         <p>This list serves as a tool to help you identify who has the “lead” on current clients/projects - and therefore which Unit or Special Adviser has a relationship with firms you may be speaking to.</p>
         
@@ -23,7 +23,7 @@ About the Lead Office List
 
         <p>We take conflicts seriously and sometimes these force hard commercial decisions. This list is our principal tool to refer to when pitching to new clients in any consideration of possible client conflicts within the Fipra group. It tells you if someone else is working for a competitor of your client – a fact of which you must be aware in order to be able to manage it.</p>
 
-        <p>This app is not, however, a definitive guide to conflicts. To obtain certainty on conflict questions please refer to the Account Director or Spad listed and where necessary to the Fipra Group Chairman who will help resolve conflict issues with you.</p>
+        <p>This app is not, however, a definitive guide to conflicts. To obtain certainty on conflict questions please refer to the Account Director or Spad listed and where necessary to the Fipra Network Chairman who will help resolve conflict issues with you.</p>
 
         <p>Please therefore, <strong>always</strong> refer to this app before signing up a client. Listed here are national clients as well as cross border clients to minimise “crossed wires” and to ensure we are co-ordinated at all times.</p>
 
