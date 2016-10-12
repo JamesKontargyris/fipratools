@@ -139,8 +139,6 @@
 
                             @if($user->hasRole('Administrator'))
                                 <td colspan="3" class="hide-print">Actions</td>
-                            @else
-                                <td class="hide-print">Actions</td>
                             @endif
 
                         </tr>
