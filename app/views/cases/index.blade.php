@@ -148,8 +148,8 @@
                             <tr>
                                 <td>{{ $case->year }}</td>
 
-                                <td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)); }}</td>
-                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
+                                <td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)) }}</td>
+                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)) }}</td>
 
                                 @if($user->hasRole('Administrator'))
                                     <td class="hide-s"><strong><a href="/units/{{ $case->unit()->pluck('id') }}">{{ $case->unit()->pluck('name') }}</a></strong></td>
