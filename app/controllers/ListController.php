@@ -17,6 +17,9 @@ class ListController extends BaseController {
 		$this->destroyCurrentPageNumber( true );
 
 		if ( $this->searchCheck() ) {
+			// Keep any flashed messages when redirecting
+			Session::reflash();
+
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 

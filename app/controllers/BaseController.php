@@ -648,14 +648,20 @@ class BaseController extends Controller {
 			Session::set('clear_search', 'yes');
 			$this->searchCheck();
 
-			return Redirect::route( 'list.index' );
+			return Redirect::route( $this->resource_key . '.index' );
 		}
 	}
 
 	protected function checkForSearchResults( $items ) {
 		if ( ! count( $items ) ) {
-			Flash::message( 'No records found.' );
-			Session::set( 'clear_search', 'yes' );
+
+			if( ! is_filter($this->resource_key)) {
+				Flash::message( 'No records found.' );
+				Session::set( 'clear_search', 'yes' );
+			} else {
+				Flash::message( 'No records found for that filter combination.' );
+				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
+			}
 
 			return false;
 		}
