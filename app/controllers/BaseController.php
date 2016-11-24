@@ -21,8 +21,6 @@ class BaseController extends Controller {
 	protected $user;
 	protected $rows_sort_order;
 	protected $rows_to_view;
-	protected $rows_list_filter_field;
-	protected $rows_list_filter_value;
 	protected $rows_hide_show_dormant;
 	protected $rows_hide_show_active;
 	protected $userFullName;
@@ -75,9 +73,6 @@ class BaseController extends Controller {
 		$this->rows_sort_order        = $this->getRowsSortOrder( $this->resource_key );
 		$this->rows_to_view           = $this->getRowsToView( $this->resource_key );
 		$this->name_order             = $this->getNameOrder( $this->resource_key );
-		$this->rows_list_filter_field = $this->getRowsListFilterField( $this->resource_key );
-		$this->rows_list_filter_value = $this->getRowsListFilterValue( $this->resource_key );
-		$this->name_order             = $this->getNameOrder( $this->resource_key );
 		$this->rows_hide_show_dormant = $this->getRowsHideShowDormant( $this->resource_key );
 		$this->rows_hide_show_active  = $this->getRowsHideShowActive( $this->resource_key );
 
@@ -117,7 +112,9 @@ class BaseController extends Controller {
 					break;
 
 				case 'pdf_filtered':
-					$contents = $this->PDFExportFiltered( $this->getFiltered() );
+					$items = $this->getFiltered('export');
+					$items->filter_value = $this->getFilteredValues();
+					$contents = $this->PDFExportFiltered( $items );
 					$this->generatePDF( $contents, $this->export_filename . '_filtered.pdf', $cover_page );
 
 					return true;
@@ -145,7 +142,8 @@ class BaseController extends Controller {
 					break;
 
 				case 'excel_filtered':
-					$contents = $this->getFiltered();
+					$contents = $this->getFiltered('export');
+					$contents->filter_value = $this->getFilteredValues();
 					$this->generateExcel( $contents, $this->export_filename . '_filtered' );
 
 					return true;
@@ -445,16 +443,18 @@ class BaseController extends Controller {
 			'newest' => 'id.desc',
 			'oldest' => 'id.asc'
 		];
+		$sort_on_cases = [
+			'az' => 'name.asc',
+			'za' => 'name.desc',
+			'newest' => 'year.desc', 'oldest' => 'year.asc'
+		];
 
 		//Value passed in and exists in the $sort_on variable?
 		if ( Input::has( 'sort' ) ) {
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get( 'sort' );
-			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && isset( $sort_on[ Input::get(
-						'sort'
-					) ] )
-			) {
+			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
@@ -464,16 +464,24 @@ class BaseController extends Controller {
 				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
 				return explode( '.', $sort_on_users_ads[ $sort_term ] );
+			} elseif ( $this->is_request( 'cases' ) || $this->is_request( 'caselist' ) ) {
+				$this->destroyCurrentPageNumber();
+				Session::set( $key . '.rowsSort', $sort_on_cases[ $sort_term ] );
+
+				return explode( '.', $sort_on_cases[ $sort_term ] );
 			}
 		} //Session value exists for rowsSort?
 		elseif ( Session::get( $key . '.rowsSort' ) ) {
 			return explode( '.', Session::get( $key . '.rowsSort' ) );
 		} //If all else fails...
 		else {
-			return ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) ? [
-				'last_name',
-				'asc'
-			] : [ 'name', 'asc' ];
+			// If we're looking at users, account directors or case studies, use a different default sort order
+			return ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) )
+				? [ 'last_name', 'asc' ]
+				: ($this->is_request( 'cases' ) || $this->is_request( 'caselist' ))
+					? ['year', 'desc']
+					// Otherwise just use name
+					: [ 'name', 'asc' ];
 		}
 
 		return false;
@@ -541,46 +549,6 @@ class BaseController extends Controller {
 		return $value;
 	}
 
-	/**
-	 *
-	 * @return int|mixed
-	 */
-	protected function getRowsListFilterField( $key ) {
-		//Value passed in?
-		if ( Input::has( 'filter_field' ) ) {
-			$this->destroyCurrentPageNumber();
-			Session::set( $key . '.rowsListFilterField', Input::get( 'filter_field' ) );
-
-			return Input::get( 'filter_field' );
-		} //Session value exists?
-		elseif ( Session::get( $key . '.rowsListFilterField' ) ) {
-			return Session::get( $key . '.rowsListFilterField' );
-		} //If all else fails...
-		else {
-			return 'status';
-		}
-	}
-
-	/**
-	 *
-	 * @return int|mixed
-	 */
-	protected function getRowsListFilterValue( $key ) {
-		//Value passed in?
-		if ( Input::has( 'filter_value' ) && is_numeric( Input::get( 'filter_value' ) ) ) {
-			$this->destroyCurrentPageNumber();
-			Session::set( $key . '.rowsListFilterValue', Input::get( 'filter_value' ) );
-
-			return Input::get( 'filter_value' );
-		} //Session value exists?
-		elseif ( Session::get( $key . '.rowsListFilterValue' ) ) {
-			return Session::get( $key . '.rowsListFilterValue' );
-		} //If all else fails...
-		else {
-			return 1;
-		}
-	}
-
 	protected function check_perm( $perm ) {
 		if ( $this->user->can( $perm ) ) {
 			return true;
@@ -629,9 +597,10 @@ class BaseController extends Controller {
 		if ( Input::has( 'clear_search' ) || Session::has( 'clear_search' ) ) {
 			Session::forget( $this->resource_key . '.SearchTerm' );
 			Session::forget( $this->resource_key . '.SearchType' );
+			Session::forget( $this->resource_key . '.Filters' );
 			Session::forget( 'clear_search' );
 			$this->destroyCurrentPageNumber();
-		} elseif ( Session::has( $this->resource_key . '.SearchTerm' ) ) {
+		} elseif ( Session::has( $this->resource_key . '.SearchType' ) ) {
 			return true;
 		}
 
@@ -650,23 +619,64 @@ class BaseController extends Controller {
 				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
-		} elseif ( Input::has( 'filter_value' ) && Input::has( 'filter_field' ) ) {
-			Session::set( $this->resource_key . '.SearchTerm', Input::get( 'filter_value' ) );
+
+			return Session::get( $this->resource_key . '.SearchTerm' );
+
+		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' ) ) {
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
+			if( ! Input::get('filter_value')) {
+				// The user has selected the "Filter..." or "Remove filter" blank row
+				Session::forget($this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
+				// Is the Filters array now empty? No filters selected if so
+				$this->isFilterArrayEmpty();
+			} else {
+				Session::set( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
+			}
+
+			return Session::get( $this->resource_key . '.Filters' );
+		} elseif (Session::has($this->resource_key . '.SearchType')) {
+			$this->isFilterArrayEmpty();
+			// No search term was parsed, but we've still got a search or filter in place, so load the search view
+			return true;
 		}
 
-		return Session::get( $this->resource_key . '.SearchTerm' );
+	}
+
+	protected function isFilterArrayEmpty()
+	{
+		if(empty(Session::get($this->resource_key . '.Filters'))) {
+			Session::set('clear_search', 'yes');
+			$this->searchCheck();
+
+			return Redirect::route( 'list.index' );
+		}
 	}
 
 	protected function checkForSearchResults( $items ) {
 		if ( ! count( $items ) ) {
-			Flash::message( 'No records found for that search term.' );
+			Flash::message( 'No records found.' );
 			Session::set( 'clear_search', 'yes' );
 
 			return false;
 		}
 
 		return true;
+	}
+
+	protected function getFilterModelName($filter_name) {
+		//Use the filter field value to instantiate the corresponding class and get the filter value's name
+		$model_name        = ucfirst( str_replace( '_id', '', $filter_name ) );
+		$model_name_plural = $model_name . 's';
+		// Split model name by _
+		$model_explode  = explode( '_', $model_name );
+		$new_model_name = "";
+		// Put model name back together without underscores
+		foreach ( $model_explode as $part ) {
+			$new_model_name .= ucfirst( $part );
+		}
+		$model_name_full = 'Leadofficelist\\' . $model_name_plural . '\\' . $new_model_name;
+
+		return $model_name_full;
 	}
 
 

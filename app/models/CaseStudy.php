@@ -87,7 +87,7 @@ class CaseStudy extends \BaseModel {
 
 		// Get all years and delete duplicates, then sort into descending order
 		$unique_years = array_unique( CaseStudy::all()->lists( 'year' ) );
-		ksort( $unique_years );
+		arsort( $unique_years );
 
 		foreach ( $unique_years as $year ) {
 			$years[ $year ] = $prefix . $year;

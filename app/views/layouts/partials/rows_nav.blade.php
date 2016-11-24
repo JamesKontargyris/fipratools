@@ -13,7 +13,7 @@
 				{{ Form::close() }}
 			</li>
 			@if(is_filter($items->key))
-				<li class="hide-print"><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Filter</a></li>
+				<li class="hide-print"><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Filter(s)</a></li>
 			@elseif(is_search())
 				<li class="hide-print"><a href="{{ route($items->key . '.index', ['clear_search' => 'true']) }}" class="primary clear-search-but"><i class="fa fa-times"></i> Clear Search</a></li>
 			@endif

@@ -45,7 +45,7 @@
 						<tr class="hide-print">
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
-								{{ Form::select('filter_value', $years, null, ['class' => 'list-table-filter']) }}
+								{{ Form::select('filter_value', $years, Session::has('caselist.Filters.year') ? Session::get('caselist.Filters.year') : null, ['class' => 'list-table-filter']) }}
 								{{ Form::hidden('filter_field', 'year') }}
 								{{ Form::hidden('filter_results', 'yes') }}
 								{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -53,7 +53,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
-								{{ Form::select('filter_value', $sectors, null, ['class' => 'list-table-filter']) }}
+								{{ Form::select('filter_value', $sectors, Session::has('caselist.Filters.sector_id') ? Session::get('caselist.Filters.sector_id') : null, ['class' => 'list-table-filter']) }}
 								{{ Form::hidden('filter_field', 'sector_id') }}
 								{{ Form::hidden('filter_results', 'yes') }}
 								{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -61,7 +61,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
-									{{ Form::select('filter_value', $products, null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $products, Session::has('caselist.Filters.product_id') ? Session::get('caselist.Filters.product_id') : null, ['class' => 'list-table-filter']) }}
 									{{ Form::hidden('filter_field', 'product_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -69,7 +69,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
-									{{ Form::select('filter_value', $units, null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $units, Session::has('caselist.Filters.unit_id') ? Session::get('caselist.Filters.unit_id') : null, ['class' => 'list-table-filter']) }}
 									{{ Form::hidden('filter_field', 'unit_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -77,7 +77,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'caselist/search']) }}
-									{{ Form::select('filter_value', $account_directors, null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $account_directors, Session::has('caselist.Filters.account_director_id') ? Session::get('caselist.Filters.account_director_id') : null, ['class' => 'list-table-filter']) }}
 									{{ Form::hidden('filter_field', 'account_director_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}

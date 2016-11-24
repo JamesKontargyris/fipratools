@@ -23,13 +23,13 @@
 									</ul>
 									<ul class="small-font">
 										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>
-										@if(is_filter())
-											<li><a href="/list/export?filetype=pdf_filtered" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Filtered</a></li>
+										@if(is_filter($items->key))
+											<li><a href="/{{ $items->key }}/export?filetype=pdf_filtered" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Filtered</a></li>
 										@else
 											<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Visible</a></li>
 										@endif
 										<li><a href="/{{ $items->key }}/export?filetype=excel_all" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: All</a></li>
-										@if(is_filter())
+										@if(is_filter($items->key))
 											<li><a href="/{{ $items->key }}/export?filetype=excel_filtered" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: Filtered</a></li>
 										@else
 											<li><a href="/{{ $items->key }}/export?filetype=excel_selection&page={{ $items->getCurrentPage() }}" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: Visible</a></li>
