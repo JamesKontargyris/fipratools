@@ -23,6 +23,12 @@
 			<a href="{{ route('clients.create') }}" class="site-nav-extra-link" title="Add a new client"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active('knowledge_area_groups') ? 'active' : '' }}">
+			<a href="{{ route('knowledge_area_groups.index') }}"><strong>Knowledge Area Groups</strong></a>
+			<a href="{{ route('knowledge_area_groups.create') }}" class="site-nav-extra-link" title="Add a new knowledge area group"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
 	@if($user->can('manage_cases') && section_is() == 'case')
 		<li class="{{ nav_item_is_active('cases') ? 'active' : '' }}">
 			<a href="{{ route('cases.index') }}" class="{{ nav_item_is_active('cases') ? 'active' : '' }} has-extra-link">

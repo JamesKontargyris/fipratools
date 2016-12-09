@@ -108,7 +108,32 @@ Route::get('roles', function()
 //	Role::find(1)->attachPermissions([$manage_cases->id]);
 //	Role::find(2)->attachPermissions([$manage_cases->id]);
 //
-//	return "All done!";
+	/*$manage_knowledge = new Permission;
+	$manage_knowledge->name = "manage_knowledge";
+	$manage_knowledge->display_name = "Manage Knowledge Survey resources";
+	$manage_knowledge->save();
+
+	$edit_knowledge = new Permission;
+	$edit_knowledge->name = "edit_knowledge";
+	$edit_knowledge->display_name = "Edit Knowledge Survey details for their user profile";
+	$edit_knowledge->save();
+
+	$view_knowledge = new Permission;
+	$view_knowledge->name = "view_knowledge";
+	$view_knowledge->display_name = "View Knowledge Survey";
+	$view_knowledge->save();
+
+	Role::find(1)->attachPermissions([$manage_knowledge->id]);
+	Role::find(1)->attachPermissions([$edit_knowledge->id]);
+	Role::find(2)->attachPermissions([$edit_knowledge->id]);
+	Role::find(3)->attachPermissions([$edit_knowledge->id]);
+	Role::find(4)->attachPermissions([$edit_knowledge->id]);
+	Role::find(1)->attachPermissions([$view_knowledge->id]);
+	Role::find(2)->attachPermissions([$view_knowledge->id]);
+	Role::find(3)->attachPermissions([$view_knowledge->id]);
+	Role::find(4)->attachPermissions([$view_knowledge->id]);
+
+	return "All done!";*/
 });
 
 Route::controller('password', 'PasswordController');
@@ -131,6 +156,16 @@ Route::group(['before' => 'auth'], function()
 	Route::any('caselist/search', 'CaseListController@search');
 	Route::post('caselist/filter', ['as' => 'caselist.filter', 'uses' => 'CaseListController@filter']);
 	Route::resource('caselist', 'CaseListController');
+
+	Route::any('knowledge_areas/export', 'KnowledgeAreasController@export');
+	Route::any('knowledge_areas/search', 'KnowledgeAreasController@search');
+	Route::post('knowledge_areas/filter', ['as' => 'knowledge_areas.filter', 'uses' => 'KnowledgeAreasController@filter']);
+	Route::resource('knowledge_areas', 'KnowledgeAreasController');
+
+	Route::any('knowledge_area_groups/export', 'KnowledgeAreaGroupsController@export');
+	Route::any('knowledge_area_groups/search', 'KnowledgeAreaGroupsController@search');
+	Route::post('knowledge_area_groups/filter', ['as' => 'knowledge_area_groups.filter', 'uses' => 'KnowledgeAreaGroupsController@filter']);
+	Route::resource('knowledge_area_groups', 'KnowledgeAreaGroupsController');
 
 	Route::any('cases/export', 'CasesController@export');
 	Route::any('cases/search', 'CasesController@search');
