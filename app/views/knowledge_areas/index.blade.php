@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('knowledge_area.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Knowledge Area</a></li>
+    <li><a href="{{ route('knowledge_areas.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Knowledge Area</a></li>
 @stop
 
 @section('export-nav')
@@ -26,7 +26,8 @@
                     <table width="100%" class="index-table">
                         <thead>
                         <tr>
-                            <td rowspan="2" width="75%">Name</td>
+                            <td rowspan="2" width="55%">Name</td>
+                            <td rowspan="2" width="20%">Group</td>
                             <td rowspan="2" colspan="2" class="hide-print">Actions</td>
                         </tr>
                         </thead>
@@ -34,14 +35,15 @@
                         @foreach($items as $area)
                             <tr>
                                 <td><strong>{{ $area->name }}</strong></td>
+                                <td>{{ KnowledgeAreaGroup::find($area->knowledge_area_group_id)->name }}</td>
                                 <td class="actions content-right hide-print">
-                                    {{ Form::open(['route' => array('knowledge_area.edit', $area->id), 'method' => 'get']) }}
+                                    {{ Form::open(['route' => array('knowledge_areas.edit', $area->id), 'method' => 'get']) }}
                                     <button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>
                                     {{ Form::close() }}
                                 </td>
                                 <td class="actions content-right hide-print">
-                                    {{ Form::open(['route' => array('knowledge_area.destroy', $area->id), 'method' => 'delete']) }}
-                                    <button type="submit" class="red-but delete-row" data-resource-type="location"><i class="fa fa-times"></i></button>
+                                    {{ Form::open(['route' => array('knowledge_areas.destroy', $area->id), 'method' => 'delete']) }}
+                                    <button type="submit" class="red-but delete-row" data-resource-type="knowledge area"><i class="fa fa-times"></i></button>
                                     {{ Form::close() }}
                                 </td>
                             </tr>

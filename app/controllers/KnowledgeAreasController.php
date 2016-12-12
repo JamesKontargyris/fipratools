@@ -17,13 +17,12 @@ class KnowledgeAreasController extends \BaseController
 	{
 		parent::__construct();
 
-		$this->check_perm( 'manage_sectors' );
+		$this->check_perm( 'manage_knowledge' );
 
 		$this->addEditKnowledgeAreaForm = $addEditKnowledgeAreaForm;
 
 		View::share( 'page_title', 'Knowledge Areas' );
-		View::share( 'key', 'knowledge_area' );
-		$this->addEditKnowledgeAreaForm = $addEditKnowledgeAreaForm;
+		View::share( 'key', 'knowledge_areas' );
 	}
 
 	/**
@@ -45,38 +44,38 @@ class KnowledgeAreasController extends \BaseController
 	}
 
 	/**
-	 * Show the form for creating a new sector.
-	 * GET /sectors/create
+	 * Show the form for creating a new knowledge area.
+	 * GET /knowledge_areas/create
 	 *
 	 * @return Response
 	 */
 	public function create()
 	{
-		$categories = $this->getSectorCategories();
-		return View::make( 'sectors.create' )->with(compact('categories'));
+		$groups = $this->getKnowledgeAreaGroups();
+		return View::make( 'knowledge_areas.create' )->with(compact('groups'));
 	}
 
 	/**
-	 * Store a newly created sector in storage.
-	 * POST /sectors
+	 * Store a newly created knowledge area in storage.
+	 * POST /knowledge_areas
 	 *
 	 * @return Response
 	 */
 	public function store()
 	{
 		$input = Input::all();
-		$this->addEditSectorForm->validate( $input );
+		$this->addEditKnowledgeAreaForm->validate( $input );
 
-		$this->execute( 'Leadofficelist\Sectors\AddSectorCommand' );
+		$this->execute( 'Leadofficelist\Knowledge_areas\AddKnowledgeAreaCommand' );
 
 		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
 
-		return Redirect::route( 'sectors.index' );
+		return Redirect::route( 'knowledge_areas.index' );
 	}
 
 	/**
-	 * Display the specified sector.
-	 * GET /sectors/{id}
+	 * Display the specified knowledge area.
+	 * GET /knowledge_areas/{id}
 	 *
 	 * @param  int $id
 	 *
@@ -96,8 +95,8 @@ class KnowledgeAreasController extends \BaseController
 	}
 
 	/**
-	 * Show the form for editing the specified sector.
-	 * GET /sectors/{id}/edit
+	 * Show the form for editing the specified knowledge area.
+	 * GET /knowledge_areas/{id}/edit
 	 *
 	 * @param  int $id
 	 *
@@ -105,20 +104,20 @@ class KnowledgeAreasController extends \BaseController
 	 */
 	public function edit( $id )
 	{
-		if ( $sector = $this->getSector($id) )
+		if ( $area = $this->getKnowledgeArea($id) )
 		{
-			$categories = $this->getSectorCategories();
-			return View::make( 'sectors.edit' )->with(compact('sector', 'categories'));
+			$groups = $this->getKnowledgeAreaGroups();
+			return View::make( 'knowledge_areas.edit' )->with(compact('area', 'groups'));
 		}
 		else
 		{
-			throw new ResourceNotFoundException('sectors');
+			throw new ResourceNotFoundException('knowledge_area');
 		}
 	}
 
 	/**
-	 * Update the specified sector in storage.
-	 * PUT /sectors/{id}
+	 * Update the specified knowledge area in storage.
+	 * PUT /knowledge_areas/{id}
 	 *
 	 * @param  int $id
 	 *
@@ -128,19 +127,19 @@ class KnowledgeAreasController extends \BaseController
 	{
 		$input                                  = Input::all();
 		$input['id']                            = $id;
-		$this->addEditSectorForm->rules['name'] = 'required|max:255|unique:sectors,name,' . $id;
-		$this->addEditSectorForm->validate( $input );
+		$this->addEditKnowledgeAreaForm->rules['name'] = 'required|max:255|unique:knowledge_areas,name,' . $id;
+		$this->addEditKnowledgeAreaForm->validate( $input );
 
-		$this->execute( 'Leadofficelist\Sectors\EditSectorCommand', $input );
+		$this->execute( 'Leadofficelist\Knowledge_areas\EditKnowledgeAreaCommand', $input );
 
-		Flash::overlay( 'Sector updated.', 'success' );
+		Flash::overlay( 'Knowledge area updated.', 'success' );
 
-		return Redirect::route( 'sectors.index' );
+		return Redirect::route( 'knowledge_areas.index' );
 	}
 
 	/**
-	 * Remove the specified sector from storage.
-	 * DELETE /sectors/{id}
+	 * Remove the specified knowledge area from storage.
+	 * DELETE /knowledge_areas/{id}
 	 *
 	 * @param  int $id
 	 *
@@ -148,20 +147,20 @@ class KnowledgeAreasController extends \BaseController
 	 */
 	public function destroy( $id )
 	{
-		if ( $sector = $this->getSector( $id ) )
+		if ( $area = $this->getKnowledgeArea( $id ) )
 		{
-			Sector::destroy( $id );
-			Flash::overlay( '"' . $sector->name . '" has been deleted.', 'info' );
+			KnowledgeArea::destroy( $id );
+			Flash::overlay( '"' . $area->name . '" has been deleted.', 'info' );
 
-			return Redirect::route( 'sectors.index' );
+			return Redirect::route( 'knowledge_areas.index' );
 		} else
 		{
-			throw new ResourceNotFoundException( 'sectors' );
+			throw new ResourceNotFoundException( 'knowledge_area' );
 		}
 	}
 
 	/**
-	 * Process a sector search.
+	 * Process a knowledge_area search.
 	 *
 	 * @return $this
 	 */
@@ -169,23 +168,23 @@ class KnowledgeAreasController extends \BaseController
 	{
 		if($search_term = $this->findSearchTerm())
 		{
-			$items              = Sector::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items              = KnowledgeArea::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
 			if( ! $this->checkForSearchResults($items)) return Redirect::route( $this->resource_key . '.index' );
 			$items->search_term = str_replace('%', '', $search_term);
-			$items->key         = 'sectors';
+			$items->key         = 'knowledge_areas';
 
-			return View::make( 'sectors.index' )->with( compact( 'items' ) );
+			return View::make( 'knowledge_areas.index' )->with( compact( 'items' ) );
 		}
 		else
 		{
-			return View::make( 'sectors.index' );
+			return View::make( 'knowledge_areas.index' );
 		}
 	}
 
 	protected function getAll()
 	{
-		return Sector::all();
+		return KnowledgeArea::all();
 	}
 
 	protected function getSelection()
@@ -195,29 +194,29 @@ class KnowledgeAreasController extends \BaseController
 			$search_term = $this->findSearchTerm();
 			$this->search_term_clean = str_replace('%', '', $search_term);
 
-			$items = Sector::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = KnowledgeArea::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 		else
 		{
-			$items = Sector::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = KnowledgeArea::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 
 		return $items;
 	}
 
-	protected function getSector($id)
+	protected function getKnowledgeArea($id)
 	{
-		return Sector::find( $id );
+		return KnowledgeArea::find( $id );
 	}
 
-	protected function getSectorCategories()
+	protected function getKnowledgeAreaGroups()
 	{
-		$categories = ['' => 'Select existing category or create new...', 'new' => 'New...'];
-		foreach(Sector_category::orderBy('name')->get() as $category)
+		$groups = ['' => 'Select...'];
+		foreach(KnowledgeAreaGroup::orderBy('order')->get() as $group)
 		{
-			$categories[$category->id] = $category->name;
+			$groups[$group->id] = $group->name;
 		}
 
-		return $categories;
+		return $groups;
 	}
 }

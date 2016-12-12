@@ -10,9 +10,11 @@ class AddEditKnowledgeArea extends FormValidator {
 	 * @var array
 	 */
 	public $rules = [
-		'name'     => 'required|max:255|unique:knowledge_areas',
+		'name'                    => 'required|max:255|unique:knowledge_areas',
+		'knowledge_area_group_id' => 'required',
 	];
 
 	public $messages = [
+		'knowledge_area_group_id.required' => 'Please select a group.',
 	];
 } 
