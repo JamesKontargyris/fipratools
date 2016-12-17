@@ -27,7 +27,7 @@
 					<thead>
 						<tr>
 							<td rowspan="2" width="40%">User</td>
-							<td rowspan="2" width="15%">Email</td>
+							<td rowspan="2" width="15%" class="hide-s">Email</td>
 							<td rowspan="2" width="10%" class="hide-s">Role</td>
 							<td colspan="2" width="10%" class="content-center hide-s">Clients Added</td>
 							<td rowspan="2" colspan="2" class="hide-print">Actions</td>

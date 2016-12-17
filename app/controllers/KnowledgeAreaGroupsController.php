@@ -3,7 +3,7 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditKnowledgeAreaGroup as AddEditKnowledgeAreaGroupForm;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 
 class KnowledgeAreaGroupsController extends \BaseController
 {
@@ -110,7 +110,7 @@ class KnowledgeAreaGroupsController extends \BaseController
 		}
 		else
 		{
-			throw new ResourceNotFoundException('sectors');
+			throw new ResourceNotFoundException('knowledge_area_groups');
 		}
 	}
 

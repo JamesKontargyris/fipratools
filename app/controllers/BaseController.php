@@ -607,37 +607,54 @@ class BaseController extends Controller {
 
 	protected function findSearchTerm() {
 		if ( Input::has( 'search' ) ) {
+			// The user has just run a search
 			//Start again on page 1 of the results
 			$this->destroyCurrentPageNumber();
 
 			if ( Input::has( 'letter' ) ) {
+				// The user has chosen a letter
 				Session::set( $this->resource_key . '.SearchTerm', Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'first letter' );
 			} else {
+				// The user has typed a search term
 				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
 
+			// Return the search term
 			return Session::get( $this->resource_key . '.SearchTerm' );
 
-		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' ) ) {
+		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' )) {
+			//The user has filtered the content using the drop-downs
+			// Set the search type to filter
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
+			//
 			if( ! Input::get('filter_value')) {
 				// The user has selected the "Filter..." or "Remove filter" blank row
 				Session::forget($this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
-				// Is the Filters array now empty? No filters selected if so
+				// Is the Filters array now empty? No filters selected if so - clear the search
 				$this->isFilterArrayEmpty();
-			} else {
+			} elseif(Input::has( 'filter_value' )) {
+				// If a filter value was selected, set that in the filters session array
 				Session::set( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
 			}
 
 			return Session::get( $this->resource_key . '.Filters' );
-		} elseif (Session::has($this->resource_key . '.SearchType')) {
-			$this->isFilterArrayEmpty();
-			// No search term was parsed, but we've still got a search or filter in place, so load the search view
-			return true;
+
+		} elseif (Session::has( $this->resource_key . '.Filters' )) {
+			// A filter hasn't been selected, but we are still filtering on existing terms, so return the existing filters
+			// Set the search type to filter
+			Session::set( $this->resource_key . '.SearchType', 'filter' );
+
+			return Session::get( $this->resource_key . '.Filters' );
+		}
+		elseif (Session::has($this->resource_key . '.SearchType')) {
+			// No search term was parsed, but we've still got a search or filter in place, so return the search term
+			return Session::get( $this->resource_key . '.SearchTerm');
 		}
 
+		// If all else fails, return whatever is set for the search term
+		return Session::get( $this->resource_key . '.SearchTerm');
 	}
 
 	protected function isFilterArrayEmpty()

@@ -93,7 +93,7 @@ class CaseListController extends BaseController {
 	}
 
 	protected function getFiltered( $for = 'screen' ) {
-		if ( $for == 'pdf' ) {
+		if ( $for == 'export' ) {
 			// Get all results for PDF export
 			// Both sector_id and product_id are set
 			if(Session::has( $this->resource_key . '.Filters.sector_id' ) && Session::has( $this->resource_key . '.Filters.product_id' )) {

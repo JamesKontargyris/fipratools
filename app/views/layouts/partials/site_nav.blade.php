@@ -72,11 +72,17 @@
 		</li>
 	@endif
 	@if($user->can('manage_knowledge') && section_is() == 'survey')
-			<li class="{{ nav_item_is_active('knowledge_area_groups') ? 'active' : '' }}">
+		<li class="{{ nav_item_is_active('knowledge_area_groups') ? 'active' : '' }}">
 			<a href="{{ route('knowledge_area_groups.index') }}"><strong>Knowledge Area Groups</strong></a>
 			<a href="{{ route('knowledge_area_groups.create') }}" class="site-nav-extra-link" title="Add a new knowledge area group"><i class="fa fa-plus-circle"></i></a>
-				</li>
-		@endif
+		</li>
+	@endif
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active('knowledge_languages') ? 'active' : '' }}">
+			<a href="{{ route('knowledge_languages.index') }}"><strong>Languages</strong></a>
+			<a href="{{ route('knowledge_languages.create') }}" class="site-nav-extra-link" title="Add a new language"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
 
 
 

@@ -167,6 +167,11 @@ Route::group(['before' => 'auth'], function()
 	Route::post('knowledge_area_groups/filter', ['as' => 'knowledge_area_groups.filter', 'uses' => 'KnowledgeAreaGroupsController@filter']);
 	Route::resource('knowledge_area_groups', 'KnowledgeAreaGroupsController');
 
+	Route::any('knowledge_languages/export', 'KnowledgeLanguagesController@export');
+	Route::any('knowledge_languages/search', 'KnowledgeLanguagesController@search');
+	Route::post('knowledge_languages/filter', ['as' => 'knowledge_languages.filter', 'uses' => 'KnowledgeLanguagesController@filter']);
+	Route::resource('knowledge_languages', 'KnowledgeLanguagesController');
+
 	Route::any('cases/export', 'CasesController@export');
 	Route::any('cases/search', 'CasesController@search');
 	Route::any('cases/status_approve', 'CasesController@approve');
