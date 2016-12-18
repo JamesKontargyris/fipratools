@@ -532,7 +532,7 @@
 }
 
 .formfield {
-	margin-bottom:$v-rhythm;
+	margin-bottom:$v-rhythm * 2;
 	&.highlight {
 		padding:($v-rhythm / 2) 10px;
 		background-color:lighten($blue, 70%);
@@ -541,6 +541,13 @@
 	&.hide {
 		display:none;
 	}
+    .label-info {
+      font-size:13px;
+      line-height:18px;
+      font-style: italic;
+      color: $grey;
+      padding-bottom:$v-rhythm / 2;
+    }
 }
 .formgroup {
   @include clearfix();
@@ -571,6 +578,10 @@
 		padding-left: 20px;
 		padding-right: 20px;
 	}
+}
+
+.fluent-language-row.master {
+  display:none;
 }
 
 .help {

@@ -124,8 +124,23 @@
 
     // Make the products select box a nicer multi-select box
     $('#product_select').multiSelect();
-    // Make the sector select box a nicer multi-select box
+    // Make the sectors select box a nicer multi-select box
     $('#sector_select').multiSelect();
+    // Make the languages select box a nicer multi-select box
+    $('#language_select').multiSelect({
+        keepOrder: true,
+        afterSelect: function(values) {
+            $('.fluent-language-row.master').children('.fluent-language-name').text(languages[values]);
+            var clonedRow = $('.fluent-language-row.master').clone();
+            clonedRow.appendTo('.fluent-languages').removeClass('master').addClass('language-id-' + values).children('input').attr('name', 'fluent_' + values);
+        },
+        afterDeselect: function(values) {
+            $('.language-id-' + values).remove();
+        }
+    });
+    // Make the fluent languages select box a nicer multi-select box
+    $('#fluent_select').multiSelect();
+
 
 
     //Alerts
