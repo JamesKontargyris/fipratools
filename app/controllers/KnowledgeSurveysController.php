@@ -38,6 +38,7 @@ class KnowledgeSurveysController extends \BaseController {
 	 */
 	public function create()
 	{
+
 		return View::make( 'knowledge_surveys.create' );
 	}
 
@@ -105,13 +106,14 @@ class KnowledgeSurveysController extends \BaseController {
 		$dob_data = $this->getDateSelect('dob');
 		$joined_fipra_data = $this->getDateSelect('joined_fipra');
 		$languages = $this->getLanguages();
+		$expertise = $this->getExpertise();
 
-		return View::make( 'knowledge_surveys.edit' )->with(compact('dob_data', 'joined_fipra_data', 'languages'));
+		return View::make( 'knowledge_surveys.edit' )->with(compact('dob_data', 'joined_fipra_data', 'languages', 'expertise'));
 	}
 
 	public function postUpdateSurvey()
 	{
-
+		print_r(Input::all());
 	}
 
 	protected function getDateSelect($purpose = 'dob')
@@ -153,6 +155,19 @@ class KnowledgeSurveysController extends \BaseController {
 		}
 
 		return $languages_processed;
+	}
+
+	protected function getExpertise()
+	{
+		$expertise = [];
+		$knowledge_area_groups = KnowledgeAreaGroup::orderBy('order')->get()->toArray();
+		foreach($knowledge_area_groups as $group) {
+			$knowledge_areas = KnowledgeArea::where('knowledge_area_group_id', '=', $group['id'])->orderBy('name')->get()->toArray();
+			foreach($knowledge_areas as $area) {
+				$expertise[$group['name']][$area['id']] = $area['name'];
+			}
+		}
+		return $expertise;
 	}
 
 }

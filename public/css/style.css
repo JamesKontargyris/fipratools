@@ -1708,6 +1708,70 @@ ul.pagination {
 .status--active {
   color: green; }
 
+/* line 751, ../../app/assets/sass/_modules.scss */
+.expertise-form__container {
+  background-color: #f0f9e1;
+  padding: 20px 20px;
+  margin-top: 20px; }
+
+/* line 757, ../../app/assets/sass/_modules.scss */
+.expertise-form__knowledge-area {
+  width: 50%;
+  padding-left: 10px; }
+  @media (min-width: 769px) {
+    /* line 757, ../../app/assets/sass/_modules.scss */
+    .expertise-form__knowledge-area {
+      width: 25%;
+      font-size: 17px;
+      font-size: 1.0625rem; } }
+
+/* line 766, ../../app/assets/sass/_modules.scss */
+.expertise-form__row {
+  background-color: #cfeca2;
+  border-bottom: 3px solid #f0f9e1; }
+
+/* line 770, ../../app/assets/sass/_modules.scss */
+.expertise-form__score-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  font-size: 1rem;
+  color: #00257f;
+  padding-bottom: 5px; }
+
+/* line 777, ../../app/assets/sass/_modules.scss */
+.expertise-form__score {
+  width: 10%;
+  text-align: center;
+  padding: 5px 0; }
+  @media (min-width: 769px) {
+    /* line 777, ../../app/assets/sass/_modules.scss */
+    .expertise-form__score {
+      width: 15%; } }
+
+/* line 786, ../../app/assets/sass/_modules.scss */
+.expertise-form__radio {
+  width: 20px;
+  height: 20px; }
+  @media (min-width: 769px) {
+    /* line 786, ../../app/assets/sass/_modules.scss */
+    .expertise-form__radio {
+      width: 30px;
+      height: 30px; } }
+
+/* line 796, ../../app/assets/sass/_modules.scss */
+.knowledge__section-title {
+  font-weight: bold;
+  padding: 20px;
+  background-color: #8dcc29;
+  color: white;
+  margin-bottom: 20px; }
+
+/* line 803, ../../app/assets/sass/_modules.scss */
+.knowledge__section-intro {
+  font-size: 17px;
+  font-size: 1.0625rem; }
+
 /* line 1, ../../app/assets/sass/_header.scss */
 .mobile-user-details-container {
   padding: 20px 10px;

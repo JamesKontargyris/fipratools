@@ -746,3 +746,60 @@ ul.pagination {
 
 .status--pending { color: orange; }
 .status--active { color: green; }
+
+
+.expertise-form__container {
+  background-color: lighten($green, 45%);
+  padding:$v-rhythm 20px;
+  margin-top:$v-rhythm;
+}
+
+.expertise-form__knowledge-area {
+  width:50%;
+  padding-left:10px;
+
+  @include breakpoint($m) {
+    width:25%;
+    @include font-size(17);
+  }
+}
+.expertise-form__row {
+  background-color:lighten($green, 30%);
+  border-bottom:3px solid lighten($green, 45%);
+}
+.expertise-form__score-title {
+  text-align: center;
+  font-weight:bold;
+  @include font-size(16);
+  color:$blue;
+  padding-bottom:5px;
+}
+.expertise-form__score {
+  width:10%;
+  text-align: center;
+  padding:5px 0;
+
+  @include breakpoint($m) {
+    width:15%;
+  }
+}
+.expertise-form__radio {
+  width:20px;
+  height:20px;
+
+  @include breakpoint($m) {
+    width:30px;
+    height:30px;
+  }
+}
+
+.knowledge__section-title {
+  font-weight:bold;
+  padding:20px;
+  background-color:$green;
+  color:white;
+  margin-bottom:20px;
+}
+.knowledge__section-intro {
+  @include font-size(17);
+}

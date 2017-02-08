@@ -289,3 +289,8 @@ function get_pretty_sector_names($sector_ids)
 
 	return false;
 }
+
+function convert_text_to_input_name($text)
+{
+	return strtolower(str_replace(' ', '_', $text));
+}
