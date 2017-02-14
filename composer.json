@@ -17,7 +17,8 @@
         "maatwebsite/excel": "1.*",
         "pda/pheanstalk": "2.1.0",
         "guzzlehttp/guzzle": "5.*",
-		"rych/random": "^0.1.0"
+		"rych/random": "^0.1.0",
+		"cebe/markdown": "~1.0.1"
 	},
 	"autoload": {
 		"classmap": [

@@ -533,6 +533,9 @@
 
 .formfield {
 	margin-bottom:$v-rhythm * 2;
+    &.no-margin {
+      margin-bottom: 0;
+    }
 	&.highlight {
 		padding:($v-rhythm / 2) 10px;
 		background-color:lighten($blue, 70%);
@@ -754,17 +757,21 @@ ul.pagination {
   margin-top:$v-rhythm;
 }
 
+.expertise-form__group-intro {
+  p { padding:0; }
+}
+
 .expertise-form__knowledge-area {
   width:50%;
-  padding-left:10px;
+  padding-left:15px;
 
   @include breakpoint($m) {
-    width:25%;
+    width:35%;
     @include font-size(17);
   }
 }
 .expertise-form__row {
-  background-color:lighten($green, 30%);
+  background-color:lighten($green, 39%);
   border-bottom:3px solid lighten($green, 45%);
 }
 .expertise-form__score-title {
@@ -780,7 +787,7 @@ ul.pagination {
   padding:5px 0;
 
   @include breakpoint($m) {
-    width:15%;
+    width:65% / 5;
   }
 }
 .expertise-form__radio {

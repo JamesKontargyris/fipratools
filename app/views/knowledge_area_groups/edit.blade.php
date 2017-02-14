@@ -20,6 +20,11 @@
                 {{ Form::text('name', isset($group->name) ? $group->name : '') }}
             </div>
             <div class="formfield">
+                {{ Form::label('description', 'Description:') }}
+                <div class="label-info">Displayed under the title on the knowledge survey form. **bold**, _italic_.</div>
+                {{ Form::textarea('description', isset($group->description) ? $group->description : '') }}
+            </div>
+            <div class="formfield">
                 {{ Form::label('order', 'Order:', ['class' => 'required']) }}
                 {{ Form::text('order', isset($group->order) ? $group->order : '10', ['style' => 'width:75px']) }}
                 <div class="small-text">The higher the number, the &quot;heavier&quot; the group. Heavier groups appear further down the page.</div>

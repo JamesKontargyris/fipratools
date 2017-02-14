@@ -290,7 +290,14 @@ function get_pretty_sector_names($sector_ids)
 	return false;
 }
 
-function convert_text_to_input_name($text)
+function convert_text_to_input_name($string)
 {
-	return strtolower(str_replace(' ', '_', $text));
+	return strtolower(str_replace(' ', '_', $string));
+}
+
+function markdown_text_decode($string)
+{
+	$parser = new \cebe\markdown\Markdown();
+
+	return $parser->parse($string);
 }

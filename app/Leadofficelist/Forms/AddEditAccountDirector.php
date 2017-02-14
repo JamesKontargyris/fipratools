@@ -11,7 +11,7 @@ class AddEditAccountDirector extends FormValidator
 	 */
 	public $rules = [
 		'first_name' => 'required|max:255',
-		'last_name'  => 'required:max:255',
+		'last_name' => 'required|max:255',
 	];
 
 	public $messages = [
@@ -21,4 +21,4 @@ class AddEditAccountDirector extends FormValidator
 		'last_name.max'       => 'Please enter a last name no longer than 255 characters in length.',
 		'first_name.unique'   => 'That name is already taken.',
 	];
-} 
+}
