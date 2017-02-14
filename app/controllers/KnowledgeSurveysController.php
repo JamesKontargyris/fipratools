@@ -1,7 +1,7 @@
 <?php
 
 use Laracasts\Commander\CommanderTrait;
-use Leadofficelist\Forms\AddEditSurveys as AddEditSurveysForm;
+use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
 
 class KnowledgeSurveysController extends \BaseController {
 
@@ -14,7 +14,7 @@ class KnowledgeSurveysController extends \BaseController {
 	 */
 	private $addEditSurvey;
 
-	function __construct( AddEditSurveysForm $addEditSurvey ) {
+	function __construct( AddEditSurveyForm $addEditSurvey ) {
 		parent::__construct();
 
 		$this->check_perm( 'view_knowledge' );
@@ -31,7 +31,7 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return Response
 	 */
 	public function index() {
-		//
+		echo "Knowledge Survey controller";
 	}
 
 	/**
@@ -103,7 +103,11 @@ class KnowledgeSurveysController extends \BaseController {
 		//
 	}
 
-	public function getUpdateSurvey() {
+	public function getShowProfile() {
+		echo "your profile will appear here";
+	}
+
+	public function getUpdateProfile() {
 		$dob_data          = $this->getDateSelect( 'dob' );
 		$joined_fipra_data = $this->getDateSelect( 'joined_fipra' );
 		$languages         = $this->getLanguages();
@@ -112,8 +116,14 @@ class KnowledgeSurveysController extends \BaseController {
 		return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise' ) );
 	}
 
-	public function postUpdateSurvey() {
+	public function postUpdateProfile() {
 		$input = Input::all();
+		// Add the knowledge areas into the validation rules and update feedback messages
+		foreach(KnowledgeArea::all() as $area) {
+			$this->addEditSurvey->rules['area_' . $area->id] = 'required|min:1|max:5';
+			$this->addEditSurvey->messages['area_' . $area->id . '.required'] = 'Please select an expertise score for ' . $area->name . '.';
+		}
+		// Validate input
 		$this->addEditSurvey->validate( $input );
 	}
 

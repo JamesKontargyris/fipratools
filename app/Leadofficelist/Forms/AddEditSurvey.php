@@ -1,6 +1,8 @@
 <?php namespace Leadofficelist\Forms;
 
+use KnowledgeArea;
 use Laracasts\Validation\FormValidator;
+use Laracasts\Validation\FactoryInterface as ValidatorFactory;
 
 class AddEditSurvey extends FormValidator
 {
@@ -22,11 +24,10 @@ class AddEditSurvey extends FormValidator
 	];
 
 	public $messages = [
+		'total_fipra_working_time.numeric' => 'Please enter your total Fipra working time as a percentage.',
+		'total_fipra_working_time.max' => 'Please enter your total Fipra working time as a percentage.',
+		'total_fipra_working_time.min' => 'Please enter your total Fipra working time as a percentage.',
+		'languages.required' => 'Please select the languages you speak / write.',
+		'fluent.required' => 'Please select the languages in which you are fluent.',
 	];
-
-	public function __construct() {
-		foreach(KnowledgeArea::all() as $area) {
-			$this->rules[$area->id] = 'required|min:1|max:5';
-		}
-	}
-} 
+}

@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
 @section('page-header')
-    Your Knowledge Profile
+    Edit your Knowledge Profile
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('knowledge_surveys.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Back</a></li>
+    <li><a href="{{ route('survey.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Back</a></li>
 @stop
 
 @section('content')
 
     @include('layouts.partials.messages')
 
-    {{ Form::open(['method' => 'POST', 'url' => '/myknowledge']) }}
+    {{ Form::open(['method' => 'POST', 'url' => 'survey/profile/edit']) }}
     <div class="row">
         <h2 class="knowledge__section-title">1. About You</h2>
         <div class="row">
@@ -114,11 +114,11 @@
                             @foreach($areas as $id => $area)
                                 <tr class="expertise-form__row">
                                     <td valign="middle" class="expertise-form__knowledge-area">{{ $area }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area[' . $id . ']', '1', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area[' . $id . ']', '2', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area[' . $id . ']', '3', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area[' . $id . ']', '4', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area[' . $id . ']', '5', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '1', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '2', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '3', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '4', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '5', null, ['class' => 'expertise-form__radio']) }}</td>
                                 </tr>
                             @endforeach
                         </table>

@@ -65,11 +65,19 @@
 			<a href="{{ route('services.create') }}" class="site-nav-extra-link" title="Add a new service"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
-	@if($user->can('manage_knowledge') && section_is() == 'survey')
-		<li class="{{ nav_item_is_active('knowledge_areas') ? 'active' : '' }}">
-			<a href="{{ route('knowledge_areas.index') }}"><strong>Knowledge Areas</strong></a>
-			<a href="{{ route('knowledge_areas.create') }}" class="site-nav-extra-link" title="Add a new knowledge area"><i class="fa fa-plus-circle"></i></a>
+	@if($user->can('view_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active(['survey', 'survey/profile']) ? 'active' : '' }}">
+			<a href="{{ url('survey/profile') }}"><strong>My Knowledge Profile</strong></a>
+            @if( ! nav_item_is_active('survey/profile/edit'))
+                <a href="{{ url('survey/profile/edit') }}" class="site-nav-extra-link" title="Edit your knowledge profile"><i class="fa fa-pencil"></i></a>
+            @endif
 		</li>
+	@endif
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+	<li class="{{ nav_item_is_active('knowledge_areas') ? 'active' : '' }}">
+		<a href="{{ route('knowledge_areas.index') }}"><strong>Knowledge Areas</strong></a>
+		<a href="{{ route('knowledge_areas.create') }}" class="site-nav-extra-link" title="Add a new knowledge area"><i class="fa fa-plus-circle"></i></a>
+	</li>
 	@endif
 	@if($user->can('manage_knowledge') && section_is() == 'survey')
 		<li class="{{ nav_item_is_active('knowledge_area_groups') ? 'active' : '' }}">

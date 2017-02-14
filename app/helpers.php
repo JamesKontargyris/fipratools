@@ -125,7 +125,13 @@ function current_section_name() {
 
 function nav_item_is_active($uri)
 {
-	if(is_request($uri)) return true;
+	if(is_array($uri)) {
+		foreach($uri as $u) {
+			if(is_request($u)) return true;
+		}
+	} else {
+		if(is_request($uri)) return true;
+	}
 
 	return false;
 }
