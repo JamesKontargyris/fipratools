@@ -76,7 +76,15 @@ class WidgetsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$this->check_role( 'Administrator' );
+
+		if ( $widget = $this->getWidget( $id ) )
+		{
+			return View::make( 'widgets.show' )->with( compact( 'widget' ) );
+		} else
+		{
+			throw new ResourceNotFoundException( 'widgets' );
+		}
 	}
 
 	/**

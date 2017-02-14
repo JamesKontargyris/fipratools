@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="knowledge__section-intro">
-                    <p>Introduction here.</p>
+                    {{ nl2br(get_widget('knowledge_survey_about_us_intro')) }}
                 </div>
                 <hr>
             </div>
@@ -85,7 +85,9 @@
             <h2 class="knowledge__section-title">2. Knowledge Survey</h2>
             <div class="row">
                 <div class="col-12">
-                    <p class="knowledge__section-intro">The results from this section will be made available in detail in a table to the whole Network. It will help the whole network identify where knowledge and experience lies that may usefully be brought into existing and future client relationships.</p>
+                    <div class="knowledge__section-intro">
+                        {{ nl2br(get_widget('knowledge_survey_expertise_form_intro')) }}
+                    </div>
                 </div>
             </div>
 

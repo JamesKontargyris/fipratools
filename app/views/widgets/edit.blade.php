@@ -17,11 +17,11 @@
         <div class="col-6">
             <div class="formfield">
                 {{ Form::label('name', 'Name:', ['class' => 'required']) }}
-                {{ Form::text('name', isset($widget->name) ? $widget->name : '') }}
+                {{ Form::text('name', isset($widget->name) ? $widget->name : '', ['class' => 'widget-name']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('slug', 'Slug:', ['class' => 'required']) }}
-                {{ Form::text('slug', isset($widget->slug) ? $widget->slug : '') }}
+                {{ Form::text('slug', isset($widget->slug) ? $widget->slug : '', ['class' => 'slug-name']) }}
             </div>
         </div>
         <div class="col-6">

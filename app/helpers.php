@@ -3,6 +3,7 @@
 use Leadofficelist\Products\Product;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Users\User;
+use Leadofficelist\Widgets\Widget;
 
 function display_page_title($default = 'Fipra Portal')
 {
@@ -306,4 +307,14 @@ function markdown_text_decode($string)
 	$parser = new \cebe\markdown\Markdown();
 
 	return $parser->parse($string);
+}
+
+function get_widget($slug)
+{
+	if($widget_content = Widget::where('slug', '=', $slug)->get()->first())
+	{
+		return $widget_content->content;
+	}
+
+	return false;
 }

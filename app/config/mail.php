@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'leadofficelist@fipra.com', 'name' => 'Fipra Lead Office List'),
+	'from' => array('address' => 'leadofficelist@fipra.com', 'name' => 'Fipra Portal'),
 
 	/*
 	|--------------------------------------------------------------------------

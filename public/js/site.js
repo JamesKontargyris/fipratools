@@ -134,6 +134,14 @@
     $('#fluent_select').multiSelect();
 
 
+    // Widgets: create a slug from the name entered, if no slug already exists
+    $('.widget-name').blur(function()
+    {
+        if($('.widget-slug').val().length == 0)
+       {
+           $('.widget-slug').val(sluggerize($('.widget-name').val()).trim());
+       }
+    });
 
     //Alerts
     $('.alert button.close').on('click', function() { $('.alert-container').slideUp(500); });
@@ -233,5 +241,10 @@
         $('.show-uk select, .show-uk input').attr('disabled', 'disabled');
         $('select[name=account_director_id]').find('option:first-child').val('').text('Please select...');
     };
+
+    function sluggerize(string)
+    {
+        return string.toString().toLowerCase().replace(/ /g,"_").replace(/\W/g, '');
+    }
 
 })();
