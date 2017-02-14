@@ -180,6 +180,10 @@ Route::group(['before' => 'auth'], function()
 	Route::post('knowledge_languages/filter', ['as' => 'knowledge_languages.filter', 'uses' => 'KnowledgeLanguagesController@filter']);
 	Route::resource('knowledge_languages', 'KnowledgeLanguagesController');
 
+	Route::any('widgets/export', 'WidgetsController@export');
+	Route::any('widgets/search', 'WidgetsController@search');
+	Route::resource('widgets', 'WidgetsController');
+
 	Route::any('cases/export', 'CasesController@export');
 	Route::any('cases/search', 'CasesController@search');
 	Route::any('cases/status_approve', 'CasesController@approve');

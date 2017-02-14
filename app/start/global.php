@@ -17,6 +17,7 @@ use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Exceptions\PermissionDeniedException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
+use Leadofficelist\Validation\CustomValidator;
 
 ClassLoader::addDirectories( array(
 
@@ -146,7 +147,3 @@ require app_path() . '/helpers.php';
 | Register custom validation rules.
 |
 */
-Validator::resolver(function($translator, $data, $rules, $messages)
-{
-	return new Leadofficelist\Validation\CustomValidator($translator, $data, $rules, $messages);
-});

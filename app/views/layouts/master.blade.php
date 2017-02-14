@@ -21,7 +21,7 @@
 								<ul class="small-font">
 									@yield('page-nav')
 								</ul>
-								@if(! is_request('client_links') && ! is_request('client_archives'))
+								@if(! is_request('client_links') && ! is_request('client_archives') && ! is_request('widgets'))
 									<ul class="small-font">
 										@if(isset($items) && ! is_request('about') && ! is_request('survey'))
 											<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>

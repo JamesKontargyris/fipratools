@@ -101,9 +101,14 @@
 		</li>
 	@endif
 	@if($user->hasRole('Administrator'))
-		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }} hang-right"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
-	@endif
-	@if($user->can('manage_users'))
+            <li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }} hang-right"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
+        @endif
+        @if($user->hasRole('Administrator'))
+            <li class="{{ nav_item_is_active('widgets') ? 'active' : '' }} hang-right">
+                <a href="{{ route('widgets.index') }}">Widgets</a>
+            </li>
+        @endif
+    @if($user->can('manage_users'))
 		<li class="{{ nav_item_is_active('users') ? 'active' : '' }} hang-right">
 			<a href="{{ route('users.index') }}" class="has-extra-link">Users</a>
 			<a href="{{ route('users.create') }}" class="site-nav-extra-link" title="Add a new user"><i class="fa fa-plus-circle"></i></a>

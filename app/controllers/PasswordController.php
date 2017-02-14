@@ -1,6 +1,7 @@
 <?php
 
 use Laracasts\Flash\Flash;
+use Laracasts\Validation\FormValidationException;
 use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Forms\Login as LoginForm;
@@ -85,7 +86,12 @@ class PasswordController extends \BaseController
 	public function postChange()
 	{
 		$input = Input::all();
-		$this->passwordchange->validate($input);
+		// Does the temporary password match the one in the DB?
+		if(Hash::check(trim($input['current_password']), Session::get('temp_pass'))) {
+			$this->passwordchange->validate($input);
+		} else {
+			throw new FormValidationException('Validation failed', ['Your current password is incorrect.']);
+		}
 
 		$user = Auth::user();
 		$user->password = $input['new_password'];
