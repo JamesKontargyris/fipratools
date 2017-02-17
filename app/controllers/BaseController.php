@@ -47,11 +47,12 @@ class BaseController extends Controller {
 //	    via a 'section' variable in the controller.
 //	    If so, update the session variable.
 //	    If no section is set, default to list section.
-		if ( ! Session::has( 'section' ) ) {
+		if ( ! isset($this->section) && ! Session::has( 'section' ) ) {
 			Session::put( 'section', 'list' );
-		}
-		if ( isset($this->section) ) {
+		} elseif ( isset($this->section) ) {
 			Session::put( 'section', $this->section );
+		} else {
+			Session::put( 'section', 'list' );
 		}
 
 		$this->user = Auth::user();
