@@ -9,6 +9,7 @@ class WidgetsController extends \BaseController {
 
 	use CommanderTrait;
 
+	public $section = 'admin';
 	protected $resource_key = 'widgets';
 	protected $resource_permission = 'manage_users';
 	protected $addEditWidgetForm;

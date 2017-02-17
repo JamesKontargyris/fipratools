@@ -9,6 +9,7 @@ class KnowledgeAreasController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'survey';
 	protected $resource_key = 'knowledge_areas';
 	protected $resource_permission = 'manage_knowledge';
 	private $addEditKnowledgeAreaForm;

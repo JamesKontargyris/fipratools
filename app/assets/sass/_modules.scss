@@ -157,6 +157,10 @@
     h2 { color:darken($green, 10%); }
     background-color: desaturate(lighten($green, 40%), 25%);
   }
+  &.section-admin {
+    h2 { color:darken($grey, 10%); }
+    background-color: desaturate(lighten($grey, 40%), 25%);
+  }
 
   nav {
     @include clearfix();

@@ -9,6 +9,7 @@ use Leadofficelist\Exceptions\ResourceNotFoundException;
 class ProductsController extends \BaseController {
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'products';
 	protected $resource_permission = 'manage_products';
 	private $addEditProductForm;

@@ -9,6 +9,7 @@ class KnowledgeAreaGroupsController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'survey';
 	protected $resource_key = 'knowledge_area_groups';
 	protected $resource_permission = 'manage_knowledge';
 	private $addEditKnowledgeAreaGroupForm;

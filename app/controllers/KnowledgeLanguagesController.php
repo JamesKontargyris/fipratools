@@ -9,6 +9,7 @@ class KnowledgeLanguagesController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'survey';
 	protected $resource_key = 'knowledge_languages';
 	protected $resource_permission = 'manage_knowledge';
 	private $addEditKnowledgeLanguageForm;

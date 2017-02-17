@@ -11,6 +11,7 @@ class UnitGroupsController extends \BaseController
 {
     use CommanderTrait;
 
+	public $section = 'list';
     protected $resource_key = 'unit_groups';
     protected $resource_permission = 'manage_units';
     private $addEditUnitGroupForm;

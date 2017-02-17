@@ -12,6 +12,7 @@ class TypesController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'types';
 	protected $resource_permission = 'manage_types';
 	private $addEditTypeForm;

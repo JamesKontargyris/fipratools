@@ -3,6 +3,8 @@
 use Leadofficelist\Clients\Client;
 
 class ListController extends BaseController {
+
+	public $section = 'list';
 	public $resource_key = 'list';
 	public $resource_permission = 'view_list';
 

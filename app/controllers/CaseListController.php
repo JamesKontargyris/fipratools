@@ -6,6 +6,8 @@ use Leadofficelist\Products\Product;
 use Leadofficelist\Sectors\Sector;
 
 class CaseListController extends BaseController {
+
+	public $section = 'case';
 	public $resource_key = 'caselist';
 	public $resource_permission = 'view_list';
 

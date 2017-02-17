@@ -7,6 +7,7 @@ class KnowledgeSurveysController extends \BaseController {
 
 	use CommanderTrait;
 
+	public $section = 'survey';
 	protected $resource_key = 'knowledge_surveys';
 	protected $resource_permission = 'view_knowledge';
 	/**

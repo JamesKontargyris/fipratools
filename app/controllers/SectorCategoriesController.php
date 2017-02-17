@@ -11,6 +11,7 @@ class SectorCategoriesController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'sector_categories';
 	protected $resource_permission = 'manage_sectors';
 	private $addEditSectorCategoryForm;

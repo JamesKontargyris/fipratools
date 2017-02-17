@@ -12,6 +12,7 @@ class CasesController extends \BaseController {
 
 	use CommanderTrait;
 
+	public $section = 'case';
 	protected $resource_key = 'cases';
 	protected $resource_permission = 'manage_cases';
 	private $addEditCaseForm;
