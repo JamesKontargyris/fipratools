@@ -116,11 +116,11 @@
                             @foreach($areas as $id => $area)
                                 <tr class="expertise-form__row">
                                     <td valign="middle" class="expertise-form__knowledge-area">{{ $area }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '1', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '2', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '3', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '4', null, ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('area_' . $id, '5', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '1', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '2', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '3', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '4', null, ['class' => 'expertise-form__radio']) }}</td>
+                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '5', null, ['class' => 'expertise-form__radio']) }}</td>
                                 </tr>
                             @endforeach
                         </table>

@@ -1,9 +1,9 @@
 <?php namespace Leadofficelist\Knowledge_languages;
 
+use KnowledgeLanguage;
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 use Location;
-use Leadofficelist\Products\Product;
 
 class AddKnowledgeLanguageCommandHandler implements CommandHandler {
 
@@ -11,7 +11,7 @@ class AddKnowledgeLanguageCommandHandler implements CommandHandler {
 
 	public $knowledge_language;
 
-	function __construct(\KnowledgeLanguage $knowledge_language) {
+	function __construct( KnowledgeLanguage $knowledge_language) {
 
 		$this->knowledge_language = $knowledge_language;
 	}

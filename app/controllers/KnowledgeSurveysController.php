@@ -2,6 +2,8 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
+use Leadofficelist\Knowledge_areas\KnowledgeArea;
+use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 
 class KnowledgeSurveysController extends \BaseController {
 
@@ -26,13 +28,13 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	/**
-	 * Display a listing of the resource.
+	 * Display the current user's knowledge profile
 	 * GET /knowledgesurveys
 	 *
 	 * @return Response
 	 */
 	public function index() {
-		echo "Knowledge Survey controller";
+		return View::make( 'knowledge_surveys.index' );
 	}
 
 	/**
@@ -53,7 +55,7 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return Response
 	 */
 	public function store() {
-		//
+
 	}
 
 	/**
@@ -121,11 +123,20 @@ class KnowledgeSurveysController extends \BaseController {
 		$input = Input::all();
 		// Add the knowledge areas into the validation rules and update feedback messages
 		foreach(KnowledgeArea::all() as $area) {
-			$this->addEditSurvey->rules['area_' . $area->id] = 'required|min:1|max:5';
-			$this->addEditSurvey->messages['area_' . $area->id . '.required'] = 'Please select an expertise score for ' . $area->name . '.';
+			$this->addEditSurvey->rules['areas.' . $area->id] = 'required|min:1|max:5';
+			$this->addEditSurvey->messages['areas.' . $area->id . '.required'] = 'Please select an expertise score for ' . $area->name . '.';
 		}
 		// Validate input
 		$this->addEditSurvey->validate( $input );
+		/*print_r($input); die();*/
+
+		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateKnowledgeInfoCommand' );
+		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateLanguageInfoCommand' );
+		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateUserInfoCommand' );
+
+		Flash::overlay( '"Knowledge profile updated.', 'success' );
+
+		return Redirect::route( 'survey.index' );
 	}
 
 	protected function getDateSelect( $purpose = 'dob' ) {
