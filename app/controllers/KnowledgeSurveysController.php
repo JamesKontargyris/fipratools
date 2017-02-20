@@ -34,7 +34,29 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return Response
 	 */
 	public function index() {
-		return View::make( 'knowledge_surveys.index' );
+		if($this->check_role('Administrator', false))
+		{
+			$user_info = $this->user;
+			$language_info = $this->getUserLanguageInfo();
+			$expertise_info = $this->getExpertise();
+			$score_info = $this->getUserExpertiseInfoByID();
+
+			return View::make( 'knowledge_surveys.index' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info', 'expertise_count'));
+		}
+		else
+		{
+			return Redirect::to('/survey/profile');
+		}
+	}
+
+	public function getProfile()
+	{
+		$user_info = $this->user;
+		$language_info = $this->getUserLanguageInfo();
+		$expertise_info = $this->getExpertise();
+		$score_info = $this->getUserExpertiseInfoByID();
+
+		return View::make( 'knowledge_surveys.index' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info', 'expertise_count'));
 	}
 
 	/**
@@ -116,7 +138,13 @@ class KnowledgeSurveysController extends \BaseController {
 		$languages         = $this->getLanguages();
 		$expertise         = $this->getExpertise();
 
-		return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise' ) );
+		$user_info = $this->user;
+		$language_info = $this->getUserSpokenWrittenLanguages();
+		/*dd($language_info);*/
+		$fluency_info = $this->getUserFluentLanguages();
+		$expertise_info = $this->getUserExpertiseInfoByID();
+
+		return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'fluency_info', 'expertise_info' ) );
 	}
 
 	public function postUpdateProfile() {
@@ -134,7 +162,7 @@ class KnowledgeSurveysController extends \BaseController {
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateLanguageInfoCommand' );
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateUserInfoCommand' );
 
-		Flash::overlay( '"Knowledge profile updated.', 'success' );
+		Flash::overlay( 'Knowledge profile updated.', 'success' );
 
 		return Redirect::route( 'survey.index' );
 	}
@@ -203,6 +231,84 @@ class KnowledgeSurveysController extends \BaseController {
 		}
 
 		return $expertise;
+	}
+
+	protected function getUserLanguageInfo()
+	{
+		// Get language data via the pivot table
+		$languages = $this->user->knowledge_languages()->get();
+		$languageData = [];
+
+		foreach($languages as $language)
+		{
+			// Create an array with language names as keys and fluent flag as values
+			$languageData[$language->name] = $language->pivot->fluent;
+		}
+
+		return $languageData;
+	}
+
+	protected function getUserSpokenWrittenLanguages()
+	{
+		$languages_processed = [];
+		// Get language data via the pivot table
+		$languages = $this->user->knowledge_languages()->get()->toArray();
+
+		foreach($languages as $language) {
+			$languages_processed[] = $language['id'];
+		}
+
+		return $languages_processed;
+
+	}
+
+	protected function getUserFluentLanguages()
+	{
+		$languages_processed = [];
+		// Get language data via the pivot table
+		$fluent_languages = $this->user->knowledge_languages()->where('fluent', '=', 1)->get()->toArray();
+
+		foreach($fluent_languages as $language) {
+			$languages_processed[] = $language['id'];
+		}
+
+		return $languages_processed;
+	}
+
+	protected function getUserExpertiseInfo()
+	{
+		// Get language data via the pivot table
+		$expertise = $this->user->knowledge_areas()->get();
+		$expertiseData = [];
+
+		foreach($expertise as $expert)
+		{
+			// Create an array with expertise names as keys and scores as values
+			$expertiseData[$expert->name] = $expert->pivot->score;
+		}
+
+		// Put into alphabetical order
+		asort($expertiseData, SORT_STRING);
+
+		return $expertiseData;
+	}
+
+	protected function getUserExpertiseInfoByID()
+	{
+		// Get language data via the pivot table
+		$expertise = $this->user->knowledge_areas()->get();
+		$expertiseData = [];
+
+		foreach($expertise as $expert)
+		{
+			// Create an array with expertise names as keys and scores as values
+			$expertiseData[$expert->id] = $expert->pivot->score;
+		}
+
+		// Put into alphabetical order
+		asort($expertiseData, SORT_STRING);
+
+		return $expertiseData;
 	}
 
 }

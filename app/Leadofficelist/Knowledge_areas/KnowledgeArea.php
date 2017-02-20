@@ -8,7 +8,7 @@ class KnowledgeArea extends \BaseModel {
 	public function users()
 	{
 		//Many users have many knowledge areas
-		return $this->belongsToMany( '\Leadofficelist\Users\User' );
+		return $this->belongsToMany( '\Leadofficelist\Users\User' )->withPivot('score');
 	}
 
 	public function add( $area ) {

@@ -128,10 +128,15 @@
     $('#sector_select').multiSelect();
     // Make the languages select box a nicer multi-select box
     $('#language_select').multiSelect({
-        keepOrder: true,
+        /*keepOrder: true,*/
+        selectableHeader: "<div class='custom-header'><strong>Select languages:</strong></div>",
+        selectionHeader: "<div class='custom-header'><strong>I speak / write:</strong></div>"
     });
     // Make the fluent languages select box a nicer multi-select box
-    $('#fluent_select').multiSelect();
+    $('#fluent_select').multiSelect({
+        selectableHeader: "<div class='custom-header'><strong>Select languages:</strong></div>",
+        selectionHeader: "<div class='custom-header'><strong>I am fluent in:</strong></div>"
+    });
 
 
     // Widgets: create a slug from the name entered, if no slug already exists
@@ -175,6 +180,25 @@
     $('#unit_2').on('change', function()
     {
         getClientsForUnit($('#unit_2'));
+    });
+
+    // Knowledge list toggle
+    $('.knowledge-toggle').on('click', function(e)
+    {
+       $('.knowledge-toggle').toggleClass('active');
+       $('.expertise-list__score-row-1, .expertise-list__score-row-2, .expertise-list__score-row-3').fadeToggle();
+       $('.expertise-count-0').fadeToggle();
+
+       // Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
+        // If not, hide the whole container when only showing the user's expertise
+       $('.expertise-list__container').each(function()
+       {
+           if( ! $(this).find('.user-expertise').length) {
+               $(this).slideToggle();
+           }
+       });
+
+       return false;
     });
 
     function getClientsForUnit($element)

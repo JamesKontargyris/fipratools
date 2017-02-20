@@ -3,8 +3,11 @@
 use Leadofficelist\Clients\Client;
 
 class ListController extends BaseController {
+<<<<<<< HEAD
 
 	public $section = 'list';
+=======
+>>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 	public $resource_key = 'list';
 	public $resource_permission = 'view_list';
 
@@ -17,11 +20,16 @@ class ListController extends BaseController {
 
 	public function index() {
 		$this->destroyCurrentPageNumber( true );
+<<<<<<< HEAD
 
 		if ( $this->searchCheck() ) {
 			// Keep any flashed messages when redirecting
 			Session::reflash();
 
+=======
+
+		if ( $this->searchCheck() ) {
+>>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 

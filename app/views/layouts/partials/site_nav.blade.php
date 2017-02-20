@@ -65,11 +65,18 @@
 			<a href="{{ route('services.create') }}" class="site-nav-extra-link" title="Add a new service"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
+
+
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active('survey', true) ? 'active' : '' }}">
+			<a href="{{ route('survey.index') }}"><strong>Overview</strong></a>
+		</li>
+	@endif
 	@if($user->can('view_knowledge') && section_is() == 'survey')
-		<li class="{{ nav_item_is_active(['survey', 'survey/profile']) ? 'active' : '' }}">
+		<li class="{{ nav_item_is_active('survey/profile', true) ? 'active' : '' }}">
 			<a href="{{ url('survey/profile') }}"><strong>My Knowledge Profile</strong></a>
             @if( ! nav_item_is_active('survey/profile/edit'))
-                <a href="{{ url('survey/profile/edit') }}" class="site-nav-extra-link" title="Edit your knowledge profile"><i class="fa fa-pencil"></i></a>
+                <a href="{{ url('/survey/profile/edit') }}" class="site-nav-extra-link" title="Edit your knowledge profile"><i class="fa fa-pencil"></i></a>
             @endif
 		</li>
 	@endif

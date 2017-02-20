@@ -472,10 +472,19 @@ class BaseController extends Controller {
 		} //If all else fails...
 		else {
 			// If we're looking at users, account directors or case studies, use a different default sort order
+<<<<<<< HEAD
 			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) return ['last_name', 'asc' ];
 			if ($this->is_request( 'cases' ) || $this->is_request( 'caselist' )) return ['year', 'desc'];
 			// Otherwise just use name
 			return [ 'name', 'asc' ];
+=======
+			return ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) )
+				? [ 'last_name', 'asc' ]
+				: ($this->is_request( 'cases' ) || $this->is_request( 'caselist' ))
+					? ['year', 'desc']
+					// Otherwise just use name
+					: [ 'name', 'asc' ];
+>>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 		}
 
 		return false;
@@ -556,10 +565,12 @@ class BaseController extends Controller {
 	 *
 	 * @param $role
 	 *
+	 * @param bool $throw_exception
+	 *
 	 * @return bool
 	 * @throws PermissionDeniedException
 	 */
-	protected function check_role( $role ) {
+	protected function check_role( $role, $throw_exception = true ) {
 		if ( is_array( $role ) ) {
 			foreach ( $role as $r ) {
 				if ( $this->user->hasRole( $r ) ) {
@@ -570,7 +581,12 @@ class BaseController extends Controller {
 			return true;
 		}
 
-		throw new PermissionDeniedException;
+		if($throw_exception) {
+			throw new PermissionDeniedException;
+		} else {
+			return false;
+		}
+
 	}
 
 	protected function is_request( $uri, $strict = false ) {
@@ -617,6 +633,7 @@ class BaseController extends Controller {
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
 
+<<<<<<< HEAD
 			// Return the search term
 			return Session::get( $this->resource_key . '.SearchTerm' );
 
@@ -643,6 +660,26 @@ class BaseController extends Controller {
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
 
 			return Session::get( $this->resource_key . '.Filters' );
+=======
+			return Session::get( $this->resource_key . '.SearchTerm' );
+
+		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' ) ) {
+			Session::set( $this->resource_key . '.SearchType', 'filter' );
+			if( ! Input::get('filter_value')) {
+				// The user has selected the "Filter..." or "Remove filter" blank row
+				Session::forget($this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
+				// Is the Filters array now empty? No filters selected if so
+				$this->isFilterArrayEmpty();
+			} else {
+				Session::set( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
+			}
+
+			return Session::get( $this->resource_key . '.Filters' );
+		} elseif (Session::has($this->resource_key . '.SearchType')) {
+			$this->isFilterArrayEmpty();
+			// No search term was parsed, but we've still got a search or filter in place, so load the search view
+			return true;
+>>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 		}
 		elseif (Session::has($this->resource_key . '.SearchType')) {
 			// No search term was parsed, but we've still got a search or filter in place, so return the search term
@@ -659,12 +696,25 @@ class BaseController extends Controller {
 			Session::set('clear_search', 'yes');
 			$this->searchCheck();
 
+<<<<<<< HEAD
 			return Redirect::route( $this->resource_key . '.index' );
+=======
+	}
+
+	protected function isFilterArrayEmpty()
+	{
+		if(empty(Session::get($this->resource_key . '.Filters'))) {
+			Session::set('clear_search', 'yes');
+			$this->searchCheck();
+
+			return Redirect::route( 'list.index' );
+>>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 		}
 	}
 
 	protected function checkForSearchResults( $items ) {
 		if ( ! count( $items ) ) {
+<<<<<<< HEAD
 
 			if( ! is_filter($this->resource_key)) {
 				Flash::message( 'No records found.' );
@@ -673,6 +723,10 @@ class BaseController extends Controller {
 				Flash::message( 'No records found for that filter combination.' );
 				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
 			}
+=======
+			Flash::message( 'No records found.' );
+			Session::set( 'clear_search', 'yes' );
+>>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 
 			return false;
 		}

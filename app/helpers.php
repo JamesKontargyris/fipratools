@@ -125,14 +125,14 @@ function current_section_name() {
 	return $sections[Session::get('section') ? Session::get('section') : 'list'];
 }
 
-function nav_item_is_active($uri)
+function nav_item_is_active($uri, $strict = false)
 {
 	if(is_array($uri)) {
 		foreach($uri as $u) {
-			if(is_request($u)) return true;
+			if(is_request($u, $strict)) return true;
 		}
 	} else {
-		if(is_request($uri)) return true;
+		if(is_request($uri, $strict)) return true;
 	}
 
 	return false;
@@ -318,4 +318,12 @@ function get_widget($slug)
 	}
 
 	return false;
+}
+
+function calculate_age($dob)
+{
+	$tz  = new DateTimeZone('Europe/Brussels');
+	$age = DateTime::createFromFormat('Y-m-d', $dob, $tz)->diff(new DateTime('now', $tz))->y;
+
+	return $age;
 }

@@ -5,6 +5,12 @@ use Leadofficelist\Users\User;
 class KnowledgeLanguage extends \BaseModel {
 	protected $fillable = [ 'name' ];
 
+	public function users()
+	{
+		//Many users have many knowledge languages
+		return $this->belongsToMany( '\Leadofficelist\Users\User' )->withPivot('fluent');
+	}
+
 	public function add( $language ) {
 		$this->name       = $language->name;
 		$this->save();
@@ -24,7 +30,7 @@ class KnowledgeLanguage extends \BaseModel {
 		$update_user = User::find( $languages->id );
 		$language_ids = $languages->languages;
 		// Make sure languages that are marked as fluent, but aren't included in $language_ids, are included in the sync data
-		$language_ids = array_unique(array_merge($language_ids, $languages->fluent), SORT_REGULAR);
+		$language_ids = array_unique(array_merge($language_ids, $languages->fluent));
 		// Create an array of ids and fluency flags for each language to add in to the pivot table
 		$sync_data   = [];
 		foreach ( $language_ids as $language_id ) {

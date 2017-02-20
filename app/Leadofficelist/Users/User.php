@@ -35,13 +35,13 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 	public function knowledge_areas()
 	{
 		//Many users have many knowledge areas
-		return $this->belongsToMany( '\Leadofficelist\Knowledge_areas\KnowledgeArea' );
+		return $this->belongsToMany( '\Leadofficelist\Knowledge_areas\KnowledgeArea' )->withPivot('score');
 	}
 
 	public function knowledge_languages()
 	{
 		//Many users have many knowledge languages
-		return $this->belongsToMany( '\Leadofficelist\Knowledge_languages\KnowledgeLanguage' );
+		return $this->belongsToMany( '\Leadofficelist\Knowledge_languages\KnowledgeLanguage' )->withPivot('fluent');
 	}
 
 	public function getFirstNameAttribute( $value )
@@ -80,6 +80,7 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 		$update_user->other_network      = $user->other_network;
 		$update_user->formal_positions   = $user->formal_positions;
 		$update_user->survey_updated    = 1;
+		$update_user->knowledge_profile_last_updated = date('Y-m-d');
 		$update_user->save();
 
 		return $update_user;

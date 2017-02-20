@@ -3,6 +3,7 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditKnowledgeArea as AddEditKnowledgeAreaForm;
+use Leadofficelist\Knowledge_areas\KnowledgeArea;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class KnowledgeAreasController extends \BaseController
