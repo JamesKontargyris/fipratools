@@ -655,12 +655,15 @@ class BaseController extends Controller {
 
 	protected function checkForSearchResults( $items ) {
 		if ( ! count( $items ) ) {
-			Flash::message( 'No records found.' );
-			Session::set( 'clear_search', 'yes' );
-
+			if( ! is_filter($this->resource_key)) {
+				Flash::message( 'No records found.' );
+				Session::set( 'clear_search', 'yes' );
+			} else {
+				Flash::message( 'No records found for that filter combination.' );
+				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
+			}
 			return false;
 		}
-
 		return true;
 	}
 

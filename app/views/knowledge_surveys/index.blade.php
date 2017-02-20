@@ -30,7 +30,7 @@
             <div class="col-12">
                 <div class="alert-container">
                     <div class="alert alert-warning alert-big-text">
-                        <strong>Your profile is out of date and/or requires an update.</strong> <br><br>
+                        <strong>Your profile is out of date and/or requires an update.</strong><br>
                         <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             <div class="col-12">
                 <div class="alert-container">
                     <div class="alert alert-error alert-big-text">
-                        <strong>Your profile needs to be completed.</strong> <br><br>
+                        <strong>Your profile needs to be completed.</strong><br>
                         <a href="/survey/profile/edit" class="primary">Complete your knowledge profile</a>
                     </div>
                 </div>
