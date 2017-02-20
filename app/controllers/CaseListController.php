@@ -95,11 +95,7 @@ class CaseListController extends BaseController {
 	}
 
 	protected function getFiltered( $for = 'screen' ) {
-<<<<<<< HEAD
 		if ( $for == 'export' ) {
-=======
-		if ( $for == 'pdf' ) {
->>>>>>> d06cf1b... Lists can now be filtered by two or more filters at once
 			// Get all results for PDF export
 			// Both sector_id and product_id are set
 			if(Session::has( $this->resource_key . '.Filters.sector_id' ) && Session::has( $this->resource_key . '.Filters.product_id' )) {
