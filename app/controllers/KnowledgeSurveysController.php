@@ -349,7 +349,7 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	protected function getAll() {
-		return User::where( 'status', '=', 1 )->orderBy( 'id', 'DESC' )->get();
+		return User::whereDate('date_of_birth', '>', '0000-00-00')->orderBy( 'id', 'DESC' )->get();
 	}
 
 	protected function getSelection() {
@@ -357,43 +357,83 @@ class KnowledgeSurveysController extends \BaseController {
 			$search_term             = $this->findSearchTerm();
 			$this->search_term_clean = str_replace( '%', '', $search_term );
 
-			$items = User::whereDate('date_of_birth', '>', '0000-00-00')->where( 'first_name', 'LIKE', $search_term )->orWhere('last_name', 'LIKE', $search_term)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = User::whereDate('date_of_birth', '>', '0000-00-00')->where(function($query)
+			{
+				$query->where('first_name', 'LIKE', $this->search_term)->orWhere('last_name', 'LIKE', $this->search_term);
+			})->orWhereHas('knowledge_areas', function($query)
+			{
+				$query->where('knowledge_areas.name', 'LIKE', $this->search_term);
+			})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		} else {
-			$items = User::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = User::whereDate('date_of_birth', '>', '0000-00-00')->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 
 		return $items;
 	}
 
 	protected function getFiltered( $for = 'screen' ) {
-		$items = User::where(function($query)
-		{
-			$query->whereDate('date_of_birth', '>', '0000-00-00');
+		if($for == 'export') {
+			// Get all results for PDF export
+			// Only difference in 'export' and 'screen' results is no pagination on export version
+			$items = User::where(function($query)
+			{
+				$query->whereDate('date_of_birth', '>', '0000-00-00');
 
-			if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
-				$query->whereHas('knowledge_languages', function($query)
-				{
-					$query->where('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
-				});
-			}
+				if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
+					$query->whereHas('knowledge_languages', function($query)
+					{
+						$query->where('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
+					});
+				}
 
-			if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
-				$query->whereHas('unit', function($query)
-				{
-					$query->where('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
-				});
-			}
+				if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
+					$query->whereHas('unit', function($query)
+					{
+						$query->where('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
+					});
+				}
 
-			if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
-				$query->whereHas('knowledge_areas', function($query)
-				{
-					$query->where('knowledge_areas.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
-				});
-			}
+				if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
+					$query->whereHas('knowledge_areas', function($query)
+					{
+						$query->where('knowledge_areas.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
+					});
+				}
 
-		})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			})->rowsSortOrder( $this->rows_sort_order );
 
-		return $items;
+			return $items;
+		} else {
+			$items = User::where(function($query)
+			{
+				$query->whereDate('date_of_birth', '>', '0000-00-00');
+
+				if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
+					$query->whereHas('knowledge_languages', function($query)
+					{
+						$query->where('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
+					});
+				}
+
+				if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
+					$query->whereHas('unit', function($query)
+					{
+						$query->where('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
+					});
+				}
+
+				if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
+					$query->whereHas('knowledge_areas', function($query)
+					{
+						$query->where('knowledge_areas.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
+					});
+				}
+
+			})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			return $items;
+		}
+
 	}
 
 	protected function getFilteredValues() {

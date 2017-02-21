@@ -169,8 +169,9 @@ class BaseController extends Controller {
 		$active_count  = 0;
 		$dormant_count = 0;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
 
+		$heading1 = $logo;
 		// Lead Office List specific heading
 		if ( is_request( 'list' ) || is_request( 'clients' ) ) {
 //			$heading1 .= 'All ';
@@ -187,6 +188,11 @@ class BaseController extends Controller {
 		if ( is_request( 'clients' ) || is_request( 'list' ) ) {
 			$active_count  = $this->getActiveCount();
 			$dormant_count = $this->getDormantCount();
+		}
+
+		if( is_request('survey')) {
+			$heading1 = $logo . current_section_name() . ' | Profiles';
+			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
 
 		$view = View::make(
@@ -214,11 +220,18 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+
+		$heading1 = $logo;
 		$heading1 .= current_section_name() . ': ' . ucfirst( clean_key( $key ) );
 		$heading2 = isset( $this->search_term_clean )
 			? 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) ) . ' when searching for ' . Session::get( $this->resource_key . '.SearchType' ) . ' "' . $this->search_term_clean . '"'
 			: 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) );
+
+		if( is_request('survey')) {
+			$heading1 = $logo . current_section_name() . ' | Profiles';
+			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
+		}
 
 		$view = View::make(
 			( $key != 'clients' && $key != 'case_studies' ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
@@ -242,7 +255,10 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+
+		$heading1 = $logo;
+
 		$heading1 .= current_section_name() . ' | ' . 'Filtered ' . ucfirst( clean_key( $key ) );
 		if ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) == 'show' ) {
 			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' active and dormant ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
@@ -251,6 +267,12 @@ class BaseController extends Controller {
 		} else {
 			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' active ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
 		}
+
+		if( is_request('survey')) {
+			$heading1 = $logo . current_section_name() . ' | Filtered Profiles';
+			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
+		}
+
 		$view = View::make(
 			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[

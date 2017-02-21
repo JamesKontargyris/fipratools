@@ -120,7 +120,7 @@ App::error( function ( ProfileNotFoundException $exception ) {
 */
 
 App::down( function () {
-	return Response::make( "Be right back!", 503 );
+	return Response::make( "Currently carrying out maintenance. Be right back!", 503 );
 } );
 
 /*
