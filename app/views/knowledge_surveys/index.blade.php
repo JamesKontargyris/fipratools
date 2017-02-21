@@ -37,8 +37,8 @@
             <div class="col-12">
                 <div class="alert-container">
                     <div class="alert alert-error alert-big-text">
-                        <strong>Your knowledge profile needs to be completed.</strong><br>
-                        <a href="/survey/profile/edit" class="primary">Continue</a>
+                        <strong>Your knowledge profile is not yet complete.</strong><br>
+                        <a href="/survey/profile" class="primary">Continue</a>
                     </div>
                 </div>
             </div>

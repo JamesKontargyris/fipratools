@@ -42,7 +42,7 @@
             <div class="col-12">
                 <div class="alert-container">
                     <div class="alert alert-error alert-big-text">
-                        <strong>Your profile needs to be completed.</strong><br>
+                        <strong>Your profile is not yet complete.</strong><br>
                         <a href="/survey/profile/edit" class="primary">Complete your knowledge profile</a>
                     </div>
                 </div>
