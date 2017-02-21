@@ -12,7 +12,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ url('/survey/profile/edit') }}" class="secondary"><i class="fa fa-plus-circle"></i> Update your Knowledge Profile</a></li>
+    <li><a href="{{ url('/survey/profile/edit') }}" class="secondary"><i class="fa fa-pencil"></i> Update your Knowledge Profile</a></li>
 @stop
 
 @section('content')

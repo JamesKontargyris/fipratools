@@ -15,8 +15,9 @@ class KnowledgeSurveysController extends \BaseController {
 	use CommanderTrait;
 
 	public $section = 'survey';
-	protected $resource_key = 'knowledge_surveys';
+	protected $resource_key = 'survey';
 	protected $resource_permission = 'view_knowledge';
+	protected $search_term;
 	/**
 	 * @var
 	 */
@@ -49,10 +50,44 @@ class KnowledgeSurveysController extends \BaseController {
 		}
 
 		$items      = User::where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		/*$items      = User::where( 'id', '!=', $this->user->id )->where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );*/
 		$items->key = 'survey';
 		$user_info      = $this->user;
 
 		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info' ) );
+	}
+
+	/**
+	 * Process a list search.
+	 *
+	 * @return $this
+	 */
+	public function search() {
+		if ( $this->search_term = $this->findSearchTerm() ) {
+			if ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' ) {
+				$items               = $this->getFiltered();
+				$items->filter_value = $this->getFilteredValues();
+			} else {
+
+				$items = User::whereDate('date_of_birth', '>', '0000-00-00')->where(function($query)
+				{
+					$query->where('first_name', 'LIKE', $this->search_term)->orWhere('last_name', 'LIKE', $this->search_term);
+				})->orWhereHas('knowledge_areas', function($query)
+				{
+					$query->where('knowledge_areas.name', 'LIKE', $this->search_term);
+				})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
+
+			if ( ! $this->checkForSearchResults( $items ) ) {
+				return Redirect::route( 'survey.index' );
+			}
+			$items->search_term = str_replace( '%', '', $this->search_term );
+			$items->key         = 'survey';
+
+			return View::make( 'knowledge_surveys.index' )->with( compact( 'items' ) );
+		} else {
+			return Redirect::route( 'survey.index' );
+		}
 	}
 
 	/**

@@ -68,7 +68,7 @@
 
 
 	@if($user->can('manage_knowledge') && section_is() == 'survey')
-		<li class="{{ nav_item_is_active('survey', true) ? 'active' : '' }}">
+		<li class="{{ nav_item_is_active(['survey', 'survey/search'], true) ? 'active' : '' }}">
 			<a href="{{ route('survey.index') }}"><strong>Overview</strong></a>
 		</li>
 	@endif

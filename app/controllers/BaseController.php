@@ -608,9 +608,9 @@ class BaseController extends Controller {
 
 	protected function findSearchTerm() {
 		if ( Input::has( 'search' ) ) {
+
 			//Start again on page 1 of the results
 			$this->destroyCurrentPageNumber();
-
 			if ( Input::has( 'letter' ) ) {
 				Session::set( $this->resource_key . '.SearchTerm', Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'first letter' );
@@ -618,10 +618,10 @@ class BaseController extends Controller {
 				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
-
 			return Session::get( $this->resource_key . '.SearchTerm' );
 
 		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' ) ) {
+
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
 			if( ! Input::get('filter_value')) {
 				// The user has selected the "Filter..." or "Remove filter" blank row
@@ -631,15 +631,19 @@ class BaseController extends Controller {
 			} else {
 				Session::set( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
 			}
-
 			return Session::get( $this->resource_key . '.Filters' );
-		} elseif (Session::has($this->resource_key . '.SearchType')) {
-			$this->isFilterArrayEmpty();
-			// No search term was parsed, but we've still got a search or filter in place, so load the search view
-			return true;
+
+		} elseif (Session::get($this->resource_key . '.SearchType') == 'filter') {
+			// Is the latest filtered result set empty?
+			$this->isFilterArrayEmpty(); // redirect and clear last filter if so
+
+			return true; // return true if results are available
+		} else {
+			return Session::get( $this->resource_key . '.SearchTerm' );
 		}
 
 	}
+
 
 	protected function isFilterArrayEmpty()
 	{
@@ -647,7 +651,7 @@ class BaseController extends Controller {
 			Session::set('clear_search', 'yes');
 			$this->searchCheck();
 
-			return Redirect::route( 'list.index' );
+			return Redirect::route( $this->resource_key . '.index' );
 		}
 	}
 
