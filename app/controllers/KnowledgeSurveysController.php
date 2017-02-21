@@ -1,6 +1,7 @@
 <?php
 
 use Laracasts\Commander\CommanderTrait;
+use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\ProfileNotFoundException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
@@ -8,6 +9,7 @@ use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 use Leadofficelist\Knowledge_areas\KnowledgeArea;
 use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 use Leadofficelist\Knowledge_surveys\KnowledgeSurvey;
+use Leadofficelist\Units\Unit;
 use Leadofficelist\Users\User;
 
 class KnowledgeSurveysController extends \BaseController {
@@ -112,26 +114,6 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 * GET /knowledgesurveys/create
-	 *
-	 * @return Response
-	 */
-	public function create() {
-
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /knowledgesurveys
-	 *
-	 * @return Response
-	 */
-	public function store() {
-
-	}
-
-	/**
 	 * Display another user's profile
 	 * GET /knowledgesurveys/{id}
 	 *
@@ -154,42 +136,6 @@ class KnowledgeSurveysController extends \BaseController {
 		}
 
 		throw new ProfileNotFoundException();
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /knowledgesurveys/{id}/edit
-	 *
-	 * @param  int $id
-	 *
-	 * @return Response
-	 */
-	public function edit( $id ) {
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /knowledgesurveys/{id}
-	 *
-	 * @param  int $id
-	 *
-	 * @return Response
-	 */
-	public function update( $id ) {
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /knowledgesurveys/{id}
-	 *
-	 * @param  int $id
-	 *
-	 * @return Response
-	 */
-	public function destroy( $id ) {
-		//
 	}
 
 	public function getUpdateProfile() {
@@ -230,7 +176,7 @@ class KnowledgeSurveysController extends \BaseController {
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateUserInfoCommand' );
 
 		Flash::overlay( 'Knowledge profile updated.', 'success' );
-
+		EventLog::add( 'Knowledge survey updated', $this->user->getFullName(), Unit::find( $this->user->unit_id )->name, 'edit' );
 		return Redirect::to( 'survey/profile' );
 	}
 

@@ -3,6 +3,7 @@
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Clients\Client;
+use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddUser as AddUserForm;
@@ -99,9 +100,11 @@ class UsersController extends \BaseController
 		$input = Input::all();
 		$this->addUserForm->validate( $input );
 
-		$this->execute( 'Leadofficelist\Users\AddUserCommand' );
+		$user = $this->execute( 'Leadofficelist\Users\AddUserCommand' );
 
 		Flash::overlay( '"' . $input['first_name'] . ' ' . $input['last_name'] . '" added.', 'success' );
+
+		EventLog::add( 'New user created', $user->getFullName(), Unit::find( $user->unit_id )->name, 'add' );
 
 		return Redirect::route( 'users.index' );
 	}
@@ -188,8 +191,11 @@ class UsersController extends \BaseController
 		$this->editUserForm->validate( $input );
 
 		$this->execute( 'Leadofficelist\Users\EditUserCommand', $input );
+		$user = User::find($id);
 
 		Flash::overlay( '"' . $input['first_name'] . ' ' . $input['last_name'] . '" updated.', 'success' );
+
+		EventLog::add( 'User edited', $user->getFullName(), Unit::find( $user->unit_id )->name, 'edit' );
 
 		return Redirect::route( 'users.index' );
 	}
@@ -210,6 +216,8 @@ class UsersController extends \BaseController
 		{
 			User::destroy( $id );
 			Flash::overlay( '"' . $user->getFullName() . '" deleted.', 'info' );
+
+			EventLog::add( 'User deleted', $user->getFullName(), Unit::find( $user->unit_id )->name, 'delete' );
 
 		}
 
