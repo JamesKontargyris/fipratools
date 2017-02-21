@@ -92,7 +92,7 @@
                 </div>
             </div>
 
-            @if(isset($expertise_info['areas']) && count($expertise['areas'] > 0))
+            @if(isset($expertise['areas']) && count($expertise['areas'] > 0))
                 @foreach($expertise['areas'] as $group => $areas)
                     <div class="expertise-form__container">
                         <div class="row">
