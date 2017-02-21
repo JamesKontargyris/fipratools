@@ -118,25 +118,27 @@
             </div>
 
             <div class="col-7">
-                <h3 class="expertise-list__section-title">Your Knowledge</h3>
-                <a href="#" class="primary knowledge-toggle"><i class="fa fa-eye"></i> Show all knowledge areas</a> <a href="#" class="primary knowledge-toggle active"><i class="fa fa-eye"></i> Show expertise only</a>
-                @foreach($expertise_info['areas'] as $group => $areas)
-                    <div class="expertise-list__container">
-                        <div class="expertise-list__group-title">{{ $group }}</div>
-                        <table class="expertise-list" cellspacing="5" cellpadding="5" border="0" width="100%">
-                            <tbody>
-                                @foreach($areas as $id => $name)
-                                    {{--Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
-                                    If not, hide the whole container when only showing the user's expertise--}}
-                                    <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
-                                        <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
-                                        <td valign="middle" class="expertise-list__score"><img src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endforeach
+                @if(isset($expertise_info['areas']) && count($expertise_info['areas']) > 0)
+                    <h3 class="expertise-list__section-title">Your Knowledge</h3>
+                    <a href="#" class="primary knowledge-toggle"><i class="fa fa-eye"></i> Show all knowledge areas</a> <a href="#" class="primary knowledge-toggle active"><i class="fa fa-eye"></i> Show expertise only</a>
+                    @foreach($expertise_info['areas'] as $group => $areas)
+                        <div class="expertise-list__container">
+                            <div class="expertise-list__group-title">{{ $group }}</div>
+                            <table class="expertise-list" cellspacing="5" cellpadding="5" border="0" width="100%">
+                                <tbody>
+                                    @foreach($areas as $id => $name)
+                                        {{--Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
+                                        If not, hide the whole container when only showing the user's expertise--}}
+                                        <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
+                                            <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
+                                            <td valign="middle" class="expertise-list__score"><img src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     @endif
