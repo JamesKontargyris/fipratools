@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-    Your Knowledge Profile
+    Knowledge Profiles
 @stop
 
 @section('page-nav')

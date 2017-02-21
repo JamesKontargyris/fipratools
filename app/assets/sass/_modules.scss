@@ -158,7 +158,7 @@
     background-color: desaturate(lighten($violet, 25%), 25%);
   }
   &.section-survey {
-    h2 { color:darken($green, 10%); }
+    h2 { color:saturate(darken($green, 30%), 50%); }
     background-color: desaturate(lighten($green, 40%), 25%);
   }
   &.section-admin {

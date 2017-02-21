@@ -1,10 +1,13 @@
 <?php
 
 use Laracasts\Commander\CommanderTrait;
+use Leadofficelist\Exceptions\ProfileNotFoundException;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
 use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 use Leadofficelist\Knowledge_areas\KnowledgeArea;
 use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
+use Leadofficelist\Users\User;
 
 class KnowledgeSurveysController extends \BaseController {
 
@@ -40,9 +43,9 @@ class KnowledgeSurveysController extends \BaseController {
 			$user_info = $this->user;
 			$language_info = $this->getUserLanguageInfo();
 			$expertise_info = $this->getExpertise();
-			$score_info = $this->getUserExpertiseInfoByID();
+			$score_info = $this->getUserExpertiseInfoIDKeys();
 
-			return View::make( 'knowledge_surveys.index' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info', 'expertise_count'));
+			return View::make( 'knowledge_surveys.index' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info'));
 		}
 		else
 		{
@@ -50,14 +53,23 @@ class KnowledgeSurveysController extends \BaseController {
 		}
 	}
 
-	public function getProfile()
+	/**
+	 * Show the current user's profile
+	 * @return $this
+	 * @throws ResourceNotFoundException
+	 */
+	public function getShowProfile()
 	{
-		$user_info = $this->user;
-		$language_info = $this->getUserLanguageInfo();
-		$expertise_info = $this->getExpertise();
-		$score_info = $this->getUserExpertiseInfoByID();
+		if(isset($this->user) && $this->user->survey_updated && $this->user->date_of_birth != '0000-00-00') {
+			$user_info      = $this->user;
+			$language_info  = $this->getUserLanguageInfo();
+			$expertise_info = $this->getExpertise();
+			$score_info     = $this->getUserExpertiseInfoIDKeys();
 
-		return View::make( 'knowledge_surveys.profile' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info', 'expertise_count'));
+			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info' ) );
+		}
+
+		throw new ProfileNotFoundException();
 	}
 
 	/**
@@ -68,7 +80,6 @@ class KnowledgeSurveysController extends \BaseController {
 	 */
 	public function create() {
 
-		return View::make( 'knowledge_surveys.create' );
 	}
 
 	/**
@@ -82,15 +93,28 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display another user's profile
 	 * GET /knowledgesurveys/{id}
 	 *
 	 * @param  int $id
 	 *
 	 * @return Response
+	 * @throws ProfileNotFoundException
 	 */
 	public function show( $id ) {
-		//
+		$user = User::find($id);
+
+		if(isset($user) && $user->survey_updated && $user->date_of_birth != '0000-00-00')
+		{
+			$user_info = $user;
+			$language_info = $this->getUserLanguageInfo($id);
+			$expertise_info = $this->getExpertise($id);
+			$score_info = $this->getUserExpertiseInfoIDKeys($id);
+
+			return View::make( 'knowledge_surveys.show' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info'));
+		}
+
+		throw new ProfileNotFoundException();
 	}
 
 	/**
@@ -129,23 +153,26 @@ class KnowledgeSurveysController extends \BaseController {
 		//
 	}
 
-	public function getShowProfile() {
-		echo "your profile will appear here";
-	}
-
 	public function getUpdateProfile() {
-		$dob_data          = $this->getDateSelect( 'dob' );
-		$joined_fipra_data = $this->getDateSelect( 'joined_fipra' );
-		$languages         = $this->getLanguages();
-		$expertise         = $this->getExpertise();
 
-		$user_info = $this->user;
-		$language_info = $this->getUserSpokenWrittenLanguages();
-		/*dd($language_info);*/
-		$fluency_info = $this->getUserFluentLanguages();
-		$expertise_info = $this->getUserExpertiseInfoByID();
+			$dob_data          = $this->getDateSelect( 'dob' );
+			$joined_fipra_data = $this->getDateSelect( 'joined_fipra' );
+			$languages         = $this->getLanguages();
+			$expertise         = $this->getExpertise();
 
-		return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'fluency_info', 'expertise_info' ) );
+			$user_info = $this->user;
+			if(isset($user_info) && $user_info->survey_updated && $user_info->date_of_birth != '0000-00-00')
+			{
+				$language_info = $this->getUserSpokenWrittenLanguages();
+				/*dd($language_info);*/
+				$fluency_info = $this->getUserFluentLanguages();
+				$expertise_info = $this->getUserExpertiseInfoIDKeys();
+
+				return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'fluency_info', 'expertise_info' ) );
+			}
+
+			return Redirect::to('survey/profile');
+
 	}
 
 	public function postUpdateProfile() {
@@ -234,10 +261,10 @@ class KnowledgeSurveysController extends \BaseController {
 		return $expertise;
 	}
 
-	protected function getUserLanguageInfo()
+	protected function getUserLanguageInfo($id = null)
 	{
 		// Get language data via the pivot table
-		$languages = $this->user->knowledge_languages()->get();
+		$languages    = $id ? User::find($id)->knowledge_languages()->get() : $this->user->knowledge_languages()->get();
 		$languageData = [];
 
 		foreach($languages as $language)
@@ -249,11 +276,11 @@ class KnowledgeSurveysController extends \BaseController {
 		return $languageData;
 	}
 
-	protected function getUserSpokenWrittenLanguages()
+	protected function getUserSpokenWrittenLanguages($id = null)
 	{
 		$languages_processed = [];
 		// Get language data via the pivot table
-		$languages = $this->user->knowledge_languages()->get()->toArray();
+		$languages    = $id ? User::find($id)->knowledge_languages()->get()->toArray() : $this->user->knowledge_languages()->get()->toArray();
 
 		foreach($languages as $language) {
 			$languages_processed[] = $language['id'];
@@ -263,11 +290,11 @@ class KnowledgeSurveysController extends \BaseController {
 
 	}
 
-	protected function getUserFluentLanguages()
+	protected function getUserFluentLanguages($id = null)
 	{
 		$languages_processed = [];
 		// Get language data via the pivot table
-		$fluent_languages = $this->user->knowledge_languages()->where('fluent', '=', 1)->get()->toArray();
+		$fluent_languages    = $id ? User::find($id)->knowledge_languages()->where('fluent', '=', 1)->get()->toArray() : $this->user->knowledge_languages()->where('fluent', '=', 1)->get()->toArray();
 
 		foreach($fluent_languages as $language) {
 			$languages_processed[] = $language['id'];
@@ -276,10 +303,11 @@ class KnowledgeSurveysController extends \BaseController {
 		return $languages_processed;
 	}
 
-	protected function getUserExpertiseInfo()
+	protected function getUserExpertiseInfo($id = null)
 	{
 		// Get language data via the pivot table
-		$expertise = $this->user->knowledge_areas()->get();
+
+		$expertise    = $id ? User::find($id)->knowledge_areas()->get() : $this->user->knowledge_areas()->get();
 		$expertiseData = [];
 
 		foreach($expertise as $expert)
@@ -294,10 +322,10 @@ class KnowledgeSurveysController extends \BaseController {
 		return $expertiseData;
 	}
 
-	protected function getUserExpertiseInfoByID()
+	protected function getUserExpertiseInfoIDKeys($id = null)
 	{
 		// Get language data via the pivot table
-		$expertise = $this->user->knowledge_areas()->get();
+		$expertise    = $id ? User::find($id)->knowledge_areas()->get() : $this->user->knowledge_areas()->get();
 		$expertiseData = [];
 
 		foreach($expertise as $expert)

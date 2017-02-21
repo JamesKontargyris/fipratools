@@ -16,6 +16,7 @@ use Laracasts\Validation\FormValidationException;
 use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Exceptions\ProfileNotFoundException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Validation\CustomValidator;
 
@@ -98,6 +99,13 @@ App::error( function ( CannotEditException $exception ) {
 	Flash::error( $exception->getErrorMessage() );
 
 	return Redirect::route( $exception->getResourceKey() . '.index' );
+} );
+
+App::error( function ( ProfileNotFoundException $exception ) {
+	Log::error( $exception );
+	Flash::error( $exception->getErrorMessage() );
+
+	return Redirect::route( 'survey.index' );
 } );
 
 /*

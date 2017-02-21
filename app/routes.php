@@ -160,7 +160,7 @@ Route::group(['before' => 'auth'], function()
 	Route::any('knowledge_surveys/export', 'KnowledgeSurveysController@export');
 	Route::any('knowledge_surveys/search', 'KnowledgeSurveysController@search');
 	Route::post('knowledge_surveys/filter', ['as' => 'knowledge_surveys.filter', 'uses' => 'KnowledgeSurveysController@filter']);
-	Route::get('survey/profile', 'KnowledgeSurveysController@getProfile');
+	Route::get('survey/profile', 'KnowledgeSurveysController@getShowProfile');
 	Route::get('survey/profile/edit', 'KnowledgeSurveysController@getUpdateProfile');
 	Route::post('survey/profile/edit', 'KnowledgeSurveysController@postUpdateProfile');
 	Route::resource('survey', 'KnowledgeSurveysController');
