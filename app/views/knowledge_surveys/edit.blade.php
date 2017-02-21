@@ -92,42 +92,44 @@
                 </div>
             </div>
 
-            @foreach($expertise['areas'] as $group => $areas)
-                <div class="expertise-form__container">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3 class="expertise-form__group-title">{{ $group }}</h3>
-                            <div class="expertise-form__group-intro">
-                                {{ nl2br(markdown_text_decode($expertise['descriptions'][$group])) }}
+            @if($expertise['areas'])
+                @foreach($expertise['areas'] as $group => $areas)
+                    <div class="expertise-form__container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="expertise-form__group-title">{{ $group }}</h3>
+                                <div class="expertise-form__group-intro">
+                                    {{ nl2br(markdown_text_decode($expertise['descriptions'][$group])) }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    @if(isset($areas))
-                        <table class="expertise-form" cellspacing="5" cellpadding="5" border="0" width="100%">
-                            <thead>
-                            <tr>
-                                <td></td>
-                                <td valign="middle" class="expertise-form__score-title">1</td>
-                                <td valign="middle" class="expertise-form__score-title">2</td>
-                                <td valign="middle" class="expertise-form__score-title">3</td>
-                                <td valign="middle" class="expertise-form__score-title">4</td>
-                                <td valign="middle" class="expertise-form__score-title">5</td>
-                            </tr>
-                            </thead>
-                            @foreach($areas as $id => $area)
-                                <tr class="expertise-form__row">
-                                    <td valign="middle" class="expertise-form__knowledge-area">{{ $area }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '1', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 1 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '2', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 2 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '3', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 3 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '4', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 4 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
-                                    <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '5', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 5 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
+                        @if(isset($areas))
+                            <table class="expertise-form" cellspacing="5" cellpadding="5" border="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <td></td>
+                                    <td valign="middle" class="expertise-form__score-title">1</td>
+                                    <td valign="middle" class="expertise-form__score-title">2</td>
+                                    <td valign="middle" class="expertise-form__score-title">3</td>
+                                    <td valign="middle" class="expertise-form__score-title">4</td>
+                                    <td valign="middle" class="expertise-form__score-title">5</td>
                                 </tr>
-                            @endforeach
-                        </table>
-                    @endif
-                </div>
-            @endforeach
+                                </thead>
+                                @foreach($areas as $id => $area)
+                                    <tr class="expertise-form__row">
+                                        <td valign="middle" class="expertise-form__knowledge-area">{{ $area }}</td>
+                                        <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '1', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 1 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
+                                        <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '2', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 2 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
+                                        <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '3', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 3 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
+                                        <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '4', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 4 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
+                                        <td valign="middle" class="expertise-form__score">{{ Form::radio('areas[' . $id . ']', '5', Input::has('areas[' . $id . ']') ? Input::get('areas[' . $id . ']') : isset($expertise_info[$id]) && $expertise_info[$id] == 5 ? $expertise_info[$id] : '', ['class' => 'expertise-form__radio']) }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        @endif
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 
