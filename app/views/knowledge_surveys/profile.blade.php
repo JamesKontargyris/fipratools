@@ -129,10 +129,12 @@
                                     @foreach($areas as $id => $name)
                                         {{--Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
                                         If not, hide the whole container when only showing the user's expertise--}}
-                                        <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
-                                            <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
-                                            <td valign="middle" class="expertise-list__score"><img src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
-                                        </tr>
+                                        @if(isset($score_info[$id]))
+                                            <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
+                                                <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
+                                                <td valign="middle" class="expertise-list__score"><img src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
