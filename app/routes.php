@@ -157,9 +157,9 @@ Route::group(['before' => 'auth'], function()
 	Route::post('caselist/filter', ['as' => 'caselist.filter', 'uses' => 'CaseListController@filter']);
 	Route::resource('caselist', 'CaseListController');
 
-	Route::any('knowledge_surveys/export', 'KnowledgeSurveysController@export');
-	Route::any('knowledge_surveys/search', 'KnowledgeSurveysController@search');
-	Route::post('knowledge_surveys/filter', ['as' => 'knowledge_surveys.filter', 'uses' => 'KnowledgeSurveysController@filter']);
+	Route::any('survey/export', 'KnowledgeSurveysController@export');
+	Route::any('survey/search', 'KnowledgeSurveysController@search');
+	Route::post('survey/filter', ['as' => 'knowledge_surveys.filter', 'uses' => 'KnowledgeSurveysController@filter']);
 	Route::get('survey/profile', 'KnowledgeSurveysController@getShowProfile');
 	Route::get('survey/profile/edit', 'KnowledgeSurveysController@getUpdateProfile');
 	Route::post('survey/profile/edit', 'KnowledgeSurveysController@postUpdateProfile');

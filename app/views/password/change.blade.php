@@ -38,7 +38,7 @@
                 <div>
                     {{ Form::hidden('your_temporary_password', $pass) }}
                     {{ Form::submit('Change', ['class' => 'primary']) }}<br>
-                    <a href="/" class="secondary">Cancel</a><br><br>
+                    <a href="{{ URL::previous() }}" class="secondary">Cancel</a><br><br>
                     <p style="font-style: italic">If you cancel this step and are yet to update your temporary supplied password, you put your account at risk (you will also be asked to change your password every time you login).</p>
                 </div>
             </section>

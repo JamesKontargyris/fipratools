@@ -450,12 +450,12 @@ class BaseController extends Controller {
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get( 'sort' );
-			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
+			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && ! $this->is_request( 'survey' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
 				return explode( '.', $sort_on[ $sort_term ] );
-			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) {
+			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
@@ -472,7 +472,7 @@ class BaseController extends Controller {
 		} //If all else fails...
 		else {
 			// If we're looking at users, account directors or case studies, use a different default sort order
-			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) return ['last_name', 'asc' ];
+			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) return ['last_name', 'asc' ];
 			if ($this->is_request( 'cases' ) || $this->is_request( 'caselist' )) return ['year', 'desc'];
 			// Otherwise just use name
 			return [ 'name', 'asc' ];

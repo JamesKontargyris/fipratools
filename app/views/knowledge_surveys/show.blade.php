@@ -5,6 +5,7 @@
 @stop
 
 @section('page-nav')
+    <li><a href="{{ URL::previous() }}" class="secondary"><i class="fa fa-caret-left"></i> Back</a></li>
 @stop
 
 @section('content')

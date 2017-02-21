@@ -1,8 +1,6 @@
 <?php namespace Leadofficelist\Knowledge_surveys;
 
-use Leadofficelist\Users\User;
-
-class KnowledgeSurvey extends \Eloquent {
+class KnowledgeSurvey extends \BaseModel {
 	protected $fillable = [];
 
 }

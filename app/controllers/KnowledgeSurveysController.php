@@ -7,6 +7,7 @@ use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
 use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 use Leadofficelist\Knowledge_areas\KnowledgeArea;
 use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
+use Leadofficelist\Knowledge_surveys\KnowledgeSurvey;
 use Leadofficelist\Users\User;
 
 class KnowledgeSurveysController extends \BaseController {
@@ -38,34 +39,37 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return Response
 	 */
 	public function index() {
-		if($this->check_role('Administrator', false))
-		{
-			$user_info = $this->user;
-			$language_info = $this->getUserLanguageInfo();
-			$expertise_info = $this->getExpertise();
-			$score_info = $this->getUserExpertiseInfoIDKeys();
+		$this->destroyCurrentPageNumber( true );
 
-			return View::make( 'knowledge_surveys.index' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info'));
+		if ( $this->searchCheck() ) {
+			// Keep any flashed messages when redirecting
+			Session::reflash();
+
+			return Redirect::to( $this->resource_key . '/search' );
 		}
-		else
-		{
-			return Redirect::to('/survey/profile');
-		}
+
+		$items      = User::where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items->key = 'survey';
+		$user_info      = $this->user;
+
+		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info' ) );
 	}
 
 	/**
 	 * Show the current user's profile
 	 * @return $this
-	 * @throws ResourceNotFoundException
+	 * @throws ProfileNotFoundException
 	 */
-	public function getShowProfile()
-	{
-		if(isset($this->user) && $this->user->survey_updated && $this->user->date_of_birth != '0000-00-00') {
-			$user_info      = $this->user;
+	public function getShowProfile() {
+		$user_info      = $this->user;
+
+		if ( isset( $this->user ) && $this->user->date_of_birth != '0000-00-00' ) {
 			$language_info  = $this->getUserLanguageInfo();
 			$expertise_info = $this->getExpertise();
 			$score_info     = $this->getUserExpertiseInfoIDKeys();
 
+			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info' ) );
+		} elseif ( isset( $this->user ) && $this->user->date_of_birth == '0000-00-00' ) {
 			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info' ) );
 		}
 
@@ -161,7 +165,7 @@ class KnowledgeSurveysController extends \BaseController {
 			$expertise         = $this->getExpertise();
 
 			$user_info = $this->user;
-			if(isset($user_info) && $user_info->survey_updated && $user_info->date_of_birth != '0000-00-00')
+			if(isset($user_info))
 			{
 				$language_info = $this->getUserSpokenWrittenLanguages();
 				/*dd($language_info);*/
