@@ -1,6 +1,5 @@
 <?php namespace Leadofficelist\Knowledge_languages;
 
-use KnowledgeLanguage;
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 use Location;

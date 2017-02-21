@@ -2,8 +2,6 @@
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
-use Location;
-use Leadofficelist\Products\Product;
 
 class AddKnowledgeAreaGroupCommandHandler implements CommandHandler {
 
@@ -11,7 +9,7 @@ class AddKnowledgeAreaGroupCommandHandler implements CommandHandler {
 
 	private $knowledge_area_group;
 
-	function __construct(\KnowledgeAreaGroup $knowledge_area_group) {
+	function __construct(KnowledgeAreaGroup $knowledge_area_group) {
 
 		$this->knowledge_area_group = $knowledge_area_group;
 	}

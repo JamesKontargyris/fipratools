@@ -35,7 +35,7 @@
                         @foreach($items as $area)
                             <tr>
                                 <td><strong>{{ $area->name }}</strong></td>
-                                <td>{{ KnowledgeAreaGroup::find($area->knowledge_area_group_id)->name }}</td>
+                                <td>{{ \Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup::find($area->knowledge_area_group_id)->name }}</td>
                                 <td class="actions content-right hide-print">
                                     {{ Form::open(['route' => array('knowledge_areas.edit', $area->id), 'method' => 'get']) }}
                                     <button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>

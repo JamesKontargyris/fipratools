@@ -2,6 +2,7 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
+use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 use Leadofficelist\Knowledge_areas\KnowledgeArea;
 use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 
@@ -56,7 +57,7 @@ class KnowledgeSurveysController extends \BaseController {
 		$expertise_info = $this->getExpertise();
 		$score_info = $this->getUserExpertiseInfoByID();
 
-		return View::make( 'knowledge_surveys.index' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info', 'expertise_count'));
+		return View::make( 'knowledge_surveys.profile' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info', 'expertise_count'));
 	}
 
 	/**
@@ -164,7 +165,7 @@ class KnowledgeSurveysController extends \BaseController {
 
 		Flash::overlay( 'Knowledge profile updated.', 'success' );
 
-		return Redirect::route( 'survey.index' );
+		return Redirect::to( 'survey/profile' );
 	}
 
 	protected function getDateSelect( $purpose = 'dob' ) {

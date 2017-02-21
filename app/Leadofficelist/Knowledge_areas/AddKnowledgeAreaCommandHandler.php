@@ -1,6 +1,5 @@
 <?php namespace Leadofficelist\Knowledge_areas;
 
-use KnowledgeArea;
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 use Location;

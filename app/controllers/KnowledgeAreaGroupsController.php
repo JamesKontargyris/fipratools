@@ -4,6 +4,7 @@ use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditKnowledgeAreaGroup as AddEditKnowledgeAreaGroupForm;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
+use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 
 class KnowledgeAreaGroupsController extends \BaseController
 {

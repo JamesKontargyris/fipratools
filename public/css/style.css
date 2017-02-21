@@ -1838,7 +1838,12 @@ ul.pagination {
 .expertise-list {
   width: 100%; }
 
-/* line 855, ../../app/assets/sass/_modules.scss */
+@media (max-width: 769px) {
+  /* line 855, ../../app/assets/sass/_modules.scss */
+  .expertise-list__section-title {
+    margin-top: 20px; } }
+
+/* line 860, ../../app/assets/sass/_modules.scss */
 .expertise-list__group-title {
   font-weight: bold;
   font-size: 18px;
@@ -1846,42 +1851,42 @@ ul.pagination {
   color: #00257f;
   padding-bottom: 10px; }
 
-/* line 861, ../../app/assets/sass/_modules.scss */
+/* line 866, ../../app/assets/sass/_modules.scss */
 .expertise-list__knowledge-area,
 .expertise-list__score {
   font-size: 16px;
   font-size: 1rem;
   padding: 5px 15px; }
 
-/* line 866, ../../app/assets/sass/_modules.scss */
+/* line 871, ../../app/assets/sass/_modules.scss */
 .expertise-list__knowledge-area {
-  width: 80%; }
+  width: 70%; }
 
-/* line 869, ../../app/assets/sass/_modules.scss */
+/* line 874, ../../app/assets/sass/_modules.scss */
 .expertise-list__score {
-  width: 20%;
+  width: 30%;
   text-align: right; }
 
-/* line 873, ../../app/assets/sass/_modules.scss */
+/* line 878, ../../app/assets/sass/_modules.scss */
 .expertise-list__score-row-1,
 .expertise-list__score-row-2,
 .expertise-list__score-row-3 {
   background-color: #e7e7e7;
   color: #898989; }
 
-/* line 880, ../../app/assets/sass/_modules.scss */
+/* line 885, ../../app/assets/sass/_modules.scss */
 .expertise-list__score-row-4,
 .expertise-list__score-row-5 {
   background-color: #8dcc29;
   color: white; }
-  /* line 885, ../../app/assets/sass/_modules.scss */
+  /* line 890, ../../app/assets/sass/_modules.scss */
   .expertise-list__score-row-4 .expertise-list__knowledge-area,
   .expertise-list__score-row-4 .expertise-list__score,
   .expertise-list__score-row-5 .expertise-list__knowledge-area,
   .expertise-list__score-row-5 .expertise-list__score {
     font-weight: bold; }
 
-/* line 891, ../../app/assets/sass/_modules.scss */
+/* line 896, ../../app/assets/sass/_modules.scss */
 .expertise-list__score-row-1,
 .expertise-list__score-row-2,
 .expertise-list__score-row-3,
@@ -1889,18 +1894,14 @@ ul.pagination {
 .expertise-list__score-row-5 {
   border-bottom: 4px solid #f7f7f7; }
 
-/* line 899, ../../app/assets/sass/_modules.scss */
+/* line 904, ../../app/assets/sass/_modules.scss */
 .knowledge-toggle {
   display: none;
   margin-bottom: 15px;
   font-size: 14px;
   font-size: 0.875rem;
   line-height: 16px; }
-  @media (max-width: 769px) {
-    /* line 899, ../../app/assets/sass/_modules.scss */
-    .knowledge-toggle {
-      margin-top: 20px; } }
-  /* line 909, ../../app/assets/sass/_modules.scss */
+  /* line 910, ../../app/assets/sass/_modules.scss */
   .knowledge-toggle.active {
     display: inline-block; }
 

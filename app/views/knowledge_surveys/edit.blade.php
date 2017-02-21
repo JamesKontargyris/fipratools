@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('survey.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Back</a></li>
+    <li><a href="{{ url('survey/profile') }}" class="secondary"><i class="fa fa-caret-left"></i> Back</a></li>
 @stop
 
 @section('content')
@@ -28,15 +28,15 @@
                 <div class="formfield">
                     {{ Form::label('dob_day', 'Date of birth:', ['class' => 'required', 'style' => 'display:block;']) }}
                     <div class="label-info">This enables us to work out our average age profile.</div>
-                    {{ Form::select('dob_day', $dob_data['days'], Input::has('date_of_birth') ? date('d', strtotime(Input::get('date_of_birth'))) : isset($user_info->date_of_birth) ? date('d', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
-                    {{ Form::select('dob_month', $dob_data['months'], Input::has('date_of_birth') ? date('m', strtotime(Input::get('date_of_birth'))) : isset($user_info->date_of_birth) ? date('m', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
-                    {{ Form::select('dob_year', $dob_data['years'], Input::has('date_of_birth') ? date('Y', strtotime(Input::get('date_of_birth'))) : isset($user_info->date_of_birth) ? date('Y', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::select('dob_day', $dob_data['days'], Input::has('date_of_birth') ? date('d', strtotime(Input::get('date_of_birth'))) : $user_info->date_of_birth != '0000-00-00' ? date('d', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::select('dob_month', $dob_data['months'], Input::has('date_of_birth') ? date('m', strtotime(Input::get('date_of_birth'))) : $user_info->date_of_birth != '0000-00-00' ? date('m', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::select('dob_year', $dob_data['years'], Input::has('date_of_birth') ? date('Y', strtotime(Input::get('date_of_birth'))) : $user_info->date_of_birth != '0000-00-00' ? date('Y', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
                 </div>
                 <div class="formfield">
                     {{ Form::label('joined_fipra_day', 'On what date did you join Fipra?', ['class' => 'required', 'style' => 'display:block;']) }}
-                    {{ Form::select('joined_fipra_day', $joined_fipra_data['days'], Input::has('joined_fipra') ? date('d', strtotime(Input::get('joined_fipra'))) : isset($user_info->joined_fipra) ? date('d', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
-                    {{ Form::select('joined_fipra_month', $joined_fipra_data['months'], Input::has('joined_fipra') ? date('m', strtotime(Input::get('joined_fipra'))) : isset($user_info->joined_fipra) ? date('m', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
-                    {{ Form::select('joined_fipra_year', $joined_fipra_data['years'], Input::has('joined_fipra') ? date('Y', strtotime(Input::get('joined_fipra'))) : isset($user_info->joined_fipra) ? date('Y', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::select('joined_fipra_day', $joined_fipra_data['days'], Input::has('joined_fipra') ? date('d', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('d', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::select('joined_fipra_month', $joined_fipra_data['months'], Input::has('joined_fipra') ? date('m', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('m', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::select('joined_fipra_year', $joined_fipra_data['years'], Input::has('joined_fipra') ? date('Y', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('Y', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
                 </div>
                 <div class="formfield">
                     {{ Form::label('total_fipra_working_time', 'What percentage of your total working time do you spend on matters / accounts relating to Fipra?', ['class' => 'required']) }}
@@ -46,11 +46,12 @@
             <div class="col-6">
                 <div class="formfield">
                     {{ Form::label('other_network', 'If you are personally either a) a member of one or more professional PA/PR associations, or b) a registered lobbyist, please enter details here:') }}
+                    <div class="label-info">Leave blank if none.</div>
                     {{ Form::textarea('other_network', Input::has('other_network') ? Input::get('other_network') : isset($user_info->other_network) ? $user_info->other_network : '', ['rows' => '3']) }}
                 </div>
                 <div class="formfield">
                     {{ Form::label('formal_positions', 'What other formal positions do you hold?') }}
-                    <div class="label-info"> Please list all think tanks, sports associations, company, party or government positions, or anything else where you have a formal position, whether paid or not. This does not include memberships of parties, associations or clubs - only formal positions.</div>
+                    <div class="label-info"> Please list all think tanks, sports associations, company, party or government positions, or anything else where you have a formal position, whether paid or not. This does not include memberships of parties, associations or clubs - only formal positions. Leave blank if none.</div>
                     {{ Form::textarea('formal_positions', Input::has('formal_positions') ? Input::get('formal_positions') : isset($user_info->formal_positions) ? $user_info->formal_positions : '', ['rows' => '3']) }}
                 </div>
             </div>

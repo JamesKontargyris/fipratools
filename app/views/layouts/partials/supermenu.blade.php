@@ -9,7 +9,7 @@
 					</li>
 					<li class="super-menu__item hide-print"><a href="/list" class="super-menu__link <?php if(Session::get('section') == 'list') : ?> active<?php endif; ?> section-list">Lead Office List</a></li>
 					<li class="super-menu__item hide-print"><a href="/caselist" class="super-menu__link <?php if(Session::get('section') == 'case') : ?> active<?php endif; ?> section-case">Case Studies</a></li>
-					<li class="super-menu__item hide-print"><a href="/survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?> section-survey">Knowledge Survey</a></li>
+					@if($user->can('manage_knowledge')) <li class="super-menu__item hide-print"><a href="/survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?> section-survey">Knowledge Survey</a></li> @endif
 				</ul>
 			</div>
 			<div class="col-5 last super-menu__user-details hide-print">

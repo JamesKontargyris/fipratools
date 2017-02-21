@@ -472,12 +472,10 @@ class BaseController extends Controller {
 		} //If all else fails...
 		else {
 			// If we're looking at users, account directors or case studies, use a different default sort order
-			return ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) )
-				? [ 'last_name', 'asc' ]
-				: ($this->is_request( 'cases' ) || $this->is_request( 'caselist' ))
-					? ['year', 'desc']
-					// Otherwise just use name
-					: [ 'name', 'asc' ];
+			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) return ['last_name', 'asc' ];
+			if ($this->is_request( 'cases' ) || $this->is_request( 'caselist' )) return ['year', 'desc'];
+			// Otherwise just use name
+			return [ 'name', 'asc' ];
 		}
 
 		return false;

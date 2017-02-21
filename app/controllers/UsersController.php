@@ -37,7 +37,7 @@ class UsersController extends \BaseController
 		$this->editUserForm = $editUserForm;
 		$this->getFormData();
 
-		View::share( 'page_title', 'Units' );
+		View::share( 'page_title', 'Users' );
 		View::share( 'key', 'users' );
 	}
 

@@ -4,6 +4,7 @@ use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditKnowledgeLanguage as AddEditKnowledgeLanguageForm;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
+use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 
 class KnowledgeLanguagesController extends \BaseController
 {

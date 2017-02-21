@@ -1,4 +1,4 @@
-<?php
+<?php namespace Leadofficelist\Knowledge_area_groups;
 
 class KnowledgeAreaGroup extends \BaseModel {
 	protected $fillable = [ 'name', 'order' ];

@@ -2,7 +2,6 @@
 
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
-use Location;
 
 class EditKnowledgeAreaCommandHandler implements CommandHandler {
 
