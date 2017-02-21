@@ -108,30 +108,15 @@ Route::get('roles', function()
 //	Role::find(1)->attachPermissions([$manage_cases->id]);
 //	Role::find(2)->attachPermissions([$manage_cases->id]);
 //
-	/*$manage_knowledge = new Permission;
-	$manage_knowledge->name = "manage_knowledge";
-	$manage_knowledge->display_name = "Manage Knowledge Survey resources";
-	$manage_knowledge->save();
+	/*$manage_knowledge = new Permission; $manage_knowledge->name = "manage_knowledge"; $manage_knowledge->display_name = "Manage Knowledge Survey resources"; $manage_knowledge->save();
 
-	$edit_knowledge = new Permission;
-	$edit_knowledge->name = "edit_knowledge";
-	$edit_knowledge->display_name = "Edit Knowledge Survey details for their user profile";
-	$edit_knowledge->save();
+	$edit_knowledge = new Permission; $edit_knowledge->name = "edit_knowledge"; $edit_knowledge->display_name = "Edit Knowledge Survey details for their user profile"; $edit_knowledge->save();
 
-	$view_knowledge = new Permission;
-	$view_knowledge->name = "view_knowledge";
-	$view_knowledge->display_name = "View Knowledge Survey";
-	$view_knowledge->save();
+	$view_knowledge = new Permission; $view_knowledge->name = "view_knowledge"; $view_knowledge->display_name = "View Knowledge Survey"; $view_knowledge->save();
 
 	Role::find(1)->attachPermissions([$manage_knowledge->id]);
-	Role::find(1)->attachPermissions([$edit_knowledge->id]);
-	Role::find(2)->attachPermissions([$edit_knowledge->id]);
-	Role::find(3)->attachPermissions([$edit_knowledge->id]);
-	Role::find(4)->attachPermissions([$edit_knowledge->id]);
-	Role::find(1)->attachPermissions([$view_knowledge->id]);
-	Role::find(2)->attachPermissions([$view_knowledge->id]);
-	Role::find(3)->attachPermissions([$view_knowledge->id]);
-	Role::find(4)->attachPermissions([$view_knowledge->id]);
+	Role::find(1)->attachPermissions([$edit_knowledge->id]); Role::find(2)->attachPermissions([$edit_knowledge->id]); Role::find(3)->attachPermissions([$edit_knowledge->id]); Role::find(4)->attachPermissions([$edit_knowledge->id]);
+	Role::find(1)->attachPermissions([$view_knowledge->id]); Role::find(2)->attachPermissions([$view_knowledge->id]); Role::find(3)->attachPermissions([$view_knowledge->id]); Role::find(4)->attachPermissions([$view_knowledge->id]);
 
 	return "All done!";*/
 });

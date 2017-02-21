@@ -28,8 +28,6 @@ class KnowledgeSurveysController extends \BaseController {
 	function __construct( AddEditSurveyForm $addEditSurvey ) {
 		parent::__construct();
 
-		$this->check_perm( 'view_knowledge' );
-
 		View::share( 'page_title', 'Knowledge Survey' );
 		View::share( 'key', 'survey' );
 		$this->addEditSurvey = $addEditSurvey;
@@ -42,6 +40,8 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return Response
 	 */
 	public function index() {
+		$this->check_perm( 'view_knowledge' );
+
 		$this->destroyCurrentPageNumber( true );
 
 		if ( $this->searchCheck() ) {
@@ -70,6 +70,8 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return $this
 	 */
 	public function search() {
+		$this->check_perm( 'view_knowledge' );
+
 		if ( $this->search_term = $this->findSearchTerm() ) {
 			if ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' ) {
 				$items               = $this->getFiltered();
@@ -108,6 +110,8 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @throws ProfileNotFoundException
 	 */
 	public function getShowProfile() {
+		$this->check_perm( 'view_knowledge' );
+
 		$user_info      = $this->user;
 
 		if ( isset( $this->user ) && $this->user->date_of_birth != '0000-00-00' ) {
@@ -133,6 +137,8 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @throws ProfileNotFoundException
 	 */
 	public function show( $id ) {
+		$this->check_perm( 'view_knowledge' );
+
 		$user = User::find($id);
 
 		if(isset($user) && $user->survey_updated && $user->date_of_birth != '0000-00-00')
@@ -149,6 +155,7 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	public function getUpdateProfile() {
+			$this->check_perm( 'edit_knowledge' );
 
 			$dob_data          = $this->getDateSelect( 'dob' );
 			$joined_fipra_data = $this->getDateSelect( 'joined_fipra' );
@@ -171,6 +178,8 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	public function postUpdateProfile() {
+		$this->check_perm( 'edit_knowledge' );
+
 		$input = Input::all();
 		// Add the knowledge areas into the validation rules and update feedback messages
 		foreach(KnowledgeArea::all() as $area) {
