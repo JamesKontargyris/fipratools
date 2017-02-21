@@ -4,7 +4,7 @@
     @if(is_search())
         <i class="fa fa-search"></i> Searching for {{ Session::has('knowledge_areas.SearchType') ? Session::get('knowledge_areas.SearchType') : '' }}: {{ $items->search_term }}
     @else
-        Knowledge Area Groups Overview
+        Knowledge Areas Overview
     @endif
 @stop
 
