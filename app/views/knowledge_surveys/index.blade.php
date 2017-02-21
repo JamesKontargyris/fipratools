@@ -65,11 +65,41 @@
                     <table width="100%" class="index-table">
                         <thead>
                         <tr>
-                            <td width="20%">Name</td>
+                            <td width="40%">Name</td>
                             <td width="20%">Unit</td>
-                            <td width="35%">Expertise</td>
-                            <td width="20%" class="hide-s">Languages</td>
+                            <td width="20%">Expertise</td>
+                            <td width="15%" class="hide-s">Languages</td>
                             <td width="5%" class="hide-print hide-s"></td>
+                        </tr>
+                        <tr class="hide-print hide-m">
+                            <td class="hide-m sub-header">
+                                @include('layouts.partials.filters.table-letter-filter')
+                            </td>
+                            <td class="hide-m sub-header">
+                                {{ Form::open(['url' => 'survey/search']) }}
+                                {{ Form::select('filter_value', $units, Session::has('survey.Filters.unit_id') ? Session::get('survey.Filters.unit_id') : null, ['class' => 'list-table-filter']) }}
+                                {{ Form::hidden('filter_field', 'unit_id') }}
+                                {{ Form::hidden('filter_results', 'yes') }}
+                                {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
+                                {{ Form::close() }}
+                            </td>
+                            <td class="hide-m sub-header">
+                                {{ Form::open(['url' => 'survey/search']) }}
+                                {{ Form::select('filter_value', $areas, Session::has('survey.Filters.knowledge_area_id') ? Session::get('survey.Filters.knowledge_area_id') : null, ['class' => 'list-table-filter']) }}
+                                {{ Form::hidden('filter_field', 'knowledge_area_id') }}
+                                {{ Form::hidden('filter_results', 'yes') }}
+                                {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
+                                {{ Form::close() }}
+                            </td>
+                            <td class="hide-m sub-header">
+                                {{ Form::open(['url' => 'survey/search']) }}
+                                {{ Form::select('filter_value', $languages, Session::has('survey.Filters.knowledge_language_id') ? Session::get('survey.Filters.knowledge_language_id') : null, ['class' => 'list-table-filter']) }}
+                                {{ Form::hidden('filter_field', 'knowledge_language_id') }}
+                                {{ Form::hidden('filter_results', 'yes') }}
+                                {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
+                                {{ Form::close() }}
+                            </td>
+                            <td class="hide-m sub-header"></td>
                         </tr>
                         </thead>
                         <tbody>

@@ -40,4 +40,40 @@ class KnowledgeArea extends \BaseModel {
 
 		return $update_user;
 	}
+
+	public static function getKnowledgeAreasForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
+	{
+		$areas = [ ];
+		//Remove whitespace from $prefix and add a space on the end, so there is a space
+		//between the prefix and the area name
+		$prefix = trim( $prefix ) . ' ';
+		//If $blank_entry == true, add a blank "Please select..." option
+		if ( $blank_entry )
+		{
+			$areas[''] = $blank_message;
+		}
+
+		foreach (
+			KnowledgeArea::orderBy( 'name', 'ASC' )->get( [
+				'id',
+				'name'
+			] ) as $area
+		)
+		{
+			$areas[ $area->id ] = $prefix . $area->name;
+		}
+
+
+
+		if ( $blank_entry && count( $areas ) == 1 )
+		{
+			return false;
+		} elseif ( ! $blank_entry && count( $areas ) == 0 )
+		{
+			return false;
+		} else
+		{
+			return $areas;
+		}
+	}
 }

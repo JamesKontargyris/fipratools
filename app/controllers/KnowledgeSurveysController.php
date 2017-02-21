@@ -3,7 +3,6 @@
 use Laracasts\Commander\CommanderTrait;
 use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\ProfileNotFoundException;
-use Leadofficelist\Exceptions\ResourceNotFoundException;
 use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
 use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 use Leadofficelist\Knowledge_areas\KnowledgeArea;
@@ -20,10 +19,11 @@ class KnowledgeSurveysController extends \BaseController {
 	protected $resource_key = 'survey';
 	protected $resource_permission = 'view_knowledge';
 	protected $search_term;
-	/**
-	 * @var
-	 */
 	private $addEditSurvey;
+
+	protected $units;
+	protected $areas;
+	protected $languages;
 
 	function __construct( AddEditSurveyForm $addEditSurvey ) {
 		parent::__construct();
@@ -31,7 +31,7 @@ class KnowledgeSurveysController extends \BaseController {
 		$this->check_perm( 'view_knowledge' );
 
 		View::share( 'page_title', 'Knowledge Survey' );
-		View::share( 'key', 'knowledge_surveys' );
+		View::share( 'key', 'survey' );
 		$this->addEditSurvey = $addEditSurvey;
 	}
 
@@ -56,7 +56,12 @@ class KnowledgeSurveysController extends \BaseController {
 		$items->key = 'survey';
 		$user_info      = $this->user;
 
-		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info' ) );
+		$this->getFormData();
+		$units = $this->units;
+		$areas = $this->areas;
+		$languages = $this->languages;
+
+		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info', 'units', 'areas', 'languages') );
 	}
 
 	/**
@@ -86,7 +91,12 @@ class KnowledgeSurveysController extends \BaseController {
 			$items->search_term = str_replace( '%', '', $this->search_term );
 			$items->key         = 'survey';
 
-			return View::make( 'knowledge_surveys.index' )->with( compact( 'items' ) );
+			$this->getFormData();
+			$units = $this->units;
+			$areas = $this->areas;
+			$languages = $this->languages;
+
+			return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'units', 'areas', 'languages' ) );
 		} else {
 			return Redirect::route( 'survey.index' );
 		}
@@ -323,6 +333,79 @@ class KnowledgeSurveysController extends \BaseController {
 		asort($expertiseData, SORT_STRING);
 
 		return $expertiseData;
+	}
+
+	/**
+	 * Get all data required to populate the filters.
+	 *
+	 * @return bool
+	 */
+	protected function getFormData() {
+		$this->units             = $this->getUnitsFormData( true, 'All' );
+		$this->areas             = $this->getKnowledgeAreasFormData( true, 'All' );
+		$this->languages             = $this->getKnowledgeLanguagesFormData( true, 'All' );
+
+		return true;
+	}
+
+	protected function getAll() {
+		return User::where( 'status', '=', 1 )->orderBy( 'id', 'DESC' )->get();
+	}
+
+	protected function getSelection() {
+		if ( $this->searchCheck() ) {
+			$search_term             = $this->findSearchTerm();
+			$this->search_term_clean = str_replace( '%', '', $search_term );
+
+			$items = User::whereDate('date_of_birth', '>', '0000-00-00')->where( 'first_name', 'LIKE', $search_term )->orWhere('last_name', 'LIKE', $search_term)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		} else {
+			$items = User::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
+	}
+
+	protected function getFiltered( $for = 'screen' ) {
+		$items = User::where(function($query)
+		{
+			$query->whereDate('date_of_birth', '>', '0000-00-00');
+
+			if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
+				$query->whereHas('knowledge_languages', function($query)
+				{
+					$query->where('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
+				});
+			}
+
+			if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
+				$query->whereHas('unit', function($query)
+				{
+					$query->where('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
+				});
+			}
+
+			if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
+				$query->whereHas('knowledge_areas', function($query)
+				{
+					$query->where('knowledge_areas.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
+				});
+			}
+
+		})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+		return $items;
+	}
+
+	protected function getFilteredValues() {
+		// Get names of filtered values
+		$values = '';
+		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_value ) {
+			$model_name = $this->getFilterModelName( $filter_name );
+			$model = new $model_name;
+			$values .= $model::find( $filter_value )->name . ', ';
+		}
+
+		return rtrim( $values, ', ' );
 	}
 
 }

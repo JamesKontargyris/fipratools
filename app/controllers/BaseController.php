@@ -6,6 +6,8 @@ use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Cases\CaseStudy;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Knowledge_areas\KnowledgeArea;
+use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 use Leadofficelist\Locations\Location;
 use Leadofficelist\Products\Product;
 use Leadofficelist\Sectors\Sector;
@@ -815,6 +817,38 @@ class BaseController extends Controller {
 		}
 
 		return CaseStudy::getYearsForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the knowledge areas in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getKnowledgeAreasFormData( $blank_entry = true, $blank_message = 'Please select...' ) {
+		if ( ! KnowledgeArea::getKnowledgeAreasForFormSelect( $blank_entry, $blank_message ) ) {
+			return [ '' => 'No knowledge areas available to select' ];
+		}
+
+		return KnowledgeArea::getKnowledgeAreasForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the knowledge languages in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getKnowledgeLanguagesFormData( $blank_entry = true, $blank_message = 'Please select...' ) {
+		if ( ! KnowledgeLanguage::getKnowledgeLanguagesForFormSelect( $blank_entry, $blank_message ) ) {
+			return [ '' => 'No knowledge areas available to select' ];
+		}
+
+		return KnowledgeLanguage::getKnowledgeLanguagesForFormSelect( $blank_entry, $blank_message );
 	}
 
 	protected function getActiveCount() {

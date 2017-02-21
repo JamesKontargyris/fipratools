@@ -40,4 +40,40 @@ class KnowledgeLanguage extends \BaseModel {
 
 		return $update_user;
 	}
+
+	public static function getKnowledgeLanguagesForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
+	{
+		$languages = [ ];
+		//Remove whitespace from $prefix and add a space on the end, so there is a space
+		//between the prefix and the area name
+		$prefix = trim( $prefix ) . ' ';
+		//If $blank_entry == true, add a blank "Please select..." option
+		if ( $blank_entry )
+		{
+			$languages[''] = $blank_message;
+		}
+
+		foreach (
+			KnowledgeLanguage::orderBy( 'name', 'ASC' )->get( [
+				'id',
+				'name'
+			] ) as $language
+		)
+		{
+			$languages[ $language->id ] = $prefix . $language->name;
+		}
+
+
+
+		if ( $blank_entry && count( $languages ) == 1 )
+		{
+			return false;
+		} elseif ( ! $blank_entry && count( $languages ) == 0 )
+		{
+			return false;
+		} else
+		{
+			return $languages;
+		}
+	}
 }
