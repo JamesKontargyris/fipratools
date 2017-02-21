@@ -14,7 +14,7 @@ class UsersController extends \BaseController
 {
 	use CommanderTrait;
 
-	public $section = 'list';
+	public $section = 'admin';
 	protected $resource_key = 'users';
 	protected $resource_permission = 'manage_users';
 	protected $units;

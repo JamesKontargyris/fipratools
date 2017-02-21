@@ -89,7 +89,7 @@ class Unit extends \BaseModel
             $units[''] = $blank_message;
         }
 
-        foreach (Unit::orderBy('name', 'ASC')->where('show_' . section_is(), '=', 1)->get(['id', 'name']) as $unit) {
+        foreach (Unit::orderBy('name', 'ASC')->where('show_' . (section_is() == 'admin' ? 'list' : section_is()), '=', 1)->get(['id', 'name']) as $unit) {
             $units[$unit->id] = $prefix . $unit->name;
         }
 

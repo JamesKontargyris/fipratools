@@ -26,7 +26,7 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td rowspan="2" width="40%">User</td>
+							<td rowspan="2" colspan="2" width="40%">User</td>
 							<td rowspan="2" width="15%" class="hide-s">Email</td>
 							<td rowspan="2" width="10%" class="hide-s">Role</td>
 							<td colspan="2" width="10%" class="content-center hide-s">Clients Added</td>
@@ -40,13 +40,21 @@
 					<tbody>
 						@foreach($items as $list_user)
 							<tr>
-								<td><strong><a href="{{ route('users.show', ['id' => $list_user->id]) }}">
-									@if(Session::get ('users.rowsNameOrder') == 'last_first')
-										{{ $list_user->getFullName(true) }}
-									@else
-										{{ $list_user->getFullName(false) }}
+								<td>
+									<strong><a href="{{ route('users.show', ['id' => $list_user->id]) }}">
+										@if(Session::get ('users.rowsNameOrder') == 'last_first')
+											{{ $list_user->getFullName(true) }}
+										@else
+											{{ $list_user->getFullName(false) }}
+										@endif
+									</a></strong>
+								</td>
+								<td class="actions knowledge-survey-link">
+									{{--Knowledge survey link--}}
+									@if($list_user->survey_updated && $list_user->date_of_birth != '0000-00-00')
+										<a href="{{ route('survey.show', $list_user->id) }}" alt="View {{ $list_user->first_name }}'s Knowledge Profile" title="View {{ $list_user->first_name }}'s Knowledge Profile"><i class="fa fa-book fa-lg"></i></a>
 									@endif
-									</a></strong></td>
+								</td>
 								<td class="hide-s">{{ $list_user->email }}</td>
 								<td class="hide-s">{{ $list_user->roles()->pluck('name') }}</td>
 								<td class="content-center hide-s">{{ number_format($list_user->clients()->where('status', '=', 1)->count(),0,0,',') }}</td>

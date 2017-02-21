@@ -445,7 +445,8 @@
           .full-width { width:100%; text-align: left; }
         }
         &.archive-count,
-        &.client-links {
+        &.client-links,
+        &.knowledge-survey-link {
           padding-right:10px;
           border-left:0;
           color:$grey;
