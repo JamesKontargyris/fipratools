@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-{{ $show_user->getFullName() }} ({{ $show_user->unit()->pluck('name') }})
+{{ $show_user->getFullName() }} @if($show_user->unit()->pluck('name'))({{ $show_user->unit()->pluck('name') }})@endif
 @stop
 
 @section('page-nav')
@@ -21,9 +21,9 @@
 	</div>
 </div>
 
+<h3>Active clients added by this user</h3>
 @if($user->hasRole('Administrator') && count($clients) > 0)
 	<div class="row">
-		<h3>Active clients added by this user</h3>
 	</div>
 	<section class="index-table-container">
 		<div class="row">

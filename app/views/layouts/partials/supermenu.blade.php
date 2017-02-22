@@ -14,7 +14,7 @@
 			</div>
 			<div class="col-5 last super-menu__user-details hide-print">
 				Logged in as <strong>{{ $user_full_name }}</strong><br/>
-				<i class="fa fa-sitemap"></i> {{ $user_unit }} &nbsp;&nbsp;<i class="fa fa-user"></i> {{ $user_role }}
+				@if($user_unit)<i class="fa fa-sitemap"></i>{{ $user_unit }}@endif&nbsp;&nbsp;<i class="fa fa-user"></i> {{ $user_role }}
 				<br><a href="/password/change">Change Password</a> &nbsp;&nbsp;<a href="/logout">Logout</a>
 			</div>
 		</div>
