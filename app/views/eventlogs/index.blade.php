@@ -21,17 +21,16 @@ Event Log
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td width="45%">Event</td>
-							<td width="15%">User</td>
-							<td width="15%">Unit</td>
-							<td width="25%">When</td>
+							<td colspan="2" width="45%">Event</td>
+							<td width="30%">User</td>
+							<td width="20%">When</td>
 							<td class="hide-print"></td>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($items as $log)
 							<tr>
-								<td>
+								<td class="event-log-icons narrow no-border-right">
 								@if($log->type == 'add')
 									<i class="fa fa-lg fa-plus-circle green event-log-icon"></i>
 								@elseif($log->type == 'edit')
@@ -45,10 +44,10 @@ Event Log
 								@else
 									<i class="fa fa-lg fa-table periwinkle event-log-icon"></i>
 								@endif
-								<strong>{{ $log->event }}</strong></td>
-								<td>{{ $log->user_name }}</td>
-								<td>{{ $log->unit_name }}</td>
-								<td>{{ date('d F Y \a\t g.ia', strtotime($log->created_at)) }}</td>
+								</td>
+								<td><strong>{{ $log->event }}</strong></td>
+								<td>@if($log->user_name){{ $log->user_name }}@endif @if($log->unit_name)({{ $log->unit_name }})@endif</td>
+								<td>{{ date('d M Y \a\t g.ia', strtotime($log->created_at)) }}</td>
 								<td class="actions content-right hide-print">
 									{{ Form::open(['url' => array('eventlog/delete'), 'method' => 'post']) }}
 										{{ Form::hidden('log_id', $log->id) }}

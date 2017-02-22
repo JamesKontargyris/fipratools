@@ -440,10 +440,17 @@
         padding:5px 15px;
         &.actions,
         &.archive-count,
-        &.client-links {
+        &.client-links,
+        &.narrow {
           padding:5px;
           width:1%;
           white-space:nowrap;
+        }
+        &.no-border-right {
+          & + td {
+            border-left:0;
+            padding-left:3px;
+          }
         }
         &.actions {
           .full-width { width:100%; text-align: left; }
@@ -455,8 +462,11 @@
           border-left:0;
           color:$grey;
         }
+        .event-log-icons {
+          border-right:0;
+          padding:5px 0 !important;
+        }
         .event-log-icon {
-          padding-right:10px;
         }
       }
       //      &:nth-child(even) {

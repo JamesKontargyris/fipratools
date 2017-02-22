@@ -39,7 +39,7 @@
                         @foreach($items as $widget)
                             <tr>
                                 <td><strong><a href="{{ route('widgets.show', $widget->id) }}">{{ $widget->name }}</a></strong></td>
-                                <td>{{ $widget->slug }}</td>
+                                <td><span style="word-break: break-word">{{ $widget->slug }}</span></td>
                                 <td class="actions content-right hide-print">
                                     {{ Form::open(['route' => array('widgets.edit', $widget->id), 'method' => 'get']) }}
                                     <button type="submit" class="primary" ><i class="fa fa-pencil"></i></button>
