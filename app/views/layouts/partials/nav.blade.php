@@ -27,7 +27,7 @@
                         @elseif(Session::get('section') == 'list')
                             Lead Office List
                         @else
-                            Fipra Portal
+                            Portal
                         @endif
                         <i class="fa fa-lg fa-caret-down"></i></span>
                 </div>
