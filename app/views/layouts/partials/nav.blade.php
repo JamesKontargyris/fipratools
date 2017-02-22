@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             Logged in as <strong>{{ $user_full_name }}</strong><br/>
-            {{ $user_unit }} &bull; {{ $user_role }}<br/><a href="/password/change" class="primary">Change Password</a><br/><a href="/logout" class="primary">Logout</a>
+            @if($user_unit ){{ $user_unit }} &bull;@endif {{ $user_role }}<br/><a href="/password/change" class="primary">Change Password</a><br/><a href="/logout" class="primary">Logout</a>
         </div>
     </div>
 </section>
@@ -24,8 +24,10 @@
                             Case Studies
                         @elseif(Session::get('section') == 'survey')
                             Knowledge Survey
-                        @else
+                        @elseif(Session::get('section') == 'list')
                             Lead Office List
+                        @else
+                            Fipra Portal
                         @endif
                         <i class="fa fa-lg fa-caret-down"></i></span>
                 </div>

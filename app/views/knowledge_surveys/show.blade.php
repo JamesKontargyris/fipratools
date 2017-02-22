@@ -81,7 +81,7 @@
                                 If not, hide the whole container when only showing the user's expertise--}}
                                 <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
                                     <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
-                                    <td valign="middle" class="expertise-list__score"><img src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
+                                    <td valign="middle" class="expertise-list__score"><img class="expertise-list__score-stars" src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
