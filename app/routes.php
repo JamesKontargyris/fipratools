@@ -124,48 +124,10 @@ Route::controller('password', 'PasswordController');
 // Route to add new users in a batch from a CSV file
 Route::get('/usersupdate', function()
 {
-	$handle = fopen('170222_users.csv', 'r');
-	$roles_id = ['Administrator' => 1, 'Head of Unit' => 2, 'Fipriot' => 3, 'Special Adviser' => 4, 'Head of Unit (Correspondent)' => 5];
-	while(($data = fgetcsv($handle)) !== FALSE) {
-		print_r($data);
-		if($found_user = Leadofficelist\Users\User::where('email', '=', $data[3])->get()->first()) {
-			echo " FOUND IN DB";
-			$current_user = Leadofficelist\Users\User::find($found_user->id);
-			$current_user->first_name = $data[1];
-			$current_user->last_name = $data[2];
-			$current_user->save();
-			$current_user->detachRoles([1, 2, 3, 4, 5]);
-			$current_user->attachRole($roles_id[$data[4]]);
-		} else {
-			$user = new Leadofficelist\Users\User;
-			$user->first_name = $data[1];
-			$user->last_name = $data[2];
-			$user->email = $data[3];
-			$user->password = Hash::make($data[5]);
-			$user->save();
-			$user->roles()->attach($roles_id[$data[4]]);
-		}
+	$users = Leadofficelist\Users\User::whereDate('created_at', '>=', '2017-02-22')->get();
+	foreach($users as $user) { $user->delete(); }
 
-		echo '<br>';
-		/*if($current_user = Leadofficelist\Users\User::where('email', '=', $data[3])->get()->first()) {
-			// User already exists
-			$current_user->first_name = $data[1];
-			$current_user->last_name = $data[2];
-			$current_user->save();
-			$current_user->detachRoles([1, 2, 3, 4, 5]);
-			$current_user->attachRole($roles_id[$data[4]]);
-		} else {
-			// Create a new user
-			$user = new Leadofficelist\Users\User;
-			$user->first_name = $data[1];
-			$user->last_name = $data[2];
-			$user->password = Hash::make($data[5]);
-			$user->save();
-			$user->roles()->attach($roles_id[$data[4]]);
-		}*/
-	}
-
-	echo "All done.";
+	echo "It Is Done.";
 });
 
 Route::group(['before' => 'auth'], function()

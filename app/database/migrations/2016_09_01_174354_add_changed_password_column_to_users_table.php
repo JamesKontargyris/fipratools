@@ -14,7 +14,7 @@ class AddChangedPasswordColumnToUsersTable extends Migration {
 	{
 		Schema::table('users', function(Blueprint $table)
 		{
-			$table->boolean('changed_password')->unsigned()->default(1);
+			$table->boolean('changed_password')->unsigned()->default(0);
 		});
 	}
 

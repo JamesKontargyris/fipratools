@@ -56,7 +56,7 @@ class UpdateUsers extends Command
 					$user->first_name = trim($data[1]);
 					$user->last_name = trim($data[2]);
 					$user->email = trim($data[3]);
-					$user->password = Hash::make(trim($data[5]));
+					$user->password = trim($data[5]);
 					$user->save();
 					$user->roles()->attach($roles_id[$data[4]]);
 					$this->info(trim($data[0]) . ' added.');
