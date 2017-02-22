@@ -121,6 +121,7 @@ return array(
 		'Laracasts\Flash\FlashServiceProvider',
 		'Ignited\Pdf\PdfServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
+		'Leadofficelist\ServiceProviders\CustomValidationServiceProvider',
 	),
 	/*
 	|--------------------------------------------------------------------------

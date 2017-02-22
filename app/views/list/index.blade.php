@@ -30,8 +30,8 @@
 @if(count($items) > 0)
 
 	<div class="row no-margin">
-		<div class="col-12" style="font-size:16px; font-weight:bold; text-align: center;">
-            A Dormant Client is one last billed over three months and up to 12 months ago.
+		<div class="col-12">
+            {{ nl2br(get_widget('lead_office_list_details')) }}
 		</div>
 	</div>
 	@include('layouts.partials.rows_nav')

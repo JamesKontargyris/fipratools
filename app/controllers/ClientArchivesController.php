@@ -12,6 +12,7 @@ class ClientArchivesController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'client_archives';
 	/**
 	 * @var

@@ -11,6 +11,7 @@ class ClientLinksController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'list';
 	public $resource_key = 'client_links';
 	protected $resource_permission = 'manage_client_links';
 	protected $units;

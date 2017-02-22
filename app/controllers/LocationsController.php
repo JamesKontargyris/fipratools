@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class LocationsController extends \BaseController {
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'locations';
 	protected $resource_permission = 'manage_locations';
 	private $addEditLocationForm;

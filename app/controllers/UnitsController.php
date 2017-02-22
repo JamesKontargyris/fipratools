@@ -14,6 +14,7 @@ class UnitsController extends \BaseController
 
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'units';
 	protected $resource_permission = 'manage_units';
 	protected $export_filename;

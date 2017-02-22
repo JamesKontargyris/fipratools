@@ -65,6 +65,42 @@
 			<a href="{{ route('services.create') }}" class="site-nav-extra-link" title="Add a new service"><i class="fa fa-plus-circle"></i></a>
 		</li>
 	@endif
+
+
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active(['survey', 'survey/search'], true) ? 'active' : '' }}">
+			<a href="{{ route('survey.index') }}"><strong>Overview</strong></a>
+		</li>
+	@endif
+	@if($user->can('view_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active('survey/profile', true) ? 'active' : '' }}">
+			<a href="{{ url('survey/profile') }}"><strong>My Knowledge Profile</strong></a>
+            @if( ! nav_item_is_active('survey/profile/edit'))
+                <a href="{{ url('/survey/profile/edit') }}" class="site-nav-extra-link" title="Edit your knowledge profile"><i class="fa fa-pencil"></i></a>
+            @endif
+		</li>
+	@endif
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+	<li class="{{ nav_item_is_active('knowledge_areas') ? 'active' : '' }}">
+		<a href="{{ route('knowledge_areas.index') }}"><strong>Knowledge Areas</strong></a>
+		<a href="{{ route('knowledge_areas.create') }}" class="site-nav-extra-link" title="Add a new knowledge area"><i class="fa fa-plus-circle"></i></a>
+	</li>
+	@endif
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active('knowledge_area_groups') ? 'active' : '' }}">
+			<a href="{{ route('knowledge_area_groups.index') }}"><strong>Knowledge Area Groups</strong></a>
+			<a href="{{ route('knowledge_area_groups.create') }}" class="site-nav-extra-link" title="Add a new knowledge area group"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
+	@if($user->can('manage_knowledge') && section_is() == 'survey')
+		<li class="{{ nav_item_is_active('knowledge_languages') ? 'active' : '' }}">
+			<a href="{{ route('knowledge_languages.index') }}"><strong>Languages</strong></a>
+			<a href="{{ route('knowledge_languages.create') }}" class="site-nav-extra-link" title="Add a new language"><i class="fa fa-plus-circle"></i></a>
+		</li>
+	@endif
+
+
+
 	@if($user->hasRole('Administrator')  && (section_is() == 'list' || section_is() == 'case'))
 		<li class="{{ nav_item_is_active('account_directors') ? 'active' : '' }}">
 			<a href="{{ route('account_directors.index') }}" class="has-extra-link">ADs</a>
@@ -72,9 +108,14 @@
 		</li>
 	@endif
 	@if($user->hasRole('Administrator'))
-		<li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }} hang-right"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
-	@endif
-	@if($user->can('manage_users'))
+            <li class="{{ nav_item_is_active('eventlog') ? 'active' : '' }} hang-right"><a href="{{ url('eventlog') }}"><i class="fa fa-table"></i> <strong>Event Log</strong></a></li>
+        @endif
+        @if($user->hasRole('Administrator'))
+            <li class="{{ nav_item_is_active('widgets') ? 'active' : '' }} hang-right">
+                <a href="{{ route('widgets.index') }}">Widgets</a>
+            </li>
+        @endif
+    @if($user->can('manage_users'))
 		<li class="{{ nav_item_is_active('users') ? 'active' : '' }} hang-right">
 			<a href="{{ route('users.index') }}" class="has-extra-link">Users</a>
 			<a href="{{ route('users.create') }}" class="site-nav-extra-link" title="Add a new user"><i class="fa fa-plus-circle"></i></a>

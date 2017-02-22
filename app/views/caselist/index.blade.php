@@ -23,6 +23,14 @@
 
 @if(count($items) > 0)
 
+	@if(get_widget('case_studies_details'))
+		<div class="row">
+			<div class="col-12">
+				{{ nl2br(get_widget('case_studies_details')) }}
+			</div>
+		</div>
+	@endif
+
 	@include('layouts.partials.rows_nav')
 
 	@include('layouts.partials.filters')

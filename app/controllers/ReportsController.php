@@ -11,6 +11,7 @@ use Leadofficelist\Units\Unit;
 
 class ReportsController extends \BaseController {
 
+	public $section = 'list';
 	protected $resource_key = 'reports';
 	protected $resource_permision = 'view_list';
 	protected $colours = [

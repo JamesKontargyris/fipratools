@@ -1,7 +1,11 @@
 @extends('layouts.master')
 
 @section('page-header')
-    @if(is_search()) <i class="fa fa-search"></i> Searching for: {{ $items->search_term }} @else Locations Overview @endif
+    @if(is_search())
+        <i class="fa fa-search"></i> Searching for {{ Session::has('locations.SearchType') ? Session::get('locations.SearchType') : '' }}: {{ $items->search_term }}
+    @else
+        Locations Overview
+    @endif
 @stop
 
 @section('page-nav')

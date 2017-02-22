@@ -10,7 +10,9 @@
 					</li>
 				@endif
 				<li>@include('layouts.partials.filters.rows_to_view')</li>
-				<li>@include('layouts.partials.filters.rows_sort_order')</li>
+				@if($key != 'knowledge_area_groups')
+					<li>@include('layouts.partials.filters.rows_sort_order')</li>
+				@endif
 				@if(is_request('users'))
 					<li>@include('layouts.partials.filters.rows_name_order')</li>
 				@endif

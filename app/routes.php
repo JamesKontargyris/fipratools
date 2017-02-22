@@ -108,7 +108,17 @@ Route::get('roles', function()
 //	Role::find(1)->attachPermissions([$manage_cases->id]);
 //	Role::find(2)->attachPermissions([$manage_cases->id]);
 //
-//	return "All done!";
+	/*$manage_knowledge = new Permission; $manage_knowledge->name = "manage_knowledge"; $manage_knowledge->display_name = "Manage Knowledge Survey resources"; $manage_knowledge->save();
+
+	$edit_knowledge = new Permission; $edit_knowledge->name = "edit_knowledge"; $edit_knowledge->display_name = "Edit Knowledge Survey details for their user profile"; $edit_knowledge->save();
+
+	$view_knowledge = new Permission; $view_knowledge->name = "view_knowledge"; $view_knowledge->display_name = "View Knowledge Survey"; $view_knowledge->save();
+
+	Role::find(1)->attachPermissions([$manage_knowledge->id]);
+	Role::find(1)->attachPermissions([$edit_knowledge->id]); Role::find(2)->attachPermissions([$edit_knowledge->id]); Role::find(3)->attachPermissions([$edit_knowledge->id]); Role::find(4)->attachPermissions([$edit_knowledge->id]);
+	Role::find(1)->attachPermissions([$view_knowledge->id]); Role::find(2)->attachPermissions([$view_knowledge->id]); Role::find(3)->attachPermissions([$view_knowledge->id]); Role::find(4)->attachPermissions([$view_knowledge->id]);
+
+	return "All done!";*/
 });
 
 Route::controller('password', 'PasswordController');
@@ -131,6 +141,33 @@ Route::group(['before' => 'auth'], function()
 	Route::any('caselist/search', 'CaseListController@search');
 	Route::post('caselist/filter', ['as' => 'caselist.filter', 'uses' => 'CaseListController@filter']);
 	Route::resource('caselist', 'CaseListController');
+
+	Route::any('survey/export', 'KnowledgeSurveysController@export');
+	Route::any('survey/search', 'KnowledgeSurveysController@search');
+	Route::post('survey/filter', ['as' => 'knowledge_surveys.filter', 'uses' => 'KnowledgeSurveysController@filter']);
+	Route::get('survey/profile', 'KnowledgeSurveysController@getShowProfile');
+	Route::get('survey/profile/edit', 'KnowledgeSurveysController@getUpdateProfile');
+	Route::post('survey/profile/edit', 'KnowledgeSurveysController@postUpdateProfile');
+	Route::resource('survey', 'KnowledgeSurveysController');
+
+	Route::any('knowledge_areas/export', 'KnowledgeAreasController@export');
+	Route::any('knowledge_areas/search', 'KnowledgeAreasController@search');
+	Route::post('knowledge_areas/filter', ['as' => 'knowledge_areas.filter', 'uses' => 'KnowledgeAreasController@filter']);
+	Route::resource('knowledge_areas', 'KnowledgeAreasController');
+
+	Route::any('knowledge_area_groups/export', 'KnowledgeAreaGroupsController@export');
+	Route::any('knowledge_area_groups/search', 'KnowledgeAreaGroupsController@search');
+	Route::post('knowledge_area_groups/filter', ['as' => 'knowledge_area_groups.filter', 'uses' => 'KnowledgeAreaGroupsController@filter']);
+	Route::resource('knowledge_area_groups', 'KnowledgeAreaGroupsController');
+
+	Route::any('knowledge_languages/export', 'KnowledgeLanguagesController@export');
+	Route::any('knowledge_languages/search', 'KnowledgeLanguagesController@search');
+	Route::post('knowledge_languages/filter', ['as' => 'knowledge_languages.filter', 'uses' => 'KnowledgeLanguagesController@filter']);
+	Route::resource('knowledge_languages', 'KnowledgeLanguagesController');
+
+	Route::any('widgets/export', 'WidgetsController@export');
+	Route::any('widgets/search', 'WidgetsController@search');
+	Route::resource('widgets', 'WidgetsController');
 
 	Route::any('cases/export', 'CasesController@export');
 	Route::any('cases/search', 'CasesController@search');

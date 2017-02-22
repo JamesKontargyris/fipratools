@@ -4,11 +4,12 @@ use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
 use Leadofficelist\Forms\AddEditProduct as AddEditProductForm;
 use Leadofficelist\Products\Product;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Leadofficelist\Exceptions\ResourceNotFoundException;
 
 class ProductsController extends \BaseController {
 	use CommanderTrait;
 
+	public $section = 'case';
 	protected $resource_key = 'products';
 	protected $resource_permission = 'manage_products';
 	private $addEditProductForm;

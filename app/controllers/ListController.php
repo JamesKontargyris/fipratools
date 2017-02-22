@@ -155,6 +155,6 @@ class ListController extends BaseController {
 			}
 		}
 
-		 return rtrim($values, ', ');
+		return rtrim($values, ', ');
 	}
 }

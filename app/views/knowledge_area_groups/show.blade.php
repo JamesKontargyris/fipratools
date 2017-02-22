@@ -1,0 +1,1 @@
+/home/vagrant/code/fipra/fipraleadofficelist/app/views/knowledge_area_groups/show.blade.php

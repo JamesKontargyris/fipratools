@@ -10,6 +10,7 @@ class ServicesController extends \BaseController
 {
 	use CommanderTrait;
 
+	public $section = 'list';
 	protected $resource_key = 'services';
 	protected $resource_permission = 'manage_services';
 	private $addEditServiceForm;

@@ -3,6 +3,7 @@
 use Leadofficelist\Products\Product;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Users\User;
+use Leadofficelist\Widgets\Widget;
 
 function display_page_title($default = 'Fipra Portal')
 {
@@ -118,14 +119,21 @@ function current_section_name() {
 	$sections = [
 		'list' => 'Lead Office List',
 		'case' => 'Case Study Database',
-		'survey' => 'Knowledge Survey'
+		'survey' => 'Knowledge Survey',
+		'admin' => 'Admin'
 	];
 	return $sections[Session::get('section') ? Session::get('section') : 'list'];
 }
 
-function nav_item_is_active($uri)
+function nav_item_is_active($uri, $strict = false)
 {
-	if(is_request($uri)) return true;
+	if(is_array($uri)) {
+		foreach($uri as $u) {
+			if(is_request($u, $strict)) return true;
+		}
+	} else {
+		if(is_request($uri, $strict)) return true;
+	}
 
 	return false;
 }
@@ -288,4 +296,34 @@ function get_pretty_sector_names($sector_ids)
 	}
 
 	return false;
+}
+
+function convert_text_to_input_name($string)
+{
+	return strtolower(str_replace(' ', '_', $string));
+}
+
+function markdown_text_decode($string)
+{
+	$parser = new \cebe\markdown\Markdown();
+
+	return $parser->parse($string);
+}
+
+function get_widget($slug)
+{
+	if($widget_content = Widget::where('slug', '=', $slug)->get()->first())
+	{
+		return $widget_content->content;
+	}
+
+	return false;
+}
+
+function calculate_age($dob)
+{
+	$tz  = new DateTimeZone('Europe/Brussels');
+	$age = DateTime::createFromFormat('Y-m-d', $dob, $tz)->diff(new DateTime('now', $tz))->y;
+
+	return $age;
 }

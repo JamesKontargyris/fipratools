@@ -11,6 +11,7 @@ class NetworkTypesController extends \BaseController
 {
     use CommanderTrait;
 
+	public $section = 'list';
     protected $resource_key = 'network_types';
     protected $resource_permission = 'manage_units';
     private $addEditNetworkTypeForm;

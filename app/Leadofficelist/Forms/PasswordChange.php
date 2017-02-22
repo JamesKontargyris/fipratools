@@ -5,8 +5,8 @@ use Laracasts\Validation\FormValidator;
 class PasswordChange extends FormValidator {
 
 	protected $rules = [
-		'current_password' => 'required|different:new_password|temp_password_match:your_temporary_password',
-		'new_password' => 'required|min:6|max:12|confirmed',
+		'current_password' => 'required|different:new_password',
+		'new_password' => 'required|min:6|max:50|confirmed',
 		'new_password_confirmation' => 'required'
 	];
 

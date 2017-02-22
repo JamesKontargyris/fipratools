@@ -11,6 +11,7 @@ class EventLogController extends \BaseController
 		$this->check_role('Administrator');
 	}
 
+	public $section = 'admin';
 	public $resource_key = 'eventlog';
 	public $resource_permission = 'manage_users';
 

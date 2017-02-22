@@ -16,7 +16,9 @@ use Laracasts\Validation\FormValidationException;
 use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\LoginFailedException;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Exceptions\ProfileNotFoundException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
+use Leadofficelist\Validation\CustomValidator;
 
 ClassLoader::addDirectories( array(
 
@@ -99,6 +101,13 @@ App::error( function ( CannotEditException $exception ) {
 	return Redirect::route( $exception->getResourceKey() . '.index' );
 } );
 
+App::error( function ( ProfileNotFoundException $exception ) {
+	Log::error( $exception );
+	Flash::error( $exception->getErrorMessage() );
+
+	return Redirect::route( 'survey.index' );
+} );
+
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler
@@ -111,7 +120,7 @@ App::error( function ( CannotEditException $exception ) {
 */
 
 App::down( function () {
-	return Response::make( "Be right back!", 503 );
+	return Response::make( "Currently carrying out maintenance. Be right back!", 503 );
 } );
 
 /*
@@ -146,7 +155,3 @@ require app_path() . '/helpers.php';
 | Register custom validation rules.
 |
 */
-Validator::resolver(function($translator, $data, $rules, $messages)
-{
-	return new Leadofficelist\Validation\CustomValidator($translator, $data, $rules, $messages);
-});

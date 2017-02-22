@@ -26,7 +26,7 @@ class LoginController extends \BaseController
 
 		if( ! Auth::attempt( ['email' => Input::get('email'), 'password' => Input::get('password')] ))
 		{
-			EventLog::add('Failed login attempt by ' . $input['email'], '-', '-', 'error');
+			/*EventLog::add('Failed login attempt by ' . $input['email'], '-', '-', 'error');*/
 			throw new LoginFailedException;
 		}
 

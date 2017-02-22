@@ -6,6 +6,8 @@ use Leadofficelist\Account_directors\AccountDirector;
 use Leadofficelist\Cases\CaseStudy;
 use Leadofficelist\Clients\Client;
 use Leadofficelist\Exceptions\PermissionDeniedException;
+use Leadofficelist\Knowledge_areas\KnowledgeArea;
+use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 use Leadofficelist\Locations\Location;
 use Leadofficelist\Products\Product;
 use Leadofficelist\Sectors\Sector;
@@ -44,19 +46,15 @@ class BaseController extends Controller {
 
 	function __construct() {
 //    	Check to see if a new section has been visited from the super menu
-//	    via a 'section' variable in the query string.
+//	    via a 'section' variable in the controller.
 //	    If so, update the session variable.
 //	    If no section is set, default to list section.
-		if ( ! Session::has( 'section' ) ) {
+		if ( ! isset($this->section) && ! Session::has( 'section' ) ) {
 			Session::put( 'section', 'list' );
-		}
-
-		if ( isset( $_GET['section'] ) ) {
-			if ( $_GET['section'] != 'case' && $_GET['section'] != 'survey' ) {
-				Session::put( 'section', 'list' );
-			} else {
-				Session::put( 'section', $_GET['section'] );
-			}
+		} elseif ( isset($this->section) ) {
+			Session::put( 'section', $this->section );
+		} else {
+			Session::put( 'section', 'list' );
 		}
 
 		$this->user = Auth::user();
@@ -171,8 +169,9 @@ class BaseController extends Controller {
 		$active_count  = 0;
 		$dormant_count = 0;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
 
+		$heading1 = $logo;
 		// Lead Office List specific heading
 		if ( is_request( 'list' ) || is_request( 'clients' ) ) {
 //			$heading1 .= 'All ';
@@ -189,6 +188,11 @@ class BaseController extends Controller {
 		if ( is_request( 'clients' ) || is_request( 'list' ) ) {
 			$active_count  = $this->getActiveCount();
 			$dormant_count = $this->getDormantCount();
+		}
+
+		if( is_request('survey')) {
+			$heading1 = $logo . current_section_name() . ' | Profiles';
+			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
 
 		$view = View::make(
@@ -216,11 +220,18 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+
+		$heading1 = $logo;
 		$heading1 .= current_section_name() . ': ' . ucfirst( clean_key( $key ) );
 		$heading2 = isset( $this->search_term_clean )
 			? 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) ) . ' when searching for ' . Session::get( $this->resource_key . '.SearchType' ) . ' "' . $this->search_term_clean . '"'
 			: 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) );
+
+		if( is_request('survey')) {
+			$heading1 = $logo . current_section_name() . ' | Profiles';
+			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
+		}
 
 		$view = View::make(
 			( $key != 'clients' && $key != 'case_studies' ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
@@ -244,7 +255,10 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
+
+		$heading1 = $logo;
+
 		$heading1 .= current_section_name() . ' | ' . 'Filtered ' . ucfirst( clean_key( $key ) );
 		if ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) == 'show' ) {
 			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' active and dormant ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
@@ -253,13 +267,19 @@ class BaseController extends Controller {
 		} else {
 			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' active ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
 		}
+
+		if( is_request('survey')) {
+			$heading1 = $logo . current_section_name() . ' | Filtered Profiles';
+			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
+		}
+
 		$view = View::make(
 			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[
-			'items'    => $items,
-			'heading1' => $heading1,
-			'heading2' => $heading2
-		] );
+				'items'    => $items,
+				'heading1' => $heading1,
+				'heading2' => $heading2
+			] );
 
 		return (string) $view;
 	}
@@ -454,12 +474,12 @@ class BaseController extends Controller {
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get( 'sort' );
-			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
+			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && ! $this->is_request( 'survey' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
 				return explode( '.', $sort_on[ $sort_term ] );
-			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) {
+			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
@@ -476,7 +496,7 @@ class BaseController extends Controller {
 		} //If all else fails...
 		else {
 			// If we're looking at users, account directors or case studies, use a different default sort order
-			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) ) return ['last_name', 'asc' ];
+			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) return ['last_name', 'asc' ];
 			if ($this->is_request( 'cases' ) || $this->is_request( 'caselist' )) return ['year', 'desc'];
 			// Otherwise just use name
 			return [ 'name', 'asc' ];
@@ -563,7 +583,7 @@ class BaseController extends Controller {
 	 * @return bool
 	 * @throws PermissionDeniedException
 	 */
-	protected function check_role( $role ) {
+	protected function check_role( $role, $throw_exception = true ) {
 		if ( is_array( $role ) ) {
 			foreach ( $role as $r ) {
 				if ( $this->user->hasRole( $r ) ) {
@@ -574,7 +594,12 @@ class BaseController extends Controller {
 			return true;
 		}
 
-		throw new PermissionDeniedException;
+		if($throw_exception) {
+			throw new PermissionDeniedException;
+		} else {
+			return false;
+		}
+
 	}
 
 	protected function is_request( $uri, $strict = false ) {
@@ -607,9 +632,9 @@ class BaseController extends Controller {
 
 	protected function findSearchTerm() {
 		if ( Input::has( 'search' ) ) {
+
 			//Start again on page 1 of the results
 			$this->destroyCurrentPageNumber();
-
 			if ( Input::has( 'letter' ) ) {
 				Session::set( $this->resource_key . '.SearchTerm', Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'first letter' );
@@ -617,10 +642,10 @@ class BaseController extends Controller {
 				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
-
 			return Session::get( $this->resource_key . '.SearchTerm' );
 
 		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' ) ) {
+
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
 			if( ! Input::get('filter_value')) {
 				// The user has selected the "Filter..." or "Remove filter" blank row
@@ -630,15 +655,19 @@ class BaseController extends Controller {
 			} else {
 				Session::set( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
 			}
-
 			return Session::get( $this->resource_key . '.Filters' );
-		} elseif (Session::has($this->resource_key . '.SearchType')) {
-			$this->isFilterArrayEmpty();
-			// No search term was parsed, but we've still got a search or filter in place, so load the search view
-			return true;
+
+		} elseif (Session::get($this->resource_key . '.SearchType') == 'filter') {
+			// Is the latest filtered result set empty?
+			$this->isFilterArrayEmpty(); // redirect and clear last filter if so
+
+			return true; // return true if results are available
+		} else {
+			return Session::get( $this->resource_key . '.SearchTerm' );
 		}
 
 	}
+
 
 	protected function isFilterArrayEmpty()
 	{
@@ -652,7 +681,6 @@ class BaseController extends Controller {
 
 	protected function checkForSearchResults( $items ) {
 		if ( ! count( $items ) ) {
-
 			if( ! is_filter($this->resource_key)) {
 				Flash::message( 'No records found.' );
 				Session::set( 'clear_search', 'yes' );
@@ -660,10 +688,8 @@ class BaseController extends Controller {
 				Flash::message( 'No records found for that filter combination.' );
 				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
 			}
-
 			return false;
 		}
-
 		return true;
 	}
 
@@ -813,6 +839,38 @@ class BaseController extends Controller {
 		}
 
 		return CaseStudy::getYearsForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the knowledge areas in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getKnowledgeAreasFormData( $blank_entry = true, $blank_message = 'Please select...' ) {
+		if ( ! KnowledgeArea::getKnowledgeAreasForFormSelect( $blank_entry, $blank_message ) ) {
+			return [ '' => 'No knowledge areas available to select' ];
+		}
+
+		return KnowledgeArea::getKnowledgeAreasForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all the knowledge languages in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getKnowledgeLanguagesFormData( $blank_entry = true, $blank_message = 'Please select...' ) {
+		if ( ! KnowledgeLanguage::getKnowledgeLanguagesForFormSelect( $blank_entry, $blank_message ) ) {
+			return [ '' => 'No knowledge areas available to select' ];
+		}
+
+		return KnowledgeLanguage::getKnowledgeLanguagesForFormSelect( $blank_entry, $blank_message );
 	}
 
 	protected function getActiveCount() {

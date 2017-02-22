@@ -19,7 +19,7 @@
 </h4>
 
 <div style="font-weight:bold; text-align: center; font-style: italic;">
-    A Dormant Client is one last billed over three months and up to 12 months ago.
+	{{ nl2br(get_widget('lead_office_list_details')) }}
 </div>
 
 <table class="index-table">

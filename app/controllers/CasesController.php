@@ -12,11 +12,11 @@ class CasesController extends \BaseController {
 
 	use CommanderTrait;
 
+	public $section = 'case';
 	protected $resource_key = 'cases';
 	protected $resource_permission = 'manage_cases';
 	private $addEditCaseForm;
 	private $case;
-	private $addEditClientForm;
 
 	function __construct( AddEditCaseForm $addEditCaseForm, CaseStudy $case ) {
 		parent::__construct();
@@ -156,6 +156,7 @@ class CasesController extends \BaseController {
 		$this->execute( 'Leadofficelist\Cases\EditCaseCommand', $input );
 
 		Flash::overlay( 'Case study updated.', 'success' );
+		EventLog::add( 'Case study edited: ' . $input['name'], $this->user->getFullName(), Unit::find( $input['unit_id'] )->name, 'edit' );
 
 		return Redirect::route( 'cases.index' );
 	}
@@ -170,8 +171,9 @@ class CasesController extends \BaseController {
 	 */
 	public function destroy( $id ) {
 		if ( $case = $this->getCase( $id ) ) {
-			CaseStudy::destroy( $id );
 			Flash::overlay( '"' . $case->name . '" has been deleted.', 'info' );
+			EventLog::add( 'Case study deleted: ' . CaseStudy::find($id)->name, $this->user->getFullName(), $this->user->unit()->first()->name, 'delete' );
+			CaseStudy::destroy( $id );
 
 			return Redirect::route( 'cases.index' );
 		} else {
