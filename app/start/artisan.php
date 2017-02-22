@@ -14,3 +14,4 @@
 Artisan::add(new NotifySpadsCheck);
 Artisan::add(new NotifySpadsLogin);
 Artisan::add(new NotifyHeads);
+Artisan::add(new UpdateUsers);

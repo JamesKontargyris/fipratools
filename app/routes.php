@@ -18,9 +18,7 @@ Route::get('/logout', 'LoginController@logout');
 
 Route::get('roles', function()
 {
-	//$new_admin = new Role;
-	//$new_admin->name = "Administrator";
-	//$new_admin->save();
+	//$new_admin = new Role; $new_admin->name = "Administrator"; $new_admin->save();
 	//
 	//$new_manager = new Role;
 	//$new_manager->name = "Head of Unit";
@@ -122,6 +120,53 @@ Route::get('roles', function()
 });
 
 Route::controller('password', 'PasswordController');
+
+// Route to add new users in a batch from a CSV file
+Route::get('/usersupdate', function()
+{
+	$handle = fopen('170222_users.csv', 'r');
+	$roles_id = ['Administrator' => 1, 'Head of Unit' => 2, 'Fipriot' => 3, 'Special Adviser' => 4, 'Head of Unit (Correspondent)' => 5];
+	while(($data = fgetcsv($handle)) !== FALSE) {
+		print_r($data);
+		if($found_user = Leadofficelist\Users\User::where('email', '=', $data[3])->get()->first()) {
+			echo " FOUND IN DB";
+			$current_user = Leadofficelist\Users\User::find($found_user->id);
+			$current_user->first_name = $data[1];
+			$current_user->last_name = $data[2];
+			$current_user->save();
+			$current_user->detachRoles([1, 2, 3, 4, 5]);
+			$current_user->attachRole($roles_id[$data[4]]);
+		} else {
+			$user = new Leadofficelist\Users\User;
+			$user->first_name = $data[1];
+			$user->last_name = $data[2];
+			$user->email = $data[3];
+			$user->password = Hash::make($data[5]);
+			$user->save();
+			$user->roles()->attach($roles_id[$data[4]]);
+		}
+
+		echo '<br>';
+		/*if($current_user = Leadofficelist\Users\User::where('email', '=', $data[3])->get()->first()) {
+			// User already exists
+			$current_user->first_name = $data[1];
+			$current_user->last_name = $data[2];
+			$current_user->save();
+			$current_user->detachRoles([1, 2, 3, 4, 5]);
+			$current_user->attachRole($roles_id[$data[4]]);
+		} else {
+			// Create a new user
+			$user = new Leadofficelist\Users\User;
+			$user->first_name = $data[1];
+			$user->last_name = $data[2];
+			$user->password = Hash::make($data[5]);
+			$user->save();
+			$user->roles()->attach($roles_id[$data[4]]);
+		}*/
+	}
+
+	echo "All done.";
+});
 
 Route::group(['before' => 'auth'], function()
 {
