@@ -106,7 +106,7 @@
                         @foreach($items as $profile)
                             <?php
                                     /*Get user expertise with a score of 4 or 5*/
-                                $user_expertise = $profile->knowledge_areas()->where('score', '=', 4)->orWhere('score', '=', 5)->get()->lists('name');
+                                $user_expertise = array_unique($profile->knowledge_areas()->where('score', '>=', 4)->get()->lists('name'));
                                 /* Get user language(s) and fluency data*/
 	                            $user_languages = [];
                                 $languages = $profile->knowledge_languages()->get()->toArray();
