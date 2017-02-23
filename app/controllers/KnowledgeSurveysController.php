@@ -59,9 +59,10 @@ class KnowledgeSurveysController extends \BaseController {
 		$this->getFormData();
 		$units = $this->units;
 		$areas = $this->areas;
+		$area_groups = KnowledgeAreaGroup::orderBy('order', 'ASC')->get();
 		$languages = $this->languages;
 
-		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info', 'units', 'areas', 'languages') );
+		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info', 'units', 'areas', 'languages', 'area_groups') );
 	}
 
 	/**
@@ -96,9 +97,10 @@ class KnowledgeSurveysController extends \BaseController {
 			$this->getFormData();
 			$units = $this->units;
 			$areas = $this->areas;
+			$area_groups = KnowledgeAreaGroup::orderBy('order', 'ASC')->get();
 			$languages = $this->languages;
 
-			return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'units', 'areas', 'languages' ) );
+			return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'units', 'areas', 'languages', 'area_groups' ) );
 		} else {
 			return Redirect::route( 'survey.index' );
 		}
@@ -165,12 +167,10 @@ class KnowledgeSurveysController extends \BaseController {
 			$user_info = $this->user;
 			if(isset($user_info))
 			{
-				$language_info = $this->getUserSpokenWrittenLanguages();
-				/*dd($language_info);*/
-				$fluency_info = $this->getUserFluentLanguages();
+				$language_info = $this->getUserLanguages();
 				$expertise_info = $this->getUserExpertiseInfoIDKeys();
 
-				return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'fluency_info', 'expertise_info' ) );
+				return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'expertise_info' ) );
 			}
 
 			return Redirect::to('survey/profile');
@@ -267,20 +267,10 @@ class KnowledgeSurveysController extends \BaseController {
 
 	protected function getUserLanguageInfo($id = null)
 	{
-		// Get language data via the pivot table
-		$languages    = $id ? User::find($id)->knowledge_languages()->get() : $this->user->knowledge_languages()->get();
-		$languageData = [];
-
-		foreach($languages as $language)
-		{
-			// Create an array with language names as keys and fluent flag as values
-			$languageData[$language->name] = $language->pivot->fluent;
-		}
-
-		return $languageData;
+		return $id ? User::find($id)->knowledge_languages()->get()->lists('name') : $this->user->knowledge_languages()->get()->lists('name');
 	}
 
-	protected function getUserSpokenWrittenLanguages($id = null)
+	protected function getUserLanguages($id = null)
 	{
 		$languages_processed = [];
 		// Get language data via the pivot table
@@ -292,19 +282,6 @@ class KnowledgeSurveysController extends \BaseController {
 
 		return $languages_processed;
 
-	}
-
-	protected function getUserFluentLanguages($id = null)
-	{
-		$languages_processed = [];
-		// Get language data via the pivot table
-		$fluent_languages    = $id ? User::find($id)->knowledge_languages()->where('fluent', '=', 1)->get()->toArray() : $this->user->knowledge_languages()->where('fluent', '=', 1)->get()->toArray();
-
-		foreach($fluent_languages as $language) {
-			$languages_processed[] = $language['id'];
-		}
-
-		return $languages_processed;
 	}
 
 	protected function getUserExpertiseInfo($id = null)

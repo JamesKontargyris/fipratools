@@ -1,6 +1,6 @@
 <table class="letter-select-table">
 	<tr>
-		@if(is_request('users'))
+		@if(is_request('users') || is_request('survey'))
 			<td>First / last name begins with:</td>
 		@elseif(is_request('account_directors'))
 			<td>First name begins with:</td>

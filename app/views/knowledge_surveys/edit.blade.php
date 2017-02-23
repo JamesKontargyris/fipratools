@@ -62,20 +62,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="formfield">
-                    {{ Form::label('languages', 'Please select the languages you speak / write:', ['class' => 'required']) }}
-                    <div class="label-info">Please state all languages you speak / write, even if you only have basic notions.</div>
+                    {{ Form::label('languages', 'Please select the languages in which you can conduct business:', ['class' => 'required']) }}
 
                     {{ Form::select("languages[]", $languages, Input::has('languages') ? Input::get('languages') : isset($language_info) ? $language_info : '', ['id' => 'language_select', 'multiple' => 'multiple']) }}
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="formfield">
-                    {{ Form::label('fluent', 'Please select the languages in which you are fluent:', ['class' => 'required']) }}
-                    <div class="label-info">Please select those that you both write and speak 100% fluently.</div>
-
-                    {{ Form::select("fluent[]", $languages, Input::has('fluent') ? Input::get('fluent') : isset($fluency_info) ? $fluency_info : '', ['id' => 'fluent_select', 'multiple' => 'multiple']) }}
                 </div>
             </div>
         </div>

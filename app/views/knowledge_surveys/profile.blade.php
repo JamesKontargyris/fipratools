@@ -105,12 +105,8 @@
                     </tr>
                     <tr>
                         <td valign="top">
-                            @foreach($language_info as $name => $fluency)
-                                @if($fluency)
-                                    <strong>{{ $name }} <em>(fluent)</em></strong><br>
-                                @else
-                                    {{ $name }}<br>
-                                @endif
+                            @foreach($language_info as $name)
+                                {{ $name }}<br>
                             @endforeach
                         </td>
                     </tr>

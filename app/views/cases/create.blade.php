@@ -25,19 +25,19 @@
         <div class="col-6">
             <div class="formfield">
                 {{ Form::label('name', 'Basic background on case:', ['class' => 'required']) }}
-                {{ Form::text('name', Input::old('name')) }}
+                {{ Form::textarea('name', Input::old('name'), ['rows' => '5']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('challenges', 'Challenges facing client / Fipra:', ['class' => 'required']) }}
-                {{ Form::text('challenges', Input::old('challenges')) }}
+                {{ Form::textarea('challenges', Input::old('challenges'), ['rows' => '5']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('strategy', 'What Fipra did to overcome the challenges:', ['class' => 'required']) }}
-                {{ Form::text('strategy', Input::old('strategy')) }}
+                {{ Form::textarea('strategy', Input::old('strategy'), ['rows' => '5']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('result', 'End result:', ['class' => 'required']) }}
-                {{ Form::text('result', Input::old('result')) }}
+                {{ Form::textarea('result', Input::old('result'), ['rows' => '5']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('year', 'Year:', ['class' => 'required']) }}
@@ -47,6 +47,8 @@
                 {{ Form::label('client', 'Client (leave blank if anonymous):') }}
                 {{ Form::text('client', Input::old('client')) }}
             </div>
+        </div>
+        <div class="col-6 last">
             @if($user->hasRole('Administrator'))
                 <div class="formfield">
                     {{ Form::label('unit_id', 'Link to Unit:', ['class' => 'required']) }}
@@ -61,8 +63,6 @@
                 {{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
                 {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
             </div>
-        </div>
-        <div class="col-6 last">
             <div class="formfield">
                 {{ Form::label('sector_id', 'Sector(s):', ['class' => 'required']) }}
                 {{ Form::select('sector_id[]', $sectors, Input::old('sector_id'), ['id' => 'sector_select', 'multiple' => 'multiple']) }}

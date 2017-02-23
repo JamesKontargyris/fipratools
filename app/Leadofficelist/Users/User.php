@@ -41,7 +41,7 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 	public function knowledge_languages()
 	{
 		//Many users have many knowledge languages
-		return $this->belongsToMany( '\Leadofficelist\Knowledge_languages\KnowledgeLanguage' )->withPivot('fluent');
+		return $this->belongsToMany( '\Leadofficelist\Knowledge_languages\KnowledgeLanguage' );
 	}
 
 	public function getFirstNameAttribute( $value )

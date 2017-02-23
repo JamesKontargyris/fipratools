@@ -65,15 +65,17 @@
                     <table width="100%" class="index-table">
                         <thead>
                         <tr>
-                            <td width="40%">Name</td>
-                            <td width="20%">Unit</td>
-                            <td width="20%">Expertise</td>
-                            <td width="15%" class="hide-s">Languages</td>
-                            <td width="5%" class="hide-print hide-s"></td>
+                            <td rowspan="2" width="20%">Name</td>
+                            <td rowspan="2" width="15%">Unit</td>
+                            <td colspan="{{ $area_groups->count() }}" width="65%">Expertise</td>
+                        </tr>
+                        <tr>
+                            @foreach($area_groups as $group)
+                                <td width="{{ 65 / $area_groups->count() }}%" class="sub-header">{{ $group->name }}</td>
+                            @endforeach
                         </tr>
                         <tr class="hide-print hide-m">
                             <td class="hide-m sub-header">
-                                @include('layouts.partials.filters.table-letter-filter')
                             </td>
                             <td class="hide-m sub-header">
                                 {{ Form::open(['url' => 'survey/search']) }}
@@ -83,43 +85,33 @@
                                 {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
                                 {{ Form::close() }}
                             </td>
-                            <td class="hide-m sub-header">
-                                {{ Form::open(['url' => 'survey/search']) }}
-                                {{ Form::select('filter_value', $areas, Session::has('survey.Filters.knowledge_area_id') ? Session::get('survey.Filters.knowledge_area_id') : null, ['class' => 'list-table-filter']) }}
-                                {{ Form::hidden('filter_field', 'knowledge_area_id') }}
-                                {{ Form::hidden('filter_results', 'yes') }}
-                                {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
-                                {{ Form::close() }}
-                            </td>
-                            <td class="hide-m sub-header">
-                                {{ Form::open(['url' => 'survey/search']) }}
-                                {{ Form::select('filter_value', $languages, Session::has('survey.Filters.knowledge_language_id') ? Session::get('survey.Filters.knowledge_language_id') : null, ['class' => 'list-table-filter']) }}
-                                {{ Form::hidden('filter_field', 'knowledge_language_id') }}
-                                {{ Form::hidden('filter_results', 'yes') }}
-                                {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
-                                {{ Form::close() }}
-                            </td>
-                            <td class="hide-m sub-header"></td>
+                            @foreach($area_groups as $group)
+                                <td class="hide-m sub-header">
+                                    {{ Form::open(['url' => 'survey/search']) }}
+                                    {{ Form::select('filter_value', $areas[$group->id], Session::has('survey.Filters.knowledge_area_id') ? Session::get('survey.Filters.knowledge_area_id') : null, ['class' => 'list-table-filter']) }}
+                                    {{ Form::hidden('filter_field', 'knowledge_area_id') }}
+                                    {{ Form::hidden('filter_results', 'yes') }}
+                                    {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
+                                    {{ Form::close() }}
+                                </td>
+                            @endforeach
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($items as $profile)
                             <?php
+                                $user_expertise = [];
+                                foreach($area_groups as $area) {
                                     /*Get user expertise with a score of 4 or 5*/
-                                $user_expertise = array_unique($profile->knowledge_areas()->where('score', '>=', 4)->get()->lists('name'));
-                                /* Get user language(s) and fluency data*/
-	                            $user_languages = [];
-                                $languages = $profile->knowledge_languages()->get()->toArray();
-	                            foreach($languages as $language) {
-	                            	$user_languages[] = $language['pivot']['fluent'] ? '<strong>' . $language['name'] . ' (fluent)</strong>' : $language['name'];
+                                    $user_expertise[] = array_unique($profile->knowledge_areas()->where('knowledge_area_group_id', '=', $area->id)->where('score', '>=', 4)->get()->lists('name'));
                                 }
                             ?>
                             <tr>
                                 <td><a href="{{ route('survey.show', $profile->id) }}"><strong>{{ $profile->getFullName() }}</strong></a></td>
                                 <td><a href="{{ route('units.show', $profile->unit()->first()->id) }}">{{ $profile->unit()->first()->name }}</a></td>
-                                <td>{{ implode($user_expertise, ', ') }}</td>
-                                <td class="hide-s">{{ implode($user_languages, ', ') }}</td>
-                                <td class="hide-print hide-s"><strong><a href="{{ route('survey.show', ['id' => $profile->id]) }}"> Profile</a></strong></td>
+                                @foreach($user_expertise as $expertise)
+                                    <td>{{ $expertise ? implode($expertise, ', ') : '-' }}</td>
+                                @endforeach
                             </tr>
                         @endforeach
                         </tbody>

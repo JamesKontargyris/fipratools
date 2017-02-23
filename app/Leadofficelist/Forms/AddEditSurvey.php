@@ -20,14 +20,12 @@ class AddEditSurvey extends FormValidator
 		'joined_fipra_year' => 'required',
 		'total_fipra_working_time' => 'required|numeric|min:0|max:100',
 		'languages' => 'array|required',
-		'fluent' => 'array|required'
 	];
 
 	public $messages = [
 		'total_fipra_working_time.numeric' => 'Please enter your total Fipra working time as a percentage.',
 		'total_fipra_working_time.max' => 'Please enter your total Fipra working time as a percentage.',
 		'total_fipra_working_time.min' => 'Please enter your total Fipra working time as a percentage.',
-		'languages.required' => 'Please select the languages you speak / write.',
-		'fluent.required' => 'Please select the languages in which you are fluent.',
+		'languages.required' => 'Please select the languages in which you can conduct business.',
 	];
 }

@@ -20,7 +20,7 @@
 					<li><a href="?reset_sorting=yes" class="filter-but"><i class="fa fa-undo"></i> Reset Rows Per Page / Sorting</a></li>
 				@endif
 			</ul>
-			@if(is_request('clients') || is_request('users') || is_request('account_directors'))
+			@if(is_request('clients') || is_request('users') || is_request('account_directors') || is_request('survey'))
 				<ul>
 					<li class="letter-select-table-container">@include('layouts.partials.filters.letter-select-table')</li>
 				</ul>
