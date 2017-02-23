@@ -5,6 +5,7 @@ use Leadofficelist\Clients\Client;
 class ListController extends BaseController {
 	public $resource_key = 'list';
 	public $resource_permission = 'view_list';
+	protected $sector_categories;
 
 	function __construct() {
 		parent::__construct();
@@ -27,13 +28,14 @@ class ListController extends BaseController {
 		$account_directors = $this->account_directors;
 		$units             = $this->units;
 		$sectors           = $this->sectors;
+		$sector_categories = $this->sector_categories;
 		$types             = $this->types;
 		$services          = $this->services;
 
 		$items      = Client::rowsHideShowDormant( $this->rows_hide_show_dormant )->rowsHideShowActive( $this->rows_hide_show_active )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'list';
 
-		return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'types', 'services' ) );
+		return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'sector_categories', 'types', 'services' ) );
 	}
 
 	/**
@@ -44,7 +46,7 @@ class ListController extends BaseController {
 	public function search() {
 		if ( $search_term = $this->findSearchTerm() ) {
 			if ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' ) {
-				$items = $this->getFiltered();
+				$items               = $this->getFiltered();
 				$items->filter_value = $this->getFilteredValues();
 			} else {
 				$items = Client::where( 'name', 'LIKE', $search_term )->rowsHideShowDormant( Session::get( $this->resource_key . '.rowsHideShowDormant' ) )->rowsHideShowActive( Session::get( $this->resource_key . '.rowsHideShowActive' ) )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
@@ -61,10 +63,11 @@ class ListController extends BaseController {
 			$account_directors = $this->account_directors;
 			$units             = $this->units;
 			$sectors           = $this->sectors;
+			$sector_categories = $this->sector_categories;
 			$types             = $this->types;
 			$services          = $this->services;
 
-			return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'types', 'services' ) );
+			return View::make( 'list.index' )->with( compact( 'items', 'account_directors', 'units', 'sectors', 'sector_categories', 'types', 'services' ) );
 		} else {
 			return Redirect::route( 'list.index' );
 		}
@@ -96,8 +99,8 @@ class ListController extends BaseController {
 		return $items;
 	}
 
-	protected function getFiltered($for = 'screen') {
-		if($for == 'export') {
+	protected function getFiltered( $for = 'screen' ) {
+		if ( $for == 'export' ) {
 			// Get all results for PDF export
 			$items = Client::rowsListFilter( Session::get( $this->resource_key . '.Filters' ) )->rowsHideShowDormant( Session::get( $this->resource_key . '.rowsHideShowDormant' ) )->rowsHideShowActive( Session::get( $this->resource_key . '.rowsHideShowActive' ) )->rowsSortOrder( $this->rows_sort_order )->get();
 		} else {
@@ -117,13 +120,14 @@ class ListController extends BaseController {
 		$this->account_directors = $this->getAccountDirectorsFormData( true, 'All' );
 		$this->units             = $this->getUnitsFormData( true, 'All' );
 		$this->sectors           = $this->getSectorsFormData( true, 'All' );
+		$this->sector_categories = $this->getSectorCategoriesFormData( true, 'All' );
 		$this->types             = $this->getTypesFormData( true, 'All' );
 		$this->services          = $this->getServicesFormData( true, 'All' );
 
 		return true;
 	}
 
-	protected function getFilterModelName($filter_name) {
+	protected function getFilterModelName( $filter_name ) {
 		//Use the filter field value to instantiate the corresponding class and get the filter value's name
 		$model_name        = ucfirst( str_replace( '_id', '', $filter_name ) );
 		$model_name_plural = $model_name . 's';
@@ -142,19 +146,25 @@ class ListController extends BaseController {
 	protected function getFilteredValues() {
 		// Get names of filtered values
 		$values = '';
-		foreach(Session::get($this->resource_key . '.Filters') as $filter_name => $filter_value) {
-			$model_name = $this->getFilterModelName($filter_name);
+		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_value ) {
+			if($filter_name == 'sector_category_id') {
+				$model_name = 'Leadofficelist\Sector_categories\Sector_category';
+			} else {
+				$model_name = $this->getFilterModelName( $filter_name );
+			}
+
 			$model      = new $model_name;
+
 			//If filter is on account director, then the model will need to pull first_name and last_name from account _directors
 			//rather than just name.
 			if ( strpos( $model_name, 'Account_directors' ) ) {
-				$ad                  = $model::find( $filter_value );
+				$ad = $model::find( $filter_value );
 				$values .= $ad->first_name . ' ' . $ad->last_name . ', ';
 			} else {
 				$values .= $model::find( $filter_value )->name . ', ';
 			}
 		}
 
-		return rtrim($values, ', ');
+		return rtrim( $values, ', ' );
 	}
 }

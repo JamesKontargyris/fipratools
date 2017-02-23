@@ -10,6 +10,7 @@ use Leadofficelist\Knowledge_areas\KnowledgeArea;
 use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 use Leadofficelist\Locations\Location;
 use Leadofficelist\Products\Product;
+use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Services\Service;
 use Leadofficelist\Types\Type;
@@ -741,6 +742,9 @@ class BaseController extends Controller {
 	/**
 	 * Get all the units in a select element-friendly collection.
 	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
 	 * @return array
 	 */
 	protected function getAccountDirectorsFormData( $blank_entry = true, $blank_message = 'Please select...' ) {
@@ -753,6 +757,9 @@ class BaseController extends Controller {
 
 	/**
 	 * Get all the units in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
 	 *
 	 * @return array
 	 */
@@ -767,6 +774,9 @@ class BaseController extends Controller {
 	/**
 	 * Get all the sectors in a select element-friendly collection.
 	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
 	 * @return array
 	 */
 	protected function getSectorsFormData( $blank_entry = false, $blank_message = 'Please select...' ) {
@@ -778,7 +788,26 @@ class BaseController extends Controller {
 	}
 
 	/**
+	 * Get all the sector categories in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getSectorCategoriesFormData( $blank_entry = false, $blank_message = 'Please select...' ) {
+		if ( ! Sector_category::getSectorCategoriesForFormSelect( $blank_entry, $blank_message ) ) {
+			return [ '' => 'No expertise categories available to select' ];
+		}
+
+		return Sector_category::getSectorCategoriesForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
 	 * Get all the types in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
 	 *
 	 * @return array
 	 */
@@ -792,6 +821,9 @@ class BaseController extends Controller {
 
 	/**
 	 * Get all the services in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
 	 *
 	 * @return array
 	 */

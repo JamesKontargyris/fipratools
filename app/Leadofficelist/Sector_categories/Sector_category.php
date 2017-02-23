@@ -56,4 +56,33 @@ class Sector_category extends \BaseModel
 
 		return $update_sector_category;
 	}
+
+	public static function getSectorCategoriesForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
+	{
+		$sector_categories = [ ];
+		//Remove whitespace from $prefix and add a space on the end, so there is a space
+		//between the prefix and the unit name
+		$prefix = trim( $prefix ) . ' ';
+		//If $blank_entry == true, add a blank "Please select..." option
+		if ( $blank_entry )
+		{
+			$sector_categories[''] = $blank_message;
+		}
+
+		foreach ( Sector_category::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $sector_category )
+		{
+			$sector_categories[ $sector_category->id ] = $prefix . $sector_category->name;
+		}
+
+		if ( $blank_entry && count( $sector_categories ) == 1 )
+		{
+			return false;
+		} elseif ( ! $blank_entry && count( $sector_categories ) == 0 )
+		{
+			return false;
+		} else
+		{
+			return $sector_categories;
+		}
+	}
 }

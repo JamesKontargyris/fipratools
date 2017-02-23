@@ -479,15 +479,15 @@
             border-radius: 4px;
             position:relative;
             padding:8px;
-            background:#efefef;
-            color:darken(#efefef, 35%);
+            background:darken(#efefef, 5%);
+            color:darken(#efefef, 40%);
             .expertise-field__pointer {
               position:absolute;
               left:0;
               top:50%;
               margin-top:-5px;
               margin-left:-5px;
-              color:#efefef;
+              color:darken(#efefef, 5%);
             }
           }
         }

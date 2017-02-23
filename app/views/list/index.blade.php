@@ -64,7 +64,12 @@
 								{{ Form::close() }}
 							</td>
 							<td width="15%" class="hide-m sub-header no-border-left">
-								Filter
+								{{ Form::open(['url' => 'list/search']) }}
+								{{ Form::select('filter_value', $sector_categories, Session::has('list.Filters.sector_category_id') ? Session::get('list.Filters.sector_category_id') : null, ['class' => 'list-table-filter']) }}
+								{{ Form::hidden('filter_field', 'sector_category_id') }}
+								{{ Form::hidden('filter_results', 'yes') }}
+								{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
+								{{ Form::close() }}
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}

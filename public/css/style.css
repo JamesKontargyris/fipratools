@@ -1382,8 +1382,8 @@ hr {
           border-radius: 4px;
           position: relative;
           padding: 8px;
-          background: #efefef;
-          color: #969696; }
+          background: #e2e2e2;
+          color: #898989; }
           /* line 484, ../../app/assets/sass/_modules.scss */
           .index-table tbody tr > td.expertise-field .expertise-field__text-container .expertise-field__pointer {
             position: absolute;
@@ -1391,7 +1391,7 @@ hr {
             top: 50%;
             margin-top: -5px;
             margin-left: -5px;
-            color: #efefef; }
+            color: #e2e2e2; }
     /* line 500, ../../app/assets/sass/_modules.scss */
     .index-table tbody tr.dormant {
       background-color: #f2f2f2; }
