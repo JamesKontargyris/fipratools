@@ -434,7 +434,7 @@
         border-collapse: separate;
         text-transform: uppercase;
         font-weight:$font-bold;
-        padding:($v-rhythm / 4) 15px;
+        padding:5px 10px;
         &.sub-header {
           background-color:$light-grey;
           @include dark-grad($light-grey, top, 10%);
@@ -447,7 +447,7 @@
     tr {
       border-bottom:1px solid darken(white, 10%);
       & > td {
-        padding:5px 15px;
+        padding:2px 10px;
         &.actions,
         &.archive-count,
         &.client-links,

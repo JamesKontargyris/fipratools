@@ -66,7 +66,7 @@
                         <thead>
                         <tr>
                             <td rowspan="2" width="20%">Name</td>
-                            <td rowspan="2" width="15%">Unit</td>
+                            <td rowspan="2" width="15%" class="hide-m">Unit</td>
                             <td colspan="{{ $area_groups->count() }}" width="65%">Expertise</td>
                         </tr>
                         <tr>
@@ -108,7 +108,7 @@
                             ?>
                             <tr>
                                 <td><a href="{{ route('survey.show', $profile->id) }}"><strong>{{ $profile->getFullName() }}</strong></a></td>
-                                <td><a href="{{ route('units.show', $profile->unit()->first()->id) }}">{{ $profile->unit()->first()->name }}</a></td>
+                                <td class="hide-m"><a href="{{ route('units.show', $profile->unit()->first()->id) }}">{{ $profile->unit()->first()->name }}</a></td>
                                 @foreach($user_expertise as $expertise)
                                     <td>{{ $expertise ? implode($expertise, ', ') : '-' }}</td>
                                 @endforeach

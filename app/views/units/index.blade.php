@@ -37,7 +37,7 @@
 						<tr>
 							<td rowspan="2" width="40%">Name</td>
 							<td rowspan="2" width="10%">Short Name</td>
-							<td rowspan="2" width="15%">Reporting Group</td>
+							<td rowspan="2" width="15%" class="hide-m">Reporting Group</td>
 							<td rowspan="2" width="15%" class="hide-m">Type</td>
 							<td colspan="2" class="content-center hide-s">Clients</td>
 							<td rowspan="2" width="5%" class="content-center hide-s">Users</td>
