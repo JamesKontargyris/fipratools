@@ -7,6 +7,7 @@
 		<tr>
 			<td>Client name</td>
 			<td>Sector</td>
+			<td>Expertise Area</td>
 			<td>Type</td>
 			<td>Service</td>
 			<td>Lead Unit</td>
@@ -22,6 +23,11 @@
 			<tr>
 				<td>{{ $client->name }}</td>
 				<td>{{ $client->sector()->pluck('name') }}</td>
+				<td>
+					@if($expertise = \Leadofficelist\Sector_categories\Sector_category::find($client->sector()->pluck('category_id'))['name'])
+						{{ $expertise }}
+					@endif
+				</td>
 				<td>{{ $client->type()->pluck('short_name') }}</td>
 				<td>{{ $client->service()->pluck('name') }}</td>
 				<td>{{ $client->unit()->pluck('name') }}</td>

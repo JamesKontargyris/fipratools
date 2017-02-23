@@ -25,9 +25,10 @@
 <table class="index-table">
 	<thead>
 		<tr>
-			<td  width="35%">Client name</td>
+			<td width="25%">Client name</td>
 			<td width="5%">Unit links</td>
 			<td width="10%">Sector</td>
+			<td width="10%">Expertise Area</td>
 			<td width="5%">Type</td>
 			<td width="5%">Service</td>
 			<td width="10%">Lead Network Member</td>
@@ -46,6 +47,11 @@
 					@endif
 				</td>
 				<td>{{ $client->sector()->pluck('name') }}</td>
+				<td>
+					@if($expertise = \Leadofficelist\Sector_categories\Sector_category::find($client->sector()->pluck('category_id'))['name'])
+						{{ $expertise }}
+					@endif
+				</td>
 				<td>{{ $client->type()->pluck('short_name') }}</td>
 				<td>{{ $client->service()->pluck('name') }}</td>
 				<td>{{ $client->unit()->pluck('name') }}</td>
