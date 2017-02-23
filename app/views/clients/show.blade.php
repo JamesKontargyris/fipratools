@@ -54,6 +54,7 @@
 		@endif
 		<h4>Details</h4>
 		<p><strong>Sector:</strong> {{ $client->sector()->pluck('name') }}</p>
+		<p><strong>Expertise Area:</strong> {{ \Leadofficelist\Sector_categories\Sector_category::find($client->sector()->pluck('id'))['name'] }}</p>
 		<p><strong>Type:</strong> {{ $client->type()->pluck('name') }}</p>
 		<p><strong>Service:</strong> {{ $client->service()->pluck('name') }}</p>
 	</div>

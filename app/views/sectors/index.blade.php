@@ -10,7 +10,7 @@
 
 @section('page-nav')
 <li><a href="{{ route('sectors.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Sector</a></li>
-<li><a href="{{ route('sector_categories.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Reporting Categories</a></li>
+<li><a href="{{ route('sector_categories.index') }}" class="secondary"><i class="fa fa-pencil"></i> Manage Expertise Categories</a></li>
 @stop
 
 @section('export-nav')

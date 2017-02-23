@@ -190,6 +190,11 @@ class BaseController extends Controller {
 			$dormant_count = $this->getDormantCount();
 		}
 
+		if ( is_request( 'sector_categories' ) ) {
+			$heading1 = $logo . current_section_name() . ' | Expertise Categories';
+			$heading2 = number_format( $items->count(), 0 ) . ' total categories';
+		}
+
 		if( is_request('survey')) {
 			$heading1 = $logo . current_section_name() . ' | Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
@@ -227,6 +232,11 @@ class BaseController extends Controller {
 		$heading2 = isset( $this->search_term_clean )
 			? 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) ) . ' when searching for ' . Session::get( $this->resource_key . '.SearchType' ) . ' "' . $this->search_term_clean . '"'
 			: 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) );
+
+		if ( is_request( 'sector_categories' ) ) {
+			$heading1 = $logo . current_section_name() . ' | Expertise Categories';
+			$heading2 = number_format( $items->count(), 0 ) . ' total categories';
+		}
 
 		if( is_request('survey')) {
 			$heading1 = $logo . current_section_name() . ' | Profiles';

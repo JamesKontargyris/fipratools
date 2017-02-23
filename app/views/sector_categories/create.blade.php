@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-Add a Sector Category
+Add an Expertise Category
 @stop
 
 @section('page-nav')
@@ -16,7 +16,7 @@ Add a Sector Category
 <div class="row">
 	<div class="col-6">
 		<div class="formfield">
-			{{ Form::label('name', 'Sector Category Name:', ['class' => 'required']) }}
+			{{ Form::label('name', 'Expertise Category Name:', ['class' => 'required']) }}
 			{{ Form::text('name', Input::old('name')) }}
 		</div>
 	</div>

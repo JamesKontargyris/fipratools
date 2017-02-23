@@ -20,11 +20,11 @@ Editing Sector: {{ $sector->name }}
 			{{ Form::text('name', isset($sector->name) ? $sector->name : '') }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('category', 'Reporting category:', ['class' => 'required']) }}
+			{{ Form::label('category', 'Expertise category:', ['class' => 'required']) }}
 			{{ Form::select('category', $categories, isset($sector->category_id) ? $sector->category_id : '', ['class' => 'required reveal-new-category', 'data-reveal' => 'new-category']) }}
 		</div>
 		<div class="formfield new-category hide">
-			{{ Form::label('new_category', 'New reporting category:', ['class' => 'required']) }}
+			{{ Form::label('new_category', 'New expertise category:', ['class' => 'required']) }}
 			{{ Form::text('new_category', null, ['class' => 'new-category']) }}
 		</div>
 	</div>

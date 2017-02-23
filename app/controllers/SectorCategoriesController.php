@@ -23,7 +23,7 @@ class SectorCategoriesController extends \BaseController
 		$this->check_perm( 'manage_sectors' );
 
 		$this->addEditSectorCategoryForm = $addEditSectorCategoryForm;
-		View::share( 'page_title', 'Sector Categories' );
+		View::share( 'page_title', 'Expertise Categories' );
 		View::share( 'key', 'sector_categories' );
 	}
 
@@ -136,7 +136,7 @@ class SectorCategoriesController extends \BaseController
 
 		$this->execute( 'Leadofficelist\Sector_categories\EditSectorCategoryCommand', $input );
 
-		Flash::overlay( 'Sector category updated.', 'success' );
+		Flash::overlay( 'Expertise category updated.', 'success' );
 
 		return Redirect::route( 'sector_categories.index' );
 	}

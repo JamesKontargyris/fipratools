@@ -20,11 +20,11 @@ Add a Sector
 			{{ Form::text('name', Input::old('name'), ['class' => 'sector-name']) }}
 		</div>
 		<div class="formfield">
-			{{ Form::label('category', 'Reporting category:', ['class' => 'required']) }}
+			{{ Form::label('category', 'Expertise category:', ['class' => 'required']) }}
 			{{ Form::select('category', $categories, Input::old('category'), ['class' => 'required reveal-new-category', 'data-reveal' => 'new-category']) }}
 		</div>
 		<div class="formfield new-category hide">
-			{{ Form::label('new_category', 'New reporting category:', ['class' => 'required']) }}
+			{{ Form::label('new_category', 'New expertise category:', ['class' => 'required']) }}
 			{{ Form::text('new_category', Input::old('new_category'), ['class' => 'new-category']) }}
 		</div>
 	</div>

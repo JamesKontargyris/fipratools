@@ -14,6 +14,6 @@ class AddEditSectorCategory extends FormValidator
 	];
 
 	public $messages = [
-		'name.unique'         => 'The sector category name you entered already exists.',
+		'name.unique'         => 'The expertise category name you entered already exists.',
 	];
 } 

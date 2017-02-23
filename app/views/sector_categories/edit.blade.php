@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-Editing Sector Category: {{ $sector_category->name }}
+Editing Expertise Category: {{ $sector_category->name }}
 @stop
 
 @section('page-nav')
@@ -16,7 +16,7 @@ Editing Sector Category: {{ $sector_category->name }}
 <div class="row">
 	<div class="col-6">
 		<div class="formfield">
-			{{ Form::label('name', 'Sector Category Name:', ['class' => 'required']) }}
+			{{ Form::label('name', 'Expertise Category Name:', ['class' => 'required']) }}
 			{{ Form::text('name', isset($sector_category->name) ? $sector_category->name : '') }}
 		</div>
 	</div>

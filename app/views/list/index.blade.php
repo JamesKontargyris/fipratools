@@ -44,24 +44,27 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td colspan="4" width="40%">Client name</td>
-							<td width="10%" class="hide-m">Sector</td>
+							<td colspan="4" width="30%">Client name</td>
+							<td colspan="2" width="30%" class="hide-m">Sector & Expertise Area</td>
 							<td width="10%" class="hide-m">Type</td>
-							<td width="10%" class="hide-m">Service</td>
+							<td width="5%" class="hide-m">Service</td>
 							<td width="15%">Lead Member</td>
-							<td width="25%" class="hide-s">AD to talk to</td>
+							<td width="20%" class="hide-s">AD to talk to</td>
 						</tr>
 						<tr class="hide-print">
 							<td class="hide-m sub-header" colspan="4">
 								@include('layouts.partials.filters.table-letter-filter')
 							</td>
-							<td class="hide-m sub-header">
+							<td width="15%" class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
 									{{ Form::select('filter_value', $sectors, Session::has('list.Filters.sector_id') ? Session::get('list.Filters.sector_id') : null, ['class' => 'list-table-filter']) }}
 									{{ Form::hidden('filter_field', 'sector_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
 								{{ Form::close() }}
+							</td>
+							<td width="15%" class="hide-m sub-header no-border-left">
+								Filter
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
@@ -117,6 +120,14 @@
 									@endif
 								</td>
 								<td class="hide-m">{{ $client->sector()->pluck('name') }}</td>
+								<td class="hide-m expertise-field">
+									@if($expertise = \Leadofficelist\Sector_categories\Sector_category::find($client->sector()->pluck('category_id'))['name'])
+										<div class="expertise-field__text-container">
+											{{ $expertise }}
+										<i class="fa fa-caret-left fa-lg expertise-field__pointer"></i>
+										</div>
+									@endif
+								</td>
 								<td class="hide-m">{{ $client->type()->pluck('short_name') }}</td>
 								<td class="hide-m">{{ $client->service()->pluck('name') }}</td>
 								<td><a href="{{ route('units.show', ['id' => $client->unit()->pluck('id')]) }}"><strong>{{ $client->unit()->pluck('name') }}</strong></a></td>
