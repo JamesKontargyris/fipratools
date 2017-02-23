@@ -659,12 +659,17 @@ class BaseController extends Controller {
 
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
 			if( ! Input::get('filter_value')) {
-				// The user has selected the "Filter..." or "Remove filter" blank row
+				// The user has selected the "All" blank row
 				Session::forget($this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
 				// Is the Filters array now empty? No filters selected if so
 				$this->isFilterArrayEmpty();
 			} else {
-				Session::set( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
+				// Does the filter value already exist?
+				if( ! in_array( Input::get( 'filter_value' ), (array) Session::get($this->resource_key . '.Filters.' . Input::get( 'filter_field' ))))
+				{
+					// If not, push it on to the end of the filter array
+					Session::push( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
+				}
 			}
 			return Session::get( $this->resource_key . '.Filters' );
 

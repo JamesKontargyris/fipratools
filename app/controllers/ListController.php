@@ -146,7 +146,7 @@ class ListController extends BaseController {
 	protected function getFilteredValues() {
 		// Get names of filtered values
 		$values = '';
-		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_value ) {
+		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_array ) {
 			if($filter_name == 'sector_category_id') {
 				$model_name = 'Leadofficelist\Sector_categories\Sector_category';
 			} else {
@@ -158,10 +158,12 @@ class ListController extends BaseController {
 			//If filter is on account director, then the model will need to pull first_name and last_name from account _directors
 			//rather than just name.
 			if ( strpos( $model_name, 'Account_directors' ) ) {
-				$ad = $model::find( $filter_value );
+				$ad = $model::find( $filter_array );
 				$values .= $ad->first_name . ' ' . $ad->last_name . ', ';
 			} else {
-				$values .= $model::find( $filter_value )->name . ', ';
+				foreach($filter_array as $filter_value) {
+					$values .= $model::find( $filter_value )->name . ', ';
+				}
 			}
 		}
 

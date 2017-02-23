@@ -7,7 +7,6 @@
         @include('layouts.partials.page-head')
     </head>
     <body>
-
 		@include('layouts.partials.nav')
 
         <section class="content-container">

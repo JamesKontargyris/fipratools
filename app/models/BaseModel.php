@@ -54,7 +54,13 @@ class BaseModel extends Eloquent
 
 		}
 		// Otherwise, return the query with the filters applied as normal
-		return $query->where( $filters );
+		return $query->where( function($q) use ($filters)
+		{
+			// Loop through each filter and find the values in its array
+			foreach($filters as $resource_id => $values) {
+				$q->whereIn($resource_id, $values);
+			}
+		});
 
 	}
 } 
