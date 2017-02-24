@@ -1910,25 +1910,29 @@ ul.pagination {
       display: none; } }
 
 /* line 925, ../../app/assets/sass/_modules.scss */
+.expertise-list__score-row-0 {
+  color: #c9c9c9; }
+
+/* line 928, ../../app/assets/sass/_modules.scss */
 .expertise-list__score-row-1,
 .expertise-list__score-row-2,
 .expertise-list__score-row-3 {
   background-color: #e7e7e7;
   color: #898989; }
 
-/* line 932, ../../app/assets/sass/_modules.scss */
+/* line 935, ../../app/assets/sass/_modules.scss */
 .expertise-list__score-row-4,
 .expertise-list__score-row-5 {
   background-color: #8dcc29;
   color: white; }
-  /* line 937, ../../app/assets/sass/_modules.scss */
+  /* line 940, ../../app/assets/sass/_modules.scss */
   .expertise-list__score-row-4 .expertise-list__knowledge-area,
   .expertise-list__score-row-4 .expertise-list__score,
   .expertise-list__score-row-5 .expertise-list__knowledge-area,
   .expertise-list__score-row-5 .expertise-list__score {
     font-weight: bold; }
 
-/* line 943, ../../app/assets/sass/_modules.scss */
+/* line 946, ../../app/assets/sass/_modules.scss */
 .expertise-list__score-row-1,
 .expertise-list__score-row-2,
 .expertise-list__score-row-3,
@@ -1936,14 +1940,14 @@ ul.pagination {
 .expertise-list__score-row-5 {
   border-bottom: 4px solid #f7f7f7; }
 
-/* line 951, ../../app/assets/sass/_modules.scss */
+/* line 954, ../../app/assets/sass/_modules.scss */
 .knowledge-toggle {
   display: none;
   margin-bottom: 15px;
   font-size: 14px;
   font-size: 0.875rem;
   line-height: 16px; }
-  /* line 957, ../../app/assets/sass/_modules.scss */
+  /* line 960, ../../app/assets/sass/_modules.scss */
   .knowledge-toggle.active {
     display: inline-block; }
 

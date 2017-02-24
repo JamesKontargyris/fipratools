@@ -122,16 +122,19 @@
                             <div class="expertise-list__group-title">{{ $group }}</div>
                             <table class="expertise-list" cellspacing="5" cellpadding="5" border="0" width="100%">
                                 <tbody>
-                                    @foreach($areas as $id => $name)
+                                @foreach($areas as $id => $name)
+                                    {{--Has the user registered a score for this knowledge area?--}}
+                                    @if(isset($score_info[$id]))
                                         {{--Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
                                         If not, hide the whole container when only showing the user's expertise--}}
-                                        @if(isset($score_info[$id]))
-                                            <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
-                                                <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
-                                                <td valign="middle" class="expertise-list__score"><img class="expertise-list__score-stars" src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}</td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
+                                        <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
+                                            <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
+                                            <td valign="middle" class="expertise-list__score">
+                                                <img class="expertise-list__score-stars" src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

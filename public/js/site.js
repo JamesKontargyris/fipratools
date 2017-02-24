@@ -186,7 +186,7 @@
     $('.knowledge-toggle').on('click', function(e)
     {
        $('.knowledge-toggle').toggleClass('active');
-       $('.expertise-list__score-row-1, .expertise-list__score-row-2, .expertise-list__score-row-3').fadeToggle();
+       $('.expertise-list__score-row-0, .expertise-list__score-row-1, .expertise-list__score-row-2, .expertise-list__score-row-3').fadeToggle();
        $('.expertise-count-0').fadeToggle();
 
        // Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
