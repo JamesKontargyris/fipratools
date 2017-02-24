@@ -684,6 +684,20 @@ class BaseController extends Controller {
 
 	}
 
+	protected function getFilteredValues() {
+		// Get names of filtered values
+		$values = '';
+		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_array ) {
+			$model_name = $this->getFilterModelName( $filter_name );
+			$model = new $model_name;
+			foreach($filter_array as $filter_value) {
+				$values .= $model::find( $filter_value )->name . ', ';
+			}
+		}
+
+		return rtrim( $values, ', ' );
+	}
+
 
 	protected function isFilterArrayEmpty()
 	{

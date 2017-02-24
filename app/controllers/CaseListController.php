@@ -97,121 +97,145 @@ class CaseListController extends BaseController {
 	protected function getFiltered( $for = 'screen' ) {
 		if ( $for == 'export' ) {
 			// Get all results for PDF export
-			// Both sector_id and product_id are set
-			if(Session::has( $this->resource_key . '.Filters.sector_id' ) && Session::has( $this->resource_key . '.Filters.product_id' )) {
-				// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
-				$sector_term  = '%"' . Session::get( $this->resource_key . '.Filters.sector_id' ) . '"%';
-				// Get the product_id of the selected product and prepare it for a LIKE SQL query
-				$product_term  = '%"' . Session::get( $this->resource_key . '.Filters.product_id' ) . '"%';
-				// Get the filters array then unset the sector and product filters, so they doesn't overwrite the where clauses below
-				$filters_minus_sector_id_product_id = Session::get( $this->resource_key . '.Filters' );
-				unset($filters_minus_sector_id_product_id['sector_id']);
-				unset($filters_minus_sector_id_product_id['product_id']);
-				// Get results with the modified sector_id and product_id where clauses
-				$items = CaseStudy::where( 'sector_id', 'LIKE', $sector_term )->where( 'product_id', 'LIKE', $product_term )->rowsListFilter( $filters_minus_sector_id_product_id )->rowsSortOrder( $this->rows_sort_order )->get();
-			}
-			// sector_id is set
-			elseif(Session::has( $this->resource_key . '.Filters.sector_id' ) && ! Session::has( $this->resource_key . '.Filters.product_id' )) {
-				// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
-				$sector_term  = '%"' . Session::get( $this->resource_key . '.Filters.sector_id' ) . '"%';
-				// Get the filters array then unset the sector filter, so it doesn't overwrite the where clause below
-				$filters_minus_sector_id = Session::get( $this->resource_key . '.Filters' );
-				unset($filters_minus_sector_id['sector_id']);
-				// Get results with the modified sector_id where clause
-				$items = CaseStudy::where( 'sector_id', 'LIKE', $sector_term )->rowsListFilter( $filters_minus_sector_id )->rowsSortOrder( $this->rows_sort_order )->get();
-			}
-			// product_id is set
-			elseif(! Session::has( $this->resource_key . '.Filters.sector_id' ) && Session::has( $this->resource_key . '.Filters.product_id' )) {
-				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
-				$sector_term  = '%"' . Session::get( $this->resource_key . '.Filters.product_id' ) . '"%';
-				// Get the filters array then unset the sector filter, so it doesn't overwrite the where clause below
-				$filters_minus_product_id = Session::get( $this->resource_key . '.Filters' );
-				unset($filters_minus_product_id['product_id']);
-				// Get results with the modified product_id where clause
-				$items = CaseStudy::where( 'product_id', 'LIKE', $sector_term )->rowsListFilter( $filters_minus_product_id )->rowsSortOrder( $this->rows_sort_order )->get();
-			}
-			// Neither sector_id nor product_id are set
-			else {
-				$items = CaseStudy::rowsListFilter( Session::get( $this->resource_key . '.Filters' ) )->rowsSortOrder( $this->rows_sort_order )->get();
-			}
+			// Get a replica of the filters so we can play with them, without affecting the original
+			$filters = Session::get( $this->resource_key . '.Filters');
+			$items = CaseStudy::where(function($query) use ($filters)
+			{
+				if(isset($filters['sector_id'])) {
+					// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['sector_id'] as $id) {
+						$sector_ids[]  = '%"' . $id . '"%';
+					}
+					foreach($sector_ids as $id) {
+						$query->orWhere('sector_id', 'LIKE', $id);
+					}
+					unset($filters['sector_id']);
+				}
+
+			})->where(function($query) use ($filters) {
+				if(isset($filters['product_id'])) {
+					// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['product_id'] as $id) {
+						$product_ids[]  = '%"' . $id . '"%';
+					}
+					foreach($product_ids as $id) {
+						$query->orWhere('product_id', 'LIKE', $id);
+					}
+				}
+			})->where(function($query) use ($filters) {
+				if(isset($filters['year'])) {
+					foreach($filters['year'] as $year) {
+						$query->orWhere('year', '=', $year);
+					}
+				}
+			})->where(function($query) use ($filters) {
+				if(isset($filters['unit_id'])) {
+					// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['unit_id'] as $id) {
+						$query->orWhere('unit_id', '=', $id);
+					}
+				}
+			})->where(function($query) use ($filters) {
+				if(isset($filters['account_director_id'])) {
+					// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['account_director_id'] as $id) {
+						$query->orWhere('account_director_id', '=', $id);
+					}
+				}
+			})->where('status', '=', 1)->rowsSortOrder( $this->rows_sort_order )->get();
+
+			return $items;
 		} else {
 			// Paginate results for screen display
-			// Both sector_id and product_id are set
-			if(Session::has( $this->resource_key . '.Filters.sector_id' ) && Session::has( $this->resource_key . '.Filters.product_id' )) {
-				// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
-				$sector_term  = '%"' . Session::get( $this->resource_key . '.Filters.sector_id' ) . '"%';
-				// Get the product_id of the selected product and prepare it for a LIKE SQL query
-				$product_term  = '%"' . Session::get( $this->resource_key . '.Filters.product_id' ) . '"%';
-				// Get the filters array then unset the sector and product filters, so they doesn't overwrite the where clauses below
-				$filters_minus_sector_id_product_id = Session::get( $this->resource_key . '.Filters' );
-				unset($filters_minus_sector_id_product_id['sector_id']);
-				unset($filters_minus_sector_id_product_id['product_id']);
-				// Get results with the modified sector_id and product_id where clauses
-				$items = CaseStudy::where( 'sector_id', 'LIKE', $sector_term )->where( 'product_id', 'LIKE', $product_term )->rowsListFilter( $filters_minus_sector_id_product_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			}
-			// sector_id is set
-			elseif(Session::has( $this->resource_key . '.Filters.sector_id' ) && ! Session::has( $this->resource_key . '.Filters.product_id' )) {
-				// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
-				$sector_term  = '%"' . Session::get( $this->resource_key . '.Filters.sector_id' ) . '"%';
-				// Get the filters array then unset the sector filter, so it doesn't overwrite the where clause below
-				$filters_minus_sector_id = Session::get( $this->resource_key . '.Filters' );
-				unset($filters_minus_sector_id['sector_id']);
-				// Get results with the modified sector_id where clause
-				$items = CaseStudy::where( 'sector_id', 'LIKE', $sector_term )->rowsListFilter( $filters_minus_sector_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			}
-			// product_id is set
-			elseif(! Session::has( $this->resource_key . '.Filters.sector_id' ) && Session::has( $this->resource_key . '.Filters.product_id' )) {
-				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
-				$sector_term  = '%"' . Session::get( $this->resource_key . '.Filters.product_id' ) . '"%';
-				// Get the filters array then unset the sector filter, so it doesn't overwrite the where clause below
-				$filters_minus_product_id = Session::get( $this->resource_key . '.Filters' );
-				unset($filters_minus_product_id['product_id']);
-				// Get results with the modified product_id where clause
-				$items = CaseStudy::where( 'product_id', 'LIKE', $sector_term )->rowsListFilter( $filters_minus_product_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			}
-			// Neither sector_id nor product_id are set
-			else {
-				$items = CaseStudy::rowsListFilter( Session::get( $this->resource_key . '.Filters' ) )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			}
+			// Get a replica of the filters so we can play with them, without affecting the original
+			$filters = Session::get( $this->resource_key . '.Filters');
+			$items = CaseStudy::where(function($query) use ($filters)
+			{
+				if(isset($filters['sector_id'])) {
+					// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['sector_id'] as $id) {
+						$sector_ids[]  = '%"' . $id . '"%';
+					}
+					foreach($sector_ids as $id) {
+						$query->orWhere('sector_id', 'LIKE', $id);
+					}
+					unset($filters['sector_id']);
+				}
+
+			})->where(function($query) use ($filters) {
+				if(isset($filters['product_id'])) {
+					// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['product_id'] as $id) {
+						$product_ids[]  = '%"' . $id . '"%';
+					}
+					foreach($product_ids as $id) {
+						$query->orWhere('product_id', 'LIKE', $id);
+					}
+				}
+			})->where(function($query) use ($filters) {
+				if(isset($filters['year'])) {
+					foreach($filters['year'] as $year) {
+						$query->orWhere('year', '=', $year);
+					}
+				}
+			})->where(function($query) use ($filters) {
+				if(isset($filters['unit_id'])) {
+					// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['unit_id'] as $id) {
+						$query->orWhere('unit_id', '=', $id);
+					}
+				}
+			})->where(function($query) use ($filters) {
+				if(isset($filters['account_director_id'])) {
+					// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+					foreach($filters['account_director_id'] as $id) {
+						$query->orWhere('account_director_id', '=', $id);
+					}
+				}
+			})->where('status', '=', 1)->rowsSortOrder( $this->rows_sort_order )->paginate($this->rows_to_view);
+
+			return $items;
+
 		}
-
-		return $items;
-
 	}
 
 	protected function getFilteredValues() {
 		// Get names of filtered values
 		$values = '';
-		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_value ) {
+		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_array ) {
 			$model_name = $this->getFilterModelName( $filter_name );
-			//If filter is an account director, then the model will need to pull first_name and last_name from account _directors
-			//rather than just name.
 			if ( strpos( $model_name, 'Account_directors' ) ) {
-				$ad = AccountDirector::find( $filter_value );
-				$values .= $ad->first_name . ' ' . $ad->last_name . ', ';
+				//If filter is an account director, then the model will need to pull first_name and last_name from account _directors
+				//rather than just name.
+				foreach($filter_array as $id) {
+					$ad = AccountDirector::find( $id );
+					$values .= $ad->first_name . ' ' . $ad->last_name . ', ';
+				}
 
 			} elseif ( strpos( $model_name, 'Years' ) ) {
 				// If the filter is years, no need to instantiate a model as it is just a field dealt with by the CaseStudy model
-				$values .= $filter_value . ', ';
+				foreach($filter_array as $year) {
+					$values .= $year . ', ';
+				}
 
 			} elseif ( strpos( $model_name, 'Products' ) ) {
 //					If the filter is a product, we need to compare the keyword to the serialized product array
 //					Re-run the query on that basis
-				$term  = '%"' . Session::get( $this->resource_key . '.Filters.product_id' ) . '"%';
-				$items = CaseStudy::where( 'product_id', 'LIKE', $term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-
-				$values .= Product::find( $filter_value )->name . ', ';
+				foreach($filter_array as $id) {
+					$values .= Product::find( $id )->name . ', ';
+				}
 
 			} elseif ( strpos( $model_name, 'Sectors' ) ) {
 //					If the filter is a sector, we need to compare the keyword to the serialized sector array
 //					Re-run the query on that basis
-				$term  = '%"' . Session::get( $this->resource_key . '.Filters.sector_id' ) . '"%';
-				$items = CaseStudy::where( 'sector_id', 'LIKE', $term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-
-				$values .= Sector::find( $filter_value )->name . ', ';
+				foreach($filter_array as $id) {
+					$values .= Sector::find( $id )->name . ', ';
+				}
 			} else {
 				$model = new $model_name;
-				$values .= $model::find( $filter_value )->name . ', ';
+				foreach($filter_array as $id) {
+					$values .= $model::find( $id )->name . ', ';
+				}
 			}
 		}
 

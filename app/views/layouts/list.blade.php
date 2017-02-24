@@ -7,7 +7,6 @@
         @include('layouts.partials.page-head')
     </head>
     <body>
-    <?php print_r(Session::get( 'list.Filters' ) ); ?>
 		@include('layouts.partials.nav')
 
         <section class="content-container">

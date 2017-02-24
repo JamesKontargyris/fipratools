@@ -368,14 +368,14 @@ class KnowledgeSurveysController extends \BaseController {
 				if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
 					$query->whereHas('knowledge_languages', function($query)
 					{
-						$query->where('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
+						$query->whereIn('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
 					});
 				}
 
 				if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
 					$query->whereHas('unit', function($query)
 					{
-						$query->where('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
+						$query->whereIn('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
 					});
 				}
 
@@ -394,24 +394,17 @@ class KnowledgeSurveysController extends \BaseController {
 			{
 				$query->whereDate('date_of_birth', '>', '0000-00-00');
 
-				if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
-					$query->whereHas('knowledge_languages', function($query)
-					{
-						$query->where('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
-					});
-				}
-
 				if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
 					$query->whereHas('unit', function($query)
 					{
-						$query->where('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
+						$query->whereIn('units.id', Session::get( $this->resource_key . '.Filters.unit_id' ));
 					});
 				}
 
 				if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
 					$query->whereHas('knowledge_areas', function($query)
 					{
-						$query->where('knowledge_areas.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
+						$query->whereIn('knowledge_areas.id', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
 					});
 				}
 
@@ -422,16 +415,25 @@ class KnowledgeSurveysController extends \BaseController {
 
 	}
 
+	/**
+	 * Override of BaseController version
+	 *
+	 * @return string
+	 */
 	protected function getFilteredValues() {
 		// Get names of filtered values
 		$values = '';
-		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_value ) {
-			$model_name = $this->getFilterModelName( $filter_name );
-			$model = new $model_name;
-			$values .= $model::find( $filter_value )->name . ', ';
+		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_array ) {
+
+			foreach($filter_array as $filter_value) {
+				if($filter_name != 'unit_id') {
+					$values .= KnowledgeArea::find( $filter_value )->name . ', ';
+				} else {
+					$values .= Unit::find( $filter_value )->name . ', ';
+				}
+			}
 		}
 
 		return rtrim( $values, ', ' );
 	}
-
 }

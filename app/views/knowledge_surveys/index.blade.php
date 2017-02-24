@@ -88,8 +88,8 @@
                             @foreach($area_groups as $group)
                                 <td class="hide-m sub-header">
                                     {{ Form::open(['url' => 'survey/search']) }}
-                                    {{ Form::select('filter_value', $areas[$group->id], Session::has('survey.Filters.knowledge_area_id') ? Session::get('survey.Filters.knowledge_area_id') : null, ['class' => 'list-table-filter']) }}
-                                    {{ Form::hidden('filter_field', 'knowledge_area_id') }}
+                                    {{ Form::select('filter_value', $areas[$group->id], Session::has('survey.Filters.knowledge_area_id_' . $group->id) ? Session::get('survey.Filters.knowledge_area_id_' . $group->id) : null, ['class' => 'list-table-filter']) }}
+                                    {{ Form::hidden('filter_field', 'knowledge_area_id_' . $group->id) }}
                                     {{ Form::hidden('filter_results', 'yes') }}
                                     {{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
                                     {{ Form::close() }}
