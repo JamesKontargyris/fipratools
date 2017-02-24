@@ -47,24 +47,23 @@ class BaseModel extends Eloquent
 			// Find all sectors assigned to this sector category
 			$sectors = Sector::where('category_id', '=', $sector_category)->get();
 			// Use the $sectors array to set orWhere clauses and return the query with the rest of the filters applied too
-			return $query->where(function($q) use ($sectors, $filters)
+			$query->where(function($q) use ($sectors, $filters)
 			{
 				foreach($sectors as $sector) $q->orWhere('sector_id', '=', $sector->id);
-				// Loop through each filter and find the values in its array
-				foreach($filters as $resource_id => $values) {
-					$q->whereIn($resource_id, $values);
-				}
 			});
 
 		}
-		// Otherwise, return the query with the filters applied as normal
-		return $query->where( function($q) use ($filters)
+
+		// Return the query with the filters applied as normal
+		$query->where( function($q) use ($filters)
 		{
 			// Loop through each filter and find the values in its array
 			foreach($filters as $resource_id => $values) {
 				$q->whereIn($resource_id, $values);
 			}
 		});
+
+		return $query;
 
 	}
 } 
