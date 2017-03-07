@@ -18,7 +18,7 @@
         <div class="mobile">
             <div class="row no-margin">
                 <div class="col-8 logo">
-                    <img src="{{ asset('img/fipra_logo_s.png') }}" alt="Fipra" style="vertical-align:middle"/>
+                    <img src="{{ asset('img/fipra_logo_s.png') }}" alt="Fipra" style="vertical-align:middle" />
                     <span>
                         @if(Session::get('section') == 'case')
                             Case Studies

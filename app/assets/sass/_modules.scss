@@ -45,6 +45,7 @@
   position:relative;
   margin-bottom:$v-rhythm;
   padding:($v-rhythm / 2) 15px;
+  border-radius:5px;
   @include font-size(16);
   ul li {
     padding:($v-rhythm / 4) 0;
@@ -130,6 +131,7 @@
 }
 
 #page-header {
+  border-radius:5px;
   & > *:not(a) {
     padding:($v-rhythm / 2) 15px 0;
   }
@@ -152,18 +154,22 @@
   &.section-list {
     h2 { color:darken($turquoise, 10%); }
     background-color: desaturate(lighten($turquoise, 45%), 25%);
+    border-bottom: 2px solid desaturate(lighten($turquoise, 25%), 25%);
   }
   &.section-case {
     h2 { color:darken($violet, 10%); }
     background-color: desaturate(lighten($violet, 25%), 25%);
+    border-bottom: 2px solid desaturate(lighten($violet, 15%), 25%);
   }
   &.section-survey {
     h2 { color:saturate(darken($green, 30%), 50%); }
     background-color: desaturate(lighten($green, 40%), 25%);
+    border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
   }
   &.section-admin {
     h2 { color:darken($grey, 10%); }
     background-color: desaturate(lighten($grey, 40%), 25%);
+    border-bottom: 2px solid desaturate(lighten($grey, 25%), 25%);
   }
 
   nav {
@@ -258,6 +264,7 @@
           input {
             @include font-size(14);
             padding-right:30px;
+            border-radius:5px;
             @include breakpoint($l-max) {
               width:100%;
               padding-top:10px;
@@ -283,6 +290,7 @@
 
 .filter-container {
   background-color:darken(white, 5%);
+  @include breakpoint($m) { border-radius:5px 5px 0 0; }
   .filters {
     @include font-size(12);
     @include breakpoint($l-max) { display:none; padding:($v-rhythm / 2) 0; }
@@ -377,6 +385,7 @@
   tr > td {
     vertical-align: middle;
     border-left:1px solid darken(white, 10%);
+    background-color:rgba(white, 0.8);
     &.no-border-left {
       border-left:0 !important;
       padding-left:3px;
@@ -754,6 +763,7 @@ ul.pagination {
   border:1px solid $light-grey;
   padding:$v-rhythm 15px;
   margin-bottom: $v-rhythm;
+  background-color: white;
   &.fill {
     background-color:lighten($light-grey, 10%);
   }
@@ -860,6 +870,7 @@ ul.pagination {
 .knowledge-profile-details {
   border:1px solid #efefef;
   width:100%;
+  background-color: white;
 }
 .knowledge-profile-details tr {
   &:not(:last-of-type) {

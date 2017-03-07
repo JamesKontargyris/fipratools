@@ -23,6 +23,12 @@
         numberOfMonths: 1
     });
 
+    //If there are no page navigation links, hide the blank div
+    if($('.page-menu-nav ul.small-font li').length == 0)
+    {
+        $('.page-menu-nav').hide();
+    }
+
     $('.print-button').on('click', function()
     {
         window.print();

@@ -10,5 +10,6 @@
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" href="{{ asset('css/jquery.modal.css') }}" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ asset('css/multi-select.css') }}" type="text/css" media="screen" />
+<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i" rel="stylesheet">
 
 @include('layouts.partials.favicon')

@@ -43,8 +43,6 @@ $susy: (
 }
 .content-container {
 	@include clearfix();
-	background-color:white;
-    @include background(url('../img/stars_bk.gif') top right no-repeat #ffffff);
 	min-height:100%;
 }
 

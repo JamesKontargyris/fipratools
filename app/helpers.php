@@ -5,7 +5,7 @@ use Leadofficelist\Sectors\Sector;
 use Leadofficelist\Users\User;
 use Leadofficelist\Widgets\Widget;
 
-function display_page_title($default = 'Fipra Portal')
+function display_page_title($default = 'Fipra Tools')
 {
 	if(isset($page_title)) {
 		echo $page_title;

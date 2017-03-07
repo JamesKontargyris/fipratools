@@ -12,8 +12,6 @@ html {
 }
 body {
 	font-family: $font-family;
-//	@include background(linear-gradient(top, #f0f0f0, #888 66%));
-  background-color: $light-grey;
 	color:$black;
 	line-height:$v-rhythm;
 }
