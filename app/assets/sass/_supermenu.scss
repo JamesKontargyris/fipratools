@@ -20,6 +20,7 @@
   @include horizontal-list();
   @include font-size(16);
   margin-top:20px;
+  margin-left:20px;
 
   &:not(:last-of-type) {
     //margin-right:10px;
@@ -76,6 +77,11 @@
       background-color:$grey;
       font-weight:bold;
       box-shadow: rgba(black, 1) 0 0 7px;
+      cursor: default;
+
+      &:hover {
+        color:white;
+      }
 
       &.section-list {
         background: $turquoise linear-gradient(lighten($turquoise, 20%) 0%, $turquoise 40%) no-repeat top;

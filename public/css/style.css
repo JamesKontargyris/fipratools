@@ -2361,7 +2361,8 @@ footer {
   *zoom: 1;
   font-size: 16px;
   font-size: 1rem;
-  margin-top: 20px; }
+  margin-top: 20px;
+  margin-left: 20px; }
   /* line 62, ../../../../../.rvm/gems/ruby-2.2.3/gems/compass-core-1.0.3/stylesheets/compass/typography/lists/_horizontal-list.scss */
   .super-menu li {
     list-style-image: none;
@@ -2389,67 +2390,71 @@ footer {
     /* line 18, ../../app/assets/sass/_supermenu.scss */
     .super-menu {
       margin-bottom: 10px; } }
-  /* line 37, ../../app/assets/sass/_supermenu.scss */
+  /* line 38, ../../app/assets/sass/_supermenu.scss */
   .super-menu .super-menu__item {
     padding: 0; }
     @media (max-width: 769px) {
-      /* line 37, ../../app/assets/sass/_supermenu.scss */
+      /* line 38, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__item {
         display: block;
         width: 100%;
         border-right: 0;
         text-align: center; } }
-  /* line 53, ../../app/assets/sass/_supermenu.scss */
+  /* line 54, ../../app/assets/sass/_supermenu.scss */
   .super-menu .super-menu__logo {
     margin-right: 10px; }
-  /* line 57, ../../app/assets/sass/_supermenu.scss */
+  /* line 58, ../../app/assets/sass/_supermenu.scss */
   .super-menu .super-menu__link:link, .super-menu .super-menu__link:visited {
     display: block;
     color: white;
     padding: 20px 13px;
     border-radius: 5px; }
     @media (min-width: 769px) and (max-width: 900px) {
-      /* line 57, ../../app/assets/sass/_supermenu.scss */
+      /* line 58, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__link:link, .super-menu .super-menu__link:visited {
         padding: 11.76471px 13px; } }
     @media (min-width: 769px) {
-      /* line 57, ../../app/assets/sass/_supermenu.scss */
+      /* line 58, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__link:link, .super-menu .super-menu__link:visited {
         border-radius: 5px 5px 0 0; } }
-    /* line 71, ../../app/assets/sass/_supermenu.scss */
+    /* line 72, ../../app/assets/sass/_supermenu.scss */
     .super-menu .super-menu__link:link:hover, .super-menu .super-menu__link:visited:hover {
       color: #cccccc; }
-    /* line 75, ../../app/assets/sass/_supermenu.scss */
+    /* line 76, ../../app/assets/sass/_supermenu.scss */
     .super-menu .super-menu__link:link.active, .super-menu .super-menu__link:visited.active {
       background-color: #5F697F;
       font-weight: bold;
-      box-shadow: black 0 0 7px; }
-      /* line 80, ../../app/assets/sass/_supermenu.scss */
+      box-shadow: black 0 0 7px;
+      cursor: default; }
+      /* line 82, ../../app/assets/sass/_supermenu.scss */
+      .super-menu .super-menu__link:link.active:hover, .super-menu .super-menu__link:visited.active:hover {
+        color: white; }
+      /* line 86, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__link:link.active.section-list, .super-menu .super-menu__link:visited.active.section-list {
         background: #14b1cc linear-gradient(#57d8ef 0%, #14b1cc 40%) no-repeat top;
         border-left: 2px solid #14b1cc;
         border-top: 2px solid #14b1cc;
         border-right: 2px solid #14b1cc; }
-      /* line 87, ../../app/assets/sass/_supermenu.scss */
+      /* line 93, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__link:link.active.section-case, .super-menu .super-menu__link:visited.active.section-case {
         background: #6f5ce5 linear-gradient(#a295ee 0%, #6f5ce5 40%) no-repeat top;
         border-left: 2px solid #6f5ce5;
         border-top: 2px solid #6f5ce5;
         border-right: 2px solid #6f5ce5; }
-      /* line 94, ../../app/assets/sass/_supermenu.scss */
+      /* line 100, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__link:link.active.section-survey, .super-menu .super-menu__link:visited.active.section-survey {
         background: #8dcc29 linear-gradient(#c5e88d 0%, #8dcc29 40%) no-repeat top;
         border-left: 2px solid #8dcc29;
         border-top: 2px solid #8dcc29;
         border-right: 2px solid #8dcc29; }
-      /* line 101, ../../app/assets/sass/_supermenu.scss */
+      /* line 107, ../../app/assets/sass/_supermenu.scss */
       .super-menu .super-menu__link:link.active.section-admin, .super-menu .super-menu__link:visited.active.section-admin {
         background: #5F697F linear-gradient(#959daf 0%, #5f697f 40%) no-repeat top;
         border-left: 2px solid #5F697F;
         border-top: 2px solid #5F697F;
         border-right: 2px solid #5F697F; }
 
-/* line 111, ../../app/assets/sass/_supermenu.scss */
+/* line 117, ../../app/assets/sass/_supermenu.scss */
 .super-menu__user-details {
   text-align: right;
   color: white;
@@ -2458,13 +2463,13 @@ footer {
   padding: 7px 13px 0 13px;
   line-height: 1.6; }
   @media (max-width: 769px) {
-    /* line 111, ../../app/assets/sass/_supermenu.scss */
+    /* line 117, ../../app/assets/sass/_supermenu.scss */
     .super-menu__user-details {
       display: none; } }
-  /* line 125, ../../app/assets/sass/_supermenu.scss */
+  /* line 131, ../../app/assets/sass/_supermenu.scss */
   .super-menu__user-details a:link, .super-menu__user-details a:visited {
     color: #14b1cc; }
-    /* line 127, ../../app/assets/sass/_supermenu.scss */
+    /* line 133, ../../app/assets/sass/_supermenu.scss */
     .super-menu__user-details a:link:hover, .super-menu__user-details a:visited:hover {
       color: #108ea3; }
 
