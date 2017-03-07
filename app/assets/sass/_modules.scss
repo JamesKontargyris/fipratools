@@ -132,6 +132,7 @@
 
 #page-header {
   border-radius:5px;
+  margin-bottom:15px;
   & > *:not(a) {
     padding:($v-rhythm / 2) 15px 0;
   }

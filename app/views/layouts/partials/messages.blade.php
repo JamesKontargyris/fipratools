@@ -18,8 +18,9 @@
 @endif
 
 @if($errors->all())
-<div class="row">
+<div class="row alert-container">
 	<div class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		Please address the following errors:
 		<ul>
 			@foreach($errors->all() as $error)
