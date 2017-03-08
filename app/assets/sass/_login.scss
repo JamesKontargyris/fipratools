@@ -28,6 +28,7 @@
     height:100%;
     padding:15px;
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -103,8 +104,16 @@
       border:0;
     }
   }
+}
 
+.login-footer {
+  margin-top:15px;
+  color:$light-grey;
+  @include font-size(11);
 
+  a:link, a:visited {
+    color:white;
+  }
 }
 
 // Foundation classes

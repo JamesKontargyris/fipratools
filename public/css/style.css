@@ -2505,14 +2505,15 @@ footer {
     height: 100%;
     padding: 15px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; }
-  /* line 35, ../../app/assets/sass/_login.scss */
+  /* line 36, ../../app/assets/sass/_login.scss */
   .login .login-form {
     max-width: 600px;
     box-shadow: black 0 0 10px;
     border-radius: 10px; }
-  /* line 41, ../../app/assets/sass/_login.scss */
+  /* line 42, ../../app/assets/sass/_login.scss */
   .login .login-logo {
     -moz-box-shadow: 0 0 5px black;
     -webkit-box-shadow: 0 0 5px black;
@@ -2525,14 +2526,14 @@ footer {
     -moz-border-radius-topright: 10px;
     -webkit-border-top-right-radius: 10px;
     border-top-right-radius: 10px; }
-    /* line 48, ../../app/assets/sass/_login.scss */
+    /* line 49, ../../app/assets/sass/_login.scss */
     .login .login-logo img {
       float: left;
       vertical-align: middle;
       margin-right: 10px;
       width: 40px;
       height: 40px; }
-  /* line 57, ../../app/assets/sass/_login.scss */
+  /* line 58, ../../app/assets/sass/_login.scss */
   .login .login-title {
     color: #00257f;
     font-size: 40px;
@@ -2541,7 +2542,7 @@ footer {
     font-weight: 700;
     letter-spacing: -1px;
     text-shadow: rgba(255, 255, 255, 0.6) 0 1px 0; }
-  /* line 66, ../../app/assets/sass/_login.scss */
+  /* line 67, ../../app/assets/sass/_login.scss */
   .login .login-heading {
     display: none;
     color: #5F697F;
@@ -2550,11 +2551,11 @@ footer {
     line-height: 1;
     font-weight: 300; }
     @media (min-width: 769px) {
-      /* line 66, ../../app/assets/sass/_login.scss */
+      /* line 67, ../../app/assets/sass/_login.scss */
       .login .login-heading {
         display: block;
         float: right; } }
-  /* line 79, ../../app/assets/sass/_login.scss */
+  /* line 80, ../../app/assets/sass/_login.scss */
   .login .login-body {
     -moz-box-shadow: 0 0 5px black;
     -webkit-box-shadow: 0 0 5px black;
@@ -2571,24 +2572,34 @@ footer {
     -moz-border-radius-bottomright: 10px;
     -webkit-border-bottom-right-radius: 10px;
     border-bottom-right-radius: 10px; }
-    /* line 88, ../../app/assets/sass/_login.scss */
+    /* line 89, ../../app/assets/sass/_login.scss */
     .login .login-body h4 {
       color: white; }
-    /* line 92, ../../app/assets/sass/_login.scss */
+    /* line 93, ../../app/assets/sass/_login.scss */
     .login .login-body .row {
       padding: 0; }
-    /* line 96, ../../app/assets/sass/_login.scss */
+    /* line 97, ../../app/assets/sass/_login.scss */
     .login .login-body .alert-error, .login .login-body .alert-danger {
       background-color: red;
       border: 0; }
-    /* line 101, ../../app/assets/sass/_login.scss */
+    /* line 102, ../../app/assets/sass/_login.scss */
     .login .login-body .alert-info {
       background-color: #14b1cc;
       border: 0; }
 
+/* line 109, ../../app/assets/sass/_login.scss */
+.login-footer {
+  margin-top: 15px;
+  color: #dee0e6;
+  font-size: 11px;
+  font-size: 0.6875rem; }
+  /* line 114, ../../app/assets/sass/_login.scss */
+  .login-footer a:link, .login-footer a:visited {
+    color: white; }
+
 /* Grid HTML Classes */
 /* line 116, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-/* line 113, ../../app/assets/sass/_login.scss */
+/* line 122, ../../app/assets/sass/_login.scss */
 .row {
   width: 100%;
   margin-left: auto;
@@ -2599,18 +2610,18 @@ footer {
   *zoom: 1; }
 
 /* line 121, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_global.scss */
-/* line 123, ../../app/assets/sass/_login.scss */
+/* line 132, ../../app/assets/sass/_login.scss */
 .row:before, .row:after {
   content: " ";
   display: table; }
 
 /* line 122, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_global.scss */
-/* line 128, ../../app/assets/sass/_login.scss */
+/* line 137, ../../app/assets/sass/_login.scss */
 .row:after {
   clear: both; }
 
 /* line 121, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-/* line 132, ../../app/assets/sass/_login.scss */
+/* line 141, ../../app/assets/sass/_login.scss */
 .row.collapse .column,
 .row.collapse .columns {
   position: relative;
@@ -2619,7 +2630,7 @@ footer {
   float: left; }
 
 /* line 124, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-/* line 140, ../../app/assets/sass/_login.scss */
+/* line 149, ../../app/assets/sass/_login.scss */
 .row .row {
   width: auto;
   margin-left: -0.9375em;
@@ -2630,18 +2641,18 @@ footer {
   *zoom: 1; }
 
 /* line 121, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_global.scss */
-/* line 150, ../../app/assets/sass/_login.scss */
+/* line 159, ../../app/assets/sass/_login.scss */
 .row .row:before, .row .row:after {
   content: " ";
   display: table; }
 
 /* line 122, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_global.scss */
-/* line 155, ../../app/assets/sass/_login.scss */
+/* line 164, ../../app/assets/sass/_login.scss */
 .row .row:after {
   clear: both; }
 
 /* line 125, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-/* line 159, ../../app/assets/sass/_login.scss */
+/* line 168, ../../app/assets/sass/_login.scss */
 .row .row.collapse {
   width: auto;
   margin: 0;
@@ -2649,18 +2660,18 @@ footer {
   *zoom: 1; }
 
 /* line 121, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_global.scss */
-/* line 166, ../../app/assets/sass/_login.scss */
+/* line 175, ../../app/assets/sass/_login.scss */
 .row .row.collapse:before, .row .row.collapse:after {
   content: " ";
   display: table; }
 
 /* line 122, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_global.scss */
-/* line 171, ../../app/assets/sass/_login.scss */
+/* line 180, ../../app/assets/sass/_login.scss */
 .row .row.collapse:after {
   clear: both; }
 
 /* line 130, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-/* line 176, ../../app/assets/sass/_login.scss */
+/* line 185, ../../app/assets/sass/_login.scss */
 .column,
 .columns {
   position: relative;
@@ -2671,7 +2682,7 @@ footer {
 
 @media only screen {
   /* line 135, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 187, ../../app/assets/sass/_login.scss */
+  /* line 196, ../../app/assets/sass/_login.scss */
   .column,
   .columns {
     position: relative;
@@ -2680,89 +2691,89 @@ footer {
     float: left; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 196, ../../app/assets/sass/_login.scss */
+  /* line 205, ../../app/assets/sass/_login.scss */
   .small-1 {
     position: relative;
     width: 8.33333%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 202, ../../app/assets/sass/_login.scss */
+  /* line 211, ../../app/assets/sass/_login.scss */
   .small-2 {
     position: relative;
     width: 16.66667%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 208, ../../app/assets/sass/_login.scss */
+  /* line 217, ../../app/assets/sass/_login.scss */
   .small-3 {
     position: relative;
     width: 25%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 214, ../../app/assets/sass/_login.scss */
+  /* line 223, ../../app/assets/sass/_login.scss */
   .small-4 {
     position: relative;
     width: 33.33333%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 220, ../../app/assets/sass/_login.scss */
+  /* line 229, ../../app/assets/sass/_login.scss */
   .small-5 {
     position: relative;
     width: 41.66667%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 226, ../../app/assets/sass/_login.scss */
+  /* line 235, ../../app/assets/sass/_login.scss */
   .small-6 {
     position: relative;
     width: 50%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 232, ../../app/assets/sass/_login.scss */
+  /* line 241, ../../app/assets/sass/_login.scss */
   .small-7 {
     position: relative;
     width: 58.33333%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 238, ../../app/assets/sass/_login.scss */
+  /* line 247, ../../app/assets/sass/_login.scss */
   .small-8 {
     position: relative;
     width: 66.66667%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 244, ../../app/assets/sass/_login.scss */
+  /* line 253, ../../app/assets/sass/_login.scss */
   .small-9 {
     position: relative;
     width: 75%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 250, ../../app/assets/sass/_login.scss */
+  /* line 259, ../../app/assets/sass/_login.scss */
   .small-10 {
     position: relative;
     width: 83.33333%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 256, ../../app/assets/sass/_login.scss */
+  /* line 265, ../../app/assets/sass/_login.scss */
   .small-11 {
     position: relative;
     width: 91.66667%; }
 
   /* line 138, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 262, ../../app/assets/sass/_login.scss */
+  /* line 271, ../../app/assets/sass/_login.scss */
   .small-12 {
     position: relative;
     width: 100%; }
 
   /* line 145, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 268, ../../app/assets/sass/_login.scss */
+  /* line 277, ../../app/assets/sass/_login.scss */
   [class*="column"] + [class*="column"]:last-child {
     float: right; }
 
   /* line 146, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 273, ../../app/assets/sass/_login.scss */
+  /* line 282, ../../app/assets/sass/_login.scss */
   [class*="column"] + [class*="column"].end {
     float: left; }
 
   /* line 149, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 278, ../../app/assets/sass/_login.scss */
+  /* line 287, ../../app/assets/sass/_login.scss */
   .column.small-centered,
   .columns.small-centered {
     position: relative;
@@ -2772,73 +2783,73 @@ footer {
 /* Styles for screens that are atleast 768px; */
 @media only screen and (min-width: 768px) {
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 289, ../../app/assets/sass/_login.scss */
+  /* line 298, ../../app/assets/sass/_login.scss */
   .large-1 {
     position: relative;
     width: 8.33333%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 295, ../../app/assets/sass/_login.scss */
+  /* line 304, ../../app/assets/sass/_login.scss */
   .large-2 {
     position: relative;
     width: 16.66667%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 301, ../../app/assets/sass/_login.scss */
+  /* line 310, ../../app/assets/sass/_login.scss */
   .large-3 {
     position: relative;
     width: 25%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 307, ../../app/assets/sass/_login.scss */
+  /* line 316, ../../app/assets/sass/_login.scss */
   .large-4 {
     position: relative;
     width: 33.33333%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 313, ../../app/assets/sass/_login.scss */
+  /* line 322, ../../app/assets/sass/_login.scss */
   .large-5 {
     position: relative;
     width: 41.66667%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 319, ../../app/assets/sass/_login.scss */
+  /* line 328, ../../app/assets/sass/_login.scss */
   .large-6 {
     position: relative;
     width: 50%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 325, ../../app/assets/sass/_login.scss */
+  /* line 334, ../../app/assets/sass/_login.scss */
   .large-7 {
     position: relative;
     width: 58.33333%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 331, ../../app/assets/sass/_login.scss */
+  /* line 340, ../../app/assets/sass/_login.scss */
   .large-8 {
     position: relative;
     width: 66.66667%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 337, ../../app/assets/sass/_login.scss */
+  /* line 346, ../../app/assets/sass/_login.scss */
   .large-9 {
     position: relative;
     width: 75%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 343, ../../app/assets/sass/_login.scss */
+  /* line 352, ../../app/assets/sass/_login.scss */
   .large-10 {
     position: relative;
     width: 83.33333%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 349, ../../app/assets/sass/_login.scss */
+  /* line 358, ../../app/assets/sass/_login.scss */
   .large-11 {
     position: relative;
     width: 91.66667%; }
 
   /* line 156, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_grid.scss */
-  /* line 355, ../../app/assets/sass/_login.scss */
+  /* line 364, ../../app/assets/sass/_login.scss */
   .large-12 {
     position: relative;
     width: 100%; } }

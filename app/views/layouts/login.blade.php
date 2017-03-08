@@ -35,11 +35,12 @@
 				</div>
 
 			</div>
+
+			<div class="login-footer">
+				&copy; Fipra <?php echo date("Y") ?> | <a href="http://fipra.com" target="_blank">fipra.com</a>
+			</div>
 		</div>
 
-		<div class="login-footer">
-			&copy; Fipra <?php echo date("Y") ?> | <a href="http://fipra.com" target="_blank">fipra.com</a>
-		</div>
 		@include('layouts.partials.scripts')
 
     </body>
