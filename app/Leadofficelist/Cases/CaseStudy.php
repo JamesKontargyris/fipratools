@@ -1,5 +1,10 @@
 <?php namespace Leadofficelist\Cases;
 
+use Leadofficelist\Account_directors\AccountDirector;
+use Leadofficelist\Clients\Client;
+use Leadofficelist\Units\Unit;
+use Leadofficelist\Users\User;
+
 class CaseStudy extends \BaseModel {
 
 	protected $table = 'cases';
@@ -45,9 +50,16 @@ class CaseStudy extends \BaseModel {
 		$this->unit_id             = $case->unit_id;
 		$this->user_id             = $case->user_id;
 		$this->account_director_id = $case->account_director_id;
-		$this->client              = $case->client;
+		$this->client_id              = $case->client_id;
 		$this->sector_id           = serialize( $case->sector_id );
 		$this->product_id          = serialize( $case->product_id );
+
+		// Add text entries in case unit / user / AD etc. is deleted
+		$this->client = Client::find($this->client_id)->name;
+		$this->unit_name = Unit::find($this->unit_id)->name;
+		$this->user_name = User::find($this->user_id)->first_name . ' ' . User::find($this->user_id)->last_name;
+		$this->account_director_name = AccountDirector::find($this->account_director_id)->first_name . ' ' . AccountDirector::find($this->account_director_id)->last_name;
+
 		$this->save();
 
 		return $this;
@@ -67,6 +79,13 @@ class CaseStudy extends \BaseModel {
 		$update_case->client_id             = $case->client_id;
 		$update_case->sector_id           = serialize( $case->sector_id );
 		$update_case->product_id          = serialize( $case->product_id );
+
+		// Add text entries in case unit / user / AD etc. is deleted
+		$update_case->client = Client::find($update_case->client_id)->name;
+		$update_case->unit_name = Unit::find($update_case->unit_id)->name;
+		$update_case->user_name = User::find($update_case->user_id)->first_name . ' ' . User::find($update_case->user_id)->last_name;
+		$update_case->account_director_name = AccountDirector::find($update_case->account_director_id)->first_name . ' ' . AccountDirector::find($update_case->account_director_id)->last_name;
+
 		$update_case->save();
 
 		return $update_case;
