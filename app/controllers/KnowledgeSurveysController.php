@@ -358,59 +358,44 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	protected function getFiltered( $for = 'screen' ) {
-		if($for == 'export') {
+		// Get a replica of the filters so we can play with them, without affecting the original
+		$filters = Session::get( $this->resource_key . '.Filters' );
+		// Get a blank Eloquent model
+		$items = User::whereNotNull('id')->whereDate('date_of_birth', '>', '0000-00-00');
+		// Where functions are split across all columns to ensure filters work correctly
+		$items->where(function($query) use ($filters)
+		{
+			if ( isset( $filters['unit_id'] ) ) {
+				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
+				foreach ( $filters['unit_id'] as $id ) {
+					$query->orWhere( 'unit_id', '=', $id );
+				}
+			}
+		})->where(function($query) use ($filters)
+		{
+			if( isset($filters['knowledge_area_id']) ) {
+				foreach($filters['knowledge_area_id'] as $id)
+				{
+					// Get all users that have this knowledge area assigned to them
+					$validUsers = KnowledgeArea::find($id)->users()->get();
+					foreach($validUsers as $user) {
+						// Is the user's score 4 or 5?
+						if($user->pivot->score >= 4)
+							// If so, include them in the query
+							$query->orWhere('id', '=', $user->id);
+						{
+						}
+					}
+				}
+			}
+		})->rowsSortOrder( $this->rows_sort_order );
+
+		if ( $for == 'export' ) {
 			// Get all results for PDF export
-			// Only difference in 'export' and 'screen' results is no pagination on export version
-			$items = User::where(function($query)
-			{
-				$query->whereDate('date_of_birth', '>', '0000-00-00');
-
-				if(Session::has( $this->resource_key . '.Filters.knowledge_language_id' )) {
-					$query->whereHas('knowledge_languages', function($query)
-					{
-						$query->whereIn('knowledge_languages.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_language_id' ));
-					});
-				}
-
-				if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
-					$query->whereHas('unit', function($query)
-					{
-						$query->whereIn('units.id', '=', Session::get( $this->resource_key . '.Filters.unit_id' ));
-					});
-				}
-
-				if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
-					$query->whereHas('knowledge_areas', function($query)
-					{
-						$query->where('knowledge_areas.id', '=', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
-					});
-				}
-
-			})->rowsSortOrder( $this->rows_sort_order );
-
-			return $items;
+			return $items->get();
 		} else {
-			$items = User::where(function($query)
-			{
-				$query->whereDate('date_of_birth', '>', '0000-00-00');
-
-				if(Session::has( $this->resource_key . '.Filters.unit_id' )) {
-					$query->whereHas('unit', function($query)
-					{
-						$query->whereIn('units.id', Session::get( $this->resource_key . '.Filters.unit_id' ));
-					});
-				}
-
-				if(Session::has( $this->resource_key . '.Filters.knowledge_area_id' )) {
-					$query->whereHas('knowledge_areas', function($query)
-					{
-						$query->whereIn('knowledge_areas.id', Session::get( $this->resource_key . '.Filters.knowledge_area_id' ))->where('score', '>=', 4);
-					});
-				}
-
-			})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-
-			return $items;
+			// Paginate results for screen display
+			return $items->paginate( $this->rows_to_view );
 		}
 
 	}
