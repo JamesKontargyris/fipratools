@@ -135,6 +135,7 @@
 }
 
 #page-header {
+  overflow:visible;
   border-radius:5px;
   margin-bottom:15px;
   & > *:not(a) {
@@ -142,6 +143,30 @@
   }
   h2 {
     padding-right:150px;
+
+    @include breakpoint($l) {
+      padding-right: 20px;
+    }
+
+    .sitewide {
+      display:inline-block;
+      line-height: 0.5;
+
+      .sitewide__title,
+      .sitewide__icon {
+        @include font-size(12);
+        line-height:1;
+        color:#222;
+        font-weight:$font-black;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      @include breakpoint($l) {
+        float: right;
+        padding-top:1px;
+      }
+    }
   }
   padding-bottom:$v-rhythm / 2;
   position:relative;
@@ -163,7 +188,7 @@
   }
   &.section-case {
     h2 { color:darken($violet, 10%); }
-    background-color: desaturate(lighten($violet, 25%), 25%);
+    background-color: desaturate(lighten($violet, 30%), 25%);
     border-bottom: 2px solid desaturate(lighten($violet, 15%), 25%);
   }
   &.section-survey {
@@ -1013,8 +1038,6 @@ ul.pagination {
 }
 
 .select2-container {
-  @include font-size(12);
-  height:100%;
-  display:block;
+  @include font-size(13);
   line-height:1;
 }

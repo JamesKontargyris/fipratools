@@ -24,8 +24,8 @@ Add a Type
 			{{ Form::text('short_name', Input::old('short_name')) }}
 		</div>
         <div class="formfield">
-            {{ Form::label('type_category', 'Reporting Category:') }}
-            {{ Form::select('type_category', $type_categories, Input::old('type_category'), ['class' => 'required']) }}
+            {{ Form::label('type_category', 'Reporting Category:', ['class' => 'required']) }}
+            {{ Form::select('type_category', $type_categories, Input::old('type_category'), ['class' => 'select2', 'style' => 'width:100%;']) }}
         </div>
 	</div>
 </div>

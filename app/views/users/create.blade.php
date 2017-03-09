@@ -39,11 +39,11 @@ Add a User
 	<div class="col-6 last">
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to Unit:') }}
-				{{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'required']) }}
+				{{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 			</div>
 			<div class="formfield">
 				{{ Form::label('role_id', 'User role:') }} <a href="#" class="modal-open" data-modal="roles-modal"><i class="fa fa-info-circle fa-lg"></i></a>
-				{{ Form::select('role_id', $roles, Input::old('role_id'), ['class' => 'required']) }}
+				{{ Form::select('role_id', $roles, Input::old('role_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 			</div>
 	</div>
 </div>

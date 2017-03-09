@@ -23,7 +23,7 @@ a {
 	}
 }
 h1, h2 {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: $font-family;
     line-height:1;
 
 }
@@ -162,6 +162,7 @@ strong {
 #content {
     padding-top:$v-rhythm;
 	@include font-size(14);
+	overflow: visible;
 }
 .red {
 	color:$red !important;

@@ -122,7 +122,8 @@ function current_section_name() {
 		'survey' => 'Knowledge Survey',
 		'admin' => 'Admin'
 	];
-	return $sections[Session::get('section') ? Session::get('section') : 'list'];
+
+	return $sections[Session::get('section') ? Session::get('section') : 'case'];
 }
 
 function nav_item_is_active($uri, $strict = false)

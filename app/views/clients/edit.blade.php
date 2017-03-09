@@ -22,7 +22,7 @@ Editing Client: {{ $client->name }}
 		@if($user->hasRole('Administrator'))
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to unit:', ['class' => 'required']) }}
-				{{ Form::select('unit_id', $units, isset($client->unit_id) ? $client->unit_id : '', ['class' => 'unit-selection']) }}
+				{{ Form::select('unit_id', $units, isset($client->unit_id) ? $client->unit_id : '', ['class' => 'unit-selection select2', 'style' => 'width:100%;']) }}
 			</div>
 		@else
 			{{ Form::hidden('unit_id', isset($client->unit_id) ? $client->unit_id : '') }}
@@ -36,27 +36,24 @@ Editing Client: {{ $client->name }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
-			{{ Form::select('account_director_id', $account_directors, isset($client->account_director_id) ? $client->account_director_id : '') }}
+			{{ Form::select('account_director_id', $account_directors, isset($client->account_director_id) ? $client->account_director_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}
-			{{ Form::select('sector_id', $sectors, isset($client->sector_id) ? $client->sector_id : '') }}
+			{{ Form::select('sector_id', $sectors, isset($client->sector_id) ? $client->sector_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('type_id', 'Client type:', ['class' => 'required']) }}
-			{{ Form::select('type_id', $types, isset($client->type_id) ? $client->type_id : '') }}
+			{{ Form::select('type_id', $types, isset($client->type_id) ? $client->type_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('service_id', 'Client service:', ['class' => 'required']) }}
-			{{ Form::select('service_id', $services, isset($client->service_id) ? $client->service_id : '') }}
+			{{ Form::select('service_id', $services, isset($client->service_id) ? $client->service_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 	</div>
 	<div class="col-4 last">
-		<div class="formfield">
-			{{--{{ Form::label('status', 'Current status:', ['class' => 'required']) }}--}}
-			{{--{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], isset($client->status) ? $client->status : '') }}--}}
-            {{ Form::hidden('status', $client->status) }}
-		</div>
+		{{ Form::hidden('status', $client->status) }}
+
 		<div class="formfield">
 			{{ Form::label('comments', 'Comments:') }}
 			{{ Form::textarea('comments', isset($client->comments) ? $client->comments : '') }}

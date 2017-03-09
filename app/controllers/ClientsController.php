@@ -22,6 +22,7 @@ class ClientsController extends \BaseController
 	use CommanderTrait;
 
 	public $section = 'list';
+	public $sitewide = 1;
 	protected $resource_key = 'clients';
 	protected $resource_permission = 'manage_clients';
 	private $addEditClientForm;

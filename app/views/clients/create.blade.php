@@ -22,7 +22,7 @@ Add a Client
 		@if($user->hasRole('Administrator'))
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to unit:', ['class' => 'required']) }}
-				{{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'unit-selection']) }}
+				{{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'unit-selection select2', 'style' => 'width:100%']) }}
 			</div>
 		@else
 			{{ Form::hidden('unit_id', $user->unit()->pluck('id')) }}
@@ -32,29 +32,29 @@ Add a Client
 
 		<div class="formfield show-uk">
 			{{ Form::label('pr_client', 'Mainly PR client?', ['class' => 'required']) }}
-			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], Input::old('pr_client'), ['disabled' => 'disabled', 'class' => 'pr-client-selection']) }}
+			{{ Form::select('pr_client', [0 => 'No', 1 => 'Yes'], Input::old('pr_client'), ['disabled' => 'disabled', 'class' => 'pr-client-selection select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
-			{{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
+			{{ Form::select('account_director_id', $account_directors, Input::old('account_director_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('sector_id', 'Client sector:', ['class' => 'required']) }}
-			{{ Form::select('sector_id', $sectors, Input::old('sector_id')) }}
+			{{ Form::select('sector_id', $sectors, Input::old('sector_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('type_id', 'Client type:', ['class' => 'required']) }}
-			{{ Form::select('type_id', $types, Input::old('type_id')) }}
+			{{ Form::select('type_id', $types, Input::old('type_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('service_id', 'Client service:', ['class' => 'required']) }}
-			{{ Form::select('service_id', $services, Input::old('service_id')) }}
+			{{ Form::select('service_id', $services, Input::old('service_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 	</div>
 	<div class="col-4 last">
 		<div class="formfield">
 			{{ Form::label('status', 'Current status:', ['class' => 'required']) }}
-			{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], Input::has('status') ? Input::old('status') : 1) }}
+			{{ Form::select('status', ['' => 'Please select...', 0 => 'Dormant', 1 => 'Active' ], Input::has('status') ? Input::old('status') : 1, ['class' => 'select2', 'style' => 'width:100%;']) }}
 		</div>
 		<div class="formfield">
 			{{ Form::label('comments', 'Comments:') }}

@@ -29,11 +29,11 @@ Editing: {{ $edit_user->getFullName() }}
 			</div>
 			<div class="formfield">
 				{{ Form::label('unit_id', 'Link to Unit:') }}
-				{{ Form::select('unit_id', $units, isset($edit_user->unit_id) ? $edit_user->unit_id : '', ['class' => 'required']) }}
+				{{ Form::select('unit_id', $units, isset($edit_user->unit_id) ? $edit_user->unit_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
 			</div>
 			<div class="formfield">
 				{{ Form::label('role_id', 'User role:') }} <a href="#" class="modal-open" data-modal="roles-modal"><i class="fa fa-info-circle fa-lg"></i></a>
-				{{ Form::select('role_id', $roles, $edit_user->roles()->pluck('role_id'), ['class' => 'required']) }}
+				{{ Form::select('role_id', $roles, $edit_user->roles()->pluck('role_id'), ['class' => 'select2', 'style' => 'width:100%;']) }}
 			</div>
 	</div>
 	<div class="col-4 last">

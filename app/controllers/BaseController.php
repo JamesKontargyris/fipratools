@@ -48,13 +48,17 @@ class BaseController extends Controller {
 
 	function __construct() {
 //    	Check to see if a new section has been visited from the super menu
-//	    via a 'section' variable in the controller.
+//	    via 'section' variable in the controller and/or a 'global_section' variable in the query string.
 //	    If so, update the session variable.
-//	    If no section is set, default to list section.
-		if ( ! isset( $this->section ) && ! Session::has( 'section' ) ) {
-			Session::put( 'section', 'list' );
-		} elseif ( isset( $this->section ) ) {
+//	    If no section is set, but a global_section value already exists, use that.
+//      Otherwise, default to list section.
+
+		if(Input::has('global')) Session::put('global_section', Input::get('global'));
+
+		if ( isset( $this->section ) ) {
 			Session::put( 'section', $this->section );
+		} elseif ( ! isset( $this->section ) && Session::has('global_section') ) {
+			Session::put( 'section', Session::get('global_section') );
 		} else {
 			Session::put( 'section', 'list' );
 		}
@@ -65,6 +69,8 @@ class BaseController extends Controller {
 			View::share( 'user_full_name', $this->user->getFullName() );
 			View::share( 'user_unit', $this->user->unit()->pluck( 'name' ) );
 			View::share( 'user_role', $this->user->roles()->pluck( 'name' ) );
+			// Is this resource site-wide, i.e. used across the site rather than just in the current section?
+			View::share( 'sitewide', isset($this->sitewide) ? $this->sitewide : 0 );
 		}
 
 		$this->setCurrentPageNumber();
@@ -1026,12 +1032,22 @@ class BaseController extends Controller {
 			'client_archives',
 			'users',
 			'units',
+			'unit_groups',
+			'network_types',
 			'sectors',
 			'sector_categories',
 			'types',
+			'type_categories',
+			'products',
 			'services',
+			'locations',
 			'account_directors',
-			'eventlogs'
+			'knowledge_surveys',
+			'knowledge_area_groups',
+			'knowledge_areas',
+			'knowledge_languages',
+			'eventlogs',
+			'widgets',
 		];
 
 		if ( $for_other_resources ) {

@@ -10,7 +10,7 @@ class AccountDirectorsController extends \BaseController
 {
 
 	use CommanderTrait;
-	public $section = 'list';
+	public $sitewide = 1; // This resource's data applies across sections
 	protected $resource_key = 'account_directors';
 	protected $resource_permission = 'manage_users';
 	private $addEditAccountDirectorForm;

@@ -21,7 +21,7 @@ Editing: {{ $unit->name }}
 		</div>
         <div class="formfield">
             {{ Form::label('network_type', 'Type:', ['class' => 'required']) }}
-            {{ Form::select('network_type', $network_types, isset($unit->network_type_id) ? $unit->network_type_id : '', ['class' => 'required']) }}
+            {{ Form::select('network_type', $network_types, isset($unit->network_type_id) ? $unit->network_type_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
         </div>
 		<div class="formfield">
 			{{ Form::label('address', 'Address:') }}
@@ -54,7 +54,7 @@ Editing: {{ $unit->name }}
 		</div>
         <div class="formfield">
             {{ Form::label('unit_group', 'Reporting Group:', ['class' => 'required']) }}
-            {{ Form::select('unit_group', $unit_groups, isset($unit->unit_group_id) ? $unit->unit_group_id : '', ['class' => 'required']) }}
+            {{ Form::select('unit_group', $unit_groups, isset($unit->unit_group_id) ? $unit->unit_group_id : '', ['class' => 'select2', 'style' => 'width:100%;']) }}
         </div>
 	</div>
 	<div class="col-4 last">

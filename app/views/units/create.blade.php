@@ -21,7 +21,7 @@ Add a Network Member
 		</div>
         <div class="formfield">
             {{ Form::label('network_type', 'Type:', ['class' => 'required']) }}
-            {{ Form::select('network_type', $network_types, Input::old('network_type'), ['class' => 'required']) }}
+            {{ Form::select('network_type', $network_types, Input::old('network_type'), ['class' => 'select2', 'style' => 'width:100%;']) }}
         </div>
 		<div class="formfield">
 			{{ Form::label('address', 'Address:') }}
@@ -54,7 +54,7 @@ Add a Network Member
 		</div>
         <div class="formfield">
             {{ Form::label('unit_group', 'Reporting Group:') }}
-            {{ Form::select('unit_group', $unit_groups, Input::old('unit_group'), ['class' => 'required']) }}
+            {{ Form::select('unit_group', $unit_groups, Input::old('unit_group'), ['class' => 'select2', 'style' => 'width:100%;']) }}
         </div>
 	</div>
 	<div class="col-4 last">
