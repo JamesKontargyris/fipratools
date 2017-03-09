@@ -4,6 +4,10 @@
   display:none;
 }
 
+.no-padding {
+  padding:0;
+}
+
 .button-group {
   margin-bottom:$v-rhythm;
 }
@@ -47,10 +51,12 @@
 
 .alert {
   position:relative;
-  margin-bottom:$v-rhythm;
   padding:($v-rhythm / 2) 15px;
   border-radius:5px;
   @include font-size(16);
+  &.with-margin-bottom {
+    margin-bottom:$v-rhythm;
+  }
   ul li {
     padding:($v-rhythm / 4) 0;
   }
@@ -100,6 +106,17 @@
   border:1px solid lighten($blue, 50%);
   &.alert-overlay {
     background-color:rgba(lighten($blue, 68%), 0.8);
+    border:0;
+  }
+  &:before {
+    content: "\f05a";
+  }
+}
+.alert-info-alt {
+  background-color:lighten($light-grey, 5%);
+  border:1px solid $light-grey;
+  &.alert-overlay {
+    background-color:rgba(lighten($light-grey, 5%), 0.8);
     border:0;
   }
   &:before {
@@ -183,8 +200,8 @@
 
   &.section-list {
     h2 { color:darken($turquoise, 10%); }
-    background-color: desaturate(lighten($turquoise, 45%), 25%);
-    border-bottom: 2px solid desaturate(lighten($turquoise, 25%), 25%);
+    background-color: desaturate(lighten($turquoise, 47%), 25%);
+    border-bottom: 2px solid desaturate(lighten($turquoise, 28%), 25%);
   }
   &.section-case {
     h2 { color:darken($violet, 10%); }
@@ -499,6 +516,7 @@
           .full-width { width:100%; text-align: left; }
         }
         &.client-count,
+        &.archive-count,
         &.client-links,
         &.knowledge-survey-link {
           padding-right:10px;
@@ -791,12 +809,87 @@ ul.pagination {
 
 .border-box {
   border:1px solid $light-grey;
-  padding:$v-rhythm 15px;
   margin-bottom: $v-rhythm;
   background-color: white;
   border-radius:5px;
   &.fill {
     background-color:lighten($light-grey, 10%);
+  }
+
+  .border-box__header {
+    padding:20px 15px;
+    background:linear-gradient(top, white 0%, lighten($light-grey, 6%) 40%);
+    @include font-size(16);
+    font-weight: $font-bold;
+    border-bottom:1px solid $light-grey;
+
+    @include breakpoint($m) {
+      @include font-size(21);
+    }
+  }
+
+  &.section-list {
+    .border-box__title,
+    .border-box__sub-title {
+      color:$turquoise;
+    }
+  }
+
+  &.section-case {
+    .border-box__title,
+    .border-box__sub-title {
+      color:darken($violet, 10%);
+    }
+  }
+
+  &.section-survey {
+    .border-box__title,
+    .border-box__sub-title {
+      color:$green;
+    }
+  }
+
+  &.section-admin {
+    .border-box__title,
+    .border-box__sub-title {
+      color:darken($grey, 10%);
+    }
+  }
+
+  .border-box__title {
+    @include font-size(18);
+    font-weight: $font-black;
+    margin: 0 0 9px 0;
+
+    &.more-margin-bottom {
+      margin-bottom:18px;
+    }
+  }
+
+  .border-box__sub-title {
+    @include font-size(15);
+    font-weight: $font-black;
+    margin: 0 0 3px 0;
+
+    &.more-margin-bottom {
+      margin-bottom:12px;
+    }
+  }
+}
+
+.border-box__content {
+  padding:15px;
+
+  &.no-pad {
+    padding:0;
+  }
+
+  &.border-box__content--text-medium {
+    @include font-size(16);
+  }
+
+  &.border-box__content--text-large {
+    @include font-size(18);
   }
 }
 
@@ -832,7 +925,6 @@ ul.pagination {
 .page-menu-nav ul li {
   margin-bottom:$v-rhythm * 0.25;
 }
-
 
 .status--pending { color: orange; }
 .status--active { color: green; }
@@ -931,10 +1023,6 @@ ul.pagination {
 }
 
 .expertise-list__container {
-  border:1px solid #efefef;
-  background-color: lighten(#efefef, 3%);
-  padding:10px;
-  margin-bottom:20px;
 }
 .expertise-list {
   width:100%;
@@ -1040,4 +1128,17 @@ ul.pagination {
 .select2-container {
   @include font-size(13);
   line-height:1;
+}
+
+.show-more__button {
+  display:none;
+  &.active {
+    display:block;
+    padding:5px;
+    margin-top:5px;
+  }
+
+}
+.show-more__row--hidden {
+  display:none;
 }

@@ -216,6 +216,60 @@
         return false;
     });
 
+    // Show more button functionality
+    // Reveals more rows in an index-table
+    // First, get all the group names set in data-show-more-group attributes
+    var items = {};
+    $('[data-show-more-group]').each(function() {
+        items[$(this).attr('data-show-more-group')] = true;
+    });
+    var result = new Array();
+    for(var i in items)
+    {
+        result.push(i);
+    }
+
+    // Then iterate through them to set up each group of rows
+    $.each(result, function(key, group)
+    {
+        console.log(group);
+        var showMoreRows = $('.show-more__row[data-show-more-group="' + group + '"]'),
+            showMoreButton = $('.show-more__button[data-target-group="' + group + '"]');
+        if(showMoreRows.length > 10) {
+            // Display the show more button as there are more than 20 rows in the group
+            showMoreButton.addClass('active');
+            showMoreRows.addClass('show-more__row--hidden');
+            var hiddenRowsToShow = $('.show-more__row--hidden[data-show-more-group="' + group + '"]:lt(10)');
+            hiddenRowsToShow.each(function()
+            {
+                $(this).toggleClass('show-more__row--hidden', 'show-more__row');
+            });
+        }
+    });
+
+
+    $('.show-more__button').on('click', function(e)
+    {
+        var targetGroup = $(this).data('target-group'),
+            hiddenRowsToShow = $('.show-more__row--hidden[data-show-more-group="' + targetGroup + '"]:lt(10)'),
+            showMoreButton = $(this);
+        hiddenRowsToShow.each(function()
+        {
+            $(this).fadeIn();
+            $(this).toggleClass('show-more__row--hidden', 'show-more__row', function()
+            {
+                var remainingHiddenRows = $('.show-more__row--hidden[data-show-more-group="' + targetGroup + '"]');
+                if( remainingHiddenRows.length == 0 )
+                {
+                    showMoreButton.hide();
+                }
+            });
+        });
+
+        return false;
+    })
+
+
     function getClientsForUnit($element)
     {
         var $clients_select = $element.closest('.formfield').next().find('.clients');

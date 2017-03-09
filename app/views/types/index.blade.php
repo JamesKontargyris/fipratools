@@ -45,7 +45,7 @@
 					<tbody>
 						@foreach($items as $type)
 							<tr>
-								<td><strong><a href="{{ route('types.show', ['id' => $type->id]) }}">{{ $type->name }}</a></strong></td>
+								<td><strong>{{ $type->name }}</strong></td>
 								<td>{{ $type->short_name }}</td>
                                 <td class="hide-m">{{ $type->category_id ? $type->type_category()->first()->name : '-' }}</td>
 								<td class="content-center hide-s">{{ number_format($type->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>

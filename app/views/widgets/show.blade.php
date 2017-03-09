@@ -5,6 +5,7 @@
 @stop
 
 @section('page-nav')
+    <li><a href="{{ URL::previous() }}" class="primary"><i class="fa fa-caret-left"></i> Go back</a></li>
     <li><a href="/widgets/{{ $widget->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this widget</a></li>
 @stop
 
@@ -18,7 +19,4 @@
             {{ $widget->content }}
         </div>
     </div>
-
-    @include('layouts.partials.back_button')
-
 @stop

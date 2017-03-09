@@ -15,7 +15,7 @@
 					<div class="row no-margin">
 						<div class="col-12">
 							<div id="page-header" class="section-{{ section_is() }}">
-									<h2>@yield('page-header')</h2>
+								<h2>@if($sitewide && $user->hasRole('Administrator')) <div class="sitewide tooltip-left hide-print" data-tooltip="This data is used across sections"><i class="fa fa-arrows-alt sitewide__icon"></i> <span class="sitewide__title hide-s hide-m">Sitewide</span></div>@endif @yield('page-header')</h2>
 								<nav class="page-menu-nav">
 									<ul class="small-font">
                                         @yield('page-nav')

@@ -12,34 +12,32 @@
         <section class="content-container">
 
 			<section id="content">
-				<div class="row no-margin">
-					<div class="col-12">
-						<div id="page-header" class="section-{{ section_is() }}">
-							<h2>@if($sitewide && $user->hasRole('Administrator')) <div class="sitewide tooltip-left" data-tooltip="This data is used across sections"><i class="fa fa-arrows-alt sitewide__icon"></i> <span class="sitewide__title hide-s hide-m">Sitewide</span></div>@endif @yield('page-header')</h2>
-							<nav class="page-menu-nav">
+				<div class="no-margin">
+					<div id="page-header" class="section-{{ section_is() }}">
+						<h2>@if($sitewide && $user->hasRole('Administrator')) <div class="sitewide tooltip-left hide-print" data-tooltip="This data is used across sections"><i class="fa fa-arrows-alt sitewide__icon"></i> <span class="sitewide__title hide-s hide-m">Sitewide</span></div>@endif @yield('page-header')</h2>
+						<nav class="page-menu-nav">
+							<ul class="small-font">
+								@yield('page-nav')
+							</ul>
+							@if(! is_request('client_links') && ! is_request('client_archives') && ! is_request('widgets'))
 								<ul class="small-font">
-									@yield('page-nav')
+									@if(isset($items) && ! is_request('about') && ! is_request('survey'))
+										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>
+										<!-- if this is the main list and a filter is in place, substitute an export filtered button for the the export visible button -->
+										<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Visible</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=excel_all" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: All</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=excel_selection&page={{ $items->getCurrentPage() }}" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: Visible</a></li>
+
+										@yield('export-nav')
+
+										<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
+									@endif
 								</ul>
-								@if(! is_request('client_links') && ! is_request('client_archives') && ! is_request('widgets'))
-									<ul class="small-font">
-										@if(isset($items) && ! is_request('about') && ! is_request('survey'))
-											<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>
-											<!-- if this is the main list and a filter is in place, substitute an export filtered button for the the export visible button -->
-											<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Visible</a></li>
-											<li><a href="/{{ $items->key }}/export?filetype=excel_all" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: All</a></li>
-											<li><a href="/{{ $items->key }}/export?filetype=excel_selection&page={{ $items->getCurrentPage() }}" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: Visible</a></li>
-
-											@yield('export-nav')
-
-											<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
-										@endif
-									</ul>
-								@endif
-							</nav>
-							<a href="#" class="page-menu-icon-s">
-								Actions <i class="fa fa-lg fa-caret-down"></i>
-							</a>
-						</div>
+							@endif
+						</nav>
+						<a href="#" class="page-menu-icon-s">
+							Actions <i class="fa fa-lg fa-caret-down"></i>
+						</a>
 					</div>
 				</div>
 
@@ -51,7 +49,7 @@
 
         <div class="container">
             <footer>
-                <p>&copy; Fipra <?php echo date("Y"); ?>. All Rights Reserved.<br><a href="http://fipra.com/other~3/code_of_conduct~7/" target="_blank">Code of conduct</a></p>
+                <p class="no-padding">&copy; Fipra <?php echo date("Y"); ?>. All Rights Reserved.<br><a href="http://fipra.com/other~3/code_of_conduct~7/" target="_blank">Code of conduct</a></p>
             </footer>
         </div>
 

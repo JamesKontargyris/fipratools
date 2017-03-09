@@ -44,7 +44,7 @@
 					<tbody>
 						@foreach($items as $sector)
 							<tr>
-								<td><strong><a href="{{ route('sectors.show', ['id' => $sector->id]) }}">{{ $sector->name }}</a></strong></td>
+								<td><strong>{{ $sector->name }}</strong></td>
 								<td class="hide-s">{{ $sector->category()->pluck('name') }}</td>
 								<td class="content-center hide-s">{{ number_format($sector->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($sector->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>

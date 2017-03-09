@@ -45,13 +45,13 @@
 						@foreach($items as $list_user)
 							<tr>
 								<td>
-									<strong><a href="{{ route('users.show', ['id' => $list_user->id]) }}">
+									<strong>
 										@if(Session::get ('users.rowsNameOrder') == 'last_first')
 											{{ $list_user->getFullName(true) }}
 										@else
 											{{ $list_user->getFullName(false) }}
 										@endif
-									</a></strong>
+									</strong>
 								</td>
 								<td class="actions knowledge-survey-link">
 									{{--Knowledge survey link--}}

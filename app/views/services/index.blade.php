@@ -42,7 +42,7 @@
 					<tbody>
 						@foreach($items as $service)
 							<tr>
-								<td><strong><a href="{{ route('services.show', ['id' => $service->id]) }}">{{ $service->name }}</a></strong></td>
+								<td><strong>{{ $service->name }}</strong></td>
 								<td class="content-center hide-s">{{ number_format($service->clients()->where('status', '=', 1)->count(),0,'.',',') }}</td>
 								<td class="content-center hide-s">{{ number_format($service->clients()->where('status', '=', 0)->count(),0,'.',',') }}</td>
 								<td class="actions content-right hide-print">

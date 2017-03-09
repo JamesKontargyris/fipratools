@@ -1,5 +1,5 @@
-<div class="row">
-	<div class="col-12 alert alert-info">
+<div class="no-margin">
+	<div class="alert alert-info-alt">
 		No records found.
 	</div>
 	@if(is_search())

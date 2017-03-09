@@ -32,6 +32,11 @@ class Unit extends \BaseModel
         return $this->belongsTo('Leadofficelist\Network_types\Network_type');
     }
 
+	public function case_studies()
+	{
+		return $this->belongsTo('Leadofficelist\Cases\CaseStudy', 'id', 'unit_id');
+	}
+
     public function add($unit)
     {
         $this->name = $unit->name;

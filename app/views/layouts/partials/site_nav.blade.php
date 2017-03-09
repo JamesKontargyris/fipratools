@@ -24,7 +24,7 @@
 		</li>
 	@endif
 	@if($user->can('manage_cases') && section_is() == 'case')
-		<li class="{{ nav_item_is_active('cases') ? 'active' : '' }}">
+		<li class="{{ nav_item_is_active('cases', true) ? 'active' : '' }}">
 			<a href="{{ route('cases.index') }}" class="{{ nav_item_is_active('cases') ? 'active' : '' }} has-extra-link">
 				@if($user->hasRole('Administrator') || Request::is('cases/*'))
 					Manage Case Studies
@@ -69,7 +69,7 @@
 
 	@if($user->can('manage_knowledge') && section_is() == 'survey')
 		<li class="{{ nav_item_is_active(['survey', 'survey/search'], true) ? 'active' : '' }}">
-			<a href="{{ route('survey.index') }}"><strong>Overview</strong></a>
+			<a href="{{ route('survey.index') }}"><strong><i class="fa fa-th-list"></i> All Knowledge Profiles</strong></a>
 		</li>
 	@endif
 	@if($user->can('view_knowledge') && section_is() == 'survey')

@@ -60,20 +60,12 @@
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
 								<td class="archive-count">
 									@if($client->archives()->count())
-										@if($user->hasRole('Administrator'))
-											<a href="{{ route('client_archives.index', ['client_id' => $client->id]) }}"><strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong></a>
-										@else
-											<strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong>
-										@endif
+										<strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong>
 									@endif
 								</td>
 								<td class="client-links">
 									@if($client->links()->count())
-										@if($user->hasRole('Administrator'))
-											<a href="{{ route('client_links.index', ['client_id' => $client->id]) }}"><strong><i class="fa fa-link"></i> {{ $client->getLinkedUnitsList($client->id) }}</strong></a>
-										@else
-											<strong><i class="fa fa-link"></i> {{ $client->getLinkedUnitsList($client->id) }}</strong>
-										@endif
+										<strong><i class="fa fa-link"></i> {{ $client->getLinkedUnitsList($client->id) }}</strong>
 									@endif
 								</td>
 

@@ -20,7 +20,7 @@
   @include horizontal-list();
   @include font-size(16);
   margin-top:20px;
-  margin-left:20px;
+  margin-left:10px;
 
   &:not(:last-of-type) {
     //margin-right:10px;

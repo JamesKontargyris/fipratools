@@ -36,7 +36,7 @@
                         <tbody>
                         @foreach($items as $unit_group)
                             <tr>
-                                <td><strong><a href="/unit_groups/{{ $unit_group->id }}">{{ $unit_group->name }}</a></strong></td>
+                                <td><strong>{{ $unit_group->name }}</strong></td>
                                 <td><strong>{{ $unit_group->short_name }}</strong></td>
                                 <td class="actions content-right hide-print">
                                     {{ Form::open(['route' => array('unit_groups.edit', $unit_group->id), 'method' => 'get']) }}
