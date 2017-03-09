@@ -12,7 +12,7 @@
         <section class="content-container">
 
 			<section id="content">
-				<div class="row">
+				<div class="row no-margin">
 					<div class="col-12">
 						<div id="page-header" class="section-{{ section_is() }}">
 							<h2>@yield('page-header')</h2>

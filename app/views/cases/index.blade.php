@@ -31,46 +31,62 @@
                 <div class="col-12">
                     <table width="100%" class="index-table">
                         <thead>
-                        <tr>
-                            <td width="5%">Year</td>
-                            <td width="10%" class="hide-m">Sector</td>
-                            <td width="30%" class="hide-m">Product(s)</td>
-                            @if($user->hasRole('Administrator'))
-                                <td width="10%" class="hide-s">Unit</td>
-                            @endif
-                            <td width="10%" class="hide-m">AD</td>
-                            <td width="15%">Client where disclosable</td>
-                            <td width="25%">Background</td>
-                            <td width="10%" class="hide-s">Status</td>
+                            <tr>
+                                <td width="5%">Year</td>
+                                <td width="10%">Client where disclosable</td>
+                                <td width="25%">Background</td>
+                                @if($user->hasRole('Administrator'))
+                                    <td width="10%" class="hide-s">Unit</td>
+                                @endif
+                                <td colspan="2" width="25%" class="hide-m">Sector(s) and Expertise Area(s)</td>
+                                <td width="20%" class="hide-m">Product(s)</td>
+                                <td width="10%" class="hide-m">AD at the time</td>
+                                <td width="10%" class="hide-s">Status</td>
 
-                            @if($user->hasRole('Administrator'))
-                                <td colspan="3" class="hide-print">Actions</td>
-                            @else
-                                <td class="hide-print">Actions</td>
-                            @endif
-
-                        </tr>
+                                @if($user->hasRole('Administrator'))
+                                    <td colspan="3" class="hide-print">Actions</td>
+                                @else
+                                    <td class="hide-print">Actions</td>
+                                @endif
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach($items as $case)
                             <tr>
                                 <td>{{ $case->year }}</td>
-
-                                <td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)); }}</td>
-                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
-
+                                <td>{{ ! $case->client_id ? (! $case->client ? 'Anonymous' : $case->client) : '<a
+                                            href="' . route('clients.show', $case->client()->first()->id) . '"><strong>' . $case->client()->first()->name . '</strong></a>' }}</td>
+                                <td>{{ $case->name }} {{--Background--}} </td>
                                 @if($user->hasRole('Administrator'))
                                     <td class="hide-s"><strong><a href="/units/{{ $case->unit()->pluck('id') }}">{{ $case->unit()->pluck('name') }}</a></strong></td>
                                 @endif
+                                <td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)); }}</td>
+                                <td class="hide-m expertise-field">
+	                                <?php
+	                                // Get the expertise areas (called Sector Areas here) that are associated with each sector
+	                                $sectors = unserialize($case->sector_id);
+	                                $expertiseAreas = [];
+	                                foreach($sectors as $sector) {
+		                                if($sectorObj = \Leadofficelist\Sectors\Sector::find($sector)) {
+			                                $expertiseAreas[] = \Leadofficelist\Sector_categories\Sector_category::find($sectorObj->category_id)['name'];
+		                                }
+	                                }
+	                                ?>
 
+                                    @if($expertiseAreas)
+                                        <div class="expertise-field__text-container">
+                                            {{ implode(array_unique($expertiseAreas), ' &bull; ') }}
+                                            <i class="fa fa-caret-left fa-lg expertise-field__pointer"></i>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
                                 <td class="hide-m">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
-                                <td>{{ ! $case->client ? 'Anonymous' : $case->client }}</td>
-                                <td>{{ $case->name }} {{--Background--}} </td>
                                 <td width="10%" class="hide-s">{{ ! $case->status ? '<span class="status--pending">Pending</span>' : '<span class="status--active">Active</span>'}}</td>
 
                                 @if($user->hasRole('Administrator'))
                                     {{--Case approval/disapproval button based on status of case--}}
-                                @if( ! $case->status)
+                                    @if( ! $case->status)
                                         <td class="actions hide-print content-center">
                                             {{ Form::open(['url' => array('cases/status_approve'), 'method' => 'get']) }}
                                             {{ Form::hidden('case_id', $case->id) }}
@@ -125,39 +141,57 @@
                 <div class="col-12">
                     <table width="100%" class="index-table">
                         <thead>
-                        <tr>
-                            <td width="5%">Year</td>
-                            <td width="10%" class="hide-m">Sector</td>
-                            <td width="30%" class="hide-m">Product(s)</td>
-                            @if($user->hasRole('Administrator'))
-                                <td width="10%" class="hide-s">Unit</td>
-                            @endif
-                            <td width="10%" class="hide-m">AD</td>
-                            <td width="15%">Client where disclosable</td>
-                            <td width="25%">Background</td>
-                            <td width="10%" class="hide-s">Status</td>
+                            <tr>
+                                <td width="5%">Year</td>
+                                <td width="10%">Client where disclosable</td>
+                                <td width="25%">Background</td>
+                                @if($user->hasRole('Administrator'))
+                                    <td width="10%" class="hide-s">Unit</td>
+                                @endif
+                                <td colspan="2" width="25%" class="hide-m">Sector(s) and Expertise Area(s)</td>
+                                <td width="20%" class="hide-m">Product(s)</td>
+                                <td width="10%" class="hide-m">AD at the time</td>
+                                <td width="10%" class="hide-s">Status</td>
 
-                            @if($user->hasRole('Administrator'))
-                                <td colspan="3" class="hide-print">Actions</td>
-                            @endif
-
-                        </tr>
+                                @if($user->hasRole('Administrator'))
+                                    <td colspan="3" class="hide-print">Actions</td>
+                                @else
+                                    <td class="hide-print">Actions</td>
+                                @endif
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach($items_pending as $case)
                             <tr>
                                 <td>{{ $case->year }}</td>
-
-                                <td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)) }}</td>
-                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)) }}</td>
-
+                                <td>{{ ! $case->client_id ? (! $case->client ? 'Anonymous' : $case->client) : '<a
+                                            href="' . route('clients.show', $case->client()->first()->id) . '"><strong>' . $case->client()->first()->name . '</strong></a>' }}</td>
+                                <td>{{ $case->name }} {{--Background--}} </td>
                                 @if($user->hasRole('Administrator'))
                                     <td class="hide-s"><strong><a href="/units/{{ $case->unit()->pluck('id') }}">{{ $case->unit()->pluck('name') }}</a></strong></td>
                                 @endif
+                                <td class="hide-m">{{ get_pretty_sector_names(unserialize($case->sector_id)); }}</td>
+                                <td class="hide-m expertise-field">
+		                            <?php
+		                            // Get the expertise areas (called Sector Areas here) that are associated with each sector
+		                            $sectors = unserialize($case->sector_id);
+		                            $expertiseAreas = [];
+		                            foreach($sectors as $sector) {
+			                            if($sectorObj = \Leadofficelist\Sectors\Sector::find($sector)) {
+				                            $expertiseAreas[] = \Leadofficelist\Sector_categories\Sector_category::find($sectorObj->category_id)['name'];
+			                            }
+		                            }
+		                            ?>
 
+                                    @if($expertiseAreas)
+                                        <div class="expertise-field__text-container">
+                                            {{ implode(array_unique($expertiseAreas), ' &bull; ') }}
+                                            <i class="fa fa-caret-left fa-lg expertise-field__pointer"></i>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="hide-m">{{ get_pretty_product_names(unserialize($case->product_id)); }}</td>
                                 <td class="hide-m">{{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</td>
-                                <td>{{ ! $case->client ? 'Anonymous' : $case->client }}</td>
-                                <td>{{ $case->name }} {{--Background--}} </td>
                                 <td width="10%" class="hide-s">{{ ! $case->status ? '<span class="status--pending">Pending</span>' : '<span class="status--active">Active</span>'}}</td>
 
                                 @if($user->hasRole('Administrator'))
@@ -177,20 +211,20 @@
                                             {{ Form::close() }}
                                         </td>
                                     @endif
+                                @endif
 
+                                <td class="actions hide-print content-center">
+                                    {{ Form::open(['route' => array('cases.edit', $case->id), 'method' => 'get']) }}
+                                    <button type="submit" class="primary" title="Edit this case study"><i class="fa fa-pencil"></i></button>
+                                    {{ Form::close() }}
+                                </td>
+
+                                @if($user->hasRole('Administrator'))
                                     <td class="actions hide-print content-center">
-                                        {{ Form::open(['route' => array('cases.edit', $case->id), 'method' => 'get']) }}
-                                        <button type="submit" class="primary" title="Edit this case study"><i class="fa fa-pencil"></i></button>
+                                        {{ Form::open(['route' => array('cases.destroy', $case->id), 'method' => 'delete']) }}
+                                        <button type="submit" class="red-but delete-row" data-resource-type="case study" title="Delete this case study"><i class="fa fa-times"></i></button>
                                         {{ Form::close() }}
                                     </td>
-
-                                    @if($user->hasRole('Administrator'))
-                                        <td class="actions hide-print content-center">
-                                            {{ Form::open(['route' => array('cases.destroy', $case->id), 'method' => 'delete']) }}
-                                            <button type="submit" class="red-but delete-row" data-resource-type="case study" title="Delete this case study"><i class="fa fa-times"></i></button>
-                                            {{ Form::close() }}
-                                        </td>
-                                    @endif
                                 @endif
                             </tr>
                         @endforeach

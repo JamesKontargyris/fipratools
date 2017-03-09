@@ -31,6 +31,10 @@ class CaseStudy extends \BaseModel {
 		return $this->hasOne( '\Leadofficelist\Account_directors\AccountDirector', 'id', 'account_director_id' );
 	}
 
+	public function client() {
+		return $this->belongsTo( '\Leadofficelist\Clients\Client', 'client_id', 'id' );
+	}
+
 	public function add( $case ) {
 		$this->status              = $case->status;
 		$this->name                = $case->name;
@@ -60,7 +64,7 @@ class CaseStudy extends \BaseModel {
 		$update_case->unit_id             = $case->unit_id;
 		$update_case->user_id             = $case->user_id;
 		$update_case->account_director_id = $case->account_director_id;
-		$update_case->client              = $case->client;
+		$update_case->client_id             = $case->client_id;
 		$update_case->sector_id           = serialize( $case->sector_id );
 		$update_case->product_id          = serialize( $case->product_id );
 		$update_case->save();

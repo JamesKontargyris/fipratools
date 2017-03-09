@@ -57,6 +57,11 @@ class Client extends \BaseModel
 		return $this->hasMany( '\Leadofficelist\Client_archives\ClientArchive' );
 	}
 
+	public function case_studies()
+	{
+		return $this->hasMany( '\Leadofficelist\Cases\CaseStudy' );
+	}
+
 	public function add( $client )
 	{
 		$this->name                = $client->name;
@@ -159,5 +164,34 @@ class Client extends \BaseModel
 		}
 
 		return pretty_links_list( $unit_names );
+	}
+
+	public static function getClientsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" ) {
+		$clients = [];
+		$clientStatus = [];
+		//If $blank_entry == true, add a blank "Please select..." option
+		if ( $blank_entry ) {
+			$clients[''] = $blank_message;
+		}
+
+		foreach ( Client::orderBy( 'name', 'ASC' )->get() as $client ) {
+			$unit = Unit::where('id', '=', $client->unit_id)->get()->first();
+
+			if($client->status)
+			{
+				$clients[ $client->id ] = '&#xf111;  ' . $prefix . $client->name . (isset($unit->name) ? " - $unit->name" : '');
+			} else {
+				$clients[ $client->id ] = '&#xf1db;  ' . $prefix . $client->name . (isset($unit->name) ? " (Dormant) - $unit->name" : '');
+			}
+		}
+
+
+		if ( $blank_entry && count( $clients ) == 1 ) {
+			return false;
+		} elseif ( ! $blank_entry && count( $clients ) == 0 ) {
+			return false;
+		} else {
+			return $clients;
+		}
 	}
 }

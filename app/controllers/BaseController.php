@@ -35,6 +35,7 @@ class BaseController extends Controller {
 	protected $locations;
 	protected $products;
 	protected $years;
+	protected $clients;
 	protected $export_filename;
 	protected $search_term_clean;
 
@@ -50,9 +51,9 @@ class BaseController extends Controller {
 //	    via a 'section' variable in the controller.
 //	    If so, update the session variable.
 //	    If no section is set, default to list section.
-		if ( ! isset($this->section) && ! Session::has( 'section' ) ) {
+		if ( ! isset( $this->section ) && ! Session::has( 'section' ) ) {
 			Session::put( 'section', 'list' );
-		} elseif ( isset($this->section) ) {
+		} elseif ( isset( $this->section ) ) {
 			Session::put( 'section', $this->section );
 		} else {
 			Session::put( 'section', 'list' );
@@ -111,9 +112,9 @@ class BaseController extends Controller {
 					break;
 
 				case 'pdf_filtered':
-					$items = $this->getFiltered('export');
+					$items               = $this->getFiltered( 'export' );
 					$items->filter_value = $this->getFilteredValues();
-					$contents = $this->PDFExportFiltered( $items );
+					$contents            = $this->PDFExportFiltered( $items );
 					$this->generatePDF( $contents, $this->export_filename . '_filtered.pdf', $cover_page );
 
 					return true;
@@ -141,7 +142,7 @@ class BaseController extends Controller {
 					break;
 
 				case 'excel_filtered':
-					$contents = $this->getFiltered('export');
+					$contents               = $this->getFiltered( 'export' );
 					$contents->filter_value = $this->getFilteredValues();
 					$this->generateExcel( $contents, $this->export_filename . '_filtered' );
 
@@ -189,6 +190,9 @@ class BaseController extends Controller {
 		if ( is_request( 'clients' ) || is_request( 'list' ) ) {
 			$active_count  = $this->getActiveCount();
 			$dormant_count = $this->getDormantCount();
+		} else {
+			$active_count = '';
+			$dormant_count = '';
 		}
 
 		if ( is_request( 'sector_categories' ) ) {
@@ -196,7 +200,7 @@ class BaseController extends Controller {
 			$heading2 = number_format( $items->count(), 0 ) . ' total categories';
 		}
 
-		if( is_request('survey')) {
+		if ( is_request( 'survey' ) ) {
 			$heading1 = $logo . current_section_name() . ' | Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
@@ -234,23 +238,34 @@ class BaseController extends Controller {
 			? 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) ) . ' when searching for ' . Session::get( $this->resource_key . '.SearchType' ) . ' "' . $this->search_term_clean . '"'
 			: 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) );
 
+		$active_count = '';
+		$dormant_count = '';
+
+		if ( is_request( 'clients' ) || is_request( 'list' ) ) {
+			$active_count  = $this->getActiveCount();
+			$dormant_count = $this->getDormantCount();
+		}
+
 		if ( is_request( 'sector_categories' ) ) {
 			$heading1 = $logo . current_section_name() . ' | Expertise Categories';
 			$heading2 = number_format( $items->count(), 0 ) . ' total categories';
 		}
 
-		if( is_request('survey')) {
+		if ( is_request( 'survey' ) ) {
 			$heading1 = $logo . current_section_name() . ' | Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
 
 		$view = View::make(
-			( $key != 'clients' && $key != 'case_studies' ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
+			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[
-				'items'    => $items,
-				'heading1' => $heading1,
-				'heading2' => $heading2
-			] );
+				'items'         => $items,
+				'heading1'      => $heading1,
+				'heading2'      => $heading2,
+				'active_count'  => $active_count,
+				'dormant_count' => $dormant_count,
+			]
+		);
 
 		return (string) $view;
 	}
@@ -272,14 +287,14 @@ class BaseController extends Controller {
 
 		$heading1 .= current_section_name() . ' | ' . 'Filtered ' . ucfirst( clean_key( $key ) );
 		if ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) == 'show' ) {
-			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' active and dormant ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
+			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ((is_request( 'clients' ) || is_request( 'list' )) ? ' active and dormant ' : ' ') . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
 		} elseif ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) != 'show' ) {
-			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' dormant ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
+			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ((is_request( 'clients' ) || is_request( 'list' )) ? ' dormant ' : ' ') . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
 		} else {
-			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ' active ' . strtolower(clean_key( $key )) . ' filtering on: ' . $items->filter_value;
+			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ((is_request( 'clients' ) || is_request( 'list' )) ? ' active ' : ' ') . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
 		}
 
-		if( is_request('survey')) {
+		if ( is_request( 'survey' ) ) {
 			$heading1 = $logo . current_section_name() . ' | Filtered Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
@@ -307,8 +322,9 @@ class BaseController extends Controller {
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
 		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
-		$heading1 .= current_section_name() . ' | ' .  'Duplicated ' . ucfirst( clean_key( $this->resource_key ) );
+		$heading1 .= current_section_name() . ' | ' . 'Duplicated ' . ucfirst( clean_key( $this->resource_key ) );
 		$heading2      = number_format( $items->count(), 0 ) . ' total ' . clean_key( $this->resource_key );
+
 		$active_count  = 0;
 		$dormant_count = 0;
 
@@ -474,10 +490,11 @@ class BaseController extends Controller {
 			'newest' => 'id.desc',
 			'oldest' => 'id.asc'
 		];
-		$sort_on_cases = [
-			'az' => 'name.asc',
-			'za' => 'name.desc',
-			'newest' => 'year.desc', 'oldest' => 'year.asc'
+		$sort_on_cases     = [
+			'az'     => 'name.asc',
+			'za'     => 'name.desc',
+			'newest' => 'year.desc',
+			'oldest' => 'year.asc'
 		];
 
 		//Value passed in and exists in the $sort_on variable?
@@ -507,8 +524,13 @@ class BaseController extends Controller {
 		} //If all else fails...
 		else {
 			// If we're looking at users, account directors or case studies, use a different default sort order
-			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) return ['last_name', 'asc' ];
-			if ($this->is_request( 'cases' ) || $this->is_request( 'caselist' )) return ['year', 'desc'];
+			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) {
+				return [ 'last_name', 'asc' ];
+			}
+			if ( $this->is_request( 'cases' ) || $this->is_request( 'caselist' ) ) {
+				return [ 'year', 'desc' ];
+			}
+
 			// Otherwise just use name
 			return [ 'name', 'asc' ];
 		}
@@ -605,7 +627,7 @@ class BaseController extends Controller {
 			return true;
 		}
 
-		if($throw_exception) {
+		if ( $throw_exception ) {
 			throw new PermissionDeniedException;
 		} else {
 			return false;
@@ -653,27 +675,28 @@ class BaseController extends Controller {
 				Session::set( $this->resource_key . '.SearchTerm', '%' . Input::get( 'search' ) . '%' );
 				Session::set( $this->resource_key . '.SearchType', 'term' );
 			}
+
 			return Session::get( $this->resource_key . '.SearchTerm' );
 
 		} elseif ( Input::has( 'filter_value' ) || Input::has( 'filter_field' ) ) {
 
 			Session::set( $this->resource_key . '.SearchType', 'filter' );
-			if( ! Input::get('filter_value')) {
+			if ( ! Input::get( 'filter_value' ) ) {
 				// The user has selected the "All" blank row
-				Session::forget($this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
+				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ) );
 				// Is the Filters array now empty? No filters selected if so
 				$this->isFilterArrayEmpty();
 			} else {
 				// Does the filter value already exist?
-				if( ! in_array( Input::get( 'filter_value' ), (array) Session::get($this->resource_key . '.Filters.' . Input::get( 'filter_field' ))))
-				{
+				if ( ! in_array( Input::get( 'filter_value' ), (array) Session::get( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ) ) ) ) {
 					// If not, push it on to the end of the filter array
 					Session::push( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ), Input::get( 'filter_value' ) );
 				}
 			}
+
 			return Session::get( $this->resource_key . '.Filters' );
 
-		} elseif (Session::get($this->resource_key . '.SearchType') == 'filter') {
+		} elseif ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' ) {
 			// Is the latest filtered result set empty?
 			$this->isFilterArrayEmpty(); // redirect and clear last filter if so
 
@@ -689,8 +712,8 @@ class BaseController extends Controller {
 		$values = '';
 		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_array ) {
 			$model_name = $this->getFilterModelName( $filter_name );
-			$model = new $model_name;
-			foreach($filter_array as $filter_value) {
+			$model      = new $model_name;
+			foreach ( $filter_array as $filter_value ) {
 				$values .= $model::find( $filter_value )->name . ', ';
 			}
 		}
@@ -699,10 +722,9 @@ class BaseController extends Controller {
 	}
 
 
-	protected function isFilterArrayEmpty()
-	{
-		if(empty(Session::get($this->resource_key . '.Filters'))) {
-			Session::set('clear_search', 'yes');
+	protected function isFilterArrayEmpty() {
+		if ( empty( Session::get( $this->resource_key . '.Filters' ) ) ) {
+			Session::set( 'clear_search', 'yes' );
 			$this->searchCheck();
 
 			return Redirect::route( $this->resource_key . '.index' );
@@ -711,22 +733,25 @@ class BaseController extends Controller {
 
 	protected function checkForSearchResults( $items ) {
 		if ( ! count( $items ) ) {
-			if( ! is_filter($this->resource_key)) {
+			if ( ! is_filter( $this->resource_key ) ) {
 				Flash::message( 'No records found.' );
 				Session::set( 'clear_search', 'yes' );
 			} else {
 				Flash::message( 'No records found for that filter combination.' );
-				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ));
+				Session::forget( $this->resource_key . '.Filters.' . Input::get( 'filter_field' ) );
 			}
+
 			return false;
 		}
+
 		return true;
 	}
 
-	protected function getFilterModelName($filter_name) {
+	protected function getFilterModelName( $filter_name ) {
 		//Use the filter field value to instantiate the corresponding class and get the filter value's name
 		$model_name        = ucfirst( str_replace( '_id', '', $filter_name ) );
-		$model_name_plural = $model_name . 's';
+		// If the model name ends in "y", it will likely need "ies" at the end when pluralised. Otherwise, just add an "s".
+		$model_name_plural = mb_substr($model_name, -1) == 'y' ? rtrim($model_name, 'y') . 'ies' : $model_name . 's';
 		// Split model name by _
 		$model_explode  = explode( '_', $model_name );
 		$new_model_name = "";
@@ -754,6 +779,7 @@ class BaseController extends Controller {
 		$this->locations         = $this->getLocationsFormData();
 		$this->products          = $this->getProductsFormData();
 		$this->years             = $this->getYearsFormData();
+		$this->clients           = $this->getClientsFormData(true, 'Anonymous');
 
 		return true;
 	}
@@ -900,6 +926,22 @@ class BaseController extends Controller {
 		}
 
 		return CaseStudy::getYearsForFormSelect( $blank_entry, $blank_message );
+	}
+
+	/**
+	 * Get all case study years in a select element-friendly collection.
+	 *
+	 * @param bool $blank_entry
+	 * @param string $blank_message
+	 *
+	 * @return array
+	 */
+	protected function getClientsFormData( $blank_entry = false, $blank_message = 'Please select...' ) {
+		if ( ! Client::getClientsForFormSelect( $blank_entry, $blank_message ) ) {
+			return [ '' => 'No clients available to select' ];
+		}
+
+		return Client::getClientsForFormSelect( $blank_entry, $blank_message );
 	}
 
 	/**

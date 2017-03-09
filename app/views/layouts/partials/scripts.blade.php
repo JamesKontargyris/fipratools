@@ -7,6 +7,8 @@
 <script src="{{ asset('js/jquery.modal.min.js') }}" type="text/javascript" charset="utf-8"></script>
 {{--Chart.js--}}
 <script src="{{ asset('js/Chart.min.js') }}"></script>
+<!--Select2-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 {{--Site JS--}}
 <script src="{{ asset('js/jquery.multi-select.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/site.js?141001') }}"></script>

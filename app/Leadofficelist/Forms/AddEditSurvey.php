@@ -15,9 +15,7 @@ class AddEditSurvey extends FormValidator
 		'dob_day' => 'required',
 		'dob_month' => 'required',
 		'dob_year' => 'required',
-		'joined_fipra_day' => 'required',
-		'joined_fipra_month' => 'required',
-		'joined_fipra_year' => 'required',
+		'joined_fipra' => 'required',
 		'total_fipra_working_time' => 'required|numeric|min:0|max:100',
 		'languages' => 'array|required',
 	];

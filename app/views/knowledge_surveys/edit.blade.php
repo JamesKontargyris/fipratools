@@ -27,19 +27,17 @@
             <div class="col-6">
                 <div class="formfield">
                     {{ Form::label('dob_day', 'Date of birth:', ['class' => 'required', 'style' => 'display:block;']) }}
-                    <div class="label-info">This enables us to work out our average age profile.</div>
+                    <div class="label-info">This enables us to work out our average age profile and gives an idea of seniority.</div>
                     {{ Form::select('dob_day', $dob_data['days'], Input::has('date_of_birth') ? date('d', strtotime(Input::get('date_of_birth'))) : $user_info->date_of_birth != '0000-00-00' ? date('d', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
                     {{ Form::select('dob_month', $dob_data['months'], Input::has('date_of_birth') ? date('m', strtotime(Input::get('date_of_birth'))) : $user_info->date_of_birth != '0000-00-00' ? date('m', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
                     {{ Form::select('dob_year', $dob_data['years'], Input::has('date_of_birth') ? date('Y', strtotime(Input::get('date_of_birth'))) : $user_info->date_of_birth != '0000-00-00' ? date('Y', strtotime($user_info->date_of_birth)) : '', ['style' => 'width:auto; display:inline;']) }}
                 </div>
                 <div class="formfield">
-                    {{ Form::label('joined_fipra_day', 'On what date did you join Fipra?', ['class' => 'required', 'style' => 'display:block;']) }}
-                    {{ Form::select('joined_fipra_day', $joined_fipra_data['days'], Input::has('joined_fipra') ? date('d', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('d', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
-                    {{ Form::select('joined_fipra_month', $joined_fipra_data['months'], Input::has('joined_fipra') ? date('m', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('m', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
-                    {{ Form::select('joined_fipra_year', $joined_fipra_data['years'], Input::has('joined_fipra') ? date('Y', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('Y', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
+                    {{ Form::label('joined_fipra', 'In which year did you join the Fipra Network?', ['class' => 'required', 'style' => 'display:block;']) }}
+                    {{ Form::select('joined_fipra', $joined_fipra_data['years'], Input::has('joined_fipra') ? date('Y', strtotime(Input::get('joined_fipra'))) : $user_info->joined_fipra != '0000-00-00' ? date('Y', strtotime($user_info->joined_fipra)) : '', ['style' => 'width:auto; display:inline;']) }}
                 </div>
                 <div class="formfield">
-                    {{ Form::label('total_fipra_working_time', 'What percentage of your total working time do you spend on matters / accounts relating to Fipra?', ['class' => 'required']) }}
+                    {{ Form::label('total_fipra_working_time', 'What percentage, if any, of your total working time do you spend on matters / accounts relating to the Fipra Network?', ['class' => 'required']) }}
                     {{ Form::number('total_fipra_working_time', Input::has('total_fipra_working_time') ? Input::get('total_fipra_working_time') : isset($user_info->total_fipra_working_time) ? $user_info->total_fipra_working_time : '', ['style' => 'width:20%;', 'min' => '0', 'max' => '100']) }} <strong style="font-size:24px;">%</strong>
                 </div>
             </div>
@@ -66,7 +64,7 @@
                 <div class="formfield">
                     {{ Form::label('languages', 'Please select the languages in which you can conduct business:', ['class' => 'required']) }}
 
-                    {{ Form::select("languages[]", $languages, Input::has('languages') ? Input::get('languages') : isset($language_info) ? $language_info : '', ['id' => 'language_select', 'multiple' => 'multiple']) }}
+                    {{ Form::select("languages[]", $languages, Input::has('languages') ? Input::get('languages') : isset($language_info) ? $language_info : '', ['class' => 'select2', 'multiple' => 'multiple']) }}
                 </div>
             </div>
         </div>

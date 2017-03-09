@@ -11,5 +11,7 @@
 <link rel="stylesheet" href="{{ asset('css/jquery.modal.css') }}" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ asset('css/multi-select.css') }}" type="text/css" media="screen" />
 <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i" rel="stylesheet">
+<!--Select2-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
 @include('layouts.partials.favicon')

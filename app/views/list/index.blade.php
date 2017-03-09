@@ -44,20 +44,20 @@
 				<table width="100%" class="index-table">
 					<thead>
 						<tr>
-							<td colspan="4" width="30%">Client name</td>
+							<td colspan="5" width="30%">Client name</td>
 							<td colspan="2" width="30%" class="hide-m">Sector & Expertise Area</td>
 							<td width="10%" class="hide-m">Type</td>
 							<td width="5%" class="hide-m">Service</td>
-							<td width="15%">Lead Member</td>
-							<td width="20%" class="hide-s">AD to talk to</td>
+							<td width="10%">Lead Member</td>
+							<td width="15%" class="hide-s">AD to talk to</td>
 						</tr>
 						<tr class="hide-print">
-							<td class="hide-m sub-header" colspan="4">
+							<td class="hide-m sub-header" colspan="5">
 								@include('layouts.partials.filters.table-letter-filter')
 							</td>
 							<td width="15%" class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
-									{{ Form::select('filter_value', $sectors, Session::has('list.Filters.sector_id') ? Session::get('list.Filters.sector_id') : null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $sectors, Session::has('list.Filters.sector_id') ? Session::get('list.Filters.sector_id') : null, ['class' => 'list-table-filter select2', 'style' => 'width:100%']) }}
 									{{ Form::hidden('filter_field', 'sector_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -65,7 +65,7 @@
 							</td>
 							<td width="15%" class="hide-m sub-header no-border-left">
 								{{ Form::open(['url' => 'list/search']) }}
-								{{ Form::select('filter_value', $sector_categories, Session::has('list.Filters.sector_category_id') ? Session::get('list.Filters.sector_category_id') : null, ['class' => 'list-table-filter']) }}
+								{{ Form::select('filter_value', $sector_categories, Session::has('list.Filters.sector_category_id') ? Session::get('list.Filters.sector_category_id') : null, ['class' => 'list-table-filter select2', 'style' => 'width:100%']) }}
 								{{ Form::hidden('filter_field', 'sector_category_id') }}
 								{{ Form::hidden('filter_results', 'yes') }}
 								{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -73,7 +73,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
-									{{ Form::select('filter_value', $types, Session::has('list.Filters.type_id') ? Session::get('list.Filters.type_id') : null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $types, Session::has('list.Filters.type_id') ? Session::get('list.Filters.type_id') : null, ['class' => 'list-table-filter select2', 'style' => 'width:100%']) }}
 									{{ Form::hidden('filter_field', 'type_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -81,7 +81,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
-									{{ Form::select('filter_value', $services, Session::has('list.Filters.service_id') ? Session::get('list.Filters.service_id') : null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $services, Session::has('list.Filters.service_id') ? Session::get('list.Filters.service_id') : null, ['class' => 'list-table-filter select2', 'style' => 'width:100%']) }}
 									{{ Form::hidden('filter_field', 'service_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -89,7 +89,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
-									{{ Form::select('filter_value', $units, Session::has('list.Filters.unit_id') ? Session::get('list.Filters.unit_id') : null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $units, Session::has('list.Filters.unit_id') ? Session::get('list.Filters.unit_id') : null, ['class' => 'list-table-filter select2', 'style' => 'width:100%']) }}
 									{{ Form::hidden('filter_field', 'unit_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -97,7 +97,7 @@
 							</td>
 							<td class="hide-m sub-header">
 								{{ Form::open(['url' => 'list/search']) }}
-									{{ Form::select('filter_value', $account_directors, Session::has('list.Filters.account_director_id') ? Session::get('list.Filters.account_director_id') : null, ['class' => 'list-table-filter']) }}
+									{{ Form::select('filter_value', $account_directors, Session::has('list.Filters.account_director_id') ? Session::get('list.Filters.account_director_id') : null, ['class' => 'list-table-filter select2', 'style' => 'width:100%']) }}
 									{{ Form::hidden('filter_field', 'account_director_id') }}
 									{{ Form::hidden('filter_results', 'yes') }}
 									{{ Form::submit('Filter', ['class' => 'filter-submit-but hidejs']) }}
@@ -114,9 +114,14 @@
                                     <td class="actions content-center status-dormant"><i class="fa fa-times-circle fa-lg"></i></td>
                                 @endif
 								<td><strong><a href="{{ route('clients.show', ['id' => $client->id]) }}">{{ $client->name }}</a></strong></td>
-								<td class="archive-count">
+								<td class="client-count">
 									@if($client->archives()->count())
 										<strong><i class="fa fa-archive"></i> {{ $client->archives()->count() }}</strong>
+									@endif
+								</td>
+								<td class="client-count">
+									@if($client->case_studies()->count())
+										<strong><i class="fa fa-file-text-o"></i> {{ $client->case_studies()->count() }}</strong>
 									@endif
 								</td>
 								<td class="client-links">

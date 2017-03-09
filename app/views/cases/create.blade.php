@@ -39,20 +39,20 @@
                 {{ Form::label('result', 'End result:', ['class' => 'required']) }}
                 {{ Form::textarea('result', Input::old('result'), ['rows' => '5']) }}
             </div>
+        </div>
+        <div class="col-6 last">
             <div class="formfield">
                 {{ Form::label('year', 'Year:', ['class' => 'required']) }}
                 {{ Form::text('year', Input::old('year')) }}
             </div>
             <div class="formfield">
-                {{ Form::label('client', 'Client (leave blank if anonymous):') }}
-                {{ Form::text('client', Input::old('client')) }}
+                {{ Form::label('client', 'Client:') }}
+                {{ Form::select('client_id', $clients, (Input::has('client_id')) ? Input::get('client_id') : Input::old('client'), ['class' => 'select2']) }}
             </div>
-        </div>
-        <div class="col-6 last">
             @if($user->hasRole('Administrator'))
                 <div class="formfield">
                     {{ Form::label('unit_id', 'Link to Unit:', ['class' => 'required']) }}
-                    {{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'unit-selection']) }}
+                    {{ Form::select('unit_id', $units, Input::old('unit_id'), ['class' => 'unit-selection select2']) }}
                 </div>
             @else
                 {{ Form::hidden('unit_id', $user->unit()->pluck('id')) }}
@@ -60,16 +60,16 @@
             {{ Form::hidden('user_id', $user->id) }}
 
             <div class="formfield">
-                {{ Form::label('account_director_id', 'The Account Director to speak to:', ['class' => 'required']) }}
-                {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id')) }}
+                {{ Form::label('account_director_id', 'The Account Director at the time:', ['class' => 'required']) }}
+                {{ Form::select('account_director_id', $account_directors, Input::old('account_director_id'), ['class' => 'select2']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('sector_id', 'Sector(s):', ['class' => 'required']) }}
-                {{ Form::select('sector_id[]', $sectors, Input::old('sector_id'), ['id' => 'sector_select', 'multiple' => 'multiple']) }}
+                {{ Form::select('sector_id[]', $sectors, Input::old('sector_id'), ['class' => 'select2', 'multiple' => 'multiple']) }}
             </div>
             <div class="formfield">
                 {{ Form::label('product_id', 'Product(s):', ['class' => 'required']) }}
-                {{ Form::select('product_id[]', $products, Input::old('product_id'), ['id' => 'product_select', 'multiple' => 'multiple']) }}
+                {{ Form::select('product_id[]', $products, Input::old('product_id'), ['class' => 'select2', 'multiple' => 'multiple']) }}
             </div>
         </div>
     </div>

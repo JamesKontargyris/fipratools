@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                         <td valign="top" class="knowledge-profile-details__title min-height">Joined Fipra</td>
-                        <td valign="top">{{ date('j F Y', strtotime($user_info->joined_fipra)) }} <br>
+                        <td valign="top">{{ date('Y', strtotime($user_info->joined_fipra)) }} <br>
                             <em>
                                 @if(calculate_age($user_info->joined_fipra) <= 0)
                                     Less than a year ago
@@ -76,7 +76,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top" class="knowledge-profile-details__title min-height">Total Fipra Working Time</td>
+                        <td valign="top" class="knowledge-profile-details__title min-height">Total working time spent on Fipra Network matters</td>
                         <td valign="top">{{ $user_info->total_fipra_working_time }}%</td>
                     </tr>
                 </table>
@@ -116,7 +116,9 @@
             <div class="col-7">
                 @if(isset($expertise_info['areas']) && count($expertise_info['areas']) > 0)
                     <h3 class="expertise-list__section-title">Your Knowledge</h3>
-                    <a href="#" class="primary knowledge-toggle"><i class="fa fa-eye"></i> Show all knowledge areas</a> <a href="#" class="primary knowledge-toggle active"><i class="fa fa-eye"></i> Show expertise only</a>
+                    <div class="button-group">
+                        <a href="#" class="primary knowledge-toggle button-show-all"><i class="fa fa-eye"></i> Show all knowledge areas</a> <a href="#" class="primary knowledge-toggle button-show-expertise"><i class="fa fa-eye"></i> Show expertise only</a>
+                    </div>
                     @foreach($expertise_info['areas'] as $group => $areas)
                         <div class="expertise-list__container">
                             <div class="expertise-list__group-title">{{ $group }}</div>
@@ -127,7 +129,7 @@
                                     @if(isset($score_info[$id]))
                                         {{--Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
                                         If not, hide the whole container when only showing the user's expertise--}}
-                                        <tr class="expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
+                                        <tr class="expertise-list__row expertise-list__score-row-{{ $score_info[$id] }} @if($score_info[$id] > 3) user-expertise @endif">
                                             <td valign="middle" class="expertise-list__knowledge-area">{{ $name }}</td>
                                             <td valign="middle" class="expertise-list__score">
                                                 <img class="expertise-list__score-stars" src="/img/stars-{{ $score_info[$id] }}.png" alt="{{ str_pad('', $score_info[$id], '*') }}"> {{ $score_info[$id] }}

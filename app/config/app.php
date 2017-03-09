@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug'           => getenv( 'DEBUG' ),
+	'debug' => getenv( 'DEBUG' ),
 	/*
 	|--------------------------------------------------------------------------
 	| Application URL
@@ -25,7 +25,7 @@ return array(
 	|
 	*/
 
-	'url'             => 'http://localhost',
+	'url' => 'http://localhost',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
@@ -37,7 +37,7 @@ return array(
 	|
 	*/
 
-	'timezone'        => 'Europe/Brussels',
+	'timezone' => 'Europe/Brussels',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Locale Configuration
@@ -49,7 +49,7 @@ return array(
 	|
 	*/
 
-	'locale'          => 'en',
+	'locale' => 'en',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Fallback Locale
@@ -73,8 +73,8 @@ return array(
 	|
 	*/
 
-	'key'             => 'AgJOQu66sVrSlfPXMW6sQgUqi8XsxzXs',
-	'cipher'          => MCRYPT_RIJNDAEL_128,
+	'key'    => 'AgJOQu66sVrSlfPXMW6sQgUqi8XsxzXs',
+	'cipher' => MCRYPT_RIJNDAEL_128,
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers
@@ -86,7 +86,7 @@ return array(
 	|
 	*/
 
-	'providers'       => array(
+	'providers' => array(
 
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
@@ -134,7 +134,7 @@ return array(
 	|
 	*/
 
-	'manifest'        => storage_path() . '/meta',
+	'manifest' => storage_path() . '/meta',
 	/*
 	|--------------------------------------------------------------------------
 	| Class Aliases
@@ -146,7 +146,7 @@ return array(
 	|
 	*/
 
-	'aliases'         => array(
+	'aliases' => array(
 
 		'App'               => 'Illuminate\Support\Facades\App',
 		'Artisan'           => 'Illuminate\Support\Facades\Artisan',
@@ -190,6 +190,7 @@ return array(
 		'Flash'             => 'Laracasts\Flash\Flash',
 		'PDF'               => 'Ignited\Pdf\Facades\Pdf',
 		'Excel'             => 'Maatwebsite\Excel\Facades\Excel',
+		'SectorCategory'    => 'Leadofficelist\Sector_categories\Sector_category'
 	),
 
 );

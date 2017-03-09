@@ -1,41 +1,28 @@
 <?php namespace Leadofficelist\Products;
 
 class Product extends \BaseModel {
-	protected $fillable = ['name'];
+	protected $fillable = [ 'name' ];
 	public $timestamps = false;
 
-	public static function getProductsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" )
-	{
-		$products = [ ];
-		//Remove whitespace from $prefix and add a space on the end, so there is a space
-		//between the prefix and the unit name
-		$prefix = trim( $prefix ) . ' ';
+	public static function getProductsForFormSelect( $blank_entry = false, $blank_message = 'Please select...', $prefix = "" ) {
+		$products = [];
 		//If $blank_entry == true, add a blank "Please select..." option
-		if ( $blank_entry )
-		{
+		if ( $blank_entry ) {
 			$products[''] = $blank_message;
 		}
 
 		foreach (
-			Product::orderBy( 'name', 'ASC' )->get( [
-				'id',
-				'name'
-			] ) as $product
-		)
-		{
+			Product::orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $product
+		) {
 			$products[ $product->id ] = $prefix . $product->name;
 		}
 
 
-
-		if ( $blank_entry && count( $products ) == 1 )
-		{
+		if ( $blank_entry && count( $products ) == 1 ) {
 			return false;
-		} elseif ( ! $blank_entry && count( $products ) == 0 )
-		{
+		} elseif ( ! $blank_entry && count( $products ) == 0 ) {
 			return false;
-		} else
-		{
+		} else {
 			return $products;
 		}
 	}

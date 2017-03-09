@@ -43,12 +43,12 @@ class CasesController extends \BaseController {
 		}
 
 		if ( $this->user->hasRole( 'Administrator' ) ) {
-			$items = CaseStudy::where('status', '=', 1)->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			$items_pending = CaseStudy::where('status', '=', 0)->orderBy('id', 'DESC')->get();
+			$items         = CaseStudy::where( 'status', '=', 1 )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items_pending = CaseStudy::where( 'status', '=', 0 )->orderBy( 'id', 'DESC' )->get();
 		} else {
-			$items = CaseStudy::where('status', '=', 1)->where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = CaseStudy::where( 'status', '=', 1 )->where( 'unit_id', '=', $this->user->unit_id )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
-			$items_pending = CaseStudy::where('status', '=', 0)->where( 'unit_id', '=', $this->user->unit_id )->orderBy('id', 'DESC')->get();
+			$items_pending = CaseStudy::where( 'status', '=', 0 )->where( 'unit_id', '=', $this->user->unit_id )->orderBy( 'id', 'DESC' )->get();
 		}
 
 		$items->key = 'cases';
@@ -72,7 +72,8 @@ class CasesController extends \BaseController {
 			'units'             => $this->units,
 			'sectors'           => $this->sectors,
 			'locations'         => $this->locations,
-			'products'          => $this->products
+			'products'          => $this->products,
+			'clients'           => $this->clients
 		] );
 	}
 
@@ -133,6 +134,7 @@ class CasesController extends \BaseController {
 				'sectors'           => $this->sectors,
 				'locations'         => $this->locations,
 				'products'          => $this->products,
+				'clients'          => $this->clients,
 				'case'              => $case
 			] );;
 		} else {
@@ -172,7 +174,7 @@ class CasesController extends \BaseController {
 	public function destroy( $id ) {
 		if ( $case = $this->getCase( $id ) ) {
 			Flash::overlay( '"' . $case->name . '" has been deleted.', 'info' );
-			EventLog::add( 'Case study deleted: ' . CaseStudy::find($id)->name, $this->user->getFullName(), $this->user->unit()->first()->name, 'delete' );
+			EventLog::add( 'Case study deleted: ' . CaseStudy::find( $id )->name, $this->user->getFullName(), $this->user->unit()->first()->name, 'delete' );
 			CaseStudy::destroy( $id );
 
 			return Redirect::route( 'cases.index' );
@@ -187,12 +189,12 @@ class CasesController extends \BaseController {
 		if ( $case_id ) {
 			if ( CaseStudy::change_status( $case_id, 1 ) ) {
 				Flash::overlay( 'Case study approved.', 'success' );
-				return Redirect::route('cases.index');
+
+				return Redirect::route( 'cases.index' );
 			} else {
 				throw new CannotEditException;
 			}
-		}
-		else {
+		} else {
 			throw new ResourceNotFoundException;
 		}
 	}
@@ -203,12 +205,12 @@ class CasesController extends \BaseController {
 		if ( $case_id ) {
 			if ( CaseStudy::change_status( $case_id, 0 ) ) {
 				Flash::overlay( 'Case study disapproved.', 'success' );
-				return Redirect::route('cases.index');
+
+				return Redirect::route( 'cases.index' );
 			} else {
 				throw new CannotEditException;
 			}
-		}
-		else {
+		} else {
 			throw new ResourceNotFoundException;
 		}
 	}
@@ -221,8 +223,15 @@ class CasesController extends \BaseController {
 	 */
 	public function search() {
 		if ( $search_term = $this->findSearchTerm() ) {
-			$items = CaseStudy::where('status', '=', 1)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-			$items_pending = CaseStudy::where('status', '=', 0)->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+
+			if( ! $this->user->hasRole('Administrator'))
+			{
+				$items         = CaseStudy::where('unit_id', '=', $this->user->unit()->pluck('id'))->where( 'status', '=', 1 )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items_pending = CaseStudy::where('unit_id', '=', $this->user->unit()->pluck('id'))->where( 'status', '=', 0 )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			} else {
+				$items         = CaseStudy::where( 'status', '=', 1 )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items_pending = CaseStudy::where( 'status', '=', 0 )->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
 
 			if ( ! $this->checkForSearchResults( $items ) && ! $this->checkForSearchResults( $items_pending ) ) {
 				return Redirect::route( $this->resource_key . '.index' );
@@ -237,7 +246,12 @@ class CasesController extends \BaseController {
 	}
 
 	protected function getAll() {
-		return CaseStudy::all();
+		if($this->user->hasRole('Administrator'))
+		{
+			return CaseStudy::orderBy('year', 'DESC')->get();
+		}
+
+		return CaseStudy::orderBy('year', 'DESC')->where('unit_id', '=', $this->user->unit()->pluck('id'))->get();
 	}
 
 	protected function getSelection() {
@@ -245,9 +259,19 @@ class CasesController extends \BaseController {
 			$search_term             = $this->findSearchTerm();
 			$this->search_term_clean = str_replace( '%', '', $search_term );
 
-			$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			if($this->user->hasRole('Administrator'))
+			{
+				$items = CaseStudy::where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			} else {
+				$items = CaseStudy::where('unit_id', '=', $this->user->unit()->pluck('id'))->where( 'name', 'LIKE', $search_term )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
 		} else {
-			$items = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			if($this->user->hasRole('Administrator'))
+			{
+				$items = CaseStudy::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			} else {
+				$items = CaseStudy::where('unit_id', '=', $this->user->unit()->pluck('id'))->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
 		}
 
 		return $items;

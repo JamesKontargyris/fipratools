@@ -23,6 +23,9 @@
         numberOfMonths: 1
     });
 
+    // Apply select2 library to select-search-multiple fields
+    $('.select2').select2();
+
     //If there are no page navigation links, hide the blank div
     if($('.page-menu-nav ul.small-font li').length == 0)
     {
@@ -188,23 +191,29 @@
         getClientsForUnit($('#unit_2'));
     });
 
-    // Knowledge list toggle
-    $('.knowledge-toggle').on('click', function(e)
+    // Knowledge list buttons
+    $('.button-show-all').on('click', function(e)
     {
-       $('.knowledge-toggle').toggleClass('active');
-       $('.expertise-list__score-row-0, .expertise-list__score-row-1, .expertise-list__score-row-2, .expertise-list__score-row-3').fadeToggle();
-       $('.expertise-count-0').fadeToggle();
-
-       // Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
-        // If not, hide the whole container when only showing the user's expertise
-       $('.expertise-list__container').each(function()
-       {
-           if( ! $(this).find('.user-expertise').length) {
-               $(this).slideToggle();
-           }
-       });
+        $('.expertise-list__container').show();
+        $('.expertise-list__row').show();
 
        return false;
+    });
+    $('.button-show-expertise').on('click', function(e)
+    {
+        $('.expertise-list__row').hide();
+        $('.expertise-list__row.user-expertise').show();
+
+        // Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
+        // If not, hide the whole container when only showing the user's expertise
+        $('.expertise-list__container').each(function()
+        {
+            if( ! $(this).find('.user-expertise').length) {
+                $(this).hide();
+            }
+        });
+
+        return false;
     });
 
     function getClientsForUnit($element)

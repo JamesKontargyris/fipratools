@@ -30,11 +30,12 @@
             </div>
         </div>
         <div class="col-6 last" style="font-size:18px; line-height:30px;">
-            <p><strong>Client:</strong> {{ ! $case->client ? 'Anonymous' : $case->client }}</p>
+            <p><strong>Client:</strong> {{ ! $case->client_id ? (! $case->client ? 'Anonymous' : $case->client) : '<a
+                                            href="' . route('clients.show', $case->client()->first()->id) . '">' . $case->client()->first()->name . '</a>' }}</p>
             <p><strong>Year:</strong> {{ $case->year }}</p>
             <p><strong>Unit:</strong> {{ $case->unit()->pluck('name') }}</p>
             <p><strong>AD to talk to:</strong> {{ $case->account_director()->pluck('first_name') }} {{ $case->account_director()->pluck('last_name') }}</p>
-            <p><strong>Sector:</strong> {{ get_pretty_sector_names(unserialize($case->sector_id)); }}</p>
+            <p><strong>Sector(s):</strong> {{ get_pretty_sector_names(unserialize($case->sector_id)); }}</p>
             <p><strong>Product(s):</strong> {{ get_pretty_product_names(unserialize($case->product_id)); }}</p>
             @if($case->location)
                 <p><strong>Location:</strong> {{ $case->location()->pluck('name') }}</p>

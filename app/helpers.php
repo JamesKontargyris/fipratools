@@ -289,7 +289,7 @@ function get_pretty_sector_names($sector_ids)
 		$sector_names = [];
 		foreach($sector_ids as $sector_id)
 		{
-			if($sector_id) $sector_names[] = Sector::find($sector_id)->name;
+			if($sector_id && Sector::find($sector_id)) $sector_names[] = Sector::find($sector_id)->name;
 		}
 
 		return implode(', ', $sector_names);

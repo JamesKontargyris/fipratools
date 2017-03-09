@@ -4,6 +4,10 @@
   display:none;
 }
 
+.button-group {
+  margin-bottom:$v-rhythm;
+}
+
 .primary {
 	@include primary-but();
 }
@@ -469,7 +473,7 @@
         &.actions {
           .full-width { width:100%; text-align: left; }
         }
-        &.archive-count,
+        &.client-count,
         &.client-links,
         &.knowledge-survey-link {
           padding-right:10px;
@@ -765,6 +769,7 @@ ul.pagination {
   padding:$v-rhythm 15px;
   margin-bottom: $v-rhythm;
   background-color: white;
+  border-radius:5px;
   &.fill {
     background-color:lighten($light-grey, 10%);
   }
@@ -812,6 +817,7 @@ ul.pagination {
   background-color: lighten($green, 45%);
   padding:$v-rhythm 20px;
   margin-top:$v-rhythm;
+  border-radius: 5px;
 }
 
 .expertise-form__group-intro {
@@ -863,6 +869,12 @@ ul.pagination {
   background-color:$green;
   color:white;
   margin-bottom:20px;
+  background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
+  border-left:2px solid $green;
+  border-top:2px solid $green;
+  border-right:2px solid $green;
+  border-bottom:2px solid darken($green, 10%);
+  border-radius: 5px;
 }
 .knowledge__section-intro {
   @include font-size(17);
@@ -964,7 +976,6 @@ ul.pagination {
 }
 
 .knowledge-toggle {
-  display:none;
   margin-bottom:15px;
   @include font-size(14);
   line-height:16px;
@@ -972,4 +983,38 @@ ul.pagination {
   &.active {
     display:inline-block;
   }
+}
+.dormant-client:before {
+  content: 'Dormant';
+  color:$light-grey;
+  font-style: italic;
+}
+
+.select2, .select2-dropdown {
+  font-family: FontAwesome, Lato, sans-serif !important;
+}
+
+.select2 {
+}
+
+.select2-selection {
+  @include font-size(14);
+  line-height:1;
+}
+
+.formfield .select2-selection {
+  @include font-size(16);
+  line-height:1;
+}
+
+.sub-header .select2-selection {
+  @include font-size(12);
+  text-transform: capitalize;
+}
+
+.select2-container {
+  @include font-size(12);
+  height:100%;
+  display:block;
+  line-height:1;
 }
