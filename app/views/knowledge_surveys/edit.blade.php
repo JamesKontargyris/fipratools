@@ -61,7 +61,7 @@
     </div>
 
 
-    <div class="knowledge__section-title">Your Position / Company</div>
+    <div class="knowledge__section-title">Your Role and Company</div>
 
     <div class="row no-margin">
         <div class="col-5">
@@ -114,7 +114,7 @@
     @endif
 
 
-    <div class="knowledge__section-title">Memberships / Associations</div>
+    <div class="knowledge__section-title">Memberships, Associations and Positions</div>
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
@@ -155,9 +155,10 @@
                 <table cellpadding="5" cellspacing="0" border="0" class="survey-entry-table public-office">
                     <thead>
                     <tr>
-                        <td width="50%"><strong>Position</strong></td>
+                        <td width="45%"><strong>Position</strong></td>
                         <td width="25%"><strong>From</strong></td>
                         <td width="25%"><strong>To</strong></td>
+                        <td width="5%"></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -166,6 +167,7 @@
                             <td>{{ Form::text("public_office[0][position]", null, ['disabled' => 'disabled', 'class' => 'position-field']) }}</td>
                             <td>{{ Form::text("public_office[0][from]", null, ['disabled' => 'disabled', 'class' => 'from-field']) }}</td>
                             <td>{{ Form::text("public_office[0][to]", null, ['disabled' => 'disabled', 'class' => 'to-field']) }}</td>
+                            <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
                         </tr>
 
                         @if(Input::has('position'))
@@ -175,12 +177,26 @@
                                     <td>{{ Form::text("public_office[$id][position]", Input::get("public_office.$id.position")) }}</td>
                                     <td>{{ Form::text("public_office[$id][from]", Input::get("public_office.$id.from")) }}</td>
                                     <td>{{ Form::text("public_office[$id][to]", Input::get("public_office.$id.to")) }}</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+                        @elseif(isset($knowledge_data['public_office']))
+                            @foreach($knowledge_data['public_office'] as $id => $position_info)
+                                <tr>
+                                    <td>{{ Form::text("public_office[$id][position]", $position_info['position']) }}</td>
+                                    <td>{{ Form::text("public_office[$id][from]", $position_info['from']) }}</td>
+                                    <td>{{ Form::text("public_office[$id][to]", $position_info['to']) }}</td>
+                                    @if($id > 1)
+                                        <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
+                                    @else
+                                        <td></td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @else
                             <!--First proper row-->
                             <tr>
-                                <td>{{ Form::text("public_office[1][position]", Input::get('position')) }}</td>
+                                <td>{{ Form::text("public_office[1][position]", null) }}</td>
                                 <td>{{ Form::text("public_office[1][from]", null) }}</td>
                                 <td>{{ Form::text("public_office[1][to]", null) }}</td>
                             </tr>

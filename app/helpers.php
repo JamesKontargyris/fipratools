@@ -328,3 +328,25 @@ function calculate_age($dob)
 
 	return $age;
 }
+
+/**
+ * Check to see if a multidimensional array is completely empty
+ *
+ * @param $array
+ *
+ * @return bool
+ */
+function emptyArray($array) {
+	$empty = TRUE;
+	if (is_array($array)) {
+		foreach ($array as $value) {
+			if (!emptyArray($value)) {
+				$empty = FALSE;
+			}
+		}
+	}
+	elseif (!empty($array)) {
+		$empty = FALSE;
+	}
+	return $empty;
+}

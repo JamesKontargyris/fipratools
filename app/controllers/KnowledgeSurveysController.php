@@ -120,10 +120,11 @@ class KnowledgeSurveysController extends \BaseController {
 			$language_info  = $this->getUserLanguageInfo();
 			$expertise_info = $this->getExpertise();
 			$score_info     = $this->getUserExpertiseInfoIDKeys();
+			$knowledge_data = $this->getKnowledgeData();
 
-			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info' ) );
+			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info', 'knowledge_data' ) );
 		} elseif ( isset( $this->user ) && $this->user->date_of_birth == '0000-00-00' ) {
-			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info' ) );
+			return View::make( 'knowledge_surveys.profile' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info', 'knowledge_data' ) );
 		}
 
 		throw new ProfileNotFoundException();
@@ -148,9 +149,10 @@ class KnowledgeSurveysController extends \BaseController {
 			$language_info  = $this->getUserLanguageInfo( $id );
 			$expertise_info = $this->getExpertise( $id );
 			$score_info     = $this->getUserExpertiseInfoIDKeys( $id );
+			$knowledge_data = $this->getKnowledgeData( $id );
 			$fipriot_info = json_decode(file_get_contents('http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email));
 
-			return View::make( 'knowledge_surveys.show' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info', 'fipriot_info' ) );
+			return View::make( 'knowledge_surveys.show' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info', 'fipriot_info', 'knowledge_data' ) );
 		}
 
 		throw new ProfileNotFoundException();
@@ -183,7 +185,6 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	public function postUpdateProfile() {
-		dd(Input::all());
 		$this->check_perm( 'edit_knowledge' );
 
 		$input = Input::all();
@@ -285,6 +286,16 @@ class KnowledgeSurveysController extends \BaseController {
 
 	protected function getUserLanguageInfo( $id = null ) {
 		return $id ? User::find( $id )->knowledge_languages()->get()->lists( 'name' ) : $this->user->knowledge_languages()->get()->lists( 'name' );
+	}
+
+	protected function getKnowledgeData( $id = null ) {
+		$results = $id ? User::find( $id )->knowledge_data()->get()->toArray() : $this->user->knowledge_data()->get()->toArray();
+		$user_data = [];
+		foreach($results as $data) {
+			$user_data[$data['slug']] = $data['serialized'] ? unserialize($data['data_value']) : $data['data_value'];
+		}
+
+		return $user_data;
 	}
 
 	protected function getUserLanguages( $id = null ) {

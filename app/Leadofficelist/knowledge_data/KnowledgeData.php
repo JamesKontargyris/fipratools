@@ -6,6 +6,12 @@ class KnowledgeData extends \BaseModel {
 	protected $fillable = [ 'user_id', 'slug', 'data_title', 'data_value' ];
 	protected $table = 'knowledge_data';
 
+	public function user()
+	{
+		//One knowledge data entry belongs to one user
+		return $this->belongsTo( '\Leadofficelist\Users\User', 'id', 'user_id' );
+	}
+
 	public static function addData( $user_id, $slug = '', $data_value = '', $serialized = 0 ) {
 		if($user_id) {
 			if ( KnowledgeData::where('user_id', '=', $user_id)->where( 'slug', '=', $slug )->get()->first() ) {

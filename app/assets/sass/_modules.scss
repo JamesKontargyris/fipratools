@@ -210,17 +210,17 @@
 
   &.section-list {
     h2 { color:darken($turquoise, 10%); }
-    background-color: desaturate(lighten($turquoise, 47%), 25%);
+    background: linear-gradient(top, desaturate(lighten($turquoise, 47%), 25%), desaturate(lighten($turquoise, 35%), 25%)) desaturate(lighten($turquoise, 47%), 25%);
     border-bottom: 2px solid desaturate(lighten($turquoise, 28%), 25%);
   }
   &.section-case {
     h2 { color:darken($violet, 10%); }
-    background-color: desaturate(lighten($violet, 30%), 25%);
+    background: linear-gradient(top, desaturate(lighten($violet, 30%), 25%), desaturate(lighten($violet, 20%), 25%)) desaturate(lighten($violet, 30%), 25%);
     border-bottom: 2px solid desaturate(lighten($violet, 15%), 25%);
   }
   &.section-survey {
     h2 { color:saturate(darken($green, 30%), 50%); }
-    background-color: desaturate(lighten($green, 40%), 25%);
+    background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
     border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
   }
   &.section-admin {
@@ -1006,6 +1006,56 @@ ul.pagination {
   }
 }
 
+/*.knowledge-profile-section-title {
+  @include font-size(12);
+  font-weight:$font-bold;
+  color:grey;
+  margin-bottom:$v-rhythm;
+  margin-top:$v-rhythm * 0.25;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  border-radius:5px;
+  padding:5px 10px;
+  background-color:#efefef;
+}*/
+
+.knowledge-profile-section-block {
+  margin-bottom:$v-rhythm * 1.5;
+
+  &:last-of-type {
+    margin-bottom:0;
+  }
+}
+
+.knowledge-profile-section-title {
+  @include font-size(12);
+  font-weight:$font-bold;
+  color:$green;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height:1.1;
+  padding: 10px;
+  background-color:lighten($green, 42%);
+  border-radius: 5px;
+  &.margin-bottom {
+    margin-bottom:$v-rhythm * 0.5;
+  }
+}
+
+.border-box .knowledge-profile-section-title {
+  border-radius:5px 5px 0 0;
+}
+
+.knowledge-profile-section-sub-title {
+  @include font-size(12);
+  font-weight:$font-regular;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height:1.1;
+  color:$green;
+  margin-bottom:$v-rhythm * 0.25;
+}
+
 .knowledge__section-title {
   font-weight:$font-black;
   padding:12px;
@@ -1239,14 +1289,14 @@ ul.pagination {
 }
 
 .fipriot-info {
-
+  a { word-break: break-all; }
 }
 
 .fipriot-info__group,
 .fipriot-info__photo {
-  @include font-size(12);
+  @include font-size(13);
   margin-bottom:15px;
-  line-height:1.3;
+  line-height:1.4;
 }
 .fipriot-info__photo {
   display:none;
@@ -1270,11 +1320,14 @@ ul.pagination {
   background:radial-gradient(white 60%, #efefef 100%);
 }
 .fipriot-info__group-title {
-  padding:3px 6px;
+  padding:6px 10px;
   margin-bottom:10px;
   background-color:lighten($green, 42%);
+  @include font-size(12);
   color:$green;
   border-radius: 5px;
+  text-transform:uppercase;
+  letter-spacing:2px;
 }
 .fipriot-info__group-row {
   margin-bottom:10px;
@@ -1291,7 +1344,11 @@ ul.pagination {
   margin-top:10px;
   padding:5px;
 }
-.fipriot-info__bio-excerpt,
-.fipriot-info__read-more-link {
-  display:none;
+
+.para-padded {
+  padding:10px;
+}
+
+.border-light-green {
+  border: 1px solid lighten($green, 42%);
 }

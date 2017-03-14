@@ -40,6 +40,14 @@
         $('input[type=checkbox][name="expertise_team[]"][value="0"]').attr('checked', false);
     });
 
+
+    // Remove repeatable row when cross icon clicked
+    $('.remove-repeatable-row').on('click', function()
+    {
+        $(this).closest('tr').remove();
+        return false;
+    });
+
     $('.entry-table-new-row-button').on('click', function(e)
     {
         var targetTable = $(this).data('target-table'),
@@ -57,15 +65,14 @@
 
         $(targetTable + ' tbody').append('<tr>' + repeatingRow.html() + '</tr>');
 
-        return false;
-    });
+        // Trigger the remove button
+        $('.remove-repeatable-row').on('click', function()
+        {
+            $(this).closest('tr').remove();
+            return false;
+        });
 
-    // Read more link on survey profile page
-    $('.fipriot-info__read-more-link').on('click', function()
-    {
-       $('.fipriot-info__bio-excerpt').slideToggle();
-       $('.fipriot-info__bio').slideToggle();
-       $(this).text($(this).text() == 'Read less' ? 'Read more' : 'Read less');
+        return false;
     });
 
     //If there are no page navigation links, hide the blank div
@@ -231,6 +238,19 @@
     $('#unit_2').on('change', function()
     {
         getClientsForUnit($('#unit_2'));
+    });
+
+    // Show only expertise areas in profile view on page load
+    $('.expertise-list__row').hide();
+    $('.expertise-list__row.user-expertise').show();
+
+    // Use the .user-expertise class to tell if .expertise-list__container contains any user expertise
+    // If not, hide the whole container when only showing the user's expertise
+    $('.expertise-list__container').each(function()
+    {
+        if( ! $(this).find('.user-expertise').length) {
+            $(this).hide();
+        }
     });
 
     // Knowledge list buttons

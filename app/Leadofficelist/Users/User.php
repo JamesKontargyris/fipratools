@@ -44,6 +44,12 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 		return $this->belongsToMany( '\Leadofficelist\Knowledge_languages\KnowledgeLanguage' );
 	}
 
+	public function knowledge_data()
+	{
+		//One user has many knowledge data entries
+		return $this->hasMany( '\Leadofficelist\Knowledge_data\KnowledgeData' );
+	}
+
 	public function getFirstNameAttribute( $value )
 	{
 		return ucfirst( $value );
