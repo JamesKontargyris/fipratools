@@ -7,19 +7,11 @@ class UpdateUserInfoCommand {
 	public $dob_day;
 	public $dob_month;
 	public $dob_year;
-	public $joined_fipra;
-	public $total_fipra_working_time;
-	public $other_network;
-	public $formal_positions;
 
-	function __construct( $dob_day, $dob_month, $dob_year, $joined_fipra, $total_fipra_working_time, $other_network, $formal_positions ) {
+	function __construct( $dob_day, $dob_month, $dob_year ) {
 		$this->dob_day = $dob_day;
 		$this->dob_month = $dob_month;
 		$this->dob_year = $dob_year;
-		$this->joined_fipra = $joined_fipra;
-		$this->total_fipra_working_time = $total_fipra_working_time;
-		$this->other_network = trim($other_network);
-		$this->formal_positions = trim($formal_positions);
 		$this->id = Auth::user()->id;
 	}
 

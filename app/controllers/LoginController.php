@@ -40,7 +40,7 @@ class LoginController extends \BaseController
 			return Redirect::to('/password/change');
 		}
 
-		return Redirect::to('/');
+		return Redirect::intended('/');
 	}
 
 	public function logout()

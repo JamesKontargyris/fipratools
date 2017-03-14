@@ -45,7 +45,7 @@
                                 </td>
                                 <td class="actions content-right hide-print">
                                     {{ Form::open(['route' => array('knowledge_languages.destroy', $language->id), 'method' => 'delete']) }}
-                                    <button type="submit" class="red-but delete-row" data-resource-type="knowledge area"><i class="fa fa-times"></i></button>
+                                    <button type="submit" class="red-but delete-row" data-resource-type="language"><i class="fa fa-times"></i></button>
                                     {{ Form::close() }}
                                 </td>
                             </tr>

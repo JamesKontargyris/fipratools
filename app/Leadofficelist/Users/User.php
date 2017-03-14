@@ -75,10 +75,6 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 	{
 		$update_user = $this->find($user->id);
 		$update_user->date_of_birth = $user->dob_year . '-' . $user->dob_month . '-' . $user->dob_day;
-		$update_user->joined_fipra = $user->joined_fipra . '-01-01';
-		$update_user->total_fipra_working_time  = $user->total_fipra_working_time;
-		$update_user->other_network      = $user->other_network;
-		$update_user->formal_positions   = $user->formal_positions;
 		$update_user->survey_updated    = 1;
 		$update_user->knowledge_profile_last_updated = date('Y-m-d');
 		$update_user->save();

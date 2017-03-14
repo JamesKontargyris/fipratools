@@ -55,52 +55,8 @@
 
     @if($user_info->date_of_birth != '0000-00-00')
         <div class="row">
-            <div class="col-4">
-                <div class="row no-margin">
-                    <div class="col-6">
-                        <div class="border-box section-survey">
-                            <div class="border-box__content">
-                                <div class="border-box__sub-title">Date of Birth</div>
-                                <p class="no-padding">{{ date('j F Y', strtotime($user_info->date_of_birth)) }} <br><em>{{ calculate_age($user_info->date_of_birth) }} years old</em></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 last">
-                        <div class="border-box section-survey">
-                            <div class="border-box__content">
-                                <div class="border-box__sub-title">Working time spent on Fipra Network matters</div>
-                                <p class="no-padding">{{ $user_info->total_fipra_working_time }}%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="border-box section-survey">
-                    <div class="border-box__content">
-                        <div class="border-box__sub-title">Other Networks / Memberships / Associations</div>
-                        <p class="no-padding">{{ $user_info->other_network ? $user_info->other_network : 'None' }}</p>
-                    </div>
-                </div>
-                <div class="border-box section-survey">
-                    <div class="border-box__content">
-                        <div class="border-box__sub-title">Formal Positions</div>
-                        <p class="no-padding">{{ $user_info->formal_positions ? $user_info->formal_positions : 'None' }}</p>
-                    </div>
-                </div>
-                <div class="border-box section-survey">
-                    <div class="border-box__content">
-                        <div class="border-box__sub-title">Languages</div>
-                        <p class="no-padding">
-                            @foreach($language_info as $name)
-                                {{ $name }}<br>
-                            @endforeach
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-8 last">
+            <div class="col-6">
                 @if(isset($expertise_info['areas']) && count($expertise_info['areas']) > 0)
-                    <h3 class="expertise-list__section-title">Your Knowledge</h3>
                     <div class="button-group">
                         <a href="#" class="primary knowledge-toggle button-show-all"><i class="fa fa-eye"></i> Show all knowledge areas</a> <a href="#" class="primary knowledge-toggle button-show-expertise"><i class="fa fa-eye"></i> Show expertise only</a>
                     </div>
@@ -131,6 +87,41 @@
                         </div>
                     @endforeach
                 @endif
+            </div>
+
+            <div class="col-6 last">
+                <div class="row no-margin">
+                    <div class="col-6">
+                        <div class="border-box section-survey">
+                            <div class="border-box__content">
+                                <div class="border-box__sub-title">Date of Birth</div>
+                                <p class="no-padding">{{ date('j F Y', strtotime($user_info->date_of_birth)) }} <br><em>{{ calculate_age($user_info->date_of_birth) }} years old</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-box section-survey">
+                    <div class="border-box__content">
+                        <div class="border-box__sub-title">Other Networks / Memberships / Associations</div>
+                        <p class="no-padding">{{ $user_info->other_network ? $user_info->other_network : 'None' }}</p>
+                    </div>
+                </div>
+                <div class="border-box section-survey">
+                    <div class="border-box__content">
+                        <div class="border-box__sub-title">Formal Positions</div>
+                        <p class="no-padding">{{ $user_info->formal_positions ? $user_info->formal_positions : 'None' }}</p>
+                    </div>
+                </div>
+                <div class="border-box section-survey">
+                    <div class="border-box__content">
+                        <div class="border-box__sub-title">Languages</div>
+                        <p class="no-padding">
+                            @foreach($language_info as $name)
+                                {{ $name }}<br>
+                            @endforeach
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     @endif

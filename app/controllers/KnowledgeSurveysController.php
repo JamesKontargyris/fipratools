@@ -6,8 +6,10 @@ use Leadofficelist\Exceptions\ProfileNotFoundException;
 use Leadofficelist\Forms\AddEditSurvey as AddEditSurveyForm;
 use Leadofficelist\Knowledge_area_groups\KnowledgeAreaGroup;
 use Leadofficelist\Knowledge_areas\KnowledgeArea;
+use Leadofficelist\Knowledge_data\KnowledgeData;
 use Leadofficelist\Knowledge_languages\KnowledgeLanguage;
 use Leadofficelist\Knowledge_surveys\KnowledgeSurvey;
+use Leadofficelist\Sector_categories\Sector_category;
 use Leadofficelist\Units\Unit;
 use Leadofficelist\Users\User;
 
@@ -51,18 +53,18 @@ class KnowledgeSurveysController extends \BaseController {
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 
-		$items      = User::where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items = User::where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		/*$items      = User::where( 'id', '!=', $this->user->id )->where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );*/
 		$items->key = 'survey';
-		$user_info      = $this->user;
+		$user_info  = $this->user;
 
 		$this->getFormData();
-		$units = $this->units;
-		$areas = $this->areas;
-		$area_groups = KnowledgeAreaGroup::orderBy('order', 'ASC')->get();
-		$languages = $this->languages;
+		$units       = $this->units;
+		$areas       = $this->areas;
+		$area_groups = KnowledgeAreaGroup::orderBy( 'order', 'ASC' )->get();
+		$languages   = $this->languages;
 
-		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info', 'units', 'areas', 'languages', 'area_groups') );
+		return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'user_info', 'units', 'areas', 'languages', 'area_groups' ) );
 	}
 
 	/**
@@ -79,13 +81,11 @@ class KnowledgeSurveysController extends \BaseController {
 				$items->filter_value = $this->getFilteredValues();
 			} else {
 
-				$items = User::whereDate('date_of_birth', '>', '0000-00-00')->where(function($query)
-				{
-					$query->where('first_name', 'LIKE', $this->search_term)->orWhere('last_name', 'LIKE', $this->search_term);
-				})->orWhereHas('knowledge_areas', function($query)
-				{
-					$query->where('knowledge_areas.name', 'LIKE', $this->search_term);
-				})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+				$items = User::whereDate( 'date_of_birth', '>', '0000-00-00' )->where( function ( $query ) {
+					$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+				} )->orWhereHas( 'knowledge_areas', function ( $query ) {
+					$query->where( 'knowledge_areas.name', 'LIKE', $this->search_term );
+				} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 			}
 
 			if ( ! $this->checkForSearchResults( $items ) ) {
@@ -95,10 +95,10 @@ class KnowledgeSurveysController extends \BaseController {
 			$items->key         = 'survey';
 
 			$this->getFormData();
-			$units = $this->units;
-			$areas = $this->areas;
-			$area_groups = KnowledgeAreaGroup::orderBy('order', 'ASC')->get();
-			$languages = $this->languages;
+			$units       = $this->units;
+			$areas       = $this->areas;
+			$area_groups = KnowledgeAreaGroup::orderBy( 'order', 'ASC' )->get();
+			$languages   = $this->languages;
 
 			return View::make( 'knowledge_surveys.index' )->with( compact( 'items', 'units', 'areas', 'languages', 'area_groups' ) );
 		} else {
@@ -114,7 +114,7 @@ class KnowledgeSurveysController extends \BaseController {
 	public function getShowProfile() {
 		$this->check_perm( 'view_knowledge' );
 
-		$user_info      = $this->user;
+		$user_info = $this->user;
 
 		if ( isset( $this->user ) && $this->user->date_of_birth != '0000-00-00' ) {
 			$language_info  = $this->getUserLanguageInfo();
@@ -141,61 +141,69 @@ class KnowledgeSurveysController extends \BaseController {
 	public function show( $id ) {
 		$this->check_perm( 'view_knowledge' );
 
-		$user = User::find($id);
+		$user = User::find( $id );
 
-		if(isset($user) && $user->survey_updated && $user->date_of_birth != '0000-00-00')
-		{
-			$user_info = $user;
-			$language_info = $this->getUserLanguageInfo($id);
-			$expertise_info = $this->getExpertise($id);
-			$score_info = $this->getUserExpertiseInfoIDKeys($id);
+		if ( isset( $user ) && $user->survey_updated && $user->date_of_birth != '0000-00-00' ) {
+			$user_info      = $user;
+			$language_info  = $this->getUserLanguageInfo( $id );
+			$expertise_info = $this->getExpertise( $id );
+			$score_info     = $this->getUserExpertiseInfoIDKeys( $id );
+			$fipriot_info = json_decode(file_get_contents('http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email));
 
-			return View::make( 'knowledge_surveys.show' )->with(compact('user_info', 'language_info', 'expertise_info', 'score_info'));
+			return View::make( 'knowledge_surveys.show' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info', 'fipriot_info' ) );
 		}
 
 		throw new ProfileNotFoundException();
 	}
 
 	public function getUpdateProfile() {
-			$this->check_perm( 'edit_knowledge' );
+		$this->check_perm( 'edit_knowledge' );
 
-			$dob_data          = $this->getDateSelect( 'dob' );
-			$joined_fipra_data = $this->getDateSelect( 'joined_fipra' );
-			$languages         = $this->getLanguages();
-			$expertise         = $this->getExpertise();
+		$dob_data        = $this->getDateSelect( 'dob' );
+		$languages       = $this->getLanguages();
+		$expertise       = $this->getExpertise();
+		$expertise_areas = $this->getExpertiseAreas();
 
-			$user_info = $this->user;
-			if(isset($user_info))
-			{
-				$language_info = $this->getUserLanguages();
-				$expertise_info = $this->getUserExpertiseInfoIDKeys();
+		$other_data     = KnowledgeData::where( 'user_id', '=', $this->user->id )->get()->toArray();
+		$knowledge_data = [];
+		foreach ( $other_data as $data ) {
+			$knowledge_data[ $data['slug'] ] = $data['serialized'] ? unserialize($data['data_value']) : $data['data_value'];
+		}
 
-				return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'expertise_info' ) );
-			}
+		$user_info = $this->user;
+		if ( isset( $user_info ) ) {
+			$language_info  = $this->getUserLanguages();
+			$expertise_info = $this->getUserExpertiseInfoIDKeys();
 
-			return Redirect::to('survey/profile');
+			return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'expertise_info', 'knowledge_data', 'expertise_areas' ) );
+		}
+
+		return Redirect::to( 'survey/profile' );
 
 	}
 
 	public function postUpdateProfile() {
+		dd(Input::all());
 		$this->check_perm( 'edit_knowledge' );
 
 		$input = Input::all();
 		// Add the knowledge areas into the validation rules and update feedback messages
-		foreach(KnowledgeArea::all() as $area) {
-			$this->addEditSurvey->rules['areas.' . $area->id] = 'required|min:1|max:5';
-			$this->addEditSurvey->messages['areas.' . $area->id . '.required'] = 'Please select an expertise score for ' . $area->name . '.';
+		foreach ( KnowledgeArea::all() as $area ) {
+			$this->addEditSurvey->rules[ 'areas.' . $area->id ]                  = 'required|min:1|max:5';
+			$this->addEditSurvey->messages[ 'areas.' . $area->id . '.required' ] = 'Please select an expertise score for ' . $area->name . '.';
 		}
 		// Validate input
 		$this->addEditSurvey->validate( $input );
 		/*print_r($input); die();*/
 
-		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateKnowledgeInfoCommand' );
-		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateLanguageInfoCommand' );
-		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateUserInfoCommand' );
+		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateUserInfoCommand' ); // Takes care of user-specific data
+		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateLanguageInfoCommand' ); // Takes case of pre-defined languages
+		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateKnowledgeInfoCommand' ); // Takes care of knowledge area scores
+		$this->execute( 'Leadofficelist\Knowledge_data\UpdateKnowledgeDataCommand' ); // Takes care of everything else
 
 		Flash::overlay( 'Knowledge profile updated.', 'success' );
 		EventLog::add( 'Knowledge survey updated', $this->user->getFullName(), Unit::find( $this->user->unit_id )->name, 'edit' );
+
 		return Redirect::to( 'survey/profile' );
 	}
 
@@ -265,18 +273,26 @@ class KnowledgeSurveysController extends \BaseController {
 		return $expertise;
 	}
 
-	protected function getUserLanguageInfo($id = null)
-	{
-		return $id ? User::find($id)->knowledge_languages()->get()->lists('name') : $this->user->knowledge_languages()->get()->lists('name');
+	protected function getExpertiseAreas() {
+		$sector_categories = Sector_category::orderBy( 'name' )->where('name', '<>', 'Other')->get()->toArray();
+		$expertise_areas       = [];
+		foreach ( $sector_categories as $cat ) {
+			$expertise_areas[ $cat['id'] ] = $cat['name'];
+		}
+
+		return $expertise_areas;
 	}
 
-	protected function getUserLanguages($id = null)
-	{
+	protected function getUserLanguageInfo( $id = null ) {
+		return $id ? User::find( $id )->knowledge_languages()->get()->lists( 'name' ) : $this->user->knowledge_languages()->get()->lists( 'name' );
+	}
+
+	protected function getUserLanguages( $id = null ) {
 		$languages_processed = [];
 		// Get language data via the pivot table
-		$languages    = $id ? User::find($id)->knowledge_languages()->get()->toArray() : $this->user->knowledge_languages()->get()->toArray();
+		$languages = $id ? User::find( $id )->knowledge_languages()->get()->toArray() : $this->user->knowledge_languages()->get()->toArray();
 
-		foreach($languages as $language) {
+		foreach ( $languages as $language ) {
 			$languages_processed[] = $language['id'];
 		}
 
@@ -284,39 +300,35 @@ class KnowledgeSurveysController extends \BaseController {
 
 	}
 
-	protected function getUserExpertiseInfo($id = null)
-	{
+	protected function getUserExpertiseInfo( $id = null ) {
 		// Get language data via the pivot table
 
-		$expertise    = $id ? User::find($id)->knowledge_areas()->get() : $this->user->knowledge_areas()->get();
+		$expertise     = $id ? User::find( $id )->knowledge_areas()->get() : $this->user->knowledge_areas()->get();
 		$expertiseData = [];
 
-		foreach($expertise as $expert)
-		{
+		foreach ( $expertise as $expert ) {
 			// Create an array with expertise names as keys and scores as values
-			$expertiseData[$expert->name] = $expert->pivot->score;
+			$expertiseData[ $expert->name ] = $expert->pivot->score;
 		}
 
 		// Put into alphabetical order
-		asort($expertiseData, SORT_STRING);
+		asort( $expertiseData, SORT_STRING );
 
 		return $expertiseData;
 	}
 
-	protected function getUserExpertiseInfoIDKeys($id = null)
-	{
+	protected function getUserExpertiseInfoIDKeys( $id = null ) {
 		// Get language data via the pivot table
-		$expertise    = $id ? User::find($id)->knowledge_areas()->get() : $this->user->knowledge_areas()->get();
+		$expertise     = $id ? User::find( $id )->knowledge_areas()->get() : $this->user->knowledge_areas()->get();
 		$expertiseData = [];
 
-		foreach($expertise as $expert)
-		{
+		foreach ( $expertise as $expert ) {
 			// Create an array with expertise names as keys and scores as values
-			$expertiseData[$expert->id] = $expert->pivot->score;
+			$expertiseData[ $expert->id ] = $expert->pivot->score;
 		}
 
 		// Put into alphabetical order
-		asort($expertiseData, SORT_STRING);
+		asort( $expertiseData, SORT_STRING );
 
 		return $expertiseData;
 	}
@@ -327,15 +339,15 @@ class KnowledgeSurveysController extends \BaseController {
 	 * @return bool
 	 */
 	protected function getFormData() {
-		$this->units             = $this->getUnitsFormData( true, 'All' );
-		$this->areas             = $this->getKnowledgeAreasFormData( true, 'All' );
-		$this->languages             = $this->getKnowledgeLanguagesFormData( true, 'All' );
+		$this->units     = $this->getUnitsFormData( true, 'All' );
+		$this->areas     = $this->getKnowledgeAreasFormData( true, 'All' );
+		$this->languages = $this->getKnowledgeLanguagesFormData( true, 'All' );
 
 		return true;
 	}
 
 	protected function getAll() {
-		return User::whereDate('date_of_birth', '>', '0000-00-00')->orderBy( 'id', 'DESC' )->get();
+		return User::whereDate( 'date_of_birth', '>', '0000-00-00' )->orderBy( 'id', 'DESC' )->get();
 	}
 
 	protected function getSelection() {
@@ -343,15 +355,13 @@ class KnowledgeSurveysController extends \BaseController {
 			$search_term             = $this->findSearchTerm();
 			$this->search_term_clean = str_replace( '%', '', $search_term );
 
-			$items = User::whereDate('date_of_birth', '>', '0000-00-00')->where(function($query)
-			{
-				$query->where('first_name', 'LIKE', $this->search_term)->orWhere('last_name', 'LIKE', $this->search_term);
-			})->orWhereHas('knowledge_areas', function($query)
-			{
-				$query->where('knowledge_areas.name', 'LIKE', $this->search_term);
-			})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = User::whereDate( 'date_of_birth', '>', '0000-00-00' )->where( function ( $query ) {
+				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+			} )->orWhereHas( 'knowledge_areas', function ( $query ) {
+				$query->where( 'knowledge_areas.name', 'LIKE', $this->search_term );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		} else {
-			$items = User::whereDate('date_of_birth', '>', '0000-00-00')->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = User::whereDate( 'date_of_birth', '>', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 
 		return $items;
@@ -361,34 +371,32 @@ class KnowledgeSurveysController extends \BaseController {
 		// Get a replica of the filters so we can play with them, without affecting the original
 		$filters = Session::get( $this->resource_key . '.Filters' );
 		// Get a blank Eloquent model
-		$items = User::whereNotNull('id')->whereDate('date_of_birth', '>', '0000-00-00');
+		$items = User::whereNotNull( 'id' )->whereDate( 'date_of_birth', '>', '0000-00-00' );
 		// Where functions are split across all columns to ensure filters work correctly
-		$items->where(function($query) use ($filters)
-		{
+		$items->where( function ( $query ) use ( $filters ) {
 			if ( isset( $filters['unit_id'] ) ) {
 				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
 				foreach ( $filters['unit_id'] as $id ) {
 					$query->orWhere( 'unit_id', '=', $id );
 				}
 			}
-		})->where(function($query) use ($filters)
-		{
-			if( isset($filters['knowledge_area_id']) ) {
-				foreach($filters['knowledge_area_id'] as $id)
-				{
+		} )->where( function ( $query ) use ( $filters ) {
+			if ( isset( $filters['knowledge_area_id'] ) ) {
+				foreach ( $filters['knowledge_area_id'] as $id ) {
 					// Get all users that have this knowledge area assigned to them
-					$validUsers = KnowledgeArea::find($id)->users()->get();
-					foreach($validUsers as $user) {
+					$validUsers = KnowledgeArea::find( $id )->users()->get();
+					foreach ( $validUsers as $user ) {
 						// Is the user's score 4 or 5?
-						if($user->pivot->score >= 4)
-							// If so, include them in the query
-							$query->orWhere('id', '=', $user->id);
+						if ( $user->pivot->score >= 4 ) // If so, include them in the query
+						{
+							$query->orWhere( 'id', '=', $user->id );
+						}
 						{
 						}
 					}
 				}
 			}
-		})->rowsSortOrder( $this->rows_sort_order );
+		} )->rowsSortOrder( $this->rows_sort_order );
 
 		if ( $for == 'export' ) {
 			// Get all results for PDF export
@@ -410,8 +418,8 @@ class KnowledgeSurveysController extends \BaseController {
 		$values = '';
 		foreach ( Session::get( $this->resource_key . '.Filters' ) as $filter_name => $filter_array ) {
 
-			foreach($filter_array as $filter_value) {
-				if($filter_name != 'unit_id') {
+			foreach ( $filter_array as $filter_value ) {
+				if ( $filter_name != 'unit_id' ) {
 					$values .= KnowledgeArea::find( $filter_value )->name . ', ';
 				} else {
 					$values .= Unit::find( $filter_value )->name . ', ';

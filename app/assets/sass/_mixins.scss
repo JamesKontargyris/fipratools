@@ -1,4 +1,11 @@
 // _mixins.scss: any mixins created for this project.
+@mixin clearfix {
+	&::after {
+		clear: both;
+		content: "";
+		display: table;
+	}
+}
 
 @mixin background-img($imgpath, $x:0, $y:0, $repeat: no-repeat) {
     background: {
@@ -11,11 +18,12 @@
 @mixin but {
 	cursor:pointer;
 	padding:($v-rhythm / 4) 10px;
-	line-height:$v-rhythm * 2;
 	@include font-size(16);
+	line-height:1.2;
 	@include border-radius(5px);
 	text-align:center;
 	font-weight:$font-regular;
+	white-space: nowrap;
 	&:hover {
 		opacity:0.8;
 	}

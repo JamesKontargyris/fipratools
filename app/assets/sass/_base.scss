@@ -18,6 +18,7 @@ body {
 a {
 	text-decoration:none;
 	color:$blue;
+	word-break: break-all;
 	&:hover {
       color:rgba($blue, 0.7);
 	}
@@ -42,7 +43,11 @@ h2 {
     color:white;
     @include breakpoint($m-max) {
       @include font-size(16);
-      }
+	}
+
+	&.no-right-pad {
+		padding-right:15px !important;
+	}
 }
 h3 {
   padding:0 0 ($v-rhythm / 2);
@@ -120,6 +125,7 @@ textarea {
 	padding:$v-rhythm / 4 10px;
 	@include font-size(14);
 	font-family:$font-family;
+	border-radius: 5px;
 	@include breakpoint($l) {
 		@include font-size(16);
 	}
@@ -148,6 +154,7 @@ select {
 	width:100%;
 	padding:$v-rhythm / 4 10px;
 	@include font-size(14);
+	border:1px solid $green;
 	@include breakpoint($l) {
 		@include font-size(16);
 	}
@@ -196,5 +203,5 @@ hr {
 	background-color:none;
 	height:1px;
 	border:0;
-	border-top:1px solid #efefef;
+	border-top:1px dotted #d7d7d7;
 }

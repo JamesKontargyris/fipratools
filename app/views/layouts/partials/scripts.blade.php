@@ -9,6 +9,8 @@
 <script src="{{ asset('js/Chart.min.js') }}"></script>
 <!--Select2-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<!--TagsInput-->
+<script src="{{ asset('js/tagsinput/jquery.tagsinput.min.js') }}"></script>
 {{--Site JS--}}
 <script src="{{ asset('js/jquery.multi-select.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/site.js?141001') }}"></script>

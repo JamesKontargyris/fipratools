@@ -25,6 +25,48 @@
 
     // Apply select2 library to select-search-multiple fields
     $('.select2').select2();
+    // Apply tagsinput library to tags-input fields
+    $('.tags-input').tagsInput({ 'defaultText': '', 'width':'100%', 'height':'90px'});
+
+    // If "none of the above" is ticked on team question in the knowledge survey,
+    // untick all other ticked expertise areas (and vice versa).
+    $('input[type=checkbox][name="expertise_team[]"][value="0"]').on('click', function(e)
+    {
+       $('input[type=checkbox][name="expertise_team[]"][value!="0"]').attr('checked', false);
+    });
+
+    $('input[type=checkbox][name="expertise_team[]"][value!="0"]').on('click', function(e)
+    {
+        $('input[type=checkbox][name="expertise_team[]"][value="0"]').attr('checked', false);
+    });
+
+    $('.entry-table-new-row-button').on('click', function(e)
+    {
+        var targetTable = $(this).data('target-table'),
+            repeatingRow = $(targetTable + ' tbody .entry-table-repeatable-row').clone(),
+            noOfRows = parseInt($(this).attr('data-no-of-rows')) + 1;
+
+        $(this).attr('data-no-of-rows', noOfRows);
+
+        repeatingRow.find('input').prop('disabled', false);
+
+        // public-office table
+        repeatingRow.find('.position-field').attr('name', 'public_office[' + noOfRows + '][position]');
+        repeatingRow.find('.from-field').attr('name', 'public_office[' + noOfRows + '][from]');
+        repeatingRow.find('.to-field').attr('name', 'public_office[' + noOfRows + '][to]');
+
+        $(targetTable + ' tbody').append('<tr>' + repeatingRow.html() + '</tr>');
+
+        return false;
+    });
+
+    // Read more link on survey profile page
+    $('.fipriot-info__read-more-link').on('click', function()
+    {
+       $('.fipriot-info__bio-excerpt').slideToggle();
+       $('.fipriot-info__bio').slideToggle();
+       $(this).text($(this).text() == 'Read less' ? 'Read more' : 'Read less');
+    });
 
     //If there are no page navigation links, hide the blank div
     if($('.page-menu-nav ul.small-font li').length == 0)
