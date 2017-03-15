@@ -92,7 +92,7 @@ class CasesController extends \BaseController {
 		$this->execute( 'Leadofficelist\Cases\AddCaseCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
-		EventLog::add( 'Case study created: ' . $input['name'], $this->user->getFullName(), Unit::find( $input['unit_id'] )->name, 'add' );
+		EventLog::add( 'Case study created: ' . $input['name'], $this->user->getFullName(), ($this->user->hasRole('Administrator') ? 'on behalf of ' : '') . Unit::find( $input['unit_id'] )->name, 'add' );
 
 		return Redirect::route( 'cases.index' );
 	}
@@ -158,7 +158,7 @@ class CasesController extends \BaseController {
 		$this->execute( 'Leadofficelist\Cases\EditCaseCommand', $input );
 
 		Flash::overlay( 'Case study updated.', 'success' );
-		EventLog::add( 'Case study edited: ' . $input['name'], $this->user->getFullName(), Unit::find( $input['unit_id'] )->name, 'edit' );
+		EventLog::add( 'Case study edited: ' . $input['name'], $this->user->getFullName(), ($this->user->hasRole('Administrator') ? 'on behalf of ' : '') . Unit::find( $input['unit_id'] )->name, 'edit' );
 
 		return Redirect::route( 'cases.index' );
 	}
@@ -170,11 +170,12 @@ class CasesController extends \BaseController {
 	 * @param  int $id
 	 *
 	 * @return Response
+	 * @throws ResourceNotFoundException
 	 */
 	public function destroy( $id ) {
 		if ( $case = $this->getCase( $id ) ) {
 			Flash::overlay( '"' . $case->name . '" has been deleted.', 'info' );
-			EventLog::add( 'Case study deleted: ' . CaseStudy::find( $id )->name, $this->user->getFullName(), $this->user->unit()->first()->name, 'delete' );
+			EventLog::add( 'Case study deleted: ' . CaseStudy::find( $id )->name, $this->user->getFullName(), ($this->user->hasRole('Administrator') ? 'on behalf of ' : '') . $this->user->unit()->first()->name, 'delete' );
 			CaseStudy::destroy( $id );
 
 			return Redirect::route( 'cases.index' );

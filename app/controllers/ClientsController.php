@@ -105,7 +105,7 @@ class ClientsController extends \BaseController
 		$this->execute( 'Leadofficelist\Clients\AddClientCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" added.', 'success' );
-		EventLog::add('Client created: ' . $input['name'], $this->user->getFullName(), Unit::find($input['unit_id'])->name, 'add');
+		EventLog::add('Client created: ' . $input['name'], $this->user->getFullName(), ($this->user->hasRole('Administrator') ? 'on behalf of ' : '') . Unit::find($input['unit_id'])->name, 'add');
 
 		return Redirect::route( 'clients.index' );
 	}
@@ -143,6 +143,7 @@ class ClientsController extends \BaseController
 	 * @param  int $id
 	 *
 	 * @return Response
+	 * @throws PermissionDeniedException
 	 */
 	public function edit( $id )
 	{
@@ -195,7 +196,7 @@ class ClientsController extends \BaseController
 		$this->execute( 'Leadofficelist\Clients\EditClientCommand', $input );
 
 		Flash::overlay( '"' . $input['name'] . '" updated.', 'success' );
-		EventLog::add('Client edited: ' . $input['name'], $this->user->getFullName(), Unit::find($input['unit_id'])->name, 'edit');
+		EventLog::add('Client edited: ' . $input['name'], $this->user->getFullName(), ($this->user->hasRole('Administrator') ? 'on behalf of ' : '') . Unit::find($input['unit_id'])->name, 'edit');
 
 		return Redirect::route( 'clients.index' );
 	}
@@ -216,7 +217,7 @@ class ClientsController extends \BaseController
 		{
 			Client::destroy( $id );
 			Flash::overlay( '"' . $client->name . '" deleted.', 'info' );
-			EventLog::add('Client deleted: ' . $client->name, $this->user->getFullName(), Unit::find($client->unit_id)->name, 'delete');
+			EventLog::add('Client deleted: ' . $client->name, $this->user->getFullName(), ($this->user->hasRole('Administrator') ? 'on behalf of ' : '') . Unit::find($client->unit_id)->name, 'delete');
 		}
 
 		return Redirect::route( 'clients.index' );
