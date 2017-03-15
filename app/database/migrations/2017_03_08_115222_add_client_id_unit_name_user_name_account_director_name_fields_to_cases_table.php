@@ -15,7 +15,6 @@ class AddClientIdUnitNameUserNameAccountDirectorNameFieldsToCasesTable extends M
 		Schema::table('cases', function(Blueprint $table)
 		{
 			$table->integer('client_id')->unsigned()->index()->after('client');
-				$table->foreign('client_id')->references('id')->on('clients');
 			$table->string('unit_name')->after('unit_id');
 			$table->string('user_name')->after('user_id');
 			$table->string('account_director_name')->after('account_director_id');
