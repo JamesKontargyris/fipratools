@@ -44,6 +44,13 @@ class ReportsController extends \BaseController {
 		return View::make('reports.client_count_by_unit')->with(['report_type' => 'unit', 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
 	}
 
+	public function getByexpertise()
+	{
+		$data = $this->getClientsByExpertise();
+
+		return View::make('reports.client_count_by_expertise_area')->with(['report_type' => 'expertise', 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+	}
+
 	public function getBysector()
 	{
 		$data = $this->getClientsBySector();
@@ -130,6 +137,13 @@ class ReportsController extends \BaseController {
 					return (string) $view;
 					break;
 
+				case 'expertise':
+					$data = $this->getClientsByExpertise();
+					$heading1 = 'Active Clients by Expertise Area';
+					$view = View::make('export.pdf.report_sector')->with(['heading1' => $heading1, 'colours' => $this->colours, 'clients' => $data['clients'], 'total_clients' => number_format($data['total_clients'], 0, '.', ',')]);
+					return (string) $view;
+					break;
+
 				default:
 					$data = $this->getClientsBySector();
 					$heading1 = 'Active Clients by Sector';
@@ -165,6 +179,32 @@ class ReportsController extends \BaseController {
 	}
 
 	protected function getClientsBySector()
+	{
+		$sectors = Sector::all();
+		$clients = [];
+		$total_clients = 0;
+		$count = 0;
+		foreach($sectors as $sector)
+		{
+			$clients[] = ['sector_name' => $sector->name, 'client_count' => $sector->clients()->where('status', '=', 1)->count()];
+			$total_clients += $sector->clients()->where('status', '=', 1)->count();
+		}
+
+		uasort($clients, [$this, 'compare']);
+		foreach($clients as &$client)
+		{
+			$client['id'] = $count;
+			$client['percentage'] = $this->formatPercentage($client['client_count'], $total_clients);
+			$count++;
+		}
+
+		$data['clients'] = $clients;
+		$data['total_clients'] = $total_clients;
+
+		return $data;
+	}
+
+	protected function getClientsByExpertise()
 	{
 		$sector_cats = Sector_category::all();
 		$clients = [];

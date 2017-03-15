@@ -134,7 +134,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('pa_pr_organisations', 'From a marketing point of view, it may be useful for other to know if you PERSONALLY (not your company, though if your company is you may also claim this):') }}
+                {{ Form::label('pa_pr_organisations', 'From a marketing point of view, it may be useful for others to know if you PERSONALLY (not your company, though if your company is you may also claim this):') }}
                 <div class="label-info">You may tick more than one where appropriate.</div>
             </div>
         </div>

@@ -20,6 +20,7 @@
 							<nav class="page-menu-nav">
 								<ul class="small-font">
 									<li><a class="secondary" href="{{ url('reports/bysector') }}"><i class="fa fa-pie-chart"></i> By Sector</a></li>
+									<li><a class="secondary" href="{{ url('reports/byexpertise') }}"><i class="fa fa-pie-chart"></i> By Expertise Area</a></li>
 									<li><a class="secondary" href="{{ url('reports/byunit') }}"><i class="fa fa-pie-chart"></i> By Unit</a></li>
 									<li><a class="secondary" href="{{ url('reports/bytype') }}"><i class="fa fa-pie-chart"></i> By Type</a></li>
 									<li><a class="secondary" href="{{ url('reports/byservice') }}"><i class="fa fa-pie-chart"></i> By Service</a></li>

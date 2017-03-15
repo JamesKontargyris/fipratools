@@ -1,7 +1,7 @@
 @extends('layouts.reports')
 
 @section('page-header')
-Active Clients by Sector
+Active Clients by Expertise Area
 @stop
 
 @section('page-nav')
@@ -61,7 +61,7 @@ Active Clients by Sector
           legend: 'none',
           pieSliceText: 'label',
           pieStartAngle:20,
-          pieSliceTextStyle: {color: 'white', fontSize: 9},
+          pieSliceTextStyle: {color: 'white', fontSize: 12},
           chartArea:{left:10,top:10,width:'95%',height:'95%'},
           colors: colours
         };
