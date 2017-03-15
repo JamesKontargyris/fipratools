@@ -26,7 +26,7 @@
     // Apply select2 library to select-search-multiple fields
     $('.select2').select2();
     // Apply tagsinput library to tags-input fields
-    $('.tags-input').tagsInput({ 'defaultText': '', 'width':'100%', 'height':'90px'});
+    $('.tags-input').tagsInput({ 'defaultText': '', 'width':'100%', 'height':'90px', 'delimiter': ';'});
 
     // If "none of the above" is ticked on team question in the knowledge survey,
     // untick all other ticked expertise areas (and vice versa).
@@ -52,18 +52,28 @@
     {
         var targetTable = $(this).data('target-table'),
             repeatingRow = $(targetTable + ' tbody .entry-table-repeatable-row').clone(),
-            noOfRows = parseInt($(this).attr('data-no-of-rows')) + 1;
-
-        $(this).attr('data-no-of-rows', noOfRows);
+            noOfRows = parseInt($(this).attr('data-no-of-rows'));
 
         repeatingRow.find('input').prop('disabled', false);
 
         // public-office table
-        repeatingRow.find('.position-field').attr('name', 'public_office[' + noOfRows + '][position]');
-        repeatingRow.find('.from-field').attr('name', 'public_office[' + noOfRows + '][from]');
-        repeatingRow.find('.to-field').attr('name', 'public_office[' + noOfRows + '][to]');
+        if(targetTable == '.public-office') {
+            repeatingRow.find('.position-field').attr('name', 'public_office[' + noOfRows + '][position]');
+            repeatingRow.find('.from-field').attr('name', 'public_office[' + noOfRows + '][from]');
+            repeatingRow.find('.to-field').attr('name', 'public_office[' + noOfRows + '][to]');
+        }
+
+        // political-party table
+        if(targetTable == '.political-party') {
+            repeatingRow.find('.position-field').attr('name', 'political_party[' + noOfRows + '][position]');
+            repeatingRow.find('.party-field').attr('name', 'political_party[' + noOfRows + '][party]');
+            repeatingRow.find('.from-field').attr('name', 'political_party[' + noOfRows + '][from]');
+            repeatingRow.find('.to-field').attr('name', 'political_party[' + noOfRows + '][to]');
+        }
 
         $(targetTable + ' tbody').append('<tr>' + repeatingRow.html() + '</tr>');
+
+        $(this).attr('data-no-of-rows', noOfRows + 1);
 
         // Trigger the remove button
         $('.remove-repeatable-row').on('click', function()
@@ -73,6 +83,29 @@
         });
 
         return false;
+    });
+
+    // Reveal further details entry box on Knowledge Survey form
+
+    // On page load
+    $('.reveal-details-entry').each(function()
+    {
+        var target = $('.' + $(this).attr('name') + '_details');
+
+       if(this.checked) {
+        target.show();
+       }
+    });
+
+    // When clicked
+    $('.reveal-details-entry').change(function()
+    {
+        var target = $('.' + $(this).attr('name') + '_details');
+       if(this.checked) {
+            target.slideDown();
+       } else {
+           target.slideUp();
+       }
     });
 
     //If there are no page navigation links, hide the blank div

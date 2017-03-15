@@ -150,7 +150,7 @@ class KnowledgeSurveysController extends \BaseController {
 			$expertise_info = $this->getExpertise( $id );
 			$score_info     = $this->getUserExpertiseInfoIDKeys( $id );
 			$knowledge_data = $this->getKnowledgeData( $id );
-			$fipriot_info = json_decode(file_get_contents('http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email));
+			$fipriot_info   = json_decode( file_get_contents( 'http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email ) );
 
 			return View::make( 'knowledge_surveys.show' )->with( compact( 'user_info', 'language_info', 'expertise_info', 'score_info', 'fipriot_info', 'knowledge_data' ) );
 		}
@@ -169,7 +169,7 @@ class KnowledgeSurveysController extends \BaseController {
 		$other_data     = KnowledgeData::where( 'user_id', '=', $this->user->id )->get()->toArray();
 		$knowledge_data = [];
 		foreach ( $other_data as $data ) {
-			$knowledge_data[ $data['slug'] ] = $data['serialized'] ? unserialize($data['data_value']) : $data['data_value'];
+			$knowledge_data[ $data['slug'] ] = $data['serialized'] ? unserialize( $data['data_value'] ) : $data['data_value'];
 		}
 
 		$user_info = $this->user;
@@ -193,9 +193,33 @@ class KnowledgeSurveysController extends \BaseController {
 			$this->addEditSurvey->rules[ 'areas.' . $area->id ]                  = 'required|min:1|max:5';
 			$this->addEditSurvey->messages[ 'areas.' . $area->id . '.required' ] = 'Please select an expertise score for ' . $area->name . '.';
 		}
+		// Add each public office row into the validations rules and update feedback messages
+		foreach ( Input::get( 'public_office' ) as $id => $row ) {
+			if($id > 0) {
+				$this->addEditSurvey->rules["public_office.$id.position"] = 'required';
+				$this->addEditSurvey->rules["public_office.$id.from"] = 'required';
+				$this->addEditSurvey->rules["public_office.$id.to"] = 'required';
+			}
+			$this->addEditSurvey->messages[ "public_office.$id.position.required" ] = 'The public office "position" field is required.';
+			$this->addEditSurvey->messages[ "public_office.$id.from.required" ] = 'The public office "from" field is required.';
+			$this->addEditSurvey->messages[ "public_office.$id.to.required" ] = 'The public office "to" field is required.';
+		}
+		// Add each political party row into the validations rules and update feedback messages
+		foreach ( Input::get( 'political_party' ) as $id => $row ) {
+			if($id > 0) {
+				$this->addEditSurvey->rules["political_party.$id.position"] = 'required';
+				$this->addEditSurvey->rules["political_party.$id.party"] = 'required';
+				$this->addEditSurvey->rules["political_party.$id.from"] = 'required';
+				$this->addEditSurvey->rules["political_party.$id.to"] = 'required';
+			}
+			$this->addEditSurvey->messages[ "political_party.$id.position.required" ] = 'The political party "position" field is required.';
+			$this->addEditSurvey->messages[ "political_party.$id.party.required" ] = 'The political party "party" field is required.';
+			$this->addEditSurvey->messages[ "political_party.$id.from.required" ] = 'The political party "from" field is required.';
+			$this->addEditSurvey->messages[ "political_party.$id.to.required" ] = 'The political party "to" field is required.';
+		}
+
 		// Validate input
 		$this->addEditSurvey->validate( $input );
-		/*print_r($input); die();*/
 
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateUserInfoCommand' ); // Takes care of user-specific data
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateLanguageInfoCommand' ); // Takes case of pre-defined languages
@@ -275,8 +299,8 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	protected function getExpertiseAreas() {
-		$sector_categories = Sector_category::orderBy( 'name' )->where('name', '<>', 'Other')->get()->toArray();
-		$expertise_areas       = [];
+		$sector_categories = Sector_category::orderBy( 'name' )->where( 'name', '<>', 'Other' )->get()->toArray();
+		$expertise_areas   = [];
 		foreach ( $sector_categories as $cat ) {
 			$expertise_areas[ $cat['id'] ] = $cat['name'];
 		}
@@ -289,10 +313,10 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	protected function getKnowledgeData( $id = null ) {
-		$results = $id ? User::find( $id )->knowledge_data()->get()->toArray() : $this->user->knowledge_data()->get()->toArray();
+		$results   = $id ? User::find( $id )->knowledge_data()->get()->toArray() : $this->user->knowledge_data()->get()->toArray();
 		$user_data = [];
-		foreach($results as $data) {
-			$user_data[$data['slug']] = $data['serialized'] ? unserialize($data['data_value']) : $data['data_value'];
+		foreach ( $results as $data ) {
+			$user_data[ $data['slug'] ] = $data['serialized'] ? unserialize( $data['data_value'] ) : $data['data_value'];
 		}
 
 		return $user_data;

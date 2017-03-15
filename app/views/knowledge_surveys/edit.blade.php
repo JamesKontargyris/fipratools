@@ -50,7 +50,7 @@
         <div class="col-5">
             <div class="formfield">
                 {{ Form::label('other_languages', 'Do you speak any other languages?') }}
-                <div class="label-info">Please enter each language separated by a comma, e.g. Tunisian, Algerian, Swahili. Each language will convert to a tag.</div>
+                <div class="label-info">Please enter each language separated by a semi-colon(;), e.g. Tunisian; Algerian; Swahili. Each language will convert to a tag.</div>
             </div>
         </div>
         <div class="col-7 last">
@@ -61,13 +61,13 @@
     </div>
 
 
-    <div class="knowledge__section-title">Your Role and Company</div>
+    <div class="knowledge__section-title">Your Role(s)</div>
 
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
                 {{ Form::label('expertise_team', 'Which of these teams would you place yourself in?') }}
-                <div class="label-info">You may tick more than one appropriate.</div>
+                <div class="label-info">You may tick more than one where appropriate.</div>
             </div>
         </div>
         <div class="col-7 last">
@@ -111,6 +111,22 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="row no-margin">
+            <div class="col-5">
+                <div class="formfield">
+                    {{ Form::label('work_hours', 'Do you work full- or part-time?') }}
+                </div>
+            </div>
+            <div class="col-7 last">
+                <div class="formfield">
+                    <ul>
+                        <li>{{ Form::radio('work_hours', 'Full-time', Input::has('work_hours') ? Input::get('work_hours') : (isset($knowledge_data['work_hours']) && $knowledge_data['work_hours'] == 'Full-time') ? 1 : 0) }} Full-time</li>
+                        <li>{{ Form::radio('work_hours', 'Part-time', Input::has('work_hours') ? Input::get('work_hours') : (isset($knowledge_data['work_hours']) && $knowledge_data['work_hours'] == 'Part-time') ? 1 : 0) }} Part-time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     @endif
 
 
@@ -118,13 +134,43 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('other_network', 'If you are personally either a) a member of one or more professional PA/PR associations, or b) a registered lobbyist, please enter details here:') }}
-                <div class="label-info">Leave blank if none.</div>
+                {{ Form::label('pa_pr_organisations', 'From a marketing point of view, it may be useful for other to know if you PERSONALLY (not your company, though if your company is you may also claim this):') }}
+                <div class="label-info">You may tick more than one where appropriate.</div>
             </div>
         </div>
         <div class="col-7 last">
             <div class="formfield">
-                {{ Form::textarea('other_network', Input::has('other_network') ? Input::get('other_network') : isset($knowledge_data['other_network']) ? $knowledge_data['other_network'] : '', ['rows' => '5']) }}
+                <ul>
+                    <li>{{ Form::checkbox('pa_pr_organisations', '1', Input::has('pa_pr_organisations') ? 1 : isset($knowledge_data['pa_pr_organisations']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a member of one or more professional public affairs or public relations organisations</li>
+                    <li class="question-details pa_pr_organisations_details">
+                        <div class="label-info">Please give further details, separating each membership / organisation with a semi-colon (;).</div>
+                        {{ Form::text('pa_pr_organisations_details', Input::has('pa_pr_organisations_details') ? Input::get('pa_pr_organisations_details') : isset($knowledge_data['pa_pr_organisations']) ? $knowledge_data['pa_pr_organisations'] : '', ['class' => 'tags-input']) }}
+                    </li>
+
+                    <li>{{ Form::checkbox('registered_lobbyist', '1', Input::has('registered_lobbyist') ? 1 : isset($knowledge_data['registered_lobbyist']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a registered lobbyist</li>
+                    <li class="question-details registered_lobbyist_details">
+                        <div class="label-info">Please give further details, separating each membership / organisation with a semi-colon (;).</div>
+                        {{ Form::text('registered_lobbyist_details', Input::has('registered_lobbyist_details') ? Input::get('registered_lobbyist_details') : isset($knowledge_data['registered_lobbyist']) ? $knowledge_data['registered_lobbyist'] : '', ['class' => 'tags-input']) }}
+                    </li>
+
+                    <li>{{ Form::checkbox('formal_positions', '1', Input::has('formal_positions') ? 1 : isset($knowledge_data['formal_positions']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Have a formal title or position in any trade association, think tank, NGP, sports or professional association</li>
+                    <li class="question-details formal_positions_details">
+                        <div class="label-info">Please give further details, separating each membership / organisation with a semi-colon (;).</div>
+                        {{ Form::text('formal_positions_details', Input::has('formal_positions_details') ? Input::get('formal_positions_details') : isset($knowledge_data['formal_positions']) ? $knowledge_data['formal_positions'] : '', ['class' => 'tags-input']) }}
+                    </li>
+
+                    <li>{{ Form::checkbox('political_party_membership', '1', Input::has('political_party_membership') ? 1 : isset($knowledge_data['political_party_membership']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a member of a political party</li>
+                    <li class="question-details political_party_membership_details">
+                        <div class="label-info">Please give further details, separating each membership with a semi-colon (;).</div>
+                        {{ Form::text('political_party_membership_details', Input::has('political_party_membership_details') ? Input::get('political_party_membership_details') : isset($knowledge_data['political_party_membership']) ? $knowledge_data['political_party_membership'] : '', ['class' => 'tags-input']) }}
+                    </li>
+
+                    <li>{{ Form::checkbox('other_network', '1', Input::has('other_network') ? 1 : isset($knowledge_data['other_network']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a signed up member of any other network of any type</li>
+                    <li class="question-details other_network_details">
+                        <div class="label-info">Please give further details, separating each membership with a semi-colon (;).</div>
+                        {{ Form::text('other_network_details', Input::has('other_network_details') ? Input::get('other_network_details') : isset($knowledge_data['other_network']) ? $knowledge_data['other_network'] : '', ['class' => 'tags-input']) }}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -132,21 +178,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('formal_positions', 'What other formal positions do you hold?') }}
-                <div class="label-info"> Please list all think tanks, sports associations, company, party or government positions, or anything else where you have a formal position, whether paid or not. This does not include memberships of parties, associations or clubs - only formal positions. Leave blank if none.</div>
-            </div>
-        </div>
-        <div class="col-7 last">
-            <div class="formfield">
-                {{ Form::textarea('formal_positions', Input::has('formal_positions') ? Input::get('formal_positions') : isset($knowledge_data['formal_positions']) ? $knowledge_data['formal_positions'] : '', ['rows' => '5']) }}
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="row no-margin">
-        <div class="col-5">
-            <div class="formfield">
-                {{ Form::label('other_network', 'Have you held any public office?') }}
+                {{ Form::label('public_office[0][position]', 'Have you held any public office?') }}
                 <div class="label-info">If so, please give details here.</div>
             </div>
         </div>
@@ -164,20 +196,19 @@
                     <tbody>
                         <!--Blank row that is inserted when the button is pressed-->
                         <tr class="entry-table-repeatable-row" style="display:none;">
-                            <td>{{ Form::text("public_office[0][position]", null, ['disabled' => 'disabled', 'class' => 'position-field']) }}</td>
-                            <td>{{ Form::text("public_office[0][from]", null, ['disabled' => 'disabled', 'class' => 'from-field']) }}</td>
-                            <td>{{ Form::text("public_office[0][to]", null, ['disabled' => 'disabled', 'class' => 'to-field']) }}</td>
+                            <td>{{ Form::text("public_office[999][position]", null, ['disabled' => 'disabled', 'class' => 'position-field']) }}</td>
+                            <td>{{ Form::text("public_office[999][from]", null, ['disabled' => 'disabled', 'class' => 'from-field']) }}</td>
+                            <td>{{ Form::text("public_office[999][to]", null, ['disabled' => 'disabled', 'class' => 'to-field']) }}</td>
                             <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
                         </tr>
 
                         @if(Input::has('position'))
                             @foreach(Input::get('position') as $id => $value)
-                                <!--First proper row-->
                                 <tr>
                                     <td>{{ Form::text("public_office[$id][position]", Input::get("public_office.$id.position")) }}</td>
                                     <td>{{ Form::text("public_office[$id][from]", Input::get("public_office.$id.from")) }}</td>
                                     <td>{{ Form::text("public_office[$id][to]", Input::get("public_office.$id.to")) }}</td>
-                                    <td></td>
+                                    @if($id > 0) <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>@endif
                                 </tr>
                             @endforeach
                         @elseif(isset($knowledge_data['public_office']))
@@ -186,7 +217,7 @@
                                     <td>{{ Form::text("public_office[$id][position]", $position_info['position']) }}</td>
                                     <td>{{ Form::text("public_office[$id][from]", $position_info['from']) }}</td>
                                     <td>{{ Form::text("public_office[$id][to]", $position_info['to']) }}</td>
-                                    @if($id > 1)
+                                    @if($id > 0)
                                         <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
                                     @else
                                         <td></td>
@@ -196,9 +227,9 @@
                         @else
                             <!--First proper row-->
                             <tr>
-                                <td>{{ Form::text("public_office[1][position]", null) }}</td>
-                                <td>{{ Form::text("public_office[1][from]", null) }}</td>
-                                <td>{{ Form::text("public_office[1][to]", null) }}</td>
+                                <td>{{ Form::text("public_office[0][position]", null) }}</td>
+                                <td>{{ Form::text("public_office[0][from]", null) }}</td>
+                                <td>{{ Form::text("public_office[0][to]", null) }}</td>
                             </tr>
                         @endif
                     </tbody>
@@ -207,8 +238,75 @@
             </div>
         </div>
     </div>
+    <hr>
+    <div class="row no-margin">
+        <div class="col-5">
+            <div class="formfield">
+                {{ Form::label('political_party[0][position]', 'Have you held any positions in a political party (other than membership)? ') }}
+                <div class="label-info">If so, please give details here.</div>
+            </div>
+        </div>
+        <div class="col-7 last">
+            <div class="formfield">
+                <table cellpadding="5" cellspacing="0" border="0" class="survey-entry-table political-party">
+                    <thead>
+                    <tr>
+                        <td width="45%"><strong>Position</strong></td>
+                        <td width="25%"><strong>Party</strong></td>
+                        <td width="15%"><strong>From</strong></td>
+                        <td width="15%"><strong>To</strong></td>
+                        <td width="5%"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--Blank row that is inserted when the button is pressed-->
+                    <tr class="entry-table-repeatable-row" style="display:none;">
+                        <td>{{ Form::text("political_party[999][position]", null, ['disabled' => 'disabled', 'class' => 'position-field']) }}</td>
+                        <td>{{ Form::text("political_party[999][party]", null, ['disabled' => 'disabled', 'class' => 'party-field']) }}</td>
+                        <td>{{ Form::text("political_party[999][from]", null, ['disabled' => 'disabled', 'class' => 'from-field']) }}</td>
+                        <td>{{ Form::text("political_party[999][to]", null, ['disabled' => 'disabled', 'class' => 'to-field']) }}</td>
+                        <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
+                    </tr>
 
-
+                    @if(Input::has('position'))
+                        @foreach(Input::get('position') as $id => $value)
+                            <tr>
+                                <td>{{ Form::text("political_party[$id][position]", Input::get("political_party.$id.position")) }}</td>
+                                <td>{{ Form::text("political_party[$id][party]", Input::get("political_party.$id.party")) }}</td>
+                                <td>{{ Form::text("political_party[$id][from]", Input::get("political_party.$id.from")) }}</td>
+                                <td>{{ Form::text("political_party[$id][to]", Input::get("political_party.$id.to")) }}</td>
+                                @if($id > 0) <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>@endif
+                            </tr>
+                        @endforeach
+                    @elseif(isset($knowledge_data['political_party']))
+                        @foreach($knowledge_data['political_party'] as $id => $position_info)
+                            <tr>
+                                <td>{{ Form::text("political_party[$id][position]", $position_info['position']) }}</td>
+                                <td>{{ Form::text("political_party[$id][party]", $position_info['party']) }}</td>
+                                <td>{{ Form::text("political_party[$id][from]", $position_info['from']) }}</td>
+                                <td>{{ Form::text("political_party[$id][to]", $position_info['to']) }}</td>
+                                @if($id > 0)
+                                    <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
+                                @else
+                                    <td></td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    @else
+                        <!--First proper row-->
+                        <tr>
+                            <td>{{ Form::text("political_party[0][position]", null) }}</td>
+                            <td>{{ Form::text("political_party[0][party]", null) }}</td>
+                            <td>{{ Form::text("political_party[0][from]", null) }}</td>
+                            <td>{{ Form::text("political_party[0][to]", null) }}</td>
+                        </tr>
+                    @endif
+                    </tbody>
+                </table>
+                <a href="#" class="secondary but-small entry-table-new-row-button" data-no-of-rows="1" data-target-table=".political-party">Add a row</a>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-12">
@@ -252,6 +350,20 @@
                     </div>
                 @endforeach
             @endif
+        </div>
+    </div>
+
+    <div class="row no-margin">
+        <div class="col-5">
+            <div class="formfield">
+                {{ Form::label('additional_info', 'Finally, please let us know anything else about yourself that others in the Network should know about your knowledge, experience or ability.') }}
+                <div class="label-info">This enables others in the Network to bring you into projects when the opportunity arises.</div>
+            </div>
+        </div>
+        <div class="col-7 last">
+            <div class="formfield">
+                {{ Form::textarea("additional_info", Input::has('additional_info') ? Input::get('additional_info') : isset($knowledge_data['additional_info']) ? $knowledge_data['additional_info'] : '', ['rows' => '5']) }}
+            </div>
         </div>
     </div>
 

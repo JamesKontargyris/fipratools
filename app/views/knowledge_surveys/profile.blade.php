@@ -95,6 +95,15 @@
                     </div>
                 </div>
 
+                @if(isset($knowledge_data['additional_info']))
+                    <div class="border-box section-survey border-light-green">
+                        <div class="knowledge-profile-section-title">Additional Information</div>
+                        <div class="border-box__content">
+                            {{ nl2br($knowledge_data['additional_info']) }}
+                        </div>
+                    </div>
+                @endif
+
             </div>
 
             <div class="col-5 last">
@@ -121,8 +130,7 @@
                         <div class="border-box section-survey border-light-green">
                             <div class="knowledge-profile-section-title">Date of Birth</div>
                             <div class="border-box__content">
-                                {{ date('j F Y', strtotime($user_info->date_of_birth)) }}<br>
-
+                                {{ date('j M y', strtotime($user_info->date_of_birth)) }} ({{ calculate_age($user_info->date_of_birth) }} years)<br>
                             </div>
                         </div>
                     </div>
@@ -130,36 +138,83 @@
 
 
                 <div class="border-box section-survey border-light-green">
-                    <div class="knowledge-profile-section-title">Your Role and Company</div>
+                    <div class="knowledge-profile-section-title">Your Roles</div>
                     <div class="border-box__content">
-                        <div class="knowledge-profile-section-block">
-                            <div class="knowledge-profile-section-sub-title margin-bottom">Team Membership(s)</div>
-                            <?php $expertise_areas = ''; ?>
-                            @foreach($knowledge_data['expertise_team'] as $id)
-                            @if($id != 0)
-                                <?php $expertise_areas .= \Leadofficelist\Sector_categories\Sector_category::find($id)->name . ', '; ?>
-                            @else
-                                <?php $expertise_areas = 'None'; ?>
-                            @endif
-                            @endforeach
-
-                            <?php echo rtrim($expertise_areas, ', '); ?>
-                        </div>
-                        <div class="knowledge-profile-section-block">
-
-                            <div class="knowledge-profile-section-sub-title margin-bottom">Main Function(s) in Company</div>
-                            @if(isset($knowledge_data['company_function']))
-                                @foreach($knowledge_data['company_function'] as $statement)
-                                    {{ $statement }}<br>
+                        @if(isset($knowledge_data['expertise_team']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title margin-bottom">Team Membership(s)</div>
+			                    <?php $expertise_areas = ''; ?>
+                                @foreach($knowledge_data['expertise_team'] as $id)
+                                    @if($id != 0)
+					                    <?php $expertise_areas .= \Leadofficelist\Sector_categories\Sector_category::find($id)->name . ', '; ?>
+                                    @else
+					                    <?php $expertise_areas = 'None'; ?>
+                                    @endif
                                 @endforeach
-                            @endif
-                        </div>
+
+			                    <?php echo rtrim($expertise_areas, ', '); ?>
+                            </div>
+                        @endif
+
+                        @if(isset($knowledge_data['company_function']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title margin-bottom">Main Function(s) in Company</div>
+                                    @foreach($knowledge_data['company_function'] as $statement)
+                                        {{ $statement }}<br>
+                                    @endforeach
+                            </div>
+                        @endif
+
+                        @if(isset($knowledge_data['work_hours']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title margin-bottom">Working Hours</div>
+                                {{ $knowledge_data['work_hours'] }}
+                            </div>
+                        @endif
                     </div>
                 </div>
-                @if(isset($knowledge_data['public_office']))
-                    <div class="border-box section-survey border-light-green">
-                        <div class="knowledge-profile-section-title">Memberships, Associations and Positions</div>
-                        <div class="border-box__content">
+
+
+                <div class="border-box section-survey border-light-green">
+                    <div class="knowledge-profile-section-title">Memberships, Associations and Positions</div>
+                    <div class="border-box__content">
+                        @if(isset($knowledge_data['pa_pr_organisations']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title">PA / PR Organisation Memberships</div>
+                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['pa_pr_organisations']) }}</p>
+                            </div>
+                        @endif
+
+                        @if(isset($knowledge_data['registered_lobbyist']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title">Lobbyist Registrations</div>
+                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['registered_lobbyist']) }}</p>
+                            </div>
+                        @endif
+
+                        @if(isset($knowledge_data['formal_positions']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title">Formal titles / positions</div>
+                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['formal_positions']) }}</p>
+                            </div>
+                        @endif
+
+                        @if(isset($knowledge_data['political_party_membership']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title">Political Party Membership</div>
+                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['political_party_membership']) }}</p>
+                            </div>
+                        @endif
+
+                        @if(isset($knowledge_data['other_network']))
+                            <div class="knowledge-profile-section-block">
+                                <div class="knowledge-profile-section-sub-title">Network Memberships</div>
+                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['other_network']) }}</p>
+                            </div>
+                        @endif
+
+
+                            @if(isset($knowledge_data['public_office']))
                             <div class="knowledge-profile-section-block">
                                 <div class="knowledge-profile-section-sub-title margin-bottom">Public Office Position(s)</div>
                                 <table cellpadding="0" cellspacing="0" border="0" width="100%" class="index-table margin-bottom">
@@ -181,19 +236,35 @@
                                     </tbody>
                                 </table>
                             </div>
+                        @endif
 
+                        @if(isset($knowledge_data['political_party']))
                             <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">Other Network(s)</div>
-                                <p class="no-padding">{{ $user_info->other_network ? $user_info->other_network : 'None' }}</p>
+                                <div class="knowledge-profile-section-sub-title margin-bottom">Political Party Position(s)</div>
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="index-table margin-bottom">
+                                    <thead>
+                                    <tr>
+                                        <td>Position</td>
+                                        <td>Party</td>
+                                        <td>From</td>
+                                        <td>To</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($knowledge_data['political_party'] as $political_party)
+                                        <tr>
+                                            <td>{{ $political_party['position'] }}</td>
+                                            <td>{{ $political_party['party'] }}</td>
+                                            <td>{{ $political_party['from'] }}</td>
+                                            <td>{{ $political_party['to'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">Formal Position(s)</div>
-                                <p class="no-padding">{{ $user_info->formal_positions ? $user_info->formal_positions : 'None' }}</p>
-                            </div>
-                        </div>
+                        @endif
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     @endif

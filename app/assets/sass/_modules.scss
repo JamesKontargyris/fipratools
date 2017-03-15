@@ -664,6 +664,10 @@
       color: $grey;
       padding-bottom:$v-rhythm / 2;
     }
+
+    ul li {
+      @include font-size(16);
+    }
 }
 .formgroup {
   @include clearfix();
@@ -996,15 +1000,6 @@ ul.pagination {
     width:65% / 5;
   }
 }
-.expertise-form__radio {
-  width:20px;
-  height:20px;
-
-  @include breakpoint($m) {
-    width:30px;
-    height:30px;
-  }
-}
 
 /*.knowledge-profile-section-title {
   @include font-size(12);
@@ -1030,7 +1025,7 @@ ul.pagination {
 .knowledge-profile-section-title {
   @include font-size(12);
   font-weight:$font-bold;
-  color:$green;
+  color:darken($green, 10%);
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height:1.1;
@@ -1052,8 +1047,8 @@ ul.pagination {
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height:1.1;
-  color:$green;
-  margin-bottom:$v-rhythm * 0.25;
+  color:darken($green, 10%);
+  margin-bottom:8px;
 }
 
 .knowledge__section-title {
@@ -1351,4 +1346,10 @@ ul.pagination {
 
 .border-light-green {
   border: 1px solid lighten($green, 42%);
+}
+
+.question-details {
+  display:none;
+  margin:10px 0 25px;
+  padding-left:40px;
 }
