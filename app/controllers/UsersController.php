@@ -278,7 +278,6 @@ class UsersController extends \BaseController {
 		$this->roles                = $this->getRolesFormData();
 		$this->admin_perms_list     = $this->getPerms( 'Administrator' );
 		$this->head_perms_list      = $this->getPerms( 'Head of Unit' );
-		$this->head_corr_perms_list = $this->getPerms( 'Head of Unit (Correspondent)' );
 		$this->fipriot_perms_list   = $this->getPerms( 'Fipriot' );
 		$this->spad_perms_list      = $this->getPerms( 'Special Adviser' );
 

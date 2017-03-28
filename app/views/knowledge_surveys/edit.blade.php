@@ -358,7 +358,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('additional_info', 'Finally, please let us know anything else about yourself that others in the Network should know about your knowledge, experience or ability.') }}
+                {{ Form::label('additional_info', 'Please let us know anything else about yourself that others in the Network should know about your knowledge, experience or ability.') }}
                 <div class="label-info">This enables others in the Network to bring you into projects when the opportunity arises.</div>
             </div>
         </div>
@@ -371,7 +371,11 @@
 
     <div class="row">
         <div class="col-12">
-            {{ Form::submit('Update my Profile', ['class' => 'primary']) }}
+            @if($user->hasRole('Head of Unit'))
+                {{ Form::submit('Continue', ['class' => 'primary']) }}
+            @else
+                {{ Form::submit('Update my Profile', ['class' => 'primary']) }}
+            @endif
 
         </div>
     </div>
