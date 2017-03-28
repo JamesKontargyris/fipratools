@@ -16,7 +16,7 @@
 					@endif
 
 					@if($user->can('view_knowledge'))
-						<li class="super-menu__item hide-print"><a href="/survey?global=survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?> section-survey">Knowledge Fountain</a></li>
+						<li class="super-menu__item hide-print"><a href="/survey?global=survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?> section-survey">Knowledge Survey</a></li>
 					@endif
 
 					@if($user->can('view_toolbox'))
