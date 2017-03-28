@@ -7,9 +7,21 @@
 						<img src="{{ asset('img/fipra_logo.png') }}" class="hide-m hide-s" alt="Fipra" style="vertical-align:middle"/>
 						<img src="{{ asset('img/fipra_logo_s.png') }}" class="hide-l" alt="Fipra" style="vertical-align:middle"/>
 					</li>
-					<li class="super-menu__item hide-print"><a href="/list?global=list" class="super-menu__link <?php if(Session::get('section') == 'list') : ?> active<?php endif; ?> section-list">Lead Office List</a></li>
-					<li class="super-menu__item hide-print"><a href="/caselist?global=case" class="super-menu__link <?php if(Session::get('section') == 'case') : ?> active<?php endif; ?> section-case">Case Studies</a></li>
-					@if($user->can('manage_knowledge')) <li class="super-menu__item hide-print"><a href="/survey?global=survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?> section-survey">Knowledge Survey</a></li> @endif
+					@if($user->can('view_list'))
+						<li class="super-menu__item hide-print"><a href="/list?global=list" class="super-menu__link <?php if(Session::get('section') == 'list') : ?> active<?php endif; ?> section-list">Lead Office List</a></li>
+					@endif
+
+					@if($user->can('view_cases'))
+						<li class="super-menu__item hide-print"><a href="/caselist?global=case" class="super-menu__link <?php if(Session::get('section') == 'case') : ?> active<?php endif; ?> section-case">Case Studies</a></li>
+					@endif
+
+					@if($user->can('view_knowledge'))
+						<li class="super-menu__item hide-print"><a href="/survey?global=survey" class="super-menu__link <?php if(Session::get('section') == 'survey') : ?> active<?php endif; ?> section-survey">Knowledge Fountain</a></li>
+					@endif
+
+					@if($user->can('view_toolbox'))
+						<li class="super-menu__item hide-print"><a href="/toolbox?global=toolbox" class="super-menu__link <?php if(Session::get('section') == 'toolbox') : ?> active<?php endif; ?> section-toolbox">Toolbox</a></li>
+					@endif
 				</ul>
 			</div>
 			<div class="col-5 last super-menu__user-details hide-print">

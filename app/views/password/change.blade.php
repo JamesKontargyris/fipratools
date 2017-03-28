@@ -9,15 +9,13 @@
         <div>
             {{ Form::open(['files' => false, 'url' => '/password/change', 'method' => 'POST']) }}
 
-            <section class="col-6" style="margin-bottom:0;">
-                <h4>Change your password</h4>
+            <section>
+                <h3 style="color:white;">Change your password</h3>
 
                 @if($user->changed_password == 0)
                     <div>
                         <p>Please update your temporary password to something more memorable to you. This is a security measure that ensures only you have access to your Portal account.</p>
                     </div>
-                @else
-                    <br>
                 @endif
 
                 <div class="formfield">
@@ -37,8 +35,8 @@
 
                 <div>
                     {{ Form::hidden('your_temporary_password', $pass) }}
-                    {{ Form::submit('Change', ['class' => 'primary']) }}<br>
-                    <a href="{{ URL::previous() }}" class="secondary">Cancel</a><br><br>
+                    {{ Form::submit('Change', ['class' => 'secondary']) }}
+                    <a href="/" class="secondary">Cancel</a><br><br>
                     <p style="font-style: italic">If you cancel this step and are yet to update your temporary supplied password, you put your account at risk (you will also be asked to change your password every time you login).</p>
                 </div>
             </section>

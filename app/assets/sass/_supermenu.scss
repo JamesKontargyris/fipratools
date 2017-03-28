@@ -18,7 +18,7 @@
 .super-menu {
   list-style: none;
   @include horizontal-list();
-  @include font-size(16);
+  @include font-size(14);
   margin-top:20px;
   margin-left:10px;
 
@@ -102,6 +102,13 @@
         border-left:2px solid $green;
         border-top:2px solid $green;
         border-right:2px solid $green;
+      }
+
+      &.section-toolbox {
+        background: $orange linear-gradient(lighten($orange, 25%) 0%, $orange 40%) no-repeat top;
+        border-left:2px solid $orange;
+        border-top:2px solid $orange;
+        border-right:2px solid $orange;
       }
 
       &.section-admin {

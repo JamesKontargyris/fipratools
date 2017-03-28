@@ -13,7 +13,7 @@ class Role extends EntrustRole
 
 		if($blank_entry) $roles[''] = 'Please select...';
 
-		foreach(Role::all() as $role)
+		foreach(Role::orderBy('name')->get() as $role)
 		{
 			$roles[$role->id] = $prefix . $role->name;
 		}

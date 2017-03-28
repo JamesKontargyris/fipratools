@@ -28,7 +28,7 @@
     // Apply tagsinput library to tags-input fields
     $('.tags-input').tagsInput({ 'defaultText': '', 'width':'100%', 'height':'90px', 'delimiter': ';'});
 
-    // If "none of the above" is ticked on team question in the knowledge survey,
+    // If "none of the above" is ticked on the team question in the knowledge survey,
     // untick all other ticked expertise areas (and vice versa).
     $('input[type=checkbox][name="expertise_team[]"][value="0"]').on('click', function(e)
     {
@@ -38,6 +38,30 @@
     $('input[type=checkbox][name="expertise_team[]"][value!="0"]').on('click', function(e)
     {
         $('input[type=checkbox][name="expertise_team[]"][value="0"]').attr('checked', false);
+    });
+
+    // In the knowledge survey, if no membership, association or position checkboxes are ticked,
+    // tick the "none of the above" checkbox
+    if(! $('.membership-option[checked=checked]').length) {
+        $('input[type=checkbox][name="no_memberships"]').attr('checked', true);
+    }
+
+    // If "none of the above" is ticked in the memberships section of the knowledge survey,
+    // untick all other ticked options (and vice versa).
+    $('input[type=checkbox][name="no_memberships"][value="0"]').on('click', function(e)
+    {
+        $('.membership-option').attr('checked', false).each(function() {
+            var target = $('.' + $(this).attr('name') + '_details');
+            if(this.checked) {
+                target.slideDown();
+            } else {
+                target.slideUp();
+            }
+        });
+    });
+    $('.membership-option[value!="0"]').on('click', function(e)
+    {
+        $('input[type=checkbox][name="no_memberships"]').attr('checked', false);
     });
 
 
@@ -98,7 +122,7 @@
     });
 
     // When clicked
-    $('.reveal-details-entry').change(function()
+    $('.reveal-details-entry, .membership-option').change(function()
     {
         var target = $('.' + $(this).attr('name') + '_details');
        if(this.checked) {

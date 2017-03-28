@@ -141,35 +141,37 @@
         <div class="col-7 last">
             <div class="formfield">
                 <ul>
-                    <li>{{ Form::checkbox('pa_pr_organisations', '1', Input::has('pa_pr_organisations') ? 1 : isset($knowledge_data['pa_pr_organisations']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a member of one or more professional public affairs or public relations organisations</li>
+                    <li>{{ Form::checkbox('pa_pr_organisations', '1', Input::has('pa_pr_organisations') ? 1 : isset($knowledge_data['pa_pr_organisations']) ? 1 : 0, ['class' => 'reveal-details-entry membership-option']) }} Are a member of one or more professional public affairs or public relations organisations</li>
                     <li class="question-details pa_pr_organisations_details">
                         <div class="label-info">Please give further details, separating each membership / organisation with a semi-colon (;).</div>
                         {{ Form::text('pa_pr_organisations_details', Input::has('pa_pr_organisations_details') ? Input::get('pa_pr_organisations_details') : isset($knowledge_data['pa_pr_organisations']) ? $knowledge_data['pa_pr_organisations'] : '', ['class' => 'tags-input']) }}
                     </li>
 
-                    <li>{{ Form::checkbox('registered_lobbyist', '1', Input::has('registered_lobbyist') ? 1 : isset($knowledge_data['registered_lobbyist']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a registered lobbyist</li>
+                    <li>{{ Form::checkbox('registered_lobbyist', '1', Input::has('registered_lobbyist') ? 1 : isset($knowledge_data['registered_lobbyist']) ? 1 : 0, ['class' => 'reveal-details-entry membership-option']) }} Are a registered lobbyist</li>
                     <li class="question-details registered_lobbyist_details">
                         <div class="label-info">Please give further details, separating each membership / organisation with a semi-colon (;).</div>
                         {{ Form::text('registered_lobbyist_details', Input::has('registered_lobbyist_details') ? Input::get('registered_lobbyist_details') : isset($knowledge_data['registered_lobbyist']) ? $knowledge_data['registered_lobbyist'] : '', ['class' => 'tags-input']) }}
                     </li>
 
-                    <li>{{ Form::checkbox('formal_positions', '1', Input::has('formal_positions') ? 1 : isset($knowledge_data['formal_positions']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Have a formal title or position in any trade association, think tank, NGP, sports or professional association</li>
+                    <li>{{ Form::checkbox('formal_positions', '1', Input::has('formal_positions') ? 1 : isset($knowledge_data['formal_positions']) ? 1 : 0, ['class' => 'reveal-details-entry membership-option']) }} Have a formal title or position in any trade association, think tank, NGP, sports or professional association</li>
                     <li class="question-details formal_positions_details">
                         <div class="label-info">Please give further details, separating each membership / organisation with a semi-colon (;).</div>
                         {{ Form::text('formal_positions_details', Input::has('formal_positions_details') ? Input::get('formal_positions_details') : isset($knowledge_data['formal_positions']) ? $knowledge_data['formal_positions'] : '', ['class' => 'tags-input']) }}
                     </li>
 
-                    <li>{{ Form::checkbox('political_party_membership', '1', Input::has('political_party_membership') ? 1 : isset($knowledge_data['political_party_membership']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a member of a political party</li>
+                    <li>{{ Form::checkbox('political_party_membership', '1', Input::has('political_party_membership') ? 1 : isset($knowledge_data['political_party_membership']) ? 1 : 0, ['class' => 'reveal-details-entry membership-option']) }} Are a member of a political party</li>
                     <li class="question-details political_party_membership_details">
                         <div class="label-info">Please give further details, separating each membership with a semi-colon (;).</div>
                         {{ Form::text('political_party_membership_details', Input::has('political_party_membership_details') ? Input::get('political_party_membership_details') : isset($knowledge_data['political_party_membership']) ? $knowledge_data['political_party_membership'] : '', ['class' => 'tags-input']) }}
                     </li>
 
-                    <li>{{ Form::checkbox('other_network', '1', Input::has('other_network') ? 1 : isset($knowledge_data['other_network']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Are a signed up member of any other network of any type</li>
+                    <li>{{ Form::checkbox('other_network', '1', Input::has('other_network') ? 1 : isset($knowledge_data['other_network']) ? 1 : 0, ['class' => 'reveal-details-entry membership-option']) }} Are a signed up member of any other network of any type</li>
                     <li class="question-details other_network_details">
                         <div class="label-info">Please give further details, separating each membership with a semi-colon (;).</div>
                         {{ Form::text('other_network_details', Input::has('other_network_details') ? Input::get('other_network_details') : isset($knowledge_data['other_network']) ? $knowledge_data['other_network'] : '', ['class' => 'tags-input']) }}
                     </li>
+                    <li>&nbsp;</li>
+                    <li>{{ Form::checkbox('no_memberships', "0", Input::has('no_memberships') ? Input::get('no_memberships') : 0) }} None of the above</li>
                 </ul>
             </div>
         </div>

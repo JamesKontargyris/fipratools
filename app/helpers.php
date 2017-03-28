@@ -120,6 +120,7 @@ function current_section_name() {
 		'list' => 'Lead Office List',
 		'case' => 'Case Study Database',
 		'survey' => 'Knowledge Survey',
+		'toolbox' => 'Toolbox',
 		'admin' => 'Admin'
 	];
 

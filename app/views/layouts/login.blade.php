@@ -14,24 +14,14 @@
 		<div class="login-container">
 			<div class="login-form">
 				<div class="login-logo clearfix">
-					<img src="img/fipra-logo-login.png" alt="Fipra">
+					<img src="/img/fipra-logo-login.png" alt="Fipra">
 					<span class="login-title">Tools</span>
-					<div class="login-heading">Login</div>
+					@if(is_request('login'))<div class="login-heading">Login</div>@endif
 				</div>
 
 
 				<div class="login-body">
-					@include ('layouts.partials.messages')
-
-					<div class="login-email-form">
-						{{ Form::open(['url' => 'login', 'method' => 'POST']) }}
-						{{ Form::label('email', 'Your Fipra email address:') }}
-						{{ Form::text('email', Input::old('email'), ['placeholder' => 'your.name@fipra.com']) }}
-						{{ Form::label('password', 'Password:') }}
-						{{ Form::password('password', ['placeholder' => 'Password']) }}
-						{{ Form::submit('Login', ['class' => 'secondary']) }}
-						{{ Form::close() }}
-					</div>
+					@yield('content')
 				</div>
 
 			</div>

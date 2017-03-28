@@ -1,0 +1,1 @@
+/home/vagrant/code/fipra/fipratools/app/views/toolboxes/show.blade.php

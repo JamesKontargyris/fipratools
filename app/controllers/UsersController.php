@@ -2,7 +2,6 @@
 
 use Laracasts\Commander\CommanderTrait;
 use Laracasts\Flash\Flash;
-use Leadofficelist\Clients\Client;
 use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Exceptions\CannotEditException;
 use Leadofficelist\Exceptions\ResourceNotFoundException;
@@ -11,8 +10,7 @@ use Leadofficelist\Forms\EditUser as EditUserForm;
 use Leadofficelist\Units\Unit;
 use Leadofficelist\Users\User;
 
-class UsersController extends \BaseController
-{
+class UsersController extends \BaseController {
 	use CommanderTrait;
 
 	public $section = 'admin';
@@ -32,11 +30,10 @@ class UsersController extends \BaseController
 
 	private $search_term;
 
-	function __construct( AddUserForm $addUserForm, EditUserForm $editUserForm )
-	{
+	function __construct( AddUserForm $addUserForm, EditUserForm $editUserForm ) {
 		parent::__construct();
 
-		$this->addUserForm = $addUserForm;
+		$this->addUserForm  = $addUserForm;
 		$this->editUserForm = $editUserForm;
 		$this->getFormData();
 
@@ -50,14 +47,12 @@ class UsersController extends \BaseController
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		$this->destroyCurrentPageNumber(true);
+	public function index() {
+		$this->destroyCurrentPageNumber( true );
 
 		$this->check_perm( 'manage_users' );
 
-		if ( $this->searchCheck() )
-		{
+		if ( $this->searchCheck() ) {
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 
@@ -73,20 +68,19 @@ class UsersController extends \BaseController
 	 *
 	 * @return Response
 	 */
-	public function create()
-	{
+	public function create() {
 		$this->check_perm( 'manage_users' );
 
 		$this->getFormData();
 
 		return View::make( 'users.create' )->with( [
-			'units'             => $this->units,
-			'roles'             => $this->roles,
-			'admin_perms_list'  => $this->admin_perms_list,
-			'head_perms_list' => $this->head_perms_list,
+			'units'                => $this->units,
+			'roles'                => $this->roles,
+			'admin_perms_list'     => $this->admin_perms_list,
+			'head_perms_list'      => $this->head_perms_list,
 			'head_corr_perms_list' => $this->head_corr_perms_list,
-			'fipriot_perms_list' => $this->fipriot_perms_list,
-			'spad_perms_list' => $this->spad_perms_list
+			'fipriot_perms_list'   => $this->fipriot_perms_list,
+			'spad_perms_list'      => $this->spad_perms_list
 		] );
 	}
 
@@ -96,9 +90,8 @@ class UsersController extends \BaseController
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
-		$this->check_perm( 'manage_units' );
+	public function store() {
+		$this->check_perm( 'manage_users' );
 
 		$input = Input::all();
 		$this->addUserForm->validate( $input );
@@ -122,17 +115,14 @@ class UsersController extends \BaseController
 	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
-	public function show( $id )
-	{
+	public function show( $id ) {
 		$this->check_perm( 'view_list' );
 
-		if ( $show_user = $this->getUser( $id ) )
-		{
+		if ( $show_user = $this->getUser( $id ) ) {
 			$clients = $this->getActiveClientsByField( 'user_id', $id );
 
 			return View::make( 'users.show' )->with( compact( 'show_user', 'clients' ) );
-		} else
-		{
+		} else {
 			throw new ResourceNotFoundException( 'users' );
 		}
 	}
@@ -148,31 +138,27 @@ class UsersController extends \BaseController
 	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 * @return Response
 	 */
-	public function edit( $id )
-	{
+	public function edit( $id ) {
 		$this->check_perm( 'manage_users' );
 
-		if ( $this->editingCurrentUser( $id ) )
-		{
+		if ( $this->editingCurrentUser( $id ) ) {
 			throw new CannotEditException( 'users' );
 		}
 
-		if ( $edit_user = $this->getUser( $id ) )
-		{
+		if ( $edit_user = $this->getUser( $id ) ) {
 			$this->getFormData();
 
 			return View::make( 'users.edit' )->with( [
-				'edit_user'         => $edit_user,
-				'units'             => $this->units,
-				'roles'             => $this->roles,
-				'admin_perms_list'  => $this->admin_perms_list,
-				'head_perms_list' => $this->head_perms_list,
+				'edit_user'            => $edit_user,
+				'units'                => $this->units,
+				'roles'                => $this->roles,
+				'admin_perms_list'     => $this->admin_perms_list,
+				'head_perms_list'      => $this->head_perms_list,
 				'head_corr_perms_list' => $this->head_corr_perms_list,
-				'fipriot_perms_list' => $this->fipriot_perms_list,
-                'spad_perms_list' => $this->spad_perms_list
+				'fipriot_perms_list'   => $this->fipriot_perms_list,
+				'spad_perms_list'      => $this->spad_perms_list
 			] );
-		} else
-		{
+		} else {
 			throw new ResourceNotFoundException( 'users' );
 		}
 	}
@@ -185,8 +171,7 @@ class UsersController extends \BaseController
 	 *
 	 * @return Response
 	 */
-	public function update( $id )
-	{
+	public function update( $id ) {
 		$this->check_perm( 'manage_users' );
 
 		$input                              = Input::all();
@@ -195,7 +180,7 @@ class UsersController extends \BaseController
 		$this->editUserForm->validate( $input );
 
 		$this->execute( 'Leadofficelist\Users\EditUserCommand', $input );
-		$user = User::find($id);
+		$user = User::find( $id );
 
 		Flash::overlay( '"' . $input['first_name'] . ' ' . $input['last_name'] . '" updated.', 'success' );
 
@@ -212,12 +197,10 @@ class UsersController extends \BaseController
 	 *
 	 * @return Response
 	 */
-	public function destroy( $id )
-	{
+	public function destroy( $id ) {
 		$this->check_perm( 'manage_users' );
 
-		if ( $user = $this->getUser( $id ) )
-		{
+		if ( $user = $this->getUser( $id ) ) {
 			User::destroy( $id );
 			Flash::overlay( '"' . $user->getFullName() . '" deleted.', 'info' );
 
@@ -234,52 +217,41 @@ class UsersController extends \BaseController
 	 * @return $this
 	 * @throws \Leadofficelist\Exceptions\PermissionDeniedException
 	 */
-	public function search()
-	{
+	public function search() {
 		$this->check_perm( 'manage_users' );
 
-		if ( $this->search_term = $this->findSearchTerm() )
-		{
-			$items = User::where( 'id', '!=', $this->user->id )->where( function ( $query )
-			{
+		if ( $this->search_term = $this->findSearchTerm() ) {
+			$items = User::where( 'id', '!=', $this->user->id )->where( function ( $query ) {
 				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
 			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 
-			if ( ! $this->checkForSearchResults( $items ) )
-			{
+			if ( ! $this->checkForSearchResults( $items ) ) {
 				return Redirect::route( $this->resource_key . '.index' );
 			}
 			$items->search_term = str_replace( '%', '', $this->search_term );
 			$items->key         = 'users';
 
 			return View::make( 'users.index' )->with( compact( 'items' ) );
-		} else
-		{
+		} else {
 			return Redirect::route( 'users.index' );
 		}
 
 	}
 
-	protected function getAll()
-	{
+	protected function getAll() {
 		return User::all();
 	}
 
-	protected function getSelection()
-	{
-		if ( $this->searchCheck() )
-		{
-			$this->search_term = $this->findSearchTerm();
-			$this->search_term_clean = str_replace('%', '', $this->search_term);
+	protected function getSelection() {
+		if ( $this->searchCheck() ) {
+			$this->search_term       = $this->findSearchTerm();
+			$this->search_term_clean = str_replace( '%', '', $this->search_term );
 
-			$items = User::where( 'id', '!=', $this->user->id )->where( function ( $query )
-			{
+			$items = User::where( 'id', '!=', $this->user->id )->where( function ( $query ) {
 				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
-			} )->rowsSortOrder( $this->rows_sort_order )->paginate($this->rows_to_view);
-		}
-		else
-		{
-				$items = User::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		} else {
+			$items = User::rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 
 		return $items;
@@ -292,8 +264,7 @@ class UsersController extends \BaseController
 	 *
 	 * @return \Illuminate\Support\Collection|static
 	 */
-	protected function getUser( $id )
-	{
+	protected function getUser( $id ) {
 		return User::find( $id );
 	}
 
@@ -302,15 +273,14 @@ class UsersController extends \BaseController
 	 *
 	 * @return bool
 	 */
-	protected function getFormData()
-	{
-		$this->units             = $this->getUnitsFormData();
-		$this->roles             = $this->getRolesFormData();
-		$this->admin_perms_list  = $this->getPerms( 'Administrator' );
-		$this->head_perms_list = $this->getPerms( 'Head of Unit' );
+	protected function getFormData() {
+		$this->units                = $this->getUnitsFormData();
+		$this->roles                = $this->getRolesFormData();
+		$this->admin_perms_list     = $this->getPerms( 'Administrator' );
+		$this->head_perms_list      = $this->getPerms( 'Head of Unit' );
 		$this->head_corr_perms_list = $this->getPerms( 'Head of Unit (Correspondent)' );
-		$this->fipriot_perms_list = $this->getPerms( 'Fipriot' );
-        $this->spad_perms_list = $this->getPerms('Special Adviser');
+		$this->fipriot_perms_list   = $this->getPerms( 'Fipriot' );
+		$this->spad_perms_list      = $this->getPerms( 'Special Adviser' );
 
 		return true;
 	}
@@ -320,10 +290,8 @@ class UsersController extends \BaseController
 	 *
 	 * @return array
 	 */
-	protected function getRolesFormData()
-	{
-		if ( ! Role::getRolesForFormSelect( true ) )
-		{
+	protected function getRolesFormData() {
+		if ( ! Role::getRolesForFormSelect( true ) ) {
 			return [ '' => 'No roles available to select' ];
 		}
 
@@ -337,10 +305,8 @@ class UsersController extends \BaseController
 	 *
 	 * @return array|string
 	 */
-	protected function getPerms( $role )
-	{
-		if ( ! Permission::getPermsForRole( $role, true ) )
-		{
+	protected function getPerms( $role ) {
+		if ( ! Permission::getPermsForRole( $role, true ) ) {
 			return 'do nothing.';
 		}
 
@@ -354,8 +320,7 @@ class UsersController extends \BaseController
 	 *
 	 * @return bool
 	 */
-	private function editingCurrentUser( $id )
-	{
+	private function editingCurrentUser( $id ) {
 		return ( $id == $this->user->id );
 	}
 }

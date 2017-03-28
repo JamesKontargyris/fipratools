@@ -1,30 +1,15 @@
 @extends('layouts.login')
 
 @section('content')
-<div class="row">
-	<div class="col-12">
-		<h3>Login</h3>
-	</div>
-</div>
-@include ('layouts.partials.messages')
+	@include ('layouts.partials.messages')
 
-<div class="row">
-	<div class="col-6">
+	<div class="login-email-form">
 		{{ Form::open(['url' => 'login', 'method' => 'POST']) }}
-			<div class="formfield">
-				{{ Form::label('email', 'Email Address:') }}
-				{{ Form::text('email', Input::old('email')) }}
-			</div>
-			<div class="formfield">
-				{{ Form::label('password', 'Password:') }}
-				{{ Form::password('password') }}
-			</div>
-			<div class="formfield">
-				{{ Form::submit('Login', ['class' => 'primary']) }}
-			</div>
+		{{ Form::label('email', 'Your Fipra email address:') }}
+		{{ Form::text('email', Input::old('email'), ['placeholder' => 'your.name@fipra.com']) }}
+		{{ Form::label('password', 'Password:') }}
+		{{ Form::password('password', ['placeholder' => 'Password']) }}
+		{{ Form::submit('Login', ['class' => 'secondary']) }} &nbsp;&nbsp;&nbsp;<a href="/password/reset" style="color:white; font-size:12px;">I've forgotten my password</a>
 		{{ Form::close() }}
-
-		<p><a href="/password/reset">Forgotten your password?</a></p>
 	</div>
-</div>
 @stop

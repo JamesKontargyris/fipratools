@@ -7,7 +7,7 @@
 				{{ Session::get('flash_notification.message') }}
 			</div>
 		@else
-			<div class="alert alert-{{ Session::get('flash_notification.level') }}">
+			<div class="alert alert-{{ Session::get('flash_notification.level') }} @if(is_request('login')) with-margin-bottom @endif">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				{{ Session::get('flash_notification.message') }}
 			</div>

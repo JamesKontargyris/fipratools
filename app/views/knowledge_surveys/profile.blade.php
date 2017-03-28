@@ -175,95 +175,97 @@
                 </div>
 
 
-                <div class="border-box section-survey border-light-green">
-                    <div class="knowledge-profile-section-title">Memberships, Associations and Positions</div>
-                    <div class="border-box__content">
-                        @if(isset($knowledge_data['pa_pr_organisations']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">PA / PR Organisation Memberships</div>
-                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['pa_pr_organisations']) }}</p>
-                            </div>
-                        @endif
+                @if(isset($knowledge_data['pa_pr_organisations']) || isset($knowledge_data['registered_lobbyist']) || isset($knowledge_data['formal_positions']) || isset($knowledge_data['political_party_membership']) || isset($knowledge_data['other_network']) || isset($knowledge_data['public_office']) || isset($knowledge_data['political_party']))
+                    <div class="border-box section-survey border-light-green">
+                        <div class="knowledge-profile-section-title">Memberships, Associations and Positions</div>
+                        <div class="border-box__content">
+                            @if(isset($knowledge_data['pa_pr_organisations']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title">PA / PR Organisation Memberships</div>
+                                    <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['pa_pr_organisations']) }}</p>
+                                </div>
+                            @endif
 
-                        @if(isset($knowledge_data['registered_lobbyist']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">Lobbyist Registrations</div>
-                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['registered_lobbyist']) }}</p>
-                            </div>
-                        @endif
+                            @if(isset($knowledge_data['registered_lobbyist']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title">Lobbyist Registrations</div>
+                                    <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['registered_lobbyist']) }}</p>
+                                </div>
+                            @endif
 
-                        @if(isset($knowledge_data['formal_positions']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">Formal titles / positions</div>
-                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['formal_positions']) }}</p>
-                            </div>
-                        @endif
+                            @if(isset($knowledge_data['formal_positions']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title">Formal titles / positions</div>
+                                    <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['formal_positions']) }}</p>
+                                </div>
+                            @endif
 
-                        @if(isset($knowledge_data['political_party_membership']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">Political Party Membership</div>
-                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['political_party_membership']) }}</p>
-                            </div>
-                        @endif
+                            @if(isset($knowledge_data['political_party_membership']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title">Political Party Membership</div>
+                                    <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['political_party_membership']) }}</p>
+                                </div>
+                            @endif
 
-                        @if(isset($knowledge_data['other_network']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title">Network Memberships</div>
-                                <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['other_network']) }}</p>
-                            </div>
-                        @endif
+                            @if(isset($knowledge_data['other_network']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title">Network Memberships</div>
+                                    <p class="no-padding">{{ str_replace(';','<br>',$knowledge_data['other_network']) }}</p>
+                                </div>
+                            @endif
 
 
-                            @if(isset($knowledge_data['public_office']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title margin-bottom">Public Office Position(s)</div>
-                                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="index-table margin-bottom">
-                                    <thead>
-                                    <tr>
-                                        <td>Position</td>
-                                        <td>From</td>
-                                        <td>To</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($knowledge_data['public_office'] as $public_office)
+                                @if(isset($knowledge_data['public_office']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title margin-bottom">Public Office Position(s)</div>
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="index-table margin-bottom">
+                                        <thead>
                                         <tr>
-                                            <td>{{ $public_office['position'] }}</td>
-                                            <td>{{ $public_office['from'] }}</td>
-                                            <td>{{ $public_office['to'] }}</td>
+                                            <td>Position</td>
+                                            <td>From</td>
+                                            <td>To</td>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
+                                        </thead>
+                                        <tbody>
+                                        @foreach($knowledge_data['public_office'] as $public_office)
+                                            <tr>
+                                                <td>{{ $public_office['position'] }}</td>
+                                                <td>{{ $public_office['from'] }}</td>
+                                                <td>{{ $public_office['to'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
 
-                        @if(isset($knowledge_data['political_party']))
-                            <div class="knowledge-profile-section-block">
-                                <div class="knowledge-profile-section-sub-title margin-bottom">Political Party Position(s)</div>
-                                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="index-table margin-bottom">
-                                    <thead>
-                                    <tr>
-                                        <td>Position</td>
-                                        <td>Party</td>
-                                        <td>From</td>
-                                        <td>To</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($knowledge_data['political_party'] as $political_party)
+                            @if(isset($knowledge_data['political_party']))
+                                <div class="knowledge-profile-section-block">
+                                    <div class="knowledge-profile-section-sub-title margin-bottom">Political Party Position(s)</div>
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="index-table margin-bottom">
+                                        <thead>
                                         <tr>
-                                            <td>{{ $political_party['position'] }}</td>
-                                            <td>{{ $political_party['party'] }}</td>
-                                            <td>{{ $political_party['from'] }}</td>
-                                            <td>{{ $political_party['to'] }}</td>
+                                            <td>Position</td>
+                                            <td>Party</td>
+                                            <td>From</td>
+                                            <td>To</td>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @endif
-                    </div>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($knowledge_data['political_party'] as $political_party)
+                                            <tr>
+                                                <td>{{ $political_party['position'] }}</td>
+                                                <td>{{ $political_party['party'] }}</td>
+                                                <td>{{ $political_party['from'] }}</td>
+                                                <td>{{ $political_party['to'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

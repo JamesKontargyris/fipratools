@@ -223,6 +223,11 @@
     background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
     border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
   }
+  &.section-toolbox {
+    h2 { color:saturate(darken($orange, 30%), 50%); }
+    background:linear-gradient(top, lighten($orange, 42%), lighten($orange, 30%)) lighten($orange, 42%);
+    border-bottom: 2px solid desaturate(lighten($orange, 25%), 25%);
+  }
   &.section-admin {
     h2 { color:darken($grey, 10%); }
     background-color: desaturate(lighten($grey, 40%), 25%);
@@ -865,9 +870,16 @@ ul.pagination {
   }
 
   &.section-survey {
+     .border-box__title,
+     .border-box__sub-title {
+       color:$green;
+     }
+   }
+
+  &.section-toolbox {
     .border-box__title,
     .border-box__sub-title {
-      color:$green;
+      color:$orange;
     }
   }
 
@@ -1352,4 +1364,33 @@ ul.pagination {
   display:none;
   margin:10px 0 25px;
   padding-left:40px;
+}
+
+
+.toolbox-resource {
+  &:not(:last-of-type) {
+    padding-bottom:$v-rhythm * 0.5;
+    border-bottom:1px dotted $periwinkle;
+    margin-bottom:$v-rhythm * 0.5;
+  }
+}
+.toolbox-resource__link {
+  font-weight:$font-bold;
+}
+.toolbox-resource__description {
+  @include font-size(13);
+  font-style: italic;
+}
+.toolbox-resource__button {
+  @extend .primary;
+  font-size:12px;
+  line-height:1;
+  margin-top:5px;
+  margin-right:3px;
+
+  @include breakpoint($m) {
+    display:block;
+    float:right;
+    margin-top:0;
+  }
 }

@@ -9,12 +9,17 @@ class ListController extends BaseController {
 
 	function __construct() {
 		parent::__construct();
-		$this->check_perm( 'view_list' );
 		View::share( 'page_title', 'Client List' );
 		View::share( 'key', 'list' );
 	}
 
 	public function index() {
+		// If the user can't view the LO List, send them to the knowledge survey
+		if( ! $this->user->can('view_list')) {
+			return Redirect::route('survey.index');
+		}
+
+		// Otherwise, carry on
 		$this->destroyCurrentPageNumber( true );
 
 		if ( $this->searchCheck() ) {

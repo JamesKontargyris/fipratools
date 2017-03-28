@@ -2,9 +2,6 @@
 	@if($user->can('view_list') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('list') ? 'active' : '' }}"><a href="{{ route('list.index') }}"><i class="fa fa-th-list"></i> <strong>The List</strong></a></li>
 	@endif
-	@if($user->can('view_list') && section_is() == 'case')
-		<li class="{{ nav_item_is_active('caselist') ? 'active' : '' }}"><a href="{{ route('caselist.index') }}"><i class="fa fa-th-list"></i> <strong>All Case Studies</strong></a></li>
-	@endif
 	@if($user->can('view_list') && section_is() == 'list')
 		<li class="{{ nav_item_is_active('about') ? 'active' : '' }}"><a href="{{ route('list.about') }}"><i class="fa fa-info-circle"></i> <strong>About the List</strong></a></li>
 	@endif
@@ -22,6 +19,10 @@
 			</a>
 			<a href="{{ route('clients.create') }}" class="site-nav-extra-link" title="Add a new client"><i class="fa fa-plus-circle"></i></a>
 		</li>
+	@endif
+
+	@if($user->can('view_cases') && section_is() == 'case')
+		<li class="{{ nav_item_is_active('caselist') ? 'active' : '' }}"><a href="{{ route('caselist.index') }}"><i class="fa fa-th-list"></i> <strong>All Case Studies</strong></a></li>
 	@endif
 	@if($user->can('manage_cases') && section_is() == 'case')
 		<li class="{{ nav_item_is_active('cases', true) ? 'active' : '' }}">
@@ -67,7 +68,7 @@
 	@endif
 
 
-	@if($user->can('manage_knowledge') && section_is() == 'survey')
+	@if($user->can('view_knowledge') && section_is() == 'survey')
 		<li class="{{ nav_item_is_active(['survey', 'survey/search'], true) ? 'active' : '' }}">
 			<a href="{{ route('survey.index') }}"><strong><i class="fa fa-th-list"></i> All Knowledge Profiles</strong></a>
 		</li>
@@ -76,7 +77,9 @@
 		<li class="{{ nav_item_is_active('survey/profile', true) ? 'active' : '' }}">
 			<a href="{{ url('survey/profile') }}"><strong>My Knowledge Profile</strong></a>
             @if( ! nav_item_is_active('survey/profile/edit'))
-                <a href="{{ url('/survey/profile/edit') }}" class="site-nav-extra-link" title="Edit your knowledge profile"><i class="fa fa-pencil"></i></a>
+				@if($user->can('edit_knowledge'))
+                	<a href="{{ url('/survey/profile/edit') }}" class="site-nav-extra-link" title="Edit your knowledge profile"><i class="fa fa-pencil"></i></a>
+				@endif
             @endif
 		</li>
 	@endif
@@ -96,6 +99,17 @@
 		</li>
 	@endif
 
+
+    @if($user->can('view_toolbox') && section_is() == 'toolbox')
+        <li class="{{ nav_item_is_active('toolbox', true) ? 'active' : '' }}">
+            <a href="{{ route('toolbox.index') }}"><strong><i class="fa fa-th-list"></i> Useful Resources</strong></a>
+        </li>
+    @endif
+    @if($user->can('manage_toolbox') && section_is() == 'toolbox')
+        <li class="{{ nav_item_is_active('toolbox/create', true) ? 'active' : '' }}">
+            <a href="{{ route('toolbox.create') }}">Add a toolbox resource</a>
+        </li>
+    @endif
 
 
 	@if($user->hasRole('Administrator')  && (section_is() == 'list' || section_is() == 'case'))

@@ -24,9 +24,7 @@ Route::get('roles', function()
 	//$new_manager->name = "Head of Unit";
 	//$new_manager->save();
 	//
-	//$new_fipriot = new Role;
-	//$new_fipriot->name = "Fipriot";
-	//$new_fipriot->save();
+	$new_fipriot = new Role; $new_fipriot->name = "Fipra International"; $new_fipriot->save();
 //
 //    $new_spad = new Role;
 //    $new_spad->name = "Special Adviser";
@@ -67,10 +65,7 @@ Route::get('roles', function()
 	//$manage_client_links->display_name = "Manage Client Links";
 	//$manage_client_links->save();
 	//
-	//$manage_client_archives = new Permission;
-	//$manage_client_archives->name = "manage_client_archives";
-	//$manage_client_archives->display_name = "Manage Client Archives";
-	//$manage_client_archives->save();
+	$manage_client_archives = new Permission; $manage_client_archives->name = "view_toolbox"; $manage_client_archives->display_name = "View Toolbox"; $manage_client_archives->save();
 	//
 	//$manage_reports = new Permission;
 	//$manage_reports->name = "manage_reports";
@@ -243,6 +238,8 @@ Route::group(['before' => 'auth'], function()
 
 	Route::controller('reports', 'ReportsController');
 	Route::controller('statuscheck', 'StatusCheckController');
+
+	Route::resource('toolbox', 'ToolboxController');
 });
 
 //Ajax requests
