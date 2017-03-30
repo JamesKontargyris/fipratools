@@ -25,7 +25,7 @@ class UpdateKnowledgeDataCommandHandler implements CommandHandler {
 	public function handle( $command ) {
 
 		// Get rid of any existing rows, ready to add new ones for the new content
-		KnowledgeData::where('user_id', '=', $command->id)->delete();
+		/*KnowledgeData::where('user_id', '=', $command->id)->delete();*/
 
 		if($command->other_languages) $this->knowledge_data->addData( Auth::user()->id, 'other_languages', $command->other_languages );
 

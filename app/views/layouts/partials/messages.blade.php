@@ -23,8 +23,10 @@
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		Please address the following errors:
 		<ul>
+			<?php $i = 0; ?>
 			@foreach($errors->all() as $error)
 			<li><strong>{{ $error }}</strong></li>
+			<?php $i++; if($i == 5) break; ?>
 			@endforeach
 		</ul>
 	</div>

@@ -79,6 +79,7 @@
             noOfRows = parseInt($(this).attr('data-no-of-rows'));
 
         repeatingRow.find('input').prop('disabled', false);
+        repeatingRow.find('select').prop('disabled', false);
 
         // public-office table
         if(targetTable == '.public-office') {
@@ -95,6 +96,19 @@
             repeatingRow.find('.to-field').attr('name', 'political_party[' + noOfRows + '][to]');
         }
 
+        // unit_staff_positions_in_public_office table (Head of Unit survey)
+        if(targetTable == '.unit_staff_positions_in_public_office') {
+            repeatingRow.find('.name-field').attr('name', 'unit_staff_positions_in_public_office[' + noOfRows + '][name]');
+            repeatingRow.find('.position-field').attr('name', 'unit_staff_positions_in_public_office[' + noOfRows + '][position]');
+            repeatingRow.find('.from-field').attr('name', 'unit_staff_positions_in_public_office[' + noOfRows + '][from]');
+        }
+
+        // unit_staff_carrying_out_public_affairs table (Head of Unit survey)
+        if(targetTable == '.unit_staff_carrying_out_public_affairs') {
+            repeatingRow.find('.name-field').attr('name', 'unit_staff_carrying_out_public_affairs[' + noOfRows + '][name]');
+            repeatingRow.find('.seniority-field').attr('name', 'unit_staff_carrying_out_public_affairs[' + noOfRows + '][seniority]');
+        }
+
         $(targetTable + ' tbody').append('<tr>' + repeatingRow.html() + '</tr>');
 
         $(this).attr('data-no-of-rows', noOfRows + 1);
@@ -107,6 +121,15 @@
         });
 
         return false;
+    });
+
+    // Add http:// to url fields if the user hasn't already
+    $('.url-format').on('blur', function()
+    {
+        var urlEntry = $(this);
+        if(urlEntry.val().substr(0,7) != 'http://'){
+            urlEntry.val('http://' + urlEntry.val());
+        }
     });
 
     // Reveal further details entry box on Knowledge Survey form
@@ -130,6 +153,26 @@
        } else {
            target.slideUp();
        }
+    });
+
+    // Add .hide-details-entry class logic for radio buttons
+    // On page load
+    $('.hide-details-entry').each(function()
+    {
+        var target = $('.' + $(this).attr('name') + '_details');
+
+        if(this.checked) {
+            target.hide();
+        }
+    });
+
+    // When clicked
+    $('.hide-details-entry').change(function()
+    {
+        var target = $('.' + $(this).attr('name') + '_details');
+        if(this.checked) {
+            target.slideUp();
+        }
     });
 
     //If there are no page navigation links, hide the blank div

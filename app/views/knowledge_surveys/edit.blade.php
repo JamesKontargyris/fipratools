@@ -204,8 +204,8 @@
                             <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
                         </tr>
 
-                        @if(Input::has('position'))
-                            @foreach(Input::get('position') as $id => $value)
+                        @if(Input::old('public_office'))
+                            @foreach(Input::old('public_office') as $id => $value)
                                 <tr>
                                     <td>{{ Form::text("public_office[$id][position]", Input::get("public_office.$id.position")) }}</td>
                                     <td>{{ Form::text("public_office[$id][from]", Input::get("public_office.$id.from")) }}</td>
@@ -270,8 +270,8 @@
                         <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
                     </tr>
 
-                    @if(Input::has('position'))
-                        @foreach(Input::get('position') as $id => $value)
+                    @if(Input::old('political_party'))
+                        @foreach(Input::old('political_party') as $id => $value)
                             <tr>
                                 <td>{{ Form::text("political_party[$id][position]", Input::get("political_party.$id.position")) }}</td>
                                 <td>{{ Form::text("political_party[$id][party]", Input::get("political_party.$id.party")) }}</td>

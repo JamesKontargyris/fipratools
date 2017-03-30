@@ -1044,6 +1044,7 @@ ul.pagination {
   padding: 10px;
   background-color:lighten($green, 42%);
   border-radius: 5px;
+
   &.margin-bottom {
     margin-bottom:$v-rhythm * 0.5;
   }
@@ -1076,11 +1077,21 @@ ul.pagination {
   border-bottom:2px solid darken($green, 10%);
   border-radius: 5px;
   @include font-size(19);
+
+  &.with-intro {
+    border-radius: 5px 5px 0 0;
+  }
 }
 .knowledge__section-intro {
+  position:relative;
+  z-index: -1;
   @include font-size(15);
   line-height:1.4;
-  margin:$v-rhythm / 2 0;
+  margin-top:-5px;
+  margin-bottom:$v-rhythm / 2;
+  padding:15px;
+  background-color: lighten($green, 40%);
+  border-radius: 0 0 5px 5px;
 }
 
 .knowledge-profile-details {
@@ -1293,6 +1304,9 @@ ul.pagination {
   tr td {
     padding:5px;
   }
+  thead tr td {
+    font-weight: $font-bold;
+  }
 }
 
 .fipriot-info {
@@ -1364,6 +1378,10 @@ ul.pagination {
   display:none;
   margin:10px 0 25px;
   padding-left:40px;
+
+  &.no-left-pad {
+    padding-left:0;
+  }
 }
 
 

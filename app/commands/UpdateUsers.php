@@ -41,7 +41,7 @@ class UpdateUsers extends Command
 		if($handle = @fopen($filename, 'r')) {
 			$this->info('Updating users, please wait...');
 
-			$roles_id = ['Administrator' => 1, 'Head of Unit' => 2, 'Fipriot' => 3, 'Special Adviser' => 4, 'Head of Unit (Correspondent)' => 5];
+			$roles_id = ['Administrator' => 1, 'Head of Unit' => 2, 'Fipriot' => 3, 'Special Adviser' => 4, 'Fipriot (International)' => 6];
 			while(($data = fgetcsv($handle)) !== FALSE) {
 				if($found_user = Leadofficelist\Users\User::where('email', '=', $data[3])->get()->first()) {
 					$current_user = Leadofficelist\Users\User::find($found_user->id);
