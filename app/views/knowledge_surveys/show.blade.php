@@ -267,7 +267,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        @if(($user->hasRole('Administrator')) && $user_info->hasRole('Head of Unit') && isset($knowledge_data['unit_staff_total']))
+                        @if($user->hasRole('Administrator') && isset($knowledge_data['unit_staff_total']))
                             {{--User viewing is a Head of Unit, and the user who's profile is being viewed is a Head of Unit--}}
                             <div class="knowledge__section-title with-margin-bottom">Unit Information</div>
                             <div class="row no-margin">
