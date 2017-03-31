@@ -371,7 +371,7 @@
 
     <div class="row">
         <div class="col-12">
-            @if($user->hasRole('Head of Unit'))
+            @if($user->hasRole('Administrator'))
                 {{ Form::submit('Continue', ['class' => 'primary']) }}
             @else
                 {{ Form::submit('Update my Profile', ['class' => 'primary']) }}

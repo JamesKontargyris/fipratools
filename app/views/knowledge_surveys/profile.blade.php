@@ -272,7 +272,7 @@
 
         <div class="row">
             <div class="col-12">
-                @if($user->hasRole('Head of Unit') && isset($knowledge_data['unit_staff_total'])) {{--Use unit_staff_total to ensure required fields are in the DB--}}
+                @if($user->hasRole('Administrator') && isset($knowledge_data['unit_staff_total'])) {{--Use unit_staff_total to ensure required fields are in the DB--}}
                     {{--User viewing is a Head of Unit, so show Unit Information from Head of Unit Survey--}}
                     <div class="knowledge__section-title with-margin-bottom">Unit Information</div>
                     <div class="row no-margin">

@@ -228,7 +228,7 @@ class KnowledgeSurveysController extends \BaseController {
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateKnowledgeInfoCommand' ); // Takes care of knowledge area scores
 		$this->execute( 'Leadofficelist\Knowledge_data\UpdateKnowledgeDataCommand' ); // Takes care of everything else
 
-		if($this->user->hasRole('Head of Unit')) return Redirect::to('survey/headofunit');
+		if($this->user->hasRole('Administrator')) return Redirect::to('survey/headofunit');
 
 		Flash::overlay( 'Knowledge profile updated.', 'success' );
 		EventLog::add( 'Knowledge survey updated', $this->user->getFullName(), Unit::find( $this->user->unit_id )->name, 'edit' );
@@ -237,7 +237,7 @@ class KnowledgeSurveysController extends \BaseController {
 	}
 
 	public function getHOUSurvey() {
-		$this->check_role('Head of Unit');
+		$this->check_role('Administrator');
 
 		$seniority = [
 			'' => 'Please select...',
@@ -262,7 +262,7 @@ class KnowledgeSurveysController extends \BaseController {
 
 	public function postHOUSurvey()
 	{
-		$this->check_role('Head of Unit');
+		$this->check_role('Administrator');
 
 		$input = Input::all();
 		/*dd($input);*/
