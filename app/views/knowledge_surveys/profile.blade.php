@@ -397,7 +397,7 @@
                                             @endif
                                             @if(isset($knowledge_data['online_platform_facebook_details']))
                                                 <tr>
-                                                    <td><i class="fa fa-facebook-square"></i></td>
+                                                    <td><i class="fa fa-lg fa-facebook-square"></i></td>
                                                     <td style="word-break: break-all;"><strong><a href="{{ $knowledge_data['online_platform_facebook_details'] }}" target="_blank">{{ $knowledge_data['online_platform_facebook_details'] }}</a></strong></td>
                                                 </tr>
                                             @endif
