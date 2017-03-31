@@ -841,6 +841,9 @@ ul.pagination {
   &.fill {
     background-color:lighten($light-grey, 10%);
   }
+  &.fill-light-green {
+    background-color:lighten($green, 42%);
+  }
 
   .border-box__header {
     padding:12px 15px;
@@ -1036,12 +1039,12 @@ ul.pagination {
 
 .knowledge-profile-section-title {
   @include font-size(12);
-  font-weight:$font-bold;
+  font-weight:$font-black;
   color:darken($green, 10%);
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height:1.1;
-  padding: 10px;
+  padding: 10px 15px;
   background-color:lighten($green, 42%);
   border-radius: 5px;
 
@@ -1056,9 +1059,9 @@ ul.pagination {
 
 .knowledge-profile-section-sub-title {
   @include font-size(12);
-  font-weight:$font-regular;
+  font-weight:$font-bold;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   line-height:1.1;
   color:darken($green, 10%);
   margin-bottom:8px;
@@ -1077,6 +1080,10 @@ ul.pagination {
   border-bottom:2px solid darken($green, 10%);
   border-radius: 5px;
   @include font-size(19);
+
+  &.with-margin-bottom {
+    margin-bottom:$v-rhythm;
+  }
 
   &.with-intro {
     border-radius: 5px 5px 0 0;
@@ -1410,5 +1417,13 @@ ul.pagination {
     display:block;
     float:right;
     margin-top:0;
+  }
+}
+
+.bullets-square {
+  list-style: square;
+  padding-left:20px;
+  li {
+    margin-bottom:10px;
   }
 }

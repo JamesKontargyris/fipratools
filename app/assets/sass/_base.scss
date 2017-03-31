@@ -172,6 +172,9 @@ input[type=radio] {
 	}
 }
 
+tr td {
+	vertical-align: inherit;
+}
 
 strong {
 	font-weight:$font-bold;
@@ -182,6 +185,7 @@ strong {
 	@include font-size(14);
 	overflow: visible;
 }
+
 .red {
 	color:$red !important;
 }
@@ -192,7 +196,10 @@ strong {
   color:$turquoise !important;
 }
 .green {
-  color:limegreen !important;
+  color:$green !important;
+}
+.green-darker {
+	color: darken($green, 10%) !important;
 }
 .orange {
   color:darken(orange, 10%) !important;
@@ -215,4 +222,12 @@ hr {
 	height:1px;
 	border:0;
 	border-top:1px dotted #d7d7d7;
+}
+
+.text-upper {
+	text-transform: uppercase;
+}
+
+.no-top-pad {
+	padding-top:0 !important;
 }

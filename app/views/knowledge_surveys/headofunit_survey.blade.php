@@ -82,7 +82,7 @@
                     <li class="question-details no-left-pad unit_staff_part_time_outside_consultants_details">
                         How many outside consultants do you <strong>regularly use</strong> in any 12 month period?
                         <div class="label-info">We are looking for the number of people <strong>who see themselves</strong> as part of your team.</div>
-                        {{ Form::text('unit_staff_part_time_outside_consultants_details', Input::has('unit_staff_part_time_outside_consultants_details') ? Input::get('unit_staff_part_time_outside_consultants_details') : isset($hou_survey_data['unit_staff_part_time_outside_consultants']) ? $hou_survey_data['unit_staff_part_time_outside_consultants'] : '', ['style' => 'width:30%']) }}
+                        {{ Form::text('unit_staff_part_time_outside_consultants_details', Input::has('unit_staff_part_time_outside_consultants_details') ? Input::get('unit_staff_part_time_outside_consultants_details') : isset($hou_survey_data['unit_staff_part_time_outside_consultants_details']) ? $hou_survey_data['unit_staff_part_time_outside_consultants_details'] : '', ['style' => 'width:30%']) }}
                     </li>
                 </ul>
             </div>
@@ -119,10 +119,10 @@
                                 <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>
                             </tr>
 
-                            @if(Input::has('position'))
-                                @foreach(Input::get('position') as $id => $value)
+                            @if(Input::old('unit_staff_positions_in_public_office_people'))
+                                @foreach(Input::old('unit_staff_positions_in_public_office_people') as $id => $value)
                                     <tr>
-                                        <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][name]", Input::get("unit_staff_positions_in_public_office_people.$id.position")) }}</td>
+                                        <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][name]", Input::get("unit_staff_positions_in_public_office_people.$id.name")) }}</td>
                                         <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][position]", Input::get("unit_staff_positions_in_public_office_people.$id.position")) }}</td>
                                         <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][from]", Input::get("unit_staff_positions_in_public_office_people.$id.from")) }}</td>
                                         @if($id > 0) <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>@endif
@@ -131,7 +131,7 @@
                             @elseif(isset($hou_survey_data['unit_staff_positions_in_public_office_people']))
                                 @foreach($hou_survey_data['unit_staff_positions_in_public_office_people'] as $id => $position_info)
                                     <tr>
-                                        <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][name]", $position_info['position']) }}</td>
+                                        <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][name]", $position_info['name']) }}</td>
                                         <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][position]", $position_info['position']) }}</td>
                                         <td>{{ Form::text("unit_staff_positions_in_public_office_people[$id][from]", $position_info['from']) }}</td>
                                         @if($id > 0)
