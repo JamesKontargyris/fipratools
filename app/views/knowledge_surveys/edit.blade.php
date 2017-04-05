@@ -100,7 +100,7 @@
 
                         <li>{{ Form::checkbox('company_function[]', 'I am in the highest tier of rates of the company', Input::has('company_function') && in_array('I am in the highest tier of rates of the company', Input::get('company_function')) ? 1 : isset($knowledge_data['company_function']) && in_array('I am in the highest tier of rates of the company', $knowledge_data['company_function']) ? 1 : 0) }} I am in the highest tier of rates of the company</li>
 
-                        <li>{{ Form::checkbox('company_function[]', 'I am a public relations consultant', Input::has('company_function') && in_array('I am a public relations consultant', Input::get('company_function')) ? 1 : isset($knowledge_data['company_function']) && in_array('I am a public relations consultant', $knowledge_data['company_function']) ? 1 : 0) }} I am a public relations consultant</li>
+                        <li>{{ Form::checkbox('company_function[]', 'I am a government relations consultant', Input::has('company_function') && in_array('I am a government relations consultant', Input::get('company_function')) ? 1 : isset($knowledge_data['company_function']) && in_array('I am a government relations consultant', $knowledge_data['company_function']) ? 1 : 0) }} I am a government relations consultant</li>
 
                         <li>{{ Form::checkbox('company_function[]', 'I am in a supporting external role', Input::has('company_function') && in_array('I am in a supporting external role', Input::get('company_function')) ? 1 : isset($knowledge_data['company_function']) && in_array('I am in a supporting external role', $knowledge_data['company_function']) ? 1 : 0) }} I am in a supporting external role</li>
 
