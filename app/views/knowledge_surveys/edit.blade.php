@@ -171,7 +171,7 @@
                         {{ Form::text('other_network_details', Input::has('other_network_details') ? Input::get('other_network_details') : isset($knowledge_data['other_network']) ? $knowledge_data['other_network'] : '', ['class' => 'tags-input']) }}
                     </li>
                     <li>&nbsp;</li>
-                    <li>{{ Form::checkbox('no_memberships', "0", Input::has('no_memberships') ? Input::get('no_memberships') : 0) }} None of the above</li>
+                    <li>{{ Form::checkbox('no_memberships', "0", Input::has('no_memberships') ? 1 : isset($knowledge_data['no_memberships']) ? 1 : 0) }} None of the above</li>
                 </ul>
             </div>
         </div>
