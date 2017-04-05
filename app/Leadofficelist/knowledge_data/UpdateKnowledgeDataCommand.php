@@ -23,7 +23,7 @@ class UpdateKnowledgeDataCommand {
 	public $other_network_details;
 	public $no_memberships;
 
-	function __construct( $expertise_team, $other_languages, $company_function, $public_office, $political_party, $work_hours, $additional_info, $pa_pr_organisations = 0, $pa_pr_organisations_details, $registered_lobbyist = 0, $registered_lobbyist_details, $formal_positions = 0, $formal_positions_details, $political_party_membership = 0, $political_party_membership_details, $other_network = 0, $other_network_details, $no_memberships = 0 ) {
+	function __construct( $expertise_team = [], $other_languages, $company_function = [], $public_office, $political_party, $work_hours, $additional_info, $pa_pr_organisations = 0, $pa_pr_organisations_details, $registered_lobbyist = 0, $registered_lobbyist_details, $formal_positions = 0, $formal_positions_details, $political_party_membership = 0, $political_party_membership_details, $other_network = 0, $other_network_details, $no_memberships = 0 ) {
 		$this->expertise_team                     = $expertise_team;
 		$this->other_languages                    = $other_languages;
 		$this->company_function                   = $company_function;
