@@ -6,7 +6,9 @@ class UpdateKnowledgeDataCommand {
 
 	public $expertise_team;
 	public $other_languages;
+	public $expertise_team_details;
 	public $company_function;
+	public $company_function_details;
 	public $public_office;
 	public $political_party;
 	public $work_hours;
@@ -24,10 +26,12 @@ class UpdateKnowledgeDataCommand {
 	public $no_memberships;
 	public $survey_name;
 
-	function __construct( $expertise_team = [], $other_languages, $company_function = [], $public_office, $political_party, $work_hours, $additional_info, $pa_pr_organisations = 0, $pa_pr_organisations_details, $registered_lobbyist = 0, $registered_lobbyist_details, $formal_positions = 0, $formal_positions_details, $political_party_membership = 0, $political_party_membership_details, $other_network = 0, $other_network_details, $no_memberships = 0, $survey_name = '' ) {
+	function __construct( $expertise_team = [], $other_languages, $expertise_team_details, $company_function_details, $company_function = [], $public_office, $political_party, $work_hours, $additional_info, $pa_pr_organisations = 0, $pa_pr_organisations_details, $registered_lobbyist = 0, $registered_lobbyist_details, $formal_positions = 0, $formal_positions_details, $political_party_membership = 0, $political_party_membership_details, $other_network = 0, $other_network_details, $no_memberships = 0, $survey_name = '' ) {
 		$this->expertise_team                     = $expertise_team;
 		$this->other_languages                    = $other_languages;
+		$this->expertise_team_details             = $expertise_team_details;
 		$this->company_function                   = $company_function;
+		$this->company_function_details           = $company_function_details;
 		$this->work_hours                         = $work_hours;
 		$this->additional_info                    = trim( $additional_info );
 		$this->pa_pr_organisations                = $pa_pr_organisations;

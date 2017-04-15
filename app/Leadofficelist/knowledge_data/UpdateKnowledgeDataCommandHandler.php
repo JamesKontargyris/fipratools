@@ -39,10 +39,22 @@ class UpdateKnowledgeDataCommandHandler implements CommandHandler {
 			$this->knowledge_data->deleteData( Auth::user()->id, 'expertise_team', $command->survey_name );
 		}
 
+		if($command->expertise_team_details) {
+			$this->knowledge_data->addData( Auth::user()->id, 'expertise_team_details', serialize($command->expertise_team_details), $command->survey_name, 1 );
+		} else {
+			$this->knowledge_data->deleteData( Auth::user()->id, 'expertise_team_details', $command->survey_name );
+		}
+
 		if($command->company_function) {
 			$this->knowledge_data->addData( Auth::user()->id, 'company_function', serialize($command->company_function), $command->survey_name, 1 );
 		} else {
 			$this->knowledge_data->deleteData( Auth::user()->id, 'company_function', $command->survey_name );
+		}
+
+		if($command->company_function_details) {
+			$this->knowledge_data->addData( Auth::user()->id, 'company_function_details', serialize($command->company_function_details), $command->survey_name, 1 );
+		} else {
+			$this->knowledge_data->deleteData( Auth::user()->id, 'company_function_details', $command->survey_name );
 		}
 
 		if(isset($command->public_office) && ! emptyArray($command->public_office)) {

@@ -82,6 +82,10 @@
                     <li>{{ Form::checkbox('expertise_team[]', "0", Input::has('expertise_team[' . $expertise_area_id .']') ? Input::get('expertise_team[' . $expertise_area_id .']') : isset($knowledge_data['expertise_team']) && in_array(0, $knowledge_data['expertise_team']) ? 1 : 0) }} None of the above - I am into something else</li>
                 </ul>
             </div>
+            <div class="formfield">
+                Any further details:
+                {{ Form::textarea('expertise_team_details', Input::has('expertise_team_details') ? Input::get('expertise_team_details') : isset($knowledge_data['expertise_team_details']) ? $knowledge_data['expertise_team_details'] : '', ['rows' => '4']) }}
+            </div>
         </div>
     </div>
     @if( ! $user->hasRole('Special Adviser'))
@@ -110,6 +114,10 @@
 
                         <li>{{ Form::checkbox('company_function[]', 'I am in a supporting role in administration, finance or management', Input::has('company_function') && in_array('I am in a supporting role in administration, finance or management', Input::get('company_function')) ? 1 : isset($knowledge_data['company_function']) && in_array('I am in a supporting role in administration, finance or management', $knowledge_data['company_function']) ? 1 : 0) }} I am in a supporting role in administration, finance or management</li>
                     </ul>
+                </div>
+                <div class="formfield">
+                    Any further details:
+                    {{ Form::textarea('company_function_details', Input::has('company_function_details') ? Input::get('company_function_details') : isset($knowledge_data['company_function_details']) ? $knowledge_data['company_function_details'] : '', ['rows' => '4']) }}
                 </div>
             </div>
         </div>

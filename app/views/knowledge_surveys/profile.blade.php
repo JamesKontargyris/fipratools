@@ -140,7 +140,7 @@
                 <div class="border-box section-survey fill-light-green border-light-green">
                     <div class="knowledge-profile-section-title">Your Roles</div>
                     <div class="border-box__content">
-                        @if(isset($knowledge_data['expertise_team']))
+                        @if(isset($knowledge_data['expertise_team']) || isset($knowledge_data['expertise_team_details']))
                             <div class="knowledge-profile-section-block">
                                 <div class="knowledge-profile-section-sub-title margin-bottom">Team Membership(s)</div>
 			                    <?php $expertise_areas = ''; ?>
@@ -153,15 +153,21 @@
                                 @endforeach
 
 			                    <?php echo rtrim($expertise_areas, ', '); ?>
+                                @if(isset($knowledge_data['expertise_team_details']))
+                                    <br><em>{{ $knowledge_data['expertise_team_details'] }}</em>
+                                @endif
                             </div>
                         @endif
 
-                        @if(isset($knowledge_data['company_function']))
+                        @if(isset($knowledge_data['company_function']) || isset($knowledge_data['company_function_details']))
                             <div class="knowledge-profile-section-block">
                                 <div class="knowledge-profile-section-sub-title margin-bottom">Main Function(s) in Company</div>
-                                    @foreach($knowledge_data['company_function'] as $statement)
-                                        {{ $statement }}<br>
-                                    @endforeach
+                                @foreach($knowledge_data['company_function'] as $statement)
+                                    {{ $statement }}<br>
+                                @endforeach
+                                @if(isset($knowledge_data['company_function_details']))
+                                    <em>{{ $knowledge_data['company_function_details'] }}</em>
+                                @endif
                             </div>
                         @endif
 
