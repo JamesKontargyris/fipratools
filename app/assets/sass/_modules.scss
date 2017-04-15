@@ -223,6 +223,11 @@
     background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
     border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
   }
+  &.section-iwo {
+    h2 { color:saturate(darken($dark-teal, 30%), 50%); }
+    background:linear-gradient(top, desaturate(lighten($dark-teal, 42%),25%), desaturate(lighten($dark-teal, 20%), 25%)) desaturate(lighten($dark-teal, 42%),25%);
+    border-bottom: 2px solid desaturate(lighten($dark-teal, 15%), 25%);
+  }
   &.section-toolbox {
     h2 { color:saturate(darken($orange, 30%), 50%); }
     background:linear-gradient(top, lighten($orange, 42%), lighten($orange, 30%)) lighten($orange, 42%);

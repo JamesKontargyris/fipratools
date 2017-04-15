@@ -1,6 +1,5 @@
 <?php
 
-
 class PagesController extends \BaseController {
 
 	protected $resource_key = 'home';
@@ -13,5 +12,10 @@ class PagesController extends \BaseController {
 	public function survey()
 	{
 		return View::make('survey');
+	}
+
+	public function iwo()
+	{
+		return View::make('iwo');
 	}
 } 

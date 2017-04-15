@@ -104,6 +104,13 @@
         border-right:2px solid $green;
       }
 
+      &.section-iwo {
+        background: $dark-teal linear-gradient(lighten($dark-teal, 10%) 0%, $dark-teal 40%) no-repeat top;
+        border-left:2px solid $dark-teal;
+        border-top:2px solid $dark-teal;
+        border-right:2px solid $dark-teal;
+      }
+
       &.section-toolbox {
         background: $orange linear-gradient(lighten($orange, 25%) 0%, $orange 40%) no-repeat top;
         border-left:2px solid $orange;

@@ -121,6 +121,7 @@ function current_section_name() {
 		'case' => 'Case Study Database',
 		'survey' => 'Knowledge Survey',
 		'toolbox' => 'Toolbox',
+		'iwo' => 'IWO',
 		'admin' => 'Admin'
 	];
 

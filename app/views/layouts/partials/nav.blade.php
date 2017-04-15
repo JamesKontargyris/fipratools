@@ -26,8 +26,10 @@
                             Knowledge Survey
                         @elseif(Session::get('section') == 'list')
                             Lead Office List
+                        @elseif(Session::get('section') == 'iwo')
+                            IWO
                         @else
-                            Portal
+                            Tools
                         @endif
                         <i class="fa fa-lg fa-caret-down"></i></span>
                 </div>

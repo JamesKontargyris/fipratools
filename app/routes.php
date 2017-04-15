@@ -127,8 +127,8 @@ Route::get('/usersupdate', function()
 
 Route::group(['before' => 'auth'], function()
 {
-	// Temporary Knowledge Survey route
-	Route::any('survey', 'PagesController@survey');
+	// Temporary IWO route
+	Route::any('iwo', 'PagesController@iwo');
 
 	Route::get('password/change', 'PasswordController@getChange');
 	Route::post('password/change', 'PasswordController@postChange');
