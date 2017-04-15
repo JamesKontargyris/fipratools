@@ -22,8 +22,9 @@ class UpdateKnowledgeDataCommand {
 	public $other_network;
 	public $other_network_details;
 	public $no_memberships;
+	public $survey_name;
 
-	function __construct( $expertise_team = [], $other_languages, $company_function = [], $public_office, $political_party, $work_hours, $additional_info, $pa_pr_organisations = 0, $pa_pr_organisations_details, $registered_lobbyist = 0, $registered_lobbyist_details, $formal_positions = 0, $formal_positions_details, $political_party_membership = 0, $political_party_membership_details, $other_network = 0, $other_network_details, $no_memberships = 0 ) {
+	function __construct( $expertise_team = [], $other_languages, $company_function = [], $public_office, $political_party, $work_hours, $additional_info, $pa_pr_organisations = 0, $pa_pr_organisations_details, $registered_lobbyist = 0, $registered_lobbyist_details, $formal_positions = 0, $formal_positions_details, $political_party_membership = 0, $political_party_membership_details, $other_network = 0, $other_network_details, $no_memberships = 0, $survey_name = '' ) {
 		$this->expertise_team                     = $expertise_team;
 		$this->other_languages                    = $other_languages;
 		$this->company_function                   = $company_function;
@@ -39,7 +40,8 @@ class UpdateKnowledgeDataCommand {
 		$this->political_party_membership_details = trim( $political_party_membership_details );
 		$this->other_network                      = $other_network;
 		$this->other_network_details              = trim( $other_network_details );
-		$this->no_memberships                      = $no_memberships;
+		$this->no_memberships                     = $no_memberships;
+		$this->survey_name                        = $survey_name;
 		$this->id                                 = Auth::user()->id;
 
 		$public_office_clean = [];

@@ -19,7 +19,7 @@
                 <div class="alert-container">
                     <div class="alert alert-info with-margin-bottom">
                         <button class="close"><i class="fa fa-close"></i></button>
-                        <strong>Your profile was last updated on {{ date('j F Y', strtotime($user_info->knowledge_profile_last_updated)) }}.</strong><br><br><a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
+                        <strong>Your profile was last updated on {{ date('j F Y', strtotime($user_info->knowledge_profile_last_updated)) }}.</strong><br><br><a href="/survey/profile/edit" class="primary">Update your knowledge profile</a> <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="alert-container">
                     <div class="alert alert-warning alert-big-text with-margin-bottom">
                         <strong>Your profile is out of date and/or requires an update.</strong><br><br>
-                        <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
+                        <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a> <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="alert-container">
                     <div class="alert alert-error alert-big-text with-margin-bottom">
                         <strong>Your profile is not yet complete.</strong><br><br>
-                        <a href="/survey/profile/edit" class="primary">Complete your knowledge profile</a>
+                        <a href="/survey/profile/edit" class="primary">Begin your knowledge profile</a>
                     </div>
                 </div>
             </div>
@@ -431,12 +431,23 @@
                                                     <td style="word-break: break-all;"><strong><a href="{{ $knowledge_data['online_platform_pinterest_details'] }}" target="_blank">{{ $knowledge_data['online_platform_pinterest_details'] }}</a></strong></td>
                                                 </tr>
                                             @endif
+                                            @if(isset($knowledge_data['online_platform_other_details']))
+                                                @foreach($knowledge_data['online_platform_other_details'] as $id => $details)
+                                                    <tr>
+                                                        <td>{{ $details['name'] }}</td>
+                                                        <td style="word-break: break-all;"><strong><a href="{{ $details['url'] }}" target="_blank">{{ $details['url'] }}</a></strong></td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </table>
                                     </div>
                                     <div class="knowledge-profile-section-block">
                                         <ul class="bullets-square">
+                                            @if(isset($knowledge_data['website_state_affiliation']))
+                                                <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['website_state_affiliation'] == 'Yes') ? 'do' : 'do not' }}</strong> state our affiliation to the Fipra Network on our website.</li>
+                                            @endif
                                             @if(isset($knowledge_data['website_reciprocal_link']))
-                                                <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['website_reciprocal_link'] == 'Yes') ? 'do' : 'do not' }}</strong> state our affiliation to the Fipra Network on our website.</li>
+                                                <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['website_reciprocal_link'] == 'Yes') ? 'do' : 'do not' }}</strong> offer a reciprocal link to fipra.com on our website.</li>
                                             @endif
                                             @if(isset($knowledge_data['online_social_media_policy']))
                                                 <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['online_social_media_policy'] == 'Yes') ? 'do' : 'do not' }}</strong> have an online / social media policy.</li>
@@ -457,14 +468,11 @@
                                             <div class="knowledge-profile-section-sub-title margin-bottom">Online Marketing Point(s) of Contact</div>
                                             <table cellpadding="0" cellspacing="0" border="0" width="100%" class="survey-entry-table">
                                                 <tbody>
-                                                <tr>
-                                                    <td>{{ $knowledge_data['points_of_contact'] }}:</td>
-                                                </tr>
-                                                @foreach($knowledge_data['points_of_contact_people'] as $id => $person_data)
-                                                    <tr>
-                                                        <td valign="top"><strong>{{ $person_data['name'] }}</strong></td>
-                                                    </tr>
-                                                @endforeach
+                                                    @foreach($knowledge_data['points_of_contact_people'] as $id => $person_data)
+                                                        <tr>
+                                                            <td valign="top"><strong>{{ $person_data['name'] }}</strong></td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -473,6 +481,23 @@
                             </div>
                         </div>
                         <div class="col-4 last">
+                            <div class="border-box fill-light-green section-survey border-light-green">
+                                <div class="knowledge-profile-section-title"><i class="fa fa-money"></i> Fees</div>
+                                <div class="border-box__content">
+                                    <div class="row no-margin">
+                                        <div class="knowledge-profile-section-block">
+                                            <ul class="bullets-square">
+                                                @if(isset($knowledge_data['fees_operation']))
+                                                    <li>{{ $knowledge_data['fees_operation'] }}.</li>
+                                                @endif
+                                                @if(isset($knowledge_data['success_fees']))
+                                                    <li>{{ $knowledge_data['success_fees'] }}.</li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="border-box fill-light-green section-survey border-light-green">
                                 <div class="knowledge-profile-section-title"><i class="fa fa-info-circle"></i> Further Information</div>
                                 <div class="border-box__content">
@@ -494,9 +519,6 @@
                                                 @if(isset($knowledge_data['professional_indemnity_insurance']))
                                                     <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['professional_indemnity_insurance'] == 'Yes') ? 'do' : 'do not' }}</strong> have professional indemnity insurance{{ ($knowledge_data['professional_indemnity_insurance'] == 'Yes') ? ':<br><em>Up to ' . $knowledge_data['professional_indemnity_insurance_details'] . '</em>' : '.'  }}</li>
                                                 @endif
-                                                @if(isset($knowledge_data['fees_operation']))
-                                                    <li>{{ $knowledge_data['fees_operation'] }}.</li>
-                                                @endif
                                             </ul>
                                         </div>
                                     </div>
@@ -513,6 +535,7 @@
             <div class="row">
                 <div class="col-12">
                     <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
+                    @if($user->hasRole('Administrator')) <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a> @endif
                 </div>
             </div>
         @elseif(! $user_info->survey_updated && $user_info->date_of_birth != '0000-00-00')
@@ -520,6 +543,7 @@
             <div class="row no-margin">
                 <div class="col-12">
                     <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
+                    @if($user->hasRole('Administrator')) <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a> @endif
                 </div>
             </div>
         @endif

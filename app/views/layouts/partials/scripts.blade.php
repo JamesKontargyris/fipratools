@@ -6,9 +6,11 @@
 {{--jQuery Modal plugin--}}
 <script src="{{ asset('js/jquery.modal.min.js') }}" type="text/javascript" charset="utf-8"></script>
 {{--Chart.js--}}
-<script src="{{ asset('js/Chart.min.js') }}"></script>
+<script src="{{ asset('js/Chart.min.js') }}" type="text/javascript" charset="utf-8"></script>
 <!--Select2-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<!--numeric-->
+<script src="{{ asset('js/jquery.numeric.min.js') }}" type="text/javascript" charset="utf-8"></script>
 <!--TagsInput-->
 <script src="{{ asset('js/tagsinput/jquery.tagsinput.min.js') }}"></script>
 {{--Site JS--}}

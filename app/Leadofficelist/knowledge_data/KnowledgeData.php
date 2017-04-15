@@ -12,16 +12,17 @@ class KnowledgeData extends \BaseModel {
 		return $this->belongsTo( '\Leadofficelist\Users\User', 'id', 'user_id' );
 	}
 
-	public static function addData( $user_id, $slug = '', $data_value = '', $serialized = 0 ) {
+	public static function addData( $user_id, $slug = '', $data_value = '', $survey_name = '', $serialized = 0 ) {
 		if($user_id) {
-			if ( KnowledgeData::where('user_id', '=', $user_id)->where( 'slug', '=', $slug )->get()->first() ) {
+			if ( KnowledgeData::where('user_id', '=', $user_id)->where( 'slug', '=', $slug )->where( 'survey_name', '=', $survey_name )->get()->first() ) {
 				// Slug already exists for this user so update instead of adding
-				return KnowledgeData::updateData( $user_id, $slug, $data_value, $serialized );
+				return KnowledgeData::updateData( $user_id, $slug, $data_value, $survey_name, $serialized );
 			} else {
 				$add_data = new KnowledgeData;
 				$add_data->user_id = $user_id;
 				$add_data->slug = $slug;
 				$add_data->data_value = $data_value;
+				$add_data->survey_name = $survey_name;
 				$add_data->serialized = $serialized;
 				$add_data->save();
 
@@ -32,10 +33,11 @@ class KnowledgeData extends \BaseModel {
 		}
 	}
 
-	public static function updateData( $user_id, $slug = '', $data_value = '', $serialized = 0 ) {
-		if($update_data = KnowledgeData::where('user_id', '=', $user_id)->where('slug', '=', $slug)->get()->first()) {
+	public static function updateData( $user_id, $slug = '', $data_value = '', $survey_name = '', $serialized = 0 ) {
+		if($update_data = KnowledgeData::where('user_id', '=', $user_id)->where('slug', '=', $slug)->where('survey_name', '=', $survey_name)->get()->first()) {
 			// User / slug combo exists
 			$update_data->data_value = $data_value;
+			$update_data->survey_name = $survey_name;
 			$update_data->serialized = $serialized;
 			$update_data->save();
 
@@ -45,9 +47,9 @@ class KnowledgeData extends \BaseModel {
 		}
 	}
 
-	public static function deleteData($user_id, $slug = '')
+	public static function deleteData($user_id, $slug = '', $survey_name = '')
 	{
-		if($delete_data = KnowledgeData::where('user_id', '=', $user_id)->where('slug', '=', $slug)->get()->first()) {
+		if($delete_data = KnowledgeData::where('user_id', '=', $user_id)->where('slug', '=', $slug)->where('survey_name', '=', $survey_name)->get()->first()) {
 			// User / slug combo exists
 			$delete_data->delete();
 

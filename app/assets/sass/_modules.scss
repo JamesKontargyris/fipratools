@@ -1099,6 +1099,10 @@ ul.pagination {
   padding:15px;
   background-color: lighten($green, 40%);
   border-radius: 0 0 5px 5px;
+  &.no-bg {
+    background-color: transparent;
+    padding:15px 0;
+  }
 }
 
 .knowledge-profile-details {
@@ -1426,4 +1430,10 @@ ul.pagination {
   li {
     margin-bottom:10px;
   }
+}
+
+.time-required {
+  margin: 12px 0 6px;
+  @include font-size(16);
+  font-weight: $font-black;
 }

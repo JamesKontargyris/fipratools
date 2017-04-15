@@ -2,6 +2,7 @@
 
 @section('page-header')
     Edit your Knowledge Profile
+    <div class="time-required"><i class="fa fa-clock-o"></i> 5-10 minutes</div>
 @stop
 
 @section('page-nav')
@@ -13,6 +14,7 @@
     @include('layouts.partials.messages')
 
     {{ Form::open(['method' => 'POST', 'url' => 'survey/profile/edit', 'class' => 'knowledge-survey-form']) }}
+    {{ Form::hidden('survey_name', $survey_name) }}
 
     <div class="row no-margin">
         <div class="col-5">

@@ -23,10 +23,16 @@
         numberOfMonths: 1
     });
 
+    // Ensure numeric input
+    $('.numeric').numeric();
     // Apply select2 library to select-search-multiple fields
     $('.select2').select2();
     // Apply tagsinput library to tags-input fields
     $('.tags-input').tagsInput({ 'defaultText': '', 'width':'100%', 'height':'90px', 'delimiter': ';'});
+    // Don't submit the form with the enter key
+    $(document).on("keypress", ":input:not(textarea):not([type=submit])", function(event) {
+        if (event.keyCode == 13) { event.preventDefault(); }
+    });
 
     // If "none of the above" is ticked on the team question in the knowledge survey,
     // untick all other ticked expertise areas (and vice versa).
@@ -76,7 +82,7 @@
     {
         var targetTable = $(this).data('target-table'),
             repeatingRow = $(targetTable + ' tbody .entry-table-repeatable-row').clone(),
-            noOfRows = parseInt($(this).attr('data-no-of-rows'));
+            noOfRows = $(this).data('id-index') + 1;
 
         repeatingRow.find('input').prop('disabled', false);
         repeatingRow.find('select').prop('disabled', false);
@@ -97,10 +103,10 @@
         }
 
         // unit_staff_positions_in_public_office table (Head of Unit survey)
-        if(targetTable == '.unit_staff_positions_in_public_office') {
-            repeatingRow.find('.name-field').attr('name', 'unit_staff_positions_in_public_office[' + noOfRows + '][name]');
-            repeatingRow.find('.position-field').attr('name', 'unit_staff_positions_in_public_office[' + noOfRows + '][position]');
-            repeatingRow.find('.from-field').attr('name', 'unit_staff_positions_in_public_office[' + noOfRows + '][from]');
+        if(targetTable == '.unit_staff_positions_in_public_office_people') {
+            repeatingRow.find('.name-field').attr('name', 'unit_staff_positions_in_public_office_people[' + noOfRows + '][name]');
+            repeatingRow.find('.position-field').attr('name', 'unit_staff_positions_in_public_office_people[' + noOfRows + '][position]');
+            repeatingRow.find('.from-field').attr('name', 'unit_staff_positions_in_public_office_people[' + noOfRows + '][from]');
         }
 
         // unit_staff_carrying_out_public_affairs table (Head of Unit survey)
@@ -109,9 +115,20 @@
             repeatingRow.find('.seniority-field').attr('name', 'unit_staff_carrying_out_public_affairs[' + noOfRows + '][seniority]');
         }
 
-        $(targetTable + ' tbody').append('<tr>' + repeatingRow.html() + '</tr>');
+        // points_of_contact_people table (Head of Unit survey)
+        if(targetTable == '.points_of_contact_people') {
+            repeatingRow.find('.name-field').attr('name', 'points_of_contact_people[' + noOfRows + '][name]');
+        }
 
-        $(this).attr('data-no-of-rows', noOfRows + 1);
+        // online_platform_other_details table (Head of Unit survey)
+        if(targetTable == '.online_platform_other_details') {
+            repeatingRow.find('.name-field').attr('name', 'online_platform_other_details[' + noOfRows + '][name]');
+            repeatingRow.find('.url-field').attr('name', 'online_platform_other_details[' + noOfRows + '][url]').addClass('url-format');
+        }
+
+        $(this).data('id-index', noOfRows);
+
+        $(targetTable + ' tbody').append('<tr>' + repeatingRow.html() + '</tr>');
 
         // Trigger the remove button
         $('.remove-repeatable-row').on('click', function()
@@ -119,8 +136,31 @@
             $(this).closest('tr').remove();
             return false;
         });
+        // Trigger adding http:// to url fields if the user hasn't already
+        $('.url-format').on('blur', function()
+        {
+            var urlEntry = $(this);
+            if(urlEntry.val().substr(0,7) != 'http://'){
+                urlEntry.val('http://' + urlEntry.val());
+            }
+        });
 
         return false;
+    });
+
+    // Make sure contract percentage fields on Head of Unit survey add up to 100%
+    $('.percent_100_field_1, .percent_100_field_2').on('keyup', function()
+    {
+       var $this = $(this),
+       percentage = $this.val();
+       console.log(percentage);
+       if(percentage >= 0 && percentage <= 100) {
+           if($this.hasClass('percent_100_field_1')) {
+               $('.percent_100_field_2').val(100 - percentage);
+           } else {
+               $('.percent_100_field_1').val(100 - percentage);
+           }
+       }
     });
 
     // Add http:// to url fields if the user hasn't already
@@ -140,7 +180,13 @@
         var target = $('.' + $(this).attr('name') + '_details');
 
        if(this.checked) {
-        target.show();
+        target.show().find(':input').each(function()
+        {
+            if( $(this).attr('name').indexOf('999') == -1)
+            {
+                $(this).prop('disabled', false);
+            }
+        });
        }
     });
 
@@ -149,9 +195,21 @@
     {
         var target = $('.' + $(this).attr('name') + '_details');
        if(this.checked) {
-            target.slideDown();
+            target.slideDown().find(':input').each(function()
+            {
+                if( $(this).attr('name').indexOf('999') == -1)
+                {
+                    $(this).prop('disabled', false);
+                }
+            });
        } else {
-           target.slideUp();
+           target.slideUp().find(':input').each(function()
+           {
+               if( $(this).attr('name').indexOf('999') == -1)
+               {
+                   $(this).prop('disabled', true);
+               }
+           });
        }
     });
 
@@ -162,7 +220,13 @@
         var target = $('.' + $(this).attr('name') + '_details');
 
         if(this.checked) {
-            target.hide();
+            target.hide().find(':input').each(function()
+            {
+                if( $(this).attr('name').indexOf('999') == -1)
+                {
+                    $(this).prop('disabled', true);
+                }
+            });;
         }
     });
 
@@ -171,7 +235,13 @@
     {
         var target = $('.' + $(this).attr('name') + '_details');
         if(this.checked) {
-            target.slideUp();
+            target.slideUp().find(':input').each(function()
+            {
+                if( $(this).attr('name').indexOf('999') == -1)
+                {
+                    $(this).prop('disabled', true);
+                }
+            });;
         }
     });
 
