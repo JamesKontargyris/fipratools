@@ -104,6 +104,13 @@
         border-right:2px solid $green;
       }
 
+      &.section-headofunitsurvey {
+        background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
+        border-left:2px solid $green;
+        border-top:2px solid $green;
+        border-right:2px solid $green;
+      }
+
       &.section-iwo {
         background: $dark-teal linear-gradient(lighten($dark-teal, 10%) 0%, $dark-teal 40%) no-repeat top;
         border-left:2px solid $dark-teal;

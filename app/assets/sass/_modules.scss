@@ -223,6 +223,11 @@
     background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
     border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
   }
+  &.section-headofunitsurvey {
+    h2 { color:saturate(darken($green, 30%), 50%); }
+    background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
+    border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
+  }
   &.section-iwo {
     h2 { color:saturate(darken($dark-teal, 30%), 50%); }
     background:linear-gradient(top, desaturate(lighten($dark-teal, 42%),25%), desaturate(lighten($dark-teal, 20%), 25%)) desaturate(lighten($dark-teal, 42%),25%);
@@ -883,6 +888,13 @@ ul.pagination {
        color:$green;
      }
    }
+
+  &.section-headofunitsurvey {
+    .border-box__title,
+    .border-box__sub-title {
+      color:$green;
+    }
+  }
 
   &.section-toolbox {
     .border-box__title,

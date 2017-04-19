@@ -19,7 +19,7 @@
                 <div class="alert-container">
                     <div class="alert alert-info with-margin-bottom">
                         <button class="close"><i class="fa fa-close"></i></button>
-                        <strong>Your profile was last updated on {{ date('j F Y', strtotime($user_info->knowledge_profile_last_updated)) }}.</strong><br><br><a href="/survey/profile/edit" class="primary">Update your knowledge profile</a> <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a>
+                        <strong>Your profile was last updated on {{ date('j F Y', strtotime($user_info->knowledge_profile_last_updated)) }}.</strong><br><br><a href="/survey/profile/edit" class="primary">Update your knowledge profile</a> <a href="/headofunitsurvey" class="primary">Update your Head of Unit survey</a>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="alert-container">
                     <div class="alert alert-warning alert-big-text with-margin-bottom">
                         <strong>Your profile is out of date and/or requires an update.</strong><br><br>
-                        <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a> <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a>
+                        <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a> <a href="/headofunitsurvey" class="primary">Update your Head of Unit survey</a>
                     </div>
                 </div>
             </div>
@@ -541,7 +541,7 @@
             <div class="row">
                 <div class="col-12">
                     <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
-                    @if($user->hasRole('Administrator')) <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a> @endif
+                    @if($user->hasRole('Administrator')) <a href="/headofunitsurvey" class="primary">Update your Head of Unit survey</a> @endif
                 </div>
             </div>
         @elseif(! $user_info->survey_updated && $user_info->date_of_birth != '0000-00-00')
@@ -549,7 +549,7 @@
             <div class="row no-margin">
                 <div class="col-12">
                     <a href="/survey/profile/edit" class="primary">Update your knowledge profile</a>
-                    @if($user->hasRole('Administrator')) <a href="/survey/headofunit" class="primary">Update your Head of Unit survey</a> @endif
+                    @if($user->hasRole('Administrator')) <a href="/headofunitsurvey" class="primary">Update your Head of Unit survey</a> @endif
                 </div>
             </div>
         @endif

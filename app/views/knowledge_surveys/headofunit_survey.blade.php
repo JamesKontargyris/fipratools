@@ -13,7 +13,7 @@
 
     @include('layouts.partials.messages')
 
-    {{ Form::open(['method' => 'POST', 'url' => 'survey/headofunit', 'class' => 'knowledge-survey-form']) }}
+    {{ Form::open(['method' => 'POST', 'url' => 'headofunitsurvey', 'class' => 'knowledge-survey-form']) }}
     {{ Form::hidden('survey_name', $survey_name) }}
 
     <div class="knowledge__section-intro no-bg">{{ get_widget('head_of_unit_survey_intro') }}</div>
@@ -456,7 +456,7 @@
                                         @if($id > 0) <td><a href="#" class="remove-repeatable-row"><i class="fa fa-close"></i></a></td>@endif
                                     </tr>
                                 @endforeach
-                            @elseif(isset($hou_survey_data['online_platform_other_details']))
+                            @elseif(isset($hou_survey_data['online_platform_other_details']) && ! empty($hou_survey_data['online_platform_other_details']))
                                 @foreach($hou_survey_data['online_platform_other_details'] as $id => $social_media_other_info)
                                     <tr>
                                         <td>{{ Form::text("online_platform_other_details[$id][name]", $social_media_other_info['name'], ['disabled' => 'disabled']) }}</td>

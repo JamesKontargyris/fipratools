@@ -24,10 +24,14 @@
                             Case Studies
                         @elseif(Session::get('section') == 'survey')
                             Knowledge Survey
+                        @elseif(Session::get('section') == 'HeadofUnitSurveyController')
+                            Head of Unit Survey
                         @elseif(Session::get('section') == 'list')
                             Lead Office List
                         @elseif(Session::get('section') == 'iwo')
                             IWO
+                        @elseif(Session::get('section') == 'toolbox')
+                            Toolbox
                         @else
                             Tools
                         @endif

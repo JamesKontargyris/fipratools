@@ -150,9 +150,10 @@ Route::group(['before' => 'auth'], function()
 	Route::get('survey/profile', 'KnowledgeSurveysController@getShowProfile');
 	Route::get('survey/profile/edit', 'KnowledgeSurveysController@getUpdateProfile');
 	Route::post('survey/profile/edit', 'KnowledgeSurveysController@postUpdateProfile');
-	Route::get('survey/headofunit', 'KnowledgeSurveysController@getHOUSurvey');
-	Route::post('survey/headofunit', 'KnowledgeSurveysController@postHOUSurvey');
 	Route::resource('survey', 'KnowledgeSurveysController');
+
+	Route::get('headofunitsurvey', 'HeadofUnitSurveyController@getIndex');
+	Route::post('headofunitsurvey', 'HeadofUnitSurveyController@postIndex');
 
 	Route::any('knowledge_areas/export', 'KnowledgeAreasController@export');
 	Route::any('knowledge_areas/search', 'KnowledgeAreasController@search');

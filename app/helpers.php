@@ -120,6 +120,7 @@ function current_section_name() {
 		'list' => 'Lead Office List',
 		'case' => 'Case Study Database',
 		'survey' => 'Knowledge Survey',
+		'headofunitsurvey' => 'Head of Unit Survey',
 		'toolbox' => 'Toolbox',
 		'iwo' => 'IWO',
 		'admin' => 'Admin'
