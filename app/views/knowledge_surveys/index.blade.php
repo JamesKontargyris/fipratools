@@ -108,7 +108,9 @@
                             ?>
                             <tr>
                                 <td><a href="{{ route('survey.show', $profile->id) }}"><strong>{{ $profile->getFullName() }}</strong></a></td>
-                                <td class="hide-m"><a href="{{ route('units.show', $profile->unit()->first()->id) }}">{{ $profile->unit()->first()->name }}</a></td>
+                                <td class="hide-m">
+                                    @if($profile->unit()->first()->id)<a href="{{ route('units.show', $profile->unit()->first()->id) }}">{{ $profile->unit()->first()->name }}</a>@endif
+                                </td>
                                 @foreach($user_expertise as $expertise)
                                     <td>{{ $expertise ? implode($expertise, ', ') : '-' }}</td>
                                 @endforeach
