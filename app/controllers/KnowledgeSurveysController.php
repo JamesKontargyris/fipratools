@@ -229,10 +229,6 @@ class KnowledgeSurveysController extends \BaseController {
 		$this->execute( 'Leadofficelist\Knowledge_surveys\UpdateKnowledgeInfoCommand' ); // Takes care of knowledge area scores
 		$this->execute( 'Leadofficelist\Knowledge_data\UpdateKnowledgeDataCommand' ); // Takes care of everything else
 
-		if ( $this->user->hasRole( 'Administrator' ) ) {
-			return Redirect::to( 'survey/headofunit' );
-		}
-
 		Flash::overlay( 'Knowledge profile updated.', 'success' );
 		EventLog::add( 'Knowledge survey updated', $this->user->getFullName(), Unit::find( $this->user->unit_id )->name, 'edit' );
 
