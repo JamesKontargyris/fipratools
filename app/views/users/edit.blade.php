@@ -63,5 +63,6 @@ Editing: {{ $edit_user->getFullName() }}
   <p>Heads of Unit (Correspondent) can: <em>{{ $head_corr_perms_list }}</em></p>
   <p>Fipriots can: <em>{{ $fipriot_perms_list }}</em></p>
   <p>Special Advisers can: <em>{{ $spad_perms_list }}</em></p>
+  <p>Correspondents can: <em>{{ $corr_perms_list }}</em></p>
 </div>
 @stop

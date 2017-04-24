@@ -24,6 +24,7 @@ class UsersController extends \BaseController {
 	protected $head_perms_list;
 	protected $head_corr_perms_list;
 	protected $spad_perms_list;
+	protected $corr_perms_list;
 	protected $export_filename;
 	private $addUserForm;
 	private $editUserForm;
@@ -80,7 +81,8 @@ class UsersController extends \BaseController {
 			'head_perms_list'      => $this->head_perms_list,
 			'head_corr_perms_list' => $this->head_corr_perms_list,
 			'fipriot_perms_list'   => $this->fipriot_perms_list,
-			'spad_perms_list'      => $this->spad_perms_list
+			'spad_perms_list'      => $this->spad_perms_list,
+			'corr_perms_list'      => $this->corr_perms_list,
 		] );
 	}
 
@@ -156,7 +158,8 @@ class UsersController extends \BaseController {
 				'head_perms_list'      => $this->head_perms_list,
 				'head_corr_perms_list' => $this->head_corr_perms_list,
 				'fipriot_perms_list'   => $this->fipriot_perms_list,
-				'spad_perms_list'      => $this->spad_perms_list
+				'spad_perms_list'      => $this->spad_perms_list,
+				'corr_perms_list'      => $this->corr_perms_list
 			] );
 		} else {
 			throw new ResourceNotFoundException( 'users' );
@@ -280,6 +283,7 @@ class UsersController extends \BaseController {
 		$this->head_perms_list      = $this->getPerms( 'Head of Unit' );
 		$this->fipriot_perms_list   = $this->getPerms( 'Fipriot' );
 		$this->spad_perms_list      = $this->getPerms( 'Special Adviser' );
+		$this->corr_perms_list      = $this->getPerms( 'Correspondent' );
 
 		return true;
 	}

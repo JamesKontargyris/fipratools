@@ -62,5 +62,6 @@ Add a User
   <p>Heads of Unit can: <em>{{ $head_perms_list }}</em></p>
   <p>Fipriots can: <em>{{ $fipriot_perms_list }}</em></p>
   <p>Special Advisers can: <em>{{ $spad_perms_list }}</em></p>
+  <p>Correspondents can: <em>{{ $corr_perms_list }}</em></p>
 </div>
 @stop
