@@ -16,7 +16,6 @@ class AddEditSurvey extends FormValidator {
 		'dob_year'                           => 'required',
 		'languages'                          => 'array|required',
 		'expertise_team'                     => 'array|required',
-		'work_hours'                         => 'required',
 		'pa_pr_organisations_details'        => 'required_if:pa_pr_organisations,1',
 		'registered_lobbyist_details'        => 'required_if:registered_lobbyist,1',
 		'formal_positions_details'           => 'required_if:formal_positions,1',
@@ -27,7 +26,6 @@ class AddEditSurvey extends FormValidator {
 	public $messages = [
 		'languages.required'                      => 'Please select the languages in which you can conduct business.',
 		'expertise_team.required'                 => 'Please select the team(s) you would place yourself in.',
-		'work_hours.required'                     => 'Please indicate whether you work full- or part-time.',
 		'pa_pr_organisations_details.required_if' => 'Please enter your professional public affairs or public relations organisation(s) details.',
 		'registered_lobbyist_details.required_if' => 'Please enter your registered lobbyist details.',
 		'formal_positions.required_if'            => 'Please enter your formal title and/or position details.',
