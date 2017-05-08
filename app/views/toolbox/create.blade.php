@@ -58,7 +58,7 @@
             </div>
             <div class="formfield">
                 {{ Form::label('file', 'File:', ['class' => 'required']) }}
-                <div class="label-info">Max. upload size: 10mb</div>
+                <div class="label-info">Max. upload size: 100mb</div>
                 {{ Form::file('file') }}
             </div>
             <div class="formfield">

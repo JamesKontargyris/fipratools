@@ -14,7 +14,7 @@ class AddEditToolbox extends FormValidator {
 		'description' => 'required|max:255',
 		'type'        => 'required',
 		'url'         => 'url',
-		'file'        => 'required_if:type,file|max:10240'
+		'file'        => 'required_if:type,file|max:1048576'
 
 	];
 
@@ -24,7 +24,7 @@ class AddEditToolbox extends FormValidator {
 		'url.active_url'       => 'Please enter a valid URL.',
 		'url.url'              => 'Please enter a valid URL.',
 		'file.required_if'     => 'Please select a file to upload.',
-		'file.max'            => 'Please upload a file under 10mb in size.',
+		'file.max'            => 'Please upload a file equal to or under 100mb in size.',
 		'max'                  => 'Too many characters. Please reduce the text.'
 	];
 }
