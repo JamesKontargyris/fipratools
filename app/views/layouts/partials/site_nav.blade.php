@@ -78,11 +78,6 @@
 			<a href="{{ url('survey/profile') }}"><strong>My Knowledge Profile</strong></a>
 		</li>
 	@endif
-	@if($user->hasRole('Administrator') && section_is() == 'survey' && $user->date_of_birth != '0000-00-00')
-		<li class="{{ nav_item_is_active('survey/headofunit', true) ? 'active' : '' }}">
-			<a href="{{ url('survey/headofunit') }}"><strong>Head of Unit Survey</strong></a>
-		</li>
-	@endif
 	@if($user->can('manage_knowledge') && section_is() == 'survey')
 	<li class="{{ nav_item_is_active('knowledge_areas') ? 'active' : '' }}">
 		<a href="{{ route('knowledge_areas.index') }}">Knowledge Areas</a><a href="{{ route('knowledge_areas.create') }}" class="site-nav-extra-link" title="Add a new knowledge area"><i class="fa fa-plus-circle"></i></a>
