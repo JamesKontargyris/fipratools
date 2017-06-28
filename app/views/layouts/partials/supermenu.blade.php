@@ -23,7 +23,9 @@
 						<li class="super-menu__item hide-print"><a href="/headofunitsurvey?global=headofunitsurvey" class="super-menu__link <?php if(Session::get('section') == 'headofunitsurvey') : ?> active<?php endif; ?> section-headofunitsurvey">Head of Unit Survey</a></li>
 					@endif
 
-					<li class="super-menu__item hide-print"><a href="/iwo?global=iwo" class="super-menu__link <?php if(Session::get('section') == 'iwo') : ?> active<?php endif; ?> section-iwo">IWO</a></li>
+					@if( ! $user->hasRole('Special Adviser'))
+						<li class="super-menu__item hide-print"><a href="/iwo?global=iwo" class="super-menu__link <?php if(Session::get('section') == 'iwo') : ?> active<?php endif; ?> section-iwo">IWO</a></li>
+					@endif;
 
 					@if($user->can('view_toolbox'))
 						<li class="super-menu__item hide-print"><a href="/toolbox?global=toolbox" class="super-menu__link <?php if(Session::get('section') == 'toolbox') : ?> active<?php endif; ?> section-toolbox">Toolbox</a></li>
