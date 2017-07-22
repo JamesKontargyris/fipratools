@@ -644,7 +644,7 @@ hr {
     color: white; }
 
 /* line 21, ../../app/assets/sass/_modules.scss */
-.secondary, .fipriot-info__read-more-link {
+.secondary, .fipriot-info__read-more-link, ul.pager li {
   cursor: pointer;
   padding: 5px 10px;
   font-size: 16px;
@@ -668,11 +668,11 @@ hr {
   display: inline-block;
   margin-bottom: 3px; }
   /* line 27, ../../app/assets/sass/_mixins.scss */
-  .secondary:hover, .fipriot-info__read-more-link:hover {
+  .secondary:hover, .fipriot-info__read-more-link:hover, ul.pager li:hover {
     opacity: 0.8; }
 
 /* line 27, ../../app/assets/sass/_modules.scss */
-.but-small {
+.but-small, ul.pager li {
   font-size: 0.8rem; }
 
 /* line 30, ../../app/assets/sass/_modules.scss */
@@ -2603,6 +2603,28 @@ ul.pagination {
   font-size: 16px;
   font-size: 1rem; }
 
+/* line 1537, ../../app/assets/sass/_modules.scss */
+.forum-button-form {
+  float: left; }
+  /* line 1539, ../../app/assets/sass/_modules.scss */
+  .forum-button-form:not(:last-of-type) {
+    margin-right: 5px; }
+
+/* line 3, ../../app/assets/sass/_mixins.scss */
+ul.pager::after {
+  clear: both;
+  content: "";
+  display: table; }
+/* line 1546, ../../app/assets/sass/_modules.scss */
+ul.pager li {
+  float: left; }
+  /* line 1550, ../../app/assets/sass/_modules.scss */
+  ul.pager li:not(:last-of-type) {
+    margin-right: 5px; }
+  /* line 1553, ../../app/assets/sass/_modules.scss */
+  ul.pager li.disabled {
+    display: none; }
+
 /* line 1, ../../app/assets/sass/_header.scss */
 .mobile-user-details-container {
   padding: 20px 10px;
@@ -2835,6 +2857,18 @@ footer {
     /* line 7, ../../app/assets/sass/_footer.scss */
     footer a:hover {
       color: #00257f; }
+
+/* line 2, ../../app/assets/sass/_forum.scss */
+.forum__post__content img {
+  max-width: 100%;
+  height: auto; }
+
+/* line 9, ../../app/assets/sass/_forum.scss */
+.forum__post__avatar img {
+  border-radius: 50%;
+  max-width: 80px;
+  border: 1px solid #ccd3e5;
+  background-color: #efefef; }
 
 @media print {
   /* line 2, ../../app/assets/sass/_print.scss */

@@ -1,0 +1,15 @@
+.forum__post__content {
+  img {
+    max-width: 100%;
+    height:auto;
+  }
+}
+
+.forum__post__avatar {
+  img {
+    border-radius: 50%;
+    max-width:80px;
+    border:1px solid $periwinkle;
+    background-color:#efefef;
+  }
+}

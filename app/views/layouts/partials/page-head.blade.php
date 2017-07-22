@@ -21,6 +21,20 @@
 <script>
     tinymce.init({
         selector: '.wysiwyg-editor',
+        branding: false,
+        elementpath: false,
+        relative_urls: false,
+        height:400,
+        extended_valid_elements : 'img[class|src|border=0|alt|title|hspace|vspace|align|onmouseover|onmouseout|name]',
+        menu: {
+            file: {title: 'File', items: 'newdocument'},
+            edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+            insert: {title: 'Insert', items: 'link media image'},
+            view: {title: 'View', items: 'visualaid'},
+            format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | removeformat'},
+            table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+            tools: {title: 'Tools', items: 'spellchecker'}
+        },
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",

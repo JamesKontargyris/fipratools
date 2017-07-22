@@ -24,7 +24,7 @@
 						<table width="100%" class="index-table">
 							<thead>
 							<tr>
-								<td width="90%">Topics</td>
+								<td width="90%">Forum</td>
 								<td width="10%" class="content-center">Threads</td>
 							</tr>
 							</thead>

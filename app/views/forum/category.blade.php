@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-	Fipra Forum: {{ $category->title }}
+	'{{ $category->title }}' Forum
 @stop
 
 @section('page-nav')

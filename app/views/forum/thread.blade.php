@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page-header')
-    Fipra Forum: {{{ $thread->title }}}
+    {{{ $thread->title }}}
 
     @if ($thread->locked)
         [{{ trans('forum::base.locked') }}]
@@ -13,8 +13,7 @@
 
 @section('page-nav')
     @if ($thread->canReply)
-          <li><a href="{{ $thread->replyRoute }}" class="secondary but--small">{{ trans('forum::base.new_reply') }}</a></li>
-          <li><a href="#quick-reply" class="secondary but--small">{{ trans('forum::base.quick_reply') }}</a></li>
+          <li><a href="#quick-reply" class="secondary">{{ trans('forum::base.new_reply') }}</a></li>
     @endif
 @stop
 
@@ -49,7 +48,7 @@
                 <thead>
                 <tr>
                     <td width="20%">{{ trans('forum::base.author') }}</td>
-                    <td width="80%">{{ trans('forum::base.post') }}</td>
+                    <td colspan="2" width="80%">{{ trans('forum::base.post') }}</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,7 +64,8 @@
 {{ $thread->pageLinks }}
 
 @if ($thread->canReply)
-    <h3>{{ trans('forum::base.quick_reply') }}</h3>
+    <br><hr>
+    <h3 class="no-padding">Post a reply</h3>
     <div id="quick-reply">
         @include(
             'forum.partials.forms.post',

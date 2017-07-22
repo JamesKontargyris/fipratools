@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-@include('forum::partials.breadcrumbs', ['other' => trans('forum::base.new_threads')])
+@include('forum.partials.breadcrumbs', ['other' => trans('forum::base.new_threads')])
 
 <h2>{{ trans('forum::base.new_threads') }}</h2>
 

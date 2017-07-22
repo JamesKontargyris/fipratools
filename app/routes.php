@@ -259,7 +259,7 @@ Route::post('/imageupload', function()
   /*********************************************
    * Change this line to set the upload folder *
    *********************************************/
-  $imageFolder = public_path() . "/uploads/forum/";
+  $imageFolder = "uploads/forum/";
 
   reset ($_FILES);
   $temp = current($_FILES);
@@ -300,7 +300,7 @@ Route::post('/imageupload', function()
 	  // Respond to the successful upload with JSON.
 	  // Use a location key to specify the path to the saved image resource.
 	  // { location : '/your/uploaded/image/file'}
-	  echo json_encode(array('location' => '/uploads/' . $temp['name']));
+	  echo json_encode(array('location' => '/uploads/forum/' . $temp['name']));
   } else {
 	  // Notify editor that the upload failed
 	  header("HTTP/1.0 500 Server Error");

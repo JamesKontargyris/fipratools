@@ -24,7 +24,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
-	public function getFullName( $reversed = false )
+	public function getFullName( $reversed = false ) /* Used by forum */
 	{
 		if ( $reversed )
 		{
@@ -33,6 +33,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		{
 			return $this->first_name . ' ' . $this->last_name;
 		}
+	}
+
+	public function getRole() /* Used by forum */
+	{
+		return $this->roles()->pluck( 'name' );
 	}
 
 }

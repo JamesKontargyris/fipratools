@@ -1,12 +1,15 @@
 @extends('layouts.master')
 
-@section('content')
-@include('forum::partials.breadcrumbs', compact('parentCategory', 'category', 'thread'))
+@section('page-header')
+    {{ trans('forum::base.edit_post') }} ({{$thread->title}})
+@stop
 
-<h2>{{ trans('forum::base.edit_post') }} ({{$thread->title}})</h2>
+
+@section('content')
+@include('forum.partials.breadcrumbs', compact('parentCategory', 'category', 'thread'))
 
 @include(
-    'forum::partials.forms.post',
+    'forum.partials.forms.post',
     array(
         'form_url'          => $post->editRoute,
         'form_classes'      => '',
