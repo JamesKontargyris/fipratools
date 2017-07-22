@@ -1,3 +1,11 @@
+.forum__page-title {
+  font-weight:400;
+  @include font-size(28);
+  line-height:1.1;
+  color:$grey;
+  padding:10px 0 30px 0;
+}
+
 .forum__post__content {
   img {
     max-width: 100%;
@@ -11,5 +19,130 @@
     max-width:80px;
     border:1px solid $periwinkle;
     background-color:#efefef;
+  }
+}
+
+.forum__group {
+  border:1px solid $blue;
+  border-radius: 5px;
+}
+
+.forum__titles {
+  background: linear-gradient(to bottom, $blue 0%, darken($blue, 7%) 100%), $blue;
+  padding:10px 15px;
+  color:white;
+}
+
+.forum__title {
+  @include font-size(16);
+  font-weight: $font-black;
+}
+
+.forum__list {
+}
+
+.forum-list-table {
+  @include font-size(13);
+
+  thead {
+    td {
+      background-color:lighten($periwinkle, 8%);
+      border-bottom:1px solid $periwinkle;
+      padding:5px 15px;
+      &:first-of-type {
+      }
+      &.right-align {
+        text-align: right;
+      }
+      &.centered {
+        text-align: center;
+      }
+    }
+  }
+  tbody {
+    td {
+      background:linear-gradient(to bottom, white 0%, darken(white, 4%) 100%);
+      border-bottom:1px solid $periwinkle;
+      padding:10px 15px;
+      vertical-align: middle;
+      &.right-align {
+        text-align: right;
+      }
+      &.centered {
+        text-align: center;
+      }
+      &:not(:last-of-type) {
+        border-bottom:1px solid darken(white, 10%);
+      }
+    }
+  }
+}
+
+.forum__topic-title {
+  display:block;
+  @include font-size(17);
+  font-weight: $font-bold;
+}
+
+.forum__latest-post-title {
+  @include font-size(17);
+  line-height:1.2;
+}
+
+.forum__list__meta {
+  margin:5px 0;
+  font-style: italic;
+}
+
+.forum__breadcrumbs {
+  @include clearfix;
+  margin-bottom:$v-rhythm;
+}
+
+.forum__breadcrumbs__item {
+  float:left;
+  &:not(:last-of-type) {
+    &:after {
+      content: '>';
+      margin:0 5px;
+    }
+  }
+}
+
+.forum__breadcrumbs__link {
+
+}
+
+.forum__post__author {
+  @include font-size(16);
+}
+
+.forum__post__content-cell {
+  padding:15px !important;
+}
+
+.forum__post__content {
+  @include font-size(16);
+}
+
+.forum-button-form {
+  float:left;
+  &:not(:last-of-type) {
+    margin-right:5px;
+  }
+}
+
+ul.pager {
+  @include clearfix;
+  li {
+    float:left;
+    @extend .secondary;
+    @extend .but-small;
+    &:not(:last-of-type) {
+      margin-right:5px;
+    }
+    &.disabled {
+      display:none;
+    }
   }
 }
