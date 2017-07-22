@@ -228,6 +228,11 @@
     background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
     border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
   }
+  &.section-forum {
+    h2 { color:white; }
+    background: linear-gradient(lighten($blue, 10%) 0%, $blue 50%) no-repeat top;
+    border-bottom: 2px solid desaturate(darken($blue, 25%), 25%);
+  }
   &.section-iwo {
     h2 { color:saturate(darken($dark-teal, 30%), 50%); }
     background:linear-gradient(top, desaturate(lighten($dark-teal, 42%),25%), desaturate(lighten($dark-teal, 20%), 25%)) desaturate(lighten($dark-teal, 42%),25%);
@@ -1453,4 +1458,78 @@ ul.pagination {
   margin: 12px 0 6px;
   @include font-size(16);
   font-weight: $font-black;
+}
+
+
+// Forum component
+.forum__group {
+  border:1px solid $blue;
+  border-radius: 5px;
+}
+
+.forum__titles {
+  background: linear-gradient(to bottom, $periwinkle 0%, darken($periwinkle, 7%) 100%), $periwinkle;
+  padding:$v-rhythm 20px;
+}
+
+.forum__title {
+  @include font-size(16);
+  font-weight: $font-black;
+  margin-bottom:$v-rhythm * 0.5;
+
+  @include breakpoint($l) {
+    @include font-size(21);
+  }
+
+}
+
+.forum__list {
+  padding:$v-rhythm 20px;
+}
+
+.forum__list__meta {
+  margin:5px 0;
+  font-style: italic;
+}
+
+.forum__topic-title {
+  display:block;
+  @include font-size(16);
+  font-weight: $font-bold;
+  padding:5px 0 10px;
+}
+.forum__topic-subtitle {
+  @include font-size(13);
+  padding:0 0 10px;
+}
+
+.forum__breadcrumbs {
+  @include clearfix;
+  margin-bottom:$v-rhythm;
+}
+
+.forum__breadcrumbs__item {
+  float:left;
+  &:not(:last-of-type) {
+    &:after {
+      content: '>';
+      margin:0 5px;
+    }
+  }
+}
+
+.forum__breadcrumbs__link {
+
+}
+
+.forum__post__author {
+   @include font-size(16);
+ }
+
+.forum__post__content-cell {
+  padding:15px !important;
+}
+
+.forum__post__content {
+  @include font-size(16);
 }

@@ -122,6 +122,7 @@ return array(
 		'Ignited\Pdf\PdfServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Leadofficelist\ServiceProviders\CustomValidationServiceProvider',
+		'Riari\Forum\ForumServiceProvider',
 	),
 	/*
 	|--------------------------------------------------------------------------

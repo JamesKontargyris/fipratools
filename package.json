@@ -1,14 +1,14 @@
 {
   "devDependencies": {
-    "gulp": "^3.6.2",
-    "gulp-compass": "^1.1.8",
-    "gulp-clean": "^0.2.4",
+    "del": "^0.1.3",
+    "gulp": "^3.9.1",
     "gulp-autoprefixer": "^1.0.1",
-    "gulp-cache": "^0.2.4",
+    "gulp-cache": "^0.2.10",
+    "gulp-clean": "^0.2.4",
+    "gulp-compass": "^1.1.8",
     "gulp-imagemin": "^1.2.1",
     "gulp-minify-css": "^0.3.11",
     "gulp-notify": "^2.0.0",
-    "gulp-rename": "^1.2.0",
-    "del": "^0.1.3"
+    "gulp-rename": "^1.2.0"
   }
 }
