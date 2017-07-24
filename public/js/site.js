@@ -1,5 +1,15 @@
 (function(){
 
+    // Confirm if the action should be completed
+    $('.js-confirm').on('click', function () {
+        var strconfirm = confirm("Are you sure?");
+        if (strconfirm == true) {
+            return true;
+        }
+
+        return false;
+    });
+
     //If the logo and title section is tapped, toggle the super menu and title arrow direction
     $('.logo').on('click', function()
     {

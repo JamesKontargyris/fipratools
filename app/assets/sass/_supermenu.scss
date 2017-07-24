@@ -52,7 +52,13 @@
   }
 
   .super-menu__logo {
-    margin-right:10px;
+    display: none;
+
+    @include breakpoint($l) {
+      display: block;
+      margin-right:10px;
+    }
+
   }
 
   .super-menu__link:link, .super-menu__link:visited {

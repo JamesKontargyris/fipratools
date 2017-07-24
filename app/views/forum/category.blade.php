@@ -29,16 +29,18 @@
 							@foreach ($category->threadsPaginated as $thread)
 								<tr>
 									<td>
-										@if($thread->locked)
-											<span class="label label-danger">{{ trans('forum::base.locked') }}</span>
-										@endif
-										@if($thread->pinned)
-											<span class="label label-info">{{ trans('forum::base.pinned') }}</span>
-										@endif
-										@if($thread->userReadStatus)
-											<span class="label label-primary">{{ trans($thread->userReadStatus) }}</span>
-										@endif
-										<a href="{{ $thread->route }}" class="forum__topic-title">{{ $thread->title }}</a>
+										<div class="forum__topic-title">
+											@if ($thread->locked)
+												<i class="fa fa-lock text--red" title="Locked topic - no further replies"></i>
+											@endif
+											@if ($thread->pinned)
+												<i class="fa fa-thumb-tack text--green" title="Pinned topic"></i>
+											@endif
+											@if($thread->userReadStatus)
+													<i class="fa fa-dot-circle-o text--orange" title="Unread posts"></i>
+											@endif
+											<a href="{{ $thread->route }}">{{ $thread->title }}</a>
+										</div>
 										<div class="forum__topic-subtitle">Created {{ $thread->posted }}</div>
 									</td>
 									<td>
@@ -53,11 +55,11 @@
 						@else
 							<tr>
 								<td>
-									{{ trans('forum::base.no_threads') }}
+									No topics found.
 								</td>
 								<td colspan="2">
 									@if ($category->canPost)
-										<a href="{{ $category->newThreadRoute }}">{{ trans('forum::base.first_thread') }}</a>
+										<a href="{{ $category->newThreadRoute }}">Create a topic</a>
 									@endif
 								</td>
 							</tr>

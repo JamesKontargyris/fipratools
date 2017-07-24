@@ -125,4 +125,9 @@ class User extends \BaseModel implements UserInterface, RemindableInterface
 		return $this->unit;
 	}
 
+	public function getRole() /* Used by forum */
+	{
+		return $this->roles()->pluck( 'name' );
+	}
+
 }

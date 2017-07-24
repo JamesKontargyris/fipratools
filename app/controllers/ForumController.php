@@ -1,5 +1,6 @@
 <?php
 
+use Leadofficelist\Exceptions\PermissionDeniedException;
 use Riari\Forum\Repositories\Categories;
 use Riari\Forum\Repositories\Threads;
 use Riari\Forum\Repositories\Posts;
@@ -24,8 +25,13 @@ class ForumController extends \BaseController {
 
 	public function __construct(Categories $categories, Threads $threads, Posts $posts)
 	{
-		// User is logged in - carry on
 		parent::__construct();
+
+		if( ! $this->user->hasRole('Administrator') && ! $this->user->hasRole('Head of Unit'))
+		{
+			throw new PermissionDeniedException();
+		}
+
 		$this->categories = $categories;
 		$this->threads = $threads;
 		$this->posts = $posts;

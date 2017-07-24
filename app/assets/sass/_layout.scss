@@ -104,6 +104,13 @@ $susy: (
   }
 }
 
+.hide-s-m {
+  @include breakpoint($s-m)
+  {
+    display:none;
+  }
+}
+
 .hide-m {
    //display:none;
    @include breakpoint($m-l)

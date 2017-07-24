@@ -106,6 +106,12 @@
         </li>
     @endif
 
+	@if(section_is() == 'forum')
+		<li class="{{ nav_item_is_active('forum', true) ? 'active' : '' }}">
+			<a href="/forum"><strong><i class="fa fa-th-list"></i> Forum Index</strong></a>
+		</li>
+	@endif
+
 
 	@if($user->hasRole('Administrator')  && (section_is() == 'list' || section_is() == 'case'))
 		<li class="{{ nav_item_is_active('account_directors') ? 'active' : '' }}">

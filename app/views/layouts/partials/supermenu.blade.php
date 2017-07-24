@@ -3,9 +3,8 @@
 		<div class="row">
 			<div class="col-9">
 				<ul class="super-menu">
-					<li class="super-menu__logo hide-s">
-						<img src="{{ asset('img/fipra_logo.png') }}" class="hide-m hide-s" alt="Fipra" style="vertical-align:middle"/>
-						<img src="{{ asset('img/fipra_logo_s.png') }}" class="hide-l" alt="Fipra" style="vertical-align:middle"/>
+					<li class="super-menu__logo">
+						<img src="{{ asset('img/fipra_logo.png') }}" alt="Fipra" style="vertical-align:middle"/>
 					</li>
 					@if($user->can('view_list'))
 						<li class="super-menu__item hide-print"><a href="/list?global=list" class="super-menu__link <?php if(Session::get('section') == 'list') : ?> active<?php endif; ?> section-list">Lead Office List</a></li>
@@ -23,7 +22,7 @@
 						<li class="super-menu__item hide-print"><a href="/headofunitsurvey?global=headofunitsurvey" class="super-menu__link <?php if(Session::get('section') == 'headofunitsurvey') : ?> active<?php endif; ?> section-headofunitsurvey">Head of Unit Survey</a></li>
 					@endif
 
-					@if($user->hasRole( 'Administrator'))
+					@if($user->hasRole( 'Administrator') || $user->hasRole( 'Head of Unit'))
 						<li class="super-menu__item hide-print"><a href="/forum?global=forum" class="super-menu__link <?php if(Session::get('section') == 'forum') : ?> active<?php endif; ?> section-forum">Forum</a></li>
 					@endif
 

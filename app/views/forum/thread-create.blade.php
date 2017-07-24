@@ -1,7 +1,7 @@
-@extends('layouts.master')
+@extends('layouts.forum')
 
 @section('page-header')
-    Fipra Forum: Create new thread in '{{ $category->title }}'
+    Fipra Forum: Create new topic in '{{ $category->title }}'
 @stop
 
 @section('content')

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.forum')
 
 @section('page-header')
     {{ trans('forum::base.edit_post') }} ({{$thread->title}})

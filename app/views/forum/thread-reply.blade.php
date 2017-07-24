@@ -1,7 +1,7 @@
-@extends('layouts.master')
+@extends('layouts.forum')
 
 @section('page-header')
-    Fipra Forum: Post reply on {{ $thread->title }}
+    Fipra Forum: Post reply on '{{ $thread->title }}'
 @stop
 
 @section('content')

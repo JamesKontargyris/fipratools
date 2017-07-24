@@ -9,7 +9,7 @@
 
 <div class="formfield">
     @if(Route::currentRouteName() == 'forum.get.create.thread') {{--This is the thread creation page, rather than the post creation page--}}
-        <label for="content">First post in this thread</label>
+        <label for="content">First post in this topic</label>
     @endif
     {{ Form::textarea('content', $post_content, ['class' => 'wysiwyg-editor']) }} {{--Only make this a WYSIWYG editor if it's the new reply page--}}
 </div>

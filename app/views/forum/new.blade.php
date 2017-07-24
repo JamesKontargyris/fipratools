@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.forum')
 
 @section('content')
 @include('forum.partials.breadcrumbs', ['other' => trans('forum::base.new_threads')])
