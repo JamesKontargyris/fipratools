@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 {{--TinyMCE--}}
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=u0irmirfrddus4b2s8ump2r9luoymvwc1jmywud72qa37hum"></script>
 <script>
     tinymce.init({
         selector: '.wysiwyg-editor',
