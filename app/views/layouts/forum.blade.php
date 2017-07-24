@@ -13,6 +13,8 @@
 
 			<section id="content">
 
+                <h2 class="forum__page-title">@yield('page-header')</h2>
+
 				@yield('content')
 
 			</section>

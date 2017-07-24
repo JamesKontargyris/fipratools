@@ -24,9 +24,6 @@
   margin-bottom:3px;
 }
 
-.but-small {
-  font-size:0.8rem;
-}
 .red-but {
   @include primary-but();
   background-color:$red;
@@ -56,6 +53,10 @@
   border-bottom: 2px solid rgba(darken(orange, 40%), 0.6);
   @include dark-grad(lighten(orange, 20%), top, 10%);
   color:black;
+}
+
+.but-small {
+  font-size:0.8rem;
 }
 
 .alert {

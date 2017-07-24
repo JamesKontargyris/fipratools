@@ -4,15 +4,10 @@
 	Fipra Forum
 @stop
 
-@section('page-nav')
-@stop
-
 @section('content')
 {{--@include('forum.partials.breadcrumbs')--}}
 
-<h2 class="forum__page-title">Fipra Forums</h2>
-
-<section class="index-table-container">
+<section class="forum-table-container">
 	<div class="row">
 		<div class="col-12">
 			@foreach($categories as $category)
@@ -28,7 +23,7 @@
 							<tr>
 								<td width="50%">Forum</td>
 								<td width="10%">Stats</td>
-								<td width="30%" class="content-center">Latest Post</td>
+								<td width="30%" class="hide-s">Latest Post</td>
 							</tr>
 							</thead>
 							<tbody>
@@ -37,10 +32,10 @@
 									<tr>
 										<td>
 											<a href="{{ $subcategory->Route }}" class="forum__topic-title">{{{ $subcategory->title }}}</a>
-											{{{ $subcategory->subtitle }}}
+											<span class="hide-s">{{{ $subcategory->subtitle }}}</span>
 										</td>
-										<td>Topics: <strong>{{ Riari\Forum\Models\Thread::where('parent_category', '=', $subcategory->id)->count() }}</strong><br>Posts: <strong>{{ Riari\Forum\Models\Thread::where('parent_category', '=', $subcategory->id)->count() }}</strong></td>
-										<td>
+										<td>Topics: <strong>{{ Riari\Forum\Models\Thread::where('parent_category', '=', $subcategory->id)->count() }}</strong><br>Posts: <strong>{{ Riari\Forum\Models\Post::where('parent_thread', '=', Riari\Forum\Models\Thread::where('parent_category', '=', $subcategory->id)->pluck('id'))->count() }}</strong></td>
+										<td class="hide-s">
 											@if ($subcategory->newestThread)
 												<a href="{{ $subcategory->latestActiveThread->lastPost->route }}">
 													<strong class="forum__latest-post-title">{{{ $subcategory->latestActiveThread->title }}}</strong>

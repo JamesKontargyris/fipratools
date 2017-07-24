@@ -50,8 +50,10 @@ class AccountDirector extends \BaseModel
 			$ads[''] = $blank_message;
 		}
 
+		$show_col = getShowColumn(); // Column to search on to ensure the correct content is shown
+
 		foreach (
-			AccountDirector::where('show_' . section_is(), '=', 1)->orderBy( 'first_name', 'ASC' )->get( [
+			AccountDirector::where($show_col, '=', 1)->orderBy( 'first_name', 'ASC' )->get( [
 				'id',
 				'first_name',
 				'last_name'

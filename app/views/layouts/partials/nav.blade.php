@@ -13,7 +13,7 @@
     </div>
 </section>
 
-<section id="site-nav-container" class="section-{{ section_is(); }}">
+<section id="site-nav-container" class="section-{{ section_is() }}">
     <nav id="site-nav" class="container">
         <div class="mobile">
             <div class="row no-margin">
@@ -28,6 +28,8 @@
                             Head of Unit Survey
                         @elseif(Session::get('section') == 'list')
                             Lead Office List
+                        @elseif(Session::get('section') == 'forum')
+                            Forum
                         @elseif(Session::get('section') == 'iwo')
                             IWO
                         @elseif(Session::get('section') == 'toolbox')

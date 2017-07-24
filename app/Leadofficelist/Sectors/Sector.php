@@ -50,7 +50,9 @@ class Sector extends \BaseModel
 			$sectors[''] = $blank_message;
 		}
 
-		foreach ( Sector::where('show_' . section_is(), '=', 1)->orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $sector )
+		$show_col = getShowColumn(); // Column to search on to ensure the correct content is shown
+
+		foreach ( Sector::where($show_col, '=', 1)->orderBy( 'name', 'ASC' )->get( [ 'id', 'name' ] ) as $sector )
 		{
 			$sectors[ $sector->id ] = $prefix . $sector->name;
 		}

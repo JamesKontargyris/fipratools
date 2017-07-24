@@ -29,7 +29,7 @@
 
 					@if( ! $user->hasRole('Special Adviser'))
 						<li class="super-menu__item hide-print"><a href="/iwo?global=iwo" class="super-menu__link <?php if(Session::get('section') == 'iwo') : ?> active<?php endif; ?> section-iwo">IWO</a></li>
-					@endif;
+					@endif
 
 					@if($user->can('view_toolbox'))
 						<li class="super-menu__item hide-print"><a href="/toolbox?global=toolbox" class="super-menu__link <?php if(Session::get('section') == 'toolbox') : ?> active<?php endif; ?> section-toolbox">Toolbox</a></li>

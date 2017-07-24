@@ -387,3 +387,13 @@ function removeDuplicateValues($array, $preserveKeys = false)
 	}
 	return $arrayRewrite;
 }
+
+/**
+ * Get a usable column name for use when assessing whether a resource should be shown or not in listings
+ *
+ * @return string
+ */
+function getShowColumn()
+{
+	return (section_is() == 'forum' || section_is() == 'admin') ? 'show_list' : 'show_' . section_is();
+}

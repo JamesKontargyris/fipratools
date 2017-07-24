@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.forum')
 
 @section('page-header')
     {{{ $thread->title }}}
@@ -11,14 +11,10 @@
     @endif
 @stop
 
-@section('page-nav')
-    @if ($thread->canReply)
-          <li><a href="#quick-reply" class="secondary">{{ trans('forum::base.new_reply') }}</a></li>
-    @endif
-@stop
-
 @section('content')
 @include('forum.partials.breadcrumbs')
+
+<a href="#quick-reply" class="secondary"><i class="fa fa-comment"></i> {{ trans('forum::base.new_reply') }}</a><br><br>
 
 @if ($thread->canLock || $thread->canPin || $thread->canDelete)
     <div class="thread-tools dropdown">
@@ -41,22 +37,24 @@
     <hr>
 @endif
 
-<section class="index-table-container">
+<section class="forum-table-container">
     <div class="row">
         <div class="col-12">
-            <table width="100%" class="index-table">
-                <thead>
-                <tr>
-                    <td width="20%">{{ trans('forum::base.author') }}</td>
-                    <td colspan="2" width="80%">{{ trans('forum::base.post') }}</td>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($thread->postsPaginated as $post)
-                    @include('forum.partials.post', compact('post'))
-                @endforeach
-                </tbody>
-            </table>
+            <div class="forum__group">
+                <table width="100%" class="forum-list-table">
+                    <thead>
+                    <tr>
+                        <td width="20%">{{ trans('forum::base.author') }}</td>
+                        <td colspan="2" width="80%">{{ trans('forum::base.post') }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($thread->postsPaginated as $post)
+                        @include('forum.partials.post', compact('post'))
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>

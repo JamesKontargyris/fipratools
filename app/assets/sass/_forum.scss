@@ -46,6 +46,7 @@
 
   thead {
     td {
+      vertical-align: middle;
       background-color:lighten($periwinkle, 8%);
       border-bottom:1px solid $periwinkle;
       padding:5px 15px;
@@ -57,19 +58,25 @@
       &.centered {
         text-align: center;
       }
+      &.valign-top {
+        vertical-align: top !important;
+      }
     }
   }
   tbody {
     td {
-      background:linear-gradient(to bottom, white 0%, darken(white, 4%) 100%);
+      vertical-align: middle;
+      background:linear-gradient(to bottom, white 70%, darken(white, 4%) 100%);
       border-bottom:1px solid $periwinkle;
       padding:10px 15px;
-      vertical-align: middle;
       &.right-align {
         text-align: right;
       }
       &.centered {
         text-align: center;
+      }
+      &.valign-top {
+        vertical-align: top;
       }
       &:not(:last-of-type) {
         border-bottom:1px solid darken(white, 10%);
@@ -145,4 +152,9 @@ ul.pager {
       display:none;
     }
   }
+}
+
+.content-center,
+.content-centre {
+  text-align: center;
 }

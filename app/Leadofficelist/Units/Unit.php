@@ -94,7 +94,9 @@ class Unit extends \BaseModel
             $units[''] = $blank_message;
         }
 
-        foreach (Unit::orderBy('name', 'ASC')->where('show_' . (section_is() == 'admin' ? 'list' : section_is()), '=', 1)->get(['id', 'name']) as $unit) {
+	    $show_col = getShowColumn(); // Column to search on to ensure the correct content is shown
+
+        foreach (Unit::orderBy('name', 'ASC')->where($show_col, '=', 1)->get(['id', 'name']) as $unit) {
             $units[$unit->id] = $prefix . $unit->name;
         }
 
