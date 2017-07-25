@@ -3849,3 +3849,8 @@ ul.pager {
 /* line 4, ../../app/assets/sass/_helpers.scss */
 .text--orange {
   color: #cc7300; }
+
+/* line 6, ../../app/assets/sass/_helpers.scss */
+.text--large {
+  font-size: 1rem;
+  line-height: 1.5; }

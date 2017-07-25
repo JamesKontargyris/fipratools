@@ -7,6 +7,10 @@
 @section('content')
 {{--@include('forum.partials.breadcrumbs')--}}
 
+@if(get_widget('forum_intro'))
+	<p>{{ nl2br(get_widget('forum_intro')) }}</p>
+@endif
+
 <section class="forum-table-container">
 	<div class="row">
 		<div class="col-12">
