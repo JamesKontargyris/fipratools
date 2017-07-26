@@ -27,7 +27,13 @@ class ForumController extends \BaseController {
 	{
 		parent::__construct();
 
-		if( ! $this->user->hasRole('Administrator') && ! $this->user->hasRole('Head of Unit'))
+		if( ! $this->user_is_logged_in()) {
+			Session::forget('section');
+			Flash::message('Please log in to access this area.');
+			return Redirect::to('login');
+		};
+
+		if( ! $this->user->hasRole('Administrator') && ! $this->user->hasRole('Head of Unit') && $this->user->forum_access == 0)
 		{
 			throw new PermissionDeniedException();
 		}

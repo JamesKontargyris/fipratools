@@ -22,7 +22,7 @@
 						<li class="super-menu__item hide-print"><a href="/headofunitsurvey?global=headofunitsurvey" class="super-menu__link <?php if(Session::get('section') == 'headofunitsurvey') : ?> active<?php endif; ?> section-headofunitsurvey">Head of Unit Survey</a></li>
 					@endif
 
-					@if($user->hasRole( 'Administrator') || $user->hasRole( 'Head of Unit'))
+					@if($user->hasRole( 'Administrator') || $user->hasRole( 'Head of Unit') || $user->forum_access)
 						<li class="super-menu__item hide-print"><a href="/forum?global=forum" class="super-menu__link <?php if(Session::get('section') == 'forum') : ?> active<?php endif; ?> section-forum">Forum</a></li>
 					@endif
 

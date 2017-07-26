@@ -37,14 +37,18 @@ Editing: {{ $edit_user->getFullName() }}
 			</div>
 	</div>
 	<div class="col-4 last">
-			<div class="formfield">
-				{{ Form::label('password', 'Change Password:') }}
-				{{ Form::password('password') }}
-			</div>
-			<div class="formfield">
-				{{ Form::label('password_confirmation', 'Confirm New Password:') }}
-				{{ Form::password('password_confirmation') }}
-			</div>
+		<div class="formfield">
+			{{ Form::label('password', 'Change Password:') }}
+			{{ Form::password('password') }}
+		</div>
+		<div class="formfield">
+			{{ Form::label('password_confirmation', 'Confirm New Password:') }}
+			{{ Form::password('password_confirmation') }}
+		</div>
+		<div class="formfield">
+			{{ Form::checkbox('forum_access', isset($edit_user->forum_access) ? : '', ($edit_user->forum_access == 1) ? ['checked' => 'checked'] : []) }}
+			{{ Form::label('forum_access', 'Give forum access (regardless of user role permissions)') }}
+		</div>
 	</div>
 </div>
 
