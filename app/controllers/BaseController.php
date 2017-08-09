@@ -513,7 +513,7 @@ class BaseController extends Controller {
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
 				return explode( '.', $sort_on[ $sort_term ] );
-			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) {
+			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) || $this->is_request( 'headofunitsurvey' )) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
@@ -529,8 +529,8 @@ class BaseController extends Controller {
 			return explode( '.', Session::get( $key . '.rowsSort' ) );
 		} //If all else fails...
 		else {
-			// If we're looking at users, account directors or case studies, use a different default sort order
-			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) ) {
+			// If we're looking at users, account directors, head of unit survey or case studies, use a different default sort order
+			if ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) || $this->is_request( 'headofunitsurvey' ) ) {
 				return [ 'last_name', 'asc' ];
 			}
 			if ( $this->is_request( 'cases' ) || $this->is_request( 'caselist' ) ) {

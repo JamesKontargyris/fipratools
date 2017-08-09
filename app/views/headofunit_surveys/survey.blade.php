@@ -13,7 +13,7 @@
 
     @include('layouts.partials.messages')
 
-    {{ Form::open(['method' => 'POST', 'url' => 'headofunitsurvey', 'class' => 'knowledge-survey-form']) }}
+    {{ Form::open(['method' => 'POST', 'url' => 'headofunitsurvey/profile/edit', 'class' => 'knowledge-survey-form']) }}
     {{ Form::hidden('survey_name', $survey_name) }}
 
     <div class="knowledge__section-intro no-bg">{{ get_widget('head_of_unit_survey_intro') }}</div>
@@ -515,7 +515,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('annual_sales_turnover', 'What was your Unit\'s annual sales / turnover in the last full calendar year?') }}
+                {{ Form::label('annual_sales_turnover', 'What was your Unit\'s annual sales / turnover in the last full calendar year (' . date('Y', strtotime('last year')) . ')?') }}
                 <div class="label-info">Please state this figure as submitted in your annual returns, rounded up in Euros. It will be added up with all the others to estimate an indicative Network total turnover, as a marketing tool enabling us to better compete with large rivals who are wholly owned. <strong>It will never be used individually and will remain confidential to this survey.</strong></div>
             </div>
         </div>
@@ -536,7 +536,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('percentage_of_turnover_related_to_public_affairs', 'What percentage (%) of your total turnover do you estimate relates to the Public Affairs/Government Relations part of your business?') }}
+                {{ Form::label('percentage_of_turnover_related_to_public_affairs', 'What percentage (%) of the above total turnover do you estimate relates to the Public Affairs/Government Relations part of your business?') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -549,7 +549,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('turnover_forecast', 'According to your forecast for the current year, your Public Affairs turnover / sales will:') }}
+                {{ Form::label('turnover_forecast', 'According to your forecast for the current year (' . date('Y', strtotime('this year')) . '), your Public Affairs turnover / sales will:') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -675,7 +675,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('euros_paid_to_other_fipra_network_members_last_year', 'Approximately how many Euros did your Unit pay in total to other Units that are also members of the Fipra Network in the last calendar year (' . date('Y', strtotime('last year')) . ')?') }}
+                {{ Form::label('euros_paid_to_other_fipra_network_members_last_year', 'Approximately how much work did your Unit give in total to other Units that are also members of the Fipra Network in the last calendar year (' . date('Y', strtotime('last year')) . ')?') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -688,7 +688,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('euros_received_from_other_fipra_network_members_last_year', 'Approximately how many Euros did your Unit receive in total from other Units that are also members of the Fipra Network in the last calendar year (' . date('Y', strtotime('last year')) . ')?') }}
+                {{ Form::label('euros_received_from_other_fipra_network_members_last_year', 'Approximately how much work did your Unit receive in total from other Units that are also members of the Fipra Network in the last calendar year (' . date('Y', strtotime('last year')) . ')?') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -701,7 +701,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('new_clients_signed_up_last_year', 'How many new clients did your Unit sign up in the last calendar year (' . date('Y', strtotime('last year')) . ') in some way due to your involvement with the Fipra Network?') }}
+                {{ Form::label('new_clients_signed_up_last_year', 'How many new clients did your Unit sign up in the last calendar year (' . date('Y', strtotime('last year')) . ') in some way due to your involvement with the Fipra Network or any colleagues within it?') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -714,7 +714,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('top_3_client_obtained_through_fipra_unit', 'Please think of your current top 3 clients. Is one of those clients obtained through another Fipra Unit?') }}
+                {{ Form::label('top_3_client_obtained_through_fipra_unit', 'Please think of your current top 3 clients. Is one of those clients obtained through another Fipra Unit or colleague?') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -828,7 +828,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('contracts_percentage_retainers', 'What percentage of your contracts are:') }}
+                {{ Form::label('contracts_percentage_retainers', 'What percentage of your contracts do you estimate are:') }}
             </div>
         </div>
         <div class="col-7 last">
@@ -927,7 +927,7 @@
     <div class="row no-margin">
         <div class="col-5">
             <div class="formfield">
-                {{ Form::label('hou_survey_feedback', 'Do you have any other strong views or opinions about the Fipra Network that you do not feel were covered by this questionnaire and that you would like to see surveyed next time?') }}
+                {{ Form::label('hou_survey_feedback', 'Do you have any other strong views or opinions about the Fipra Network that you do not feel were covered by this questionnaire and that you would like to see surveyed through this system?') }}
             </div>
         </div>
         <div class="col-7 last">

@@ -56,7 +56,6 @@ class KnowledgeSurveysController extends \BaseController {
 		}
 
 		$items = User::where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
-		/*$items      = User::where( 'id', '!=', $this->user->id )->where( 'date_of_birth', '!=', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );*/
 		$items->key = 'survey';
 		$user_info  = $this->user;
 

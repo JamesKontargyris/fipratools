@@ -6,6 +6,7 @@ use Leadofficelist\Eventlogs\EventLog;
 use Leadofficelist\Forms\AddEditHOUSurvey as AddEditHOUSurveyForm;
 use Leadofficelist\Knowledge_data\KnowledgeData;
 use Leadofficelist\Units\Unit;
+use Leadofficelist\Users\User;
 
 class HeadofUnitSurveyController extends \BaseController {
 
@@ -28,13 +29,41 @@ class HeadofUnitSurveyController extends \BaseController {
 		$this->addEditHOUSurvey = $addEditHOUSurvey;
 	}
 
+	public function index() {
+		$this->check_role( ['Head of Unit', 'Administrator'] );
+
+		if($this->user->hasRole('Head of Unit')) {
+			return Redirect::to('headofunitsurvey/profile/edit'); // redirect to the survey page if user is a Head of Unit
+		}
+
+		// otherwise, user is an admin - continue to an overview page of Heads of Units
+
+		$this->destroyCurrentPageNumber( true );
+
+		if ( $this->searchCheck() ) {
+			// Keep any flashed messages when redirecting
+			Session::reflash();
+
+			return Redirect::to( $this->resource_key . '/search' );
+		}
+
+		$items = User::whereHas('roles', function($q)
+		{
+			$q->where('name', '=', 'Head of Unit');
+		})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items->key = 'headofunitsurvey';
+		$user_info  = $this->user;
+
+		return View::make( 'headofunit_surveys.index' )->with( compact( 'items', 'user_info' ) );
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 * GET /housurvey
 	 *
 	 * @return Response
 	 */
-	public function getIndex() {
+	public function getUpdateProfile() {
 		$this->check_role( ['Head of Unit', 'Administrator'] );
 
 		$survey_name = 'head_of_unit_survey';
@@ -67,10 +96,10 @@ class HeadofUnitSurveyController extends \BaseController {
 
 		View::share( 'page_title', 'Head of Unit Survey' );
 
-		return View::make( 'knowledge_surveys.headofunit_survey' )->with( compact( 'seniority', 'perception_audit', 'unit_staff', 'unit_staff_names', 'hou_survey_data', 'survey_name' ) );
+		return View::make( 'headofunit_surveys.survey' )->with( compact( 'seniority', 'perception_audit', 'unit_staff', 'unit_staff_names', 'hou_survey_data', 'survey_name' ) );
 	}
 
-	public function postIndex()
+	public function postUpdateProfile()
 	{
 		$this->check_role( ['Head of Unit', 'Administrator'] );
 
@@ -162,8 +191,10 @@ class HeadofUnitSurveyController extends \BaseController {
 		Flash::overlay( 'Head of Unit survey updated.', 'success' );
 		EventLog::add( 'Head of Unit survey updated', $this->user->getFullName(), Unit::find( $this->user->unit_id )->name, 'edit' );
 
-		return Redirect::to( 'survey/profile' );
+		return Redirect::to( 'headofunitsurvey/profile/edit' );
 	}
+
+
 
 	protected function getAllPerceptionAuditData() {
 		$perception_audit_data = [];

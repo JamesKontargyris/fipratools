@@ -152,8 +152,12 @@ Route::group(['before' => 'auth'], function()
 	Route::post('survey/profile/edit', 'KnowledgeSurveysController@postUpdateProfile');
 	Route::resource('survey', 'KnowledgeSurveysController');
 
-	Route::get('headofunitsurvey', 'HeadofUnitSurveyController@getIndex');
-	Route::post('headofunitsurvey', 'HeadofUnitSurveyController@postIndex');
+	Route::any('headofunitsurvey/export', 'HeadofUnitSurveyController@export');
+	Route::any('headofunitsurvey/search', 'HeadofUnitSurveyController@search');
+	Route::get('headofunitsurvey/profile/edit', 'HeadofUnitSurveyController@getUpdateProfile');
+	Route::post('headofunitsurvey/profile/edit', 'HeadofUnitSurveyController@postUpdateProfile');
+	Route::get('headofunitsurvey/overview', 'HeadofUnitSurveyController@getOverview');
+	Route::resource('headofunitsurvey', 'HeadofUnitSurveyController');
 
 	Route::any('knowledge_areas/export', 'KnowledgeAreasController@export');
 	Route::any('knowledge_areas/search', 'KnowledgeAreasController@search');
