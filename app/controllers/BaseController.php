@@ -634,7 +634,7 @@ class BaseController extends Controller {
 		}
 
 		if ( $throw_exception ) {
-			throw new PermissionDeniedException;
+			throw new PermissionDeniedException($this->resource_key);
 		} else {
 			return false;
 		}

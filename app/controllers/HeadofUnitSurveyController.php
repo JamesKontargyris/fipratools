@@ -54,7 +54,55 @@ class HeadofUnitSurveyController extends \BaseController {
 		$items->key = 'headofunitsurvey';
 		$user_info  = $this->user;
 
-		return View::make( 'headofunit_surveys.index' )->with( compact( 'items', 'user_info' ) );
+		$sections = [
+			'people in your unit' => ['unit_staff_public_affairs_government_relations', 'unit_staff_other_public_relations', 'unit_staff_financial_public_relations', 'unit_staff_personal_and_administrative_support_finance_accountancy', 'unit_staff_total', 'unit_staff_part_time_outside_consultants', 'unit_staff_positions_in_public_office'],
+
+			'your units staff' => ['unit_staff_carrying_out_public_affairs', 'unit_staff_previously_held_public_office_senior_positions_in_trade_consumer_organisations'],
+
+			'your online presence' => ['points_of_contact_people', 'unit_website_url', 'unit_website_help_needed', 'website_state_affiliation', 'website_reciprocal_link', 'online_newsletters'],
+
+			'commercial details' => ['annual_sales_turnover', 'percentage_of_turnover_related_to_public_affairs', 'turnover_forecast', 'member_other_branded_network', 'member_professional_association', 'mandatory_public_register', 'publicly_list_clients', 'work_from_other_network_in_last_12_months'],
+
+			'inter-unit work' => ['most_important_trading_partner_last_calendar_year', 'euros_paid_to_other_fipra_network_members_last_year', 'euros_received_from_other_fipra_network_members_last_year', 'new_clients_signed_up_last_year', 'top_3_client_obtained_through_fipra_unit', 'top_3_local_business_territory_competitors_1', 'top_3_local_business_territory_competitors_2', 'top_3_local_business_territory_competitors_3', 'top_3_international_business_competitors_1', 'top_3_international_business_competitors_2', 'top_3_international_business_competitors_3', 'fees_operation', 'success_fees', 'contracts_percentage_retainers', 'contracts_percentage_time_based_fees', 'professional_indemnity_insurance'],
+		];
+
+		$sections['perception audit'] = $this->getAllPerceptionAuditFieldsAsArray();
+
+		$section_names = [
+			'people in your unit',
+			'your units staff',
+			'your online presence',
+			'commercial details',
+			'inter-unit work',
+			'perception audit'
+		];
+
+		return View::make( 'headofunit_surveys.index' )->with( compact( 'items', 'user_info', 'sections', 'section_names' ) );
+	}
+
+	/**
+	 * Display another user's profile
+	 * GET /knowledgesurveys/{id}
+	 *
+	 * @param  int $id
+	 *
+	 * @return Response
+	 * @throws ProfileNotFoundException
+	 */
+	public function show( $id ) {
+		$this->check_role( ['Administrator'] );
+
+		$user = User::find( $id );
+
+		if ( isset( $user ) ) {
+			$user_info      = $user;
+			$knowledge_data = $this->getKnowledgeData( $id );
+			$fipriot_info   = json_decode( file_get_contents( 'http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email ) );
+
+			return View::make( 'headofunit_surveys.profile' )->with( compact( 'user_info', 'fipriot_info', 'knowledge_data' ) );
+		}
+
+		throw new ProfileNotFoundException();
 	}
 
 	/**
@@ -194,8 +242,6 @@ class HeadofUnitSurveyController extends \BaseController {
 		return Redirect::to( 'headofunitsurvey/profile/edit' );
 	}
 
-
-
 	protected function getAllPerceptionAuditData() {
 		$perception_audit_data = [];
 
@@ -241,5 +287,60 @@ class HeadofUnitSurveyController extends \BaseController {
 		return $perception_audit_data;
 	}
 
+	/**
+	 * Return all perception field names as an array
+	 *
+	 * @return array
+	 */
+	protected function getAllPerceptionAuditFieldsAsArray()
+	{
+		$perception_audit_data = $this->getAllPerceptionAuditData();
+		$fields = [];
 
+		foreach($perception_audit_data['groups'] as $group) {
+			foreach($group as $field_name => $label) {
+				$fields[] = $field_name;
+			}
+		}
+
+		return $fields;
+	}
+
+	protected function getKnowledgeData( $id = null ) {
+		$results   = $id ? User::find( $id )->knowledge_data()->get()->toArray() : $this->user->knowledge_data()->get()->toArray();
+		$user_data = [];
+		foreach ( $results as $data ) {
+			$user_data[ $data['slug'] ] = $data['serialized'] ? unserialize( $data['data_value'] ) : $data['data_value'];
+		}
+
+		return $user_data;
+	}
+
+	protected function getAll() {
+		return User::whereHas('roles', function($q)
+		{
+			$q->where('name', '=', 'Head of Unit');
+		})->get();
+	}
+
+	protected function getSelection() {
+		if ( $this->searchCheck() ) {
+			$search_term             = $this->findSearchTerm();
+			$this->search_term_clean = str_replace( '%', '', $search_term );
+
+			$items = User::whereHas('roles', function($q)
+			{
+				$q->where('name', '=', 'Head of Unit');
+			})->where( function ( $query ) {
+				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		} else {
+			$items = User::whereHas('roles', function($q)
+			{
+				$q->where('name', '=', 'Head of Unit');
+			})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		}
+
+		return $items;
+	}
 }

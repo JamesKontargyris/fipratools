@@ -6,7 +6,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ url('survey/profile/edit') }}" class="primary"><i class="fa fa-caret-left"></i> Back</a></li>
+    @if($user->hasRole('Administrator'))<li><a href="{{ url('headofunitsurvey') }}" class="primary"><i class="fa fa-caret-left"></i> Back</a></li>@endif
 @stop
 
 @section('content')

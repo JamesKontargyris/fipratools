@@ -83,4 +83,55 @@ class KnowledgeData extends \BaseModel {
 	public function getData($slug) {
 		return KnowledgeData::where('slug', '=', $slug)->where('user_id', '=', Auth::user()->id)->get()->first();
 	}
+
+	/**
+	 * Work out if a head of unit survey section has been completed by the Head of Unit
+	 *
+	 * @param array $sections
+	 * @param string $section_name
+	 * @param int $user_id
+	 *
+	 * @return bool
+	 */
+	protected static function sectionIsComplete($sections = [], $section_name = '', $user_id = 0)
+	{
+		if($sections && $section_name && $user_id)
+		{
+			if($section_name == 'perception audit')
+			{
+				// treat the perception audit section differently, as all entries are stored as a serialized array in the DB, not as separate records
+				if(KnowledgeData::where('user_id', '=', $user_id)->where('slug', '=', 'perception_audit')->count() > 0)
+				{
+					// a perception audit entry exists for this user, so carry on to get the data value and unserialize it
+					$perception_audit_array = unserialize(KnowledgeData::where('user_id', '=', $user_id)->where('slug', '=', 'perception_audit')->pluck('data_value'));
+
+					// get just the keys in an array
+					$perception_audit_array_keys = array_keys($perception_audit_array);
+					// if this array matches the $sections['perception audit'] array, all fields have been filled in by the user. Return true
+					// if not, return false
+					return $perception_audit_array_keys == $sections['perception audit'];
+				}
+
+			} else {
+				// All other sections apart from perception audit
+				// Generate a query that limits knowledge data results to the user's ID and the fields listed in the relevant sections array
+				$count = \DB::table('knowledge_data')
+				            ->where('user_id', '=', $user_id)
+				            ->where(function($query) use ($section_name, $sections)
+				            {
+					            foreach($sections[$section_name] as $field)
+					            {
+						            $query->orWhere('slug', '=', $field);
+					            }
+				            })
+				            ->count();
+
+				// Does the count of the relevant sections array equal the record count of the query?
+				// If so, all section questions have been answered
+				return ($count == count($sections[$section_name])) ? true : false;
+			}
+		} else {
+			return false;
+		}
+	}
 }
