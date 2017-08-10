@@ -507,4 +507,11 @@
         </div>
     </div>
 
+    <div class="modal bio-modal">
+        <h3>{{ $user_info->first_name }} {{ $user_info->last_name }}</h3>
+        @if(isset($fipriot_info->bio) && $fipriot_info->bio != '')
+            {{ nl2br($fipriot_info->bio) }}
+        @endif
+    </div>
+
 @stop
