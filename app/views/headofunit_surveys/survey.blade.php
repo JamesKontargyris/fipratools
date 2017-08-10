@@ -13,7 +13,7 @@
 
     @include('layouts.partials.messages')
 
-    {{ Form::open(['method' => 'POST', 'url' => 'headofunitsurvey/profile/edit', 'class' => 'knowledge-survey-form']) }}
+    {{ Form::open(['method' => 'POST', 'url' => 'headofunitsurvey/profile/edit', 'class' => 'knowledge-survey-form disable-submit-on-press-return']) }}
     {{ Form::hidden('survey_name', $survey_name) }}
 
     <div class="knowledge__section-intro no-bg">{{ get_widget('head_of_unit_survey_intro') }}</div>

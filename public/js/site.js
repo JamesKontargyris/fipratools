@@ -10,6 +10,14 @@
         return false;
     });
 
+    // Initialise Masonry
+    $('.masonry-grid').masonry({
+        // options
+        itemSelector: '.masonry-grid__item',
+        columnWidth: '.masonry-grid__grid-sizer',
+        percentPosition: true,
+    });
+
     //If the logo and title section is tapped, toggle the super menu and title arrow direction
     $('.logo').on('click', function()
     {
@@ -40,7 +48,7 @@
     // Apply tagsinput library to tags-input fields
     $('.tags-input').tagsInput({ 'defaultText': '', 'width':'100%', 'height':'90px', 'delimiter': ';'});
     // Don't submit the form with the enter key
-    $(document).on("keypress", ":input:not(textarea):not([type=submit])", function(event) {
+    $('form.disable-submit-on-press-return').on("keypress", ":input:not(textarea):not([type=submit])", function(event) {
         if (event.keyCode == 13) { event.preventDefault(); }
     });
 

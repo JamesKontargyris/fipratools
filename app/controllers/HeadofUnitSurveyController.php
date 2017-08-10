@@ -19,6 +19,8 @@ class HeadofUnitSurveyController extends \BaseController {
 	protected $units;
 	protected $areas;
 	protected $languages;
+	protected $sections = [];
+	protected $section_names = [];
 	private $addEditHOUSurvey;
 
 	function __construct( AddEditHOUSurveyForm $addEditHOUSurvey ) {
@@ -27,13 +29,80 @@ class HeadofUnitSurveyController extends \BaseController {
 		View::share( 'page_title', 'Head of Unit Survey' );
 		View::share( 'key', 'headofunitsurvey' );
 		$this->addEditHOUSurvey = $addEditHOUSurvey;
+
+		$this->sections = [
+			'people in your unit' => [
+				'unit_staff_public_affairs_government_relations',
+				'unit_staff_other_public_relations',
+				'unit_staff_financial_public_relations',
+				'unit_staff_personal_and_administrative_support_finance_accountancy',
+				'unit_staff_total',
+				'unit_staff_part_time_outside_consultants',
+				'unit_staff_positions_in_public_office'
+			],
+
+			'your units staff' => [
+				'unit_staff_carrying_out_public_affairs',
+				'unit_staff_previously_held_public_office_senior_positions_in_trade_consumer_organisations'
+			],
+
+			'your online presence' => [
+				'points_of_contact_people',
+				'unit_website_url',
+				'unit_website_help_needed',
+				'website_state_affiliation',
+				'website_reciprocal_link',
+				'online_newsletters'
+			],
+
+			'commercial details' => [
+				'annual_sales_turnover',
+				'percentage_of_turnover_related_to_public_affairs',
+				'turnover_forecast',
+				'member_other_branded_network',
+				'member_professional_association',
+				'mandatory_public_register',
+				'publicly_list_clients',
+				'work_from_other_network_in_last_12_months'
+			],
+
+			'inter-unit work' => [
+				'most_important_trading_partner_last_calendar_year',
+				'euros_paid_to_other_fipra_network_members_last_year',
+				'euros_received_from_other_fipra_network_members_last_year',
+				'new_clients_signed_up_last_year',
+				'top_3_client_obtained_through_fipra_unit',
+				'top_3_local_business_territory_competitors_1',
+				'top_3_local_business_territory_competitors_2',
+				'top_3_local_business_territory_competitors_3',
+				'top_3_international_business_competitors_1',
+				'top_3_international_business_competitors_2',
+				'top_3_international_business_competitors_3',
+				'fees_operation',
+				'success_fees',
+				'contracts_percentage_retainers',
+				'contracts_percentage_time_based_fees',
+				'professional_indemnity_insurance'
+			],
+		];
+
+		$this->sections['perception audit'] = $this->getAllPerceptionAuditFieldsAsArray();
+
+		$this->section_names = [
+			'people in your unit',
+			'your units staff',
+			'your online presence',
+			'commercial details',
+			'inter-unit work',
+			'perception audit'
+		];
 	}
 
 	public function index() {
-		$this->check_role( ['Head of Unit', 'Administrator'] );
+		$this->check_role( [ 'Head of Unit', 'Administrator' ] );
 
-		if($this->user->hasRole('Head of Unit')) {
-			return Redirect::to('headofunitsurvey/profile/edit'); // redirect to the survey page if user is a Head of Unit
+		if ( $this->user->hasRole( 'Head of Unit' ) ) {
+			return Redirect::to( 'headofunitsurvey/profile/edit' ); // redirect to the survey page if user is a Head of Unit
 		}
 
 		// otherwise, user is an admin - continue to an overview page of Heads of Units
@@ -47,35 +116,14 @@ class HeadofUnitSurveyController extends \BaseController {
 			return Redirect::to( $this->resource_key . '/search' );
 		}
 
-		$items = User::whereHas('roles', function($q)
-		{
-			$q->where('name', '=', 'Head of Unit');
-		})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+		$items      = User::whereHas( 'roles', function ( $q ) {
+			$q->where( 'name', '=', 'Head of Unit' );
+		} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		$items->key = 'headofunitsurvey';
 		$user_info  = $this->user;
 
-		$sections = [
-			'people in your unit' => ['unit_staff_public_affairs_government_relations', 'unit_staff_other_public_relations', 'unit_staff_financial_public_relations', 'unit_staff_personal_and_administrative_support_finance_accountancy', 'unit_staff_total', 'unit_staff_part_time_outside_consultants', 'unit_staff_positions_in_public_office'],
-
-			'your units staff' => ['unit_staff_carrying_out_public_affairs', 'unit_staff_previously_held_public_office_senior_positions_in_trade_consumer_organisations'],
-
-			'your online presence' => ['points_of_contact_people', 'unit_website_url', 'unit_website_help_needed', 'website_state_affiliation', 'website_reciprocal_link', 'online_newsletters'],
-
-			'commercial details' => ['annual_sales_turnover', 'percentage_of_turnover_related_to_public_affairs', 'turnover_forecast', 'member_other_branded_network', 'member_professional_association', 'mandatory_public_register', 'publicly_list_clients', 'work_from_other_network_in_last_12_months'],
-
-			'inter-unit work' => ['most_important_trading_partner_last_calendar_year', 'euros_paid_to_other_fipra_network_members_last_year', 'euros_received_from_other_fipra_network_members_last_year', 'new_clients_signed_up_last_year', 'top_3_client_obtained_through_fipra_unit', 'top_3_local_business_territory_competitors_1', 'top_3_local_business_territory_competitors_2', 'top_3_local_business_territory_competitors_3', 'top_3_international_business_competitors_1', 'top_3_international_business_competitors_2', 'top_3_international_business_competitors_3', 'fees_operation', 'success_fees', 'contracts_percentage_retainers', 'contracts_percentage_time_based_fees', 'professional_indemnity_insurance'],
-		];
-
-		$sections['perception audit'] = $this->getAllPerceptionAuditFieldsAsArray();
-
-		$section_names = [
-			'people in your unit',
-			'your units staff',
-			'your online presence',
-			'commercial details',
-			'inter-unit work',
-			'perception audit'
-		];
+		$sections      = $this->sections;
+		$section_names = $this->section_names;
 
 		return View::make( 'headofunit_surveys.index' )->with( compact( 'items', 'user_info', 'sections', 'section_names' ) );
 	}
@@ -90,16 +138,17 @@ class HeadofUnitSurveyController extends \BaseController {
 	 * @throws ProfileNotFoundException
 	 */
 	public function show( $id ) {
-		$this->check_role( ['Administrator'] );
+		$this->check_role( [ 'Administrator' ] );
 
 		$user = User::find( $id );
 
 		if ( isset( $user ) ) {
-			$user_info      = $user;
-			$knowledge_data = $this->getKnowledgeData( $id );
-			$fipriot_info   = json_decode( file_get_contents( 'http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email ) );
+			$user_info        = $user;
+			$knowledge_data   = $this->getKnowledgeData( $id );
+			$fipriot_info     = json_decode( file_get_contents( 'http://fipra.com/wp-json/wp/v2/fipriot?email=' . $user->email ) );
+			$perception_audit = $this->getAllPerceptionAuditData();
 
-			return View::make( 'headofunit_surveys.profile' )->with( compact( 'user_info', 'fipriot_info', 'knowledge_data' ) );
+			return View::make( 'headofunit_surveys.profile' )->with( compact( 'user_info', 'fipriot_info', 'knowledge_data', 'perception_audit' ) );
 		}
 
 		throw new ProfileNotFoundException();
@@ -112,7 +161,7 @@ class HeadofUnitSurveyController extends \BaseController {
 	 * @return Response
 	 */
 	public function getUpdateProfile() {
-		$this->check_role( ['Head of Unit', 'Administrator'] );
+		$this->check_role( [ 'Head of Unit', 'Administrator' ] );
 
 		$survey_name = 'head_of_unit_survey';
 
@@ -147,9 +196,8 @@ class HeadofUnitSurveyController extends \BaseController {
 		return View::make( 'headofunit_surveys.survey' )->with( compact( 'seniority', 'perception_audit', 'unit_staff', 'unit_staff_names', 'hou_survey_data', 'survey_name' ) );
 	}
 
-	public function postUpdateProfile()
-	{
-		$this->check_role( ['Head of Unit', 'Administrator'] );
+	public function postUpdateProfile() {
+		$this->check_role( [ 'Head of Unit', 'Administrator' ] );
 
 		$input = Input::all();
 		/*dd($input);*/
@@ -232,7 +280,7 @@ class HeadofUnitSurveyController extends \BaseController {
 			}
 
 			if ( $value ) { // If $value still contains data...
-				KnowledgeData::addData( $this->user->id, $slug, $value, Input::get('survey_name'), $serialized );
+				KnowledgeData::addData( $this->user->id, $slug, $value, Input::get( 'survey_name' ), $serialized );
 			}
 		}
 
@@ -292,13 +340,12 @@ class HeadofUnitSurveyController extends \BaseController {
 	 *
 	 * @return array
 	 */
-	protected function getAllPerceptionAuditFieldsAsArray()
-	{
+	protected function getAllPerceptionAuditFieldsAsArray() {
 		$perception_audit_data = $this->getAllPerceptionAuditData();
-		$fields = [];
+		$fields                = [];
 
-		foreach($perception_audit_data['groups'] as $group) {
-			foreach($group as $field_name => $label) {
+		foreach ( $perception_audit_data['groups'] as $group ) {
+			foreach ( $group as $field_name => $label ) {
 				$fields[] = $field_name;
 			}
 		}
@@ -317,10 +364,9 @@ class HeadofUnitSurveyController extends \BaseController {
 	}
 
 	protected function getAll() {
-		return User::whereHas('roles', function($q)
-		{
-			$q->where('name', '=', 'Head of Unit');
-		})->get();
+		return User::whereHas( 'roles', function ( $q ) {
+			$q->where( 'name', '=', 'Head of Unit' );
+		} )->rowsSortOrder( $this->rows_sort_order )->get();
 	}
 
 	protected function getSelection() {
@@ -328,19 +374,60 @@ class HeadofUnitSurveyController extends \BaseController {
 			$search_term             = $this->findSearchTerm();
 			$this->search_term_clean = str_replace( '%', '', $search_term );
 
-			$items = User::whereHas('roles', function($q)
-			{
-				$q->where('name', '=', 'Head of Unit');
-			})->where( function ( $query ) {
-				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+			$items = User::whereHas( 'roles', function ( $q ) {
+				$q->where( 'name', '=', 'Head of Unit' );
+			} )->where( function ( $q ) use($search_term) {
+				$q->where( 'first_name', 'LIKE', $search_term )->orWhere( 'last_name', 'LIKE', $search_term );
 			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		} else {
-			$items = User::whereHas('roles', function($q)
-			{
-				$q->where('name', '=', 'Head of Unit');
-			})->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			$items = User::whereHas( 'roles', function ( $q ) {
+				$q->where( 'name', '=', 'Head of Unit' );
+			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		}
 
 		return $items;
+	}
+
+	protected function getAdditionalDataForExport() {
+		$additional_data['sections']      = $this->sections;
+		$additional_data['section_names'] = $this->section_names;
+
+		return $additional_data;
+	}
+
+	/**
+	 * Process a search.
+	 *
+	 * @return $this
+	 */
+	public function search() {
+		$this->check_role( 'Administrator' );
+
+		if ( $this->search_term = $this->findSearchTerm() ) {
+			if ( Session::get( $this->resource_key . '.SearchType' ) == 'filter' ) {
+				$items               = $this->getFiltered();
+				$items->filter_value = $this->getFilteredValues();
+			} else {
+
+				$items = User::whereHas( 'roles', function ( $q ) {
+					$q->where( 'name', '=', 'Head of Unit' );
+				} )->where( function ( $q ) {
+					$q->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
+				} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
+			}
+
+			if ( ! $this->checkForSearchResults( $items ) ) {
+				return Redirect::route( 'headofunitsurvey.index' );
+			}
+			$items->search_term = str_replace( '%', '', $this->search_term );
+			$items->key         = 'headofunitsurvey';
+
+			$sections      = $this->sections;
+			$section_names = $this->section_names;
+
+			return View::make( 'headofunit_surveys.index' )->with( compact( 'items', 'sections', 'section_names' ) );
+		} else {
+			return Redirect::route( 'headofunitsurvey.index' );
+		}
 	}
 }

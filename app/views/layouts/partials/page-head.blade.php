@@ -9,12 +9,14 @@
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" href="{{ asset('css/jquery.modal.css') }}" type="text/css" media="screen" />
 <link rel="stylesheet" href="{{ asset('css/multi-select.css') }}" type="text/css" media="screen" />
+{{--Google Fonts--}}
 <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900" rel="stylesheet">
 <!--Select2-->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 <!--TagsInput-->
 <link rel="stylesheet" type="text/css" href="{{ asset('js/tagsinput/jquery.tagsinput.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 
 {{--TinyMCE--}}
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=u0irmirfrddus4b2s8ump2r9luoymvwc1jmywud72qa37hum"></script>

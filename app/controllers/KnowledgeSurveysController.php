@@ -401,10 +401,10 @@ class KnowledgeSurveysController extends \BaseController {
 			$search_term             = $this->findSearchTerm();
 			$this->search_term_clean = str_replace( '%', '', $search_term );
 
-			$items = User::whereDate( 'date_of_birth', '>', '0000-00-00' )->where( function ( $query ) {
-				$query->where( 'first_name', 'LIKE', $this->search_term )->orWhere( 'last_name', 'LIKE', $this->search_term );
-			} )->orWhereHas( 'knowledge_areas', function ( $query ) {
-				$query->where( 'knowledge_areas.name', 'LIKE', $this->search_term );
+			$items = User::whereDate( 'date_of_birth', '>', '0000-00-00' )->where( function ( $query ) use($search_term) {
+				$query->where( 'first_name', 'LIKE', $search_term )->orWhere( 'last_name', 'LIKE', $search_term );
+			} )->orWhereHas( 'knowledge_areas', function ( $query ) use ($search_term) {
+				$query->where( 'knowledge_areas.name', 'LIKE', $search_term );
 			} )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
 		} else {
 			$items = User::whereDate( 'date_of_birth', '>', '0000-00-00' )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );

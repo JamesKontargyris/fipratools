@@ -7,9 +7,9 @@
 <table width="100%" class="index-table">
 	<thead>
 	<tr>
-		<td width="40%">Name</td>
+		<td width="20%">Name</td>
 		<td width="20%">Unit</td>
-		<td width="20%">Expertise</td>
+		<td width="60%">Expertise</td>
 	</tr>
 	</thead>
 	<tbody>

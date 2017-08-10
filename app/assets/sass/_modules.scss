@@ -851,7 +851,6 @@ ul.pagination {
 
 .border-box {
   border:1px solid $light-grey;
-  margin-bottom: $v-rhythm;
   background-color: white;
   border-radius:5px;
   &.fill {
@@ -1039,19 +1038,6 @@ ul.pagination {
   }
 }
 
-/*.knowledge-profile-section-title {
-  @include font-size(12);
-  font-weight:$font-bold;
-  color:grey;
-  margin-bottom:$v-rhythm;
-  margin-top:$v-rhythm * 0.25;
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  border-radius:5px;
-  padding:5px 10px;
-  background-color:#efefef;
-}*/
-
 .knowledge-profile-section-block {
   margin-bottom:$v-rhythm * 1.5;
 
@@ -1063,7 +1049,7 @@ ul.pagination {
 .knowledge-profile-section-title {
   @include font-size(12);
   font-weight:$font-black;
-  color:darken($green, 10%);
+  color:black;
   text-transform: uppercase;
   letter-spacing: 2px;
   line-height:1.1;
@@ -1452,6 +1438,10 @@ ul.pagination {
   padding-left:20px;
   li {
     margin-bottom:10px;
+  }
+
+  &.margin-top {
+    margin-top:20px;
   }
 }
 

@@ -13,6 +13,8 @@
 <script src="{{ asset('js/jquery.numeric.min.js') }}" type="text/javascript" charset="utf-8"></script>
 <!--TagsInput-->
 <script src="{{ asset('js/tagsinput/jquery.tagsinput.min.js') }}"></script>
+{{--Masonry--}}
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 {{--Site JS--}}
 <script src="{{ asset('js/jquery.multi-select.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/site.js?141001') }}"></script>

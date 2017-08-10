@@ -53,12 +53,14 @@ class BaseController extends Controller {
 //	    If no section is set, but a global_section value already exists, use that.
 //      Otherwise, default to list section.
 
-		if(Input::has('global')) Session::put('global_section', Input::get('global'));
+		if ( Input::has( 'global' ) ) {
+			Session::put( 'global_section', Input::get( 'global' ) );
+		}
 
 		if ( isset( $this->section ) ) {
 			Session::put( 'section', $this->section );
-		} elseif ( ! isset( $this->section ) && Session::has('global_section') ) {
-			Session::put( 'section', Session::get('global_section') );
+		} elseif ( ! isset( $this->section ) && Session::has( 'global_section' ) ) {
+			Session::put( 'section', Session::get( 'global_section' ) );
 		} else {
 			Session::put( 'section', 'list' );
 		}
@@ -70,7 +72,7 @@ class BaseController extends Controller {
 			View::share( 'user_unit', $this->user->unit()->pluck( 'name' ) );
 			View::share( 'user_role', $this->user->roles()->pluck( 'name' ) );
 			// Is this resource site-wide, i.e. used across the site rather than just in the current section?
-			View::share( 'sitewide', isset($this->sitewide) ? $this->sitewide : 0 );
+			View::share( 'sitewide', isset( $this->sitewide ) ? $this->sitewide : 0 );
 		}
 
 		$this->setCurrentPageNumber();
@@ -104,14 +106,14 @@ class BaseController extends Controller {
 
 			switch ( Input::get( 'filetype' ) ) {
 				case 'pdf_all':
-					$contents = $this->PDFExportAll( $this->getAll() );
+					$contents = $this->PDFExportAll( $this->getAll(), $this->getAdditionalDataForExport() );
 					$this->generatePDF( $contents, $this->export_filename . '.pdf', $cover_page );
 
 					return true;
 					break;
 
 				case 'pdf_selection':
-					$contents = $this->PDFExportSelection( $this->getSelection() );
+					$contents = $this->PDFExportSelection( $this->getSelection(), $this->getAdditionalDataForExport() );
 					$this->generatePDF( $contents, $this->export_filename . '_selection.pdf', $cover_page );
 
 					return true;
@@ -120,7 +122,7 @@ class BaseController extends Controller {
 				case 'pdf_filtered':
 					$items               = $this->getFiltered( 'export' );
 					$items->filter_value = $this->getFilteredValues();
-					$contents            = $this->PDFExportFiltered( $items );
+					$contents            = $this->PDFExportFiltered( $items, $this->getAdditionalDataForExport() );
 					$this->generatePDF( $contents, $this->export_filename . '_filtered.pdf', $cover_page );
 
 					return true;
@@ -134,15 +136,17 @@ class BaseController extends Controller {
 					break;
 
 				case 'excel_all':
-					$contents = $this->getAll();
-					$this->generateExcel( $contents, $this->export_filename );
+					$contents        = $this->getAll();
+					$additional_data = $this->getAdditionalDataForExport();
+					$this->generateExcel( $contents, $this->export_filename, $additional_data );
 
 					return true;
 					break;
 
 				case 'excel_selection':
-					$contents = $this->getSelection();
-					$this->generateExcel( $contents, $this->export_filename . '_selection' );
+					$contents        = $this->getSelection();
+					$additional_data = $this->getAdditionalDataForExport();
+					$this->generateExcel( $contents, $this->export_filename . '_selection', $additional_data );
 
 					return true;
 					break;
@@ -165,11 +169,13 @@ class BaseController extends Controller {
 	/**
 	 * Export all records for a resource to a PDF file
 	 *
-	 * @param $items
+	 * @param array $items
+	 *
+	 * @param array $additional_data
 	 *
 	 * @return string
 	 */
-	protected function PDFExportAll( $items ) {
+	protected function PDFExportAll( $items, $additional_data = [] ) {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
@@ -197,7 +203,7 @@ class BaseController extends Controller {
 			$active_count  = $this->getActiveCount();
 			$dormant_count = $this->getDormantCount();
 		} else {
-			$active_count = '';
+			$active_count  = '';
 			$dormant_count = '';
 		}
 
@@ -206,7 +212,7 @@ class BaseController extends Controller {
 			$heading2 = number_format( $items->count(), 0 ) . ' total categories';
 		}
 
-		if ( is_request( 'survey' ) ) {
+		if ( is_request( 'survey' ) || is_request( 'headofunitsurvey' ) ) {
 			$heading1 = $logo . current_section_name() . ' | Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
@@ -214,11 +220,12 @@ class BaseController extends Controller {
 		$view = View::make(
 			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[
-				'items'         => $items,
-				'heading1'      => $heading1,
-				'heading2'      => $heading2,
-				'active_count'  => $active_count,
-				'dormant_count' => $dormant_count,
+				'items'           => $items,
+				'additional_data' => $additional_data,
+				'heading1'        => $heading1,
+				'heading2'        => $heading2,
+				'active_count'    => $active_count,
+				'dormant_count'   => $dormant_count,
 			]
 		);
 
@@ -230,9 +237,11 @@ class BaseController extends Controller {
 	 *
 	 * @param $items
 	 *
+	 * @param array $additional_data
+	 *
 	 * @return string
 	 */
-	protected function PDFExportSelection( $items ) {
+	protected function PDFExportSelection( $items, $additional_data = [] ) {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
@@ -244,7 +253,7 @@ class BaseController extends Controller {
 			? 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) ) . ' when searching for ' . Session::get( $this->resource_key . '.SearchType' ) . ' "' . $this->search_term_clean . '"'
 			: 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) );
 
-		$active_count = '';
+		$active_count  = '';
 		$dormant_count = '';
 
 		if ( is_request( 'clients' ) || is_request( 'list' ) ) {
@@ -257,7 +266,7 @@ class BaseController extends Controller {
 			$heading2 = number_format( $items->count(), 0 ) . ' total categories';
 		}
 
-		if ( is_request( 'survey' ) ) {
+		if ( is_request( 'survey' ) || is_request('headofunitsurvey')) {
 			$heading1 = $logo . current_section_name() . ' | Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
@@ -265,11 +274,12 @@ class BaseController extends Controller {
 		$view = View::make(
 			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[
-				'items'         => $items,
-				'heading1'      => $heading1,
-				'heading2'      => $heading2,
-				'active_count'  => $active_count,
-				'dormant_count' => $dormant_count,
+				'items'           => $items,
+				'additional_data' => $additional_data,
+				'heading1'        => $heading1,
+				'heading2'        => $heading2,
+				'active_count'    => $active_count,
+				'dormant_count'   => $dormant_count,
 			]
 		);
 
@@ -281,9 +291,11 @@ class BaseController extends Controller {
 	 *
 	 * @param $items
 	 *
+	 * @param array $additional_data
+	 *
 	 * @return string
 	 */
-	protected function PDFExportFiltered( $items ) {
+	protected function PDFExportFiltered( $items, $additional_data = [] ) {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
@@ -293,14 +305,14 @@ class BaseController extends Controller {
 
 		$heading1 .= current_section_name() . ' | ' . 'Filtered ' . ucfirst( clean_key( $key ) );
 		if ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) == 'show' ) {
-			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ((is_request( 'clients' ) || is_request( 'list' )) ? ' active and dormant ' : ' ') . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
+			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ( ( is_request( 'clients' ) || is_request( 'list' ) ) ? ' active and dormant ' : ' ' ) . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
 		} elseif ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) != 'show' ) {
-			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ((is_request( 'clients' ) || is_request( 'list' )) ? ' dormant ' : ' ') . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
+			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ( ( is_request( 'clients' ) || is_request( 'list' ) ) ? ' dormant ' : ' ' ) . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
 		} else {
-			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ((is_request( 'clients' ) || is_request( 'list' )) ? ' active ' : ' ') . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
+			$heading2 = 'Showing ' . number_format( $items->count(), 0 ) . ( ( is_request( 'clients' ) || is_request( 'list' ) ) ? ' active ' : ' ' ) . strtolower( clean_key( $key ) ) . ' filtering on: ' . $items->filter_value;
 		}
 
-		if ( is_request( 'survey' ) ) {
+		if ( is_request( 'survey' ) || is_request('headofunitsurvey') ) {
 			$heading1 = $logo . current_section_name() . ' | Filtered Profiles';
 			$heading2 = number_format( $items->count(), 0 ) . ' total profiles';
 		}
@@ -308,9 +320,10 @@ class BaseController extends Controller {
 		$view = View::make(
 			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[
-				'items'    => $items,
-				'heading1' => $heading1,
-				'heading2' => $heading2
+				'items'           => $items,
+				'additional_data' => $additional_data,
+				'heading1'        => $heading1,
+				'heading2'        => $heading2
 			] );
 
 		return (string) $view;
@@ -321,15 +334,17 @@ class BaseController extends Controller {
 	 *
 	 * @param $items
 	 *
+	 * @param array $additional_data
+	 *
 	 * @return string
 	 */
-	protected function PDFExportDuplicates( $items ) {
+	protected function PDFExportDuplicates( $items, $additional_data = [] ) {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
 		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
 		$heading1 .= current_section_name() . ' | ' . 'Duplicated ' . ucfirst( clean_key( $this->resource_key ) );
-		$heading2      = number_format( $items->count(), 0 ) . ' total ' . clean_key( $this->resource_key );
+		$heading2 = number_format( $items->count(), 0 ) . ' total ' . clean_key( $this->resource_key );
 
 		$active_count  = 0;
 		$dormant_count = 0;
@@ -342,11 +357,12 @@ class BaseController extends Controller {
 		$view = View::make(
 			( is_request( 'caselist' ) ) ? 'export.pdf.' . $key : 'export.pdf.' . $this->resource_key,
 			[
-				'items'         => $items,
-				'heading1'      => $heading1,
-				'heading2'      => $heading2,
-				'active_count'  => $active_count,
-				'dormant_count' => $dormant_count,
+				'items'           => $items,
+				'additional_data' => $additional_data,
+				'heading1'        => $heading1,
+				'heading2'        => $heading2,
+				'active_count'    => $active_count,
+				'dormant_count'   => $dormant_count,
 			]
 		);
 
@@ -356,11 +372,13 @@ class BaseController extends Controller {
 	/**
 	 * Generate a PDF file
 	 *
-	 * @param      $contents
-	 * @param      $filename
+	 * @param $contents
+	 * @param $filename
 	 * @param bool $cover_page
 	 *
 	 * @throws Exception
+	 * @internal param array $additional_data
+	 *
 	 */
 	protected function generatePDF( $contents, $filename, $cover_page = true ) {
 
@@ -404,11 +422,12 @@ class BaseController extends Controller {
 	 *
 	 * @param $contents
 	 * @param $filename
-	 *
+	 * @param array $additional_data
 	 */
-	protected function generateExcel( $contents, $filename ) {
-		global $items;
-		$items = $contents;
+	protected function generateExcel( $contents, $filename, $additional_data = [] ) {
+		global $items, $add_data;
+		$items    = $contents;
+		$add_data = $additional_data;
 
 		Excel::create(
 			$filename,
@@ -417,7 +436,7 @@ class BaseController extends Controller {
 				$excel->sheet(
 					clean_key( $this->resource_key ),
 					function ( $sheet ) {
-						global $items;
+						global $items, $add_data;
 						$user = Auth::user();
 
 						//If the main lead office list is being exported, it contains a message in the first cell
@@ -426,7 +445,7 @@ class BaseController extends Controller {
 //							$sheet->mergeCells( 'A1:G1' );
 //						}
 						$sheet->loadView( 'export.excel.' . $this->resource_key )->with(
-							[ 'items' => $items, 'user' => $user ]
+							[ 'items' => $items, 'user' => $user, 'additional_data' => $add_data ]
 						);
 
 					}
@@ -436,6 +455,16 @@ class BaseController extends Controller {
 
 			}
 		);
+	}
+
+	/**
+	 * Return a blank array as additional data for export
+	 * Controllers can overwrite this method to return additional data to export views
+	 *
+	 * @return array
+	 */
+	protected function getAdditionalDataForExport() {
+		return [];
 	}
 
 	/**
@@ -508,12 +537,12 @@ class BaseController extends Controller {
 			//If a sort term is passed in in the query string, store it in the session
 			//and return the column and order to sort on
 			$sort_term = Input::get( 'sort' );
-			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && ! $this->is_request( 'survey' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
+			if ( ! $this->is_request( 'account_directors' ) && ! $this->is_request( 'users' ) && ! $this->is_request( 'caselist' ) && ! $this->is_request( 'cases' ) && ! $this->is_request( 'survey' ) && ! $this->is_request( 'headofunitsurvey' ) && isset( $sort_on[ Input::get( 'sort' ) ] ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on[ $sort_term ] );
 
 				return explode( '.', $sort_on[ $sort_term ] );
-			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) || $this->is_request( 'headofunitsurvey' )) {
+			} elseif ( $this->is_request( 'users' ) || $this->is_request( 'account_directors' ) || $this->is_request( 'survey' ) || $this->is_request( 'headofunitsurvey' ) ) {
 				$this->destroyCurrentPageNumber();
 				Session::set( $key . '.rowsSort', $sort_on_users_ads[ $sort_term ] );
 
@@ -634,7 +663,7 @@ class BaseController extends Controller {
 		}
 
 		if ( $throw_exception ) {
-			throw new PermissionDeniedException($this->resource_key);
+			throw new PermissionDeniedException( $this->resource_key );
 		} else {
 			return false;
 		}
@@ -755,9 +784,9 @@ class BaseController extends Controller {
 
 	protected function getFilterModelName( $filter_name ) {
 		//Use the filter field value to instantiate the corresponding class and get the filter value's name
-		$model_name        = ucfirst( str_replace( '_id', '', $filter_name ) );
+		$model_name = ucfirst( str_replace( '_id', '', $filter_name ) );
 		// If the model name ends in "y", it will likely need "ies" at the end when pluralised. Otherwise, just add an "s".
-		$model_name_plural = mb_substr($model_name, -1) == 'y' ? rtrim($model_name, 'y') . 'ies' : $model_name . 's';
+		$model_name_plural = mb_substr( $model_name, - 1 ) == 'y' ? rtrim( $model_name, 'y' ) . 'ies' : $model_name . 's';
 		// Split model name by _
 		$model_explode  = explode( '_', $model_name );
 		$new_model_name = "";
@@ -785,7 +814,7 @@ class BaseController extends Controller {
 		$this->locations         = $this->getLocationsFormData();
 		$this->products          = $this->getProductsFormData();
 		$this->years             = $this->getYearsFormData();
-		$this->clients           = $this->getClientsFormData(true, 'Anonymous');
+		$this->clients           = $this->getClientsFormData( true, 'Anonymous' );
 
 		return true;
 	}

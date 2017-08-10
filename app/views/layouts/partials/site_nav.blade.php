@@ -112,6 +112,12 @@
 		</li>
 	@endif
 
+	@if(section_is() == 'headofunitsurvey' && $user->hasRole('Administrator'))
+		<li class="{{ nav_item_is_active('headofunitsurvey', true) ? 'active' : '' }}">
+			<a href="/headofunitsurvey"><strong><i class="fa fa-th-list"></i> Overview</strong></a>
+		</li>
+	@endif
+
 
 	@if($user->hasRole('Administrator')  && (section_is() == 'list' || section_is() == 'case'))
 		<li class="{{ nav_item_is_active('account_directors') ? 'active' : '' }}">

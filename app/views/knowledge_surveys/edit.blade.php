@@ -13,7 +13,7 @@
 
     @include('layouts.partials.messages')
 
-    {{ Form::open(['method' => 'POST', 'url' => 'survey/profile/edit', 'class' => 'knowledge-survey-form']) }}
+    {{ Form::open(['method' => 'POST', 'url' => 'survey/profile/edit', 'class' => 'knowledge-survey-form disable-submit-on-press-return']) }}
     {{ Form::hidden('survey_name', $survey_name) }}
 
     <div class="row no-margin">

@@ -57,15 +57,10 @@
                 <div id="page-header" class="section-survey">
                     <h2 class="no-right-pad">@if(isset($fipriot_info->photo)) <img src="{{ $fipriot_info->photo }}" alt="{{ $fipriot_info->name }}" class="fipriot-info__page-header-photo">@endif <strong>{{ $user_info->first_name }} {{ $user_info->last_name }}</strong><br><span style="padding-top:10px; font-size:16px"> @if($user_info->hasRole('Special Adviser'))Special Adviser @else {{ $user_info->unit()->pluck('name') }} @endif</span></h2>
                 </div>
-
                 @if(Leadofficelist\Knowledge_data\KnowledgeData::where('user_id', '=', $user_info->id)->where('survey_name', '=', 'head_of_unit_survey')->count() > 0) {{--Use unit_staff_total to ensure required fields are in the DB--}}
-
-                    <div class="masonry-grid">
-
-                        <div class="masonry-grid__grid-sizer"></div>
-
-                        @if(isset($knowledge_data['unit_usp'] ))
-                            <div class="masonry-grid__item">
+                    @if(isset($knowledge_data['unit_usp'] ))
+                        <div class="row no-margin">
+                            <div class="col-12">
                                 <div class="border-box fill-light-green section-survey border-light-green">
                                     <div class="knowledge-profile-section-title"><i class="fa fa-trophy"></i> Our top USP</div>
                                     <div class="border-box__content no-top-pad">
@@ -73,11 +68,11 @@
                                     </div>
                                 </div>
                             </div>
-                        @endif
-
-                        <div class="masonry-grid__item">
+                        </div>
+                    @endif
+                    <div class="row">
+                        <div class="col-4">
                             <div class="border-box fill-light-green section-survey border-light-green">
-
                                 <div class="knowledge-profile-section-title"><i class="fa fa-users"></i> Staff @if(isset($knowledge_data['unit_staff_total']))({{ $knowledge_data['unit_staff_total'] }} in total)@endif</div>
                                 <div class="border-box__content">
                                     <div class="row no-margin">
@@ -159,26 +154,18 @@
                                                     </table>
                                                 </div>
                                             @endif
-
-                                            <ul class="bullets-square margin-top">
-                                                @if(isset($knowledge_data['unit_staff_part_time_outside_consultants_details']))
-                                                    <li>We regularly use <strong class="green-darker text-upper">{{ $knowledge_data['unit_staff_part_time_outside_consultants_details'] }}</strong> outside consultants.</li>
-                                                @endif
-
-                                                @if(isset($knowledge_data['mandatory_public_register']))
-                                                    <li>It <strong class="green-darker text-upper">{{ ($knowledge_data['mandatory_public_register'] == 'Yes') ? 'is' : 'is not' }}</strong> mandatory in my country for staff to appear on a public register of public affairs professionals or lobbyists{{ ($knowledge_data['mandatory_public_register'] == 'No - but there is a voluntary register') ? ', but there is a voluntary register' : '' }}{{ ($knowledge_data['mandatory_public_register'] == 'Yes') ? ':<br><em>' . $knowledge_data['mandatory_public_register_details'] . '</em>' : '.'  }}
-                                                    </li>
-                                                @endif
-                                            </ul>
+                                            @if(isset($knowledge_data['mandatory_public_register']))
+                                                <div class="knowledge-profile-section-block">
+                                                    It <strong class="green-darker text-upper">{{ ($knowledge_data['mandatory_public_register'] == 'Yes') ? 'is' : 'is not' }}</strong> mandatory in my country for staff to appear on a public register of public affairs professionals or lobbyists{{ ($knowledge_data['mandatory_public_register'] == 'No - but there is a voluntary register') ? ', but there is a voluntary register' : '' }}{{ ($knowledge_data['mandatory_public_register'] == 'Yes') ? ':<br><em>' . $knowledge_data['mandatory_public_register_details'] . '</em>' : '.'  }}
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="masonry-grid__item">
+                        <div class="col-4">
                             <div class="border-box fill-light-green section-survey border-light-green">
-
                                 <div class="knowledge-profile-section-title"><i class="fa fa-desktop"></i> Online Presence</div>
                                 <div class="border-box__content">
                                     <div class="knowledge-profile-section-block">
@@ -258,7 +245,7 @@
                                             @if(isset($knowledge_data['network_bulletin_can_republish']))
                                                 <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['network_bulletin_can_republish'] == 'Yes') ? 'do' : 'do not' }}</strong> give permission for our newsletter content to be re-published.</li>
                                             @endif
-                                            @if(isset($knowledge_data['unit_website_help_needed']))
+                                            @if(isset($knowledge_data['unit_website_help_needed']) && $user->hasRole('Administrator'))
                                                 <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['unit_website_help_needed'] == 'Yes') ? 'do' : 'do not' }}</strong> require website set-up assistance from the Network Team.</li>
                                             @endif
                                         </ul>
@@ -268,11 +255,11 @@
                                             <div class="knowledge-profile-section-sub-title margin-bottom">Online Marketing Point(s) of Contact</div>
                                             <table cellpadding="0" cellspacing="0" border="0" width="100%" class="survey-entry-table">
                                                 <tbody>
-                                                @foreach($knowledge_data['points_of_contact_people'] as $id => $person_data)
-                                                    <tr>
-                                                        <td valign="top"><strong>{{ $person_data['name'] }}</strong></td>
-                                                    </tr>
-                                                @endforeach
+                                                    @foreach($knowledge_data['points_of_contact_people'] as $id => $person_data)
+                                                        <tr>
+                                                            <td valign="top"><strong>{{ $person_data['name'] }}</strong></td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -280,116 +267,25 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="masonry-grid__item">
+                        <div class="col-4 last">
                             <div class="border-box fill-light-green section-survey border-light-green">
-
-                                <div class="knowledge-profile-section-title"><i class="fa fa-money"></i> Commercial Details</div>
+                                <div class="knowledge-profile-section-title"><i class="fa fa-money"></i> Fees</div>
                                 <div class="border-box__content">
-                                    <ul class="bullets-square">
-                                        @if(isset($knowledge_data['annual_sales_turnover']))
-                                            <li>
-                                                Our annual sales / turnover in the last full calendar year was <strong class="green-darker text-upper">&euro;{{ number_format($knowledge_data['annual_sales_turnover']) }}</strong>.
-                                                @if(isset($knowledge_data['annual_sales_turnover_details']))
-                                                    <br><span class="small-print">{{ $knowledge_data['annual_sales_turnover_details'] }}</span>
+                                    <div class="row no-margin">
+                                        <div class="knowledge-profile-section-block">
+                                            <ul class="bullets-square">
+                                                @if(isset($knowledge_data['fees_operation']))
+                                                    <li>{{ $knowledge_data['fees_operation'] }}.</li>
                                                 @endif
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['percentage_of_turnover_related_to_public_affairs']))
-                                            <li>
-                                                <strong class="green-darker text-upper">{{ $knowledge_data['percentage_of_turnover_related_to_public_affairs'] }}%</strong> of our turnover relates to Public Affairs / Government Relations.
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['turnover_forecast']))
-                                            <li>
-                                                We forecast that our Public Affairs turnover / sales will <strong class="green-darker text-upper">{{ $knowledge_data['turnover_forecast'] }}</strong> this year.
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['fees_operation']))
-                                            <li>{{ $knowledge_data['fees_operation'] }}.</li>
-                                        @endif
-                                        @if(isset($knowledge_data['success_fees']))
-                                            <li>{{ $knowledge_data['success_fees'] }}.</li>
-                                        @endif
-                                    </ul>
+                                                @if(isset($knowledge_data['success_fees']))
+                                                    <li>{{ $knowledge_data['success_fees'] }}.</li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
-                        </div>
-
-                        <div class="masonry-grid__item">
                             <div class="border-box fill-light-green section-survey border-light-green">
-
-                                <div class="knowledge-profile-section-title"><i class="fa fa-arrows-h"></i> Inter-Unit Work</div>
-                                <div class="border-box__content">
-                                    <ul class="bullets-square">
-                                        @if(isset($knowledge_data['most_important_trading_partner_last_calendar_year']))
-                                            <li>
-                                                <strong class="green-darker text-upper">{{ $knowledge_data['most_important_trading_partner_last_calendar_year'] }}</strong> was our most important trading partner in the Fipra Network last calendar year.
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['euros_paid_to_other_fipra_network_members_last_year']))
-                                            <li>
-                                                We gave <strong class="green-darker text-upper">&euro;{{ number_format($knowledge_data['euros_paid_to_other_fipra_network_members_last_year']) }}</strong> in work to other Fipra Network Units last calendar year.
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['euros_received_from_other_fipra_network_members_last_year']))
-                                            <li>
-                                                We received <strong class="green-darker text-upper">&euro;{{ number_format($knowledge_data['euros_received_from_other_fipra_network_members_last_year']) }}</strong> in work from other Fipra Network Units last calendar year.
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['new_clients_signed_up_last_year']))
-                                            <li>
-                                                We signed up <strong class="green-darker text-upper">{{ $knowledge_data['new_clients_signed_up_last_year'] }}</strong> new clients last calendar year.
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['top_3_client_obtained_through_fipra_unit']) && $knowledge_data['top_3_client_obtained_through_fipra_unit'] == 'Yes')
-                                            <li>At least one of our top 3 clients was obtained through another Fipra Unit or colleague.</li>
-                                        @endif
-                                        @if(isset($knowledge_data['top_3_local_business_territory_competitors_1']) || isset($knowledge_data['top_3_local_business_territory_competitors_2']) || isset($knowledge_data['top_3_local_business_territory_competitors_3']))
-                                            <li>
-                                                Top local competitors:
-                                                @if(isset($knowledge_data['top_3_local_business_territory_competitors_1']))
-                                                    <br><strong class="green-darker">{{ $knowledge_data['top_3_local_business_territory_competitors_1'] }}</strong>
-                                                @endif
-                                                @if(isset($knowledge_data['top_3_local_business_territory_competitors_2']))
-                                                    <br><strong class="green-darker">{{ $knowledge_data['top_3_local_business_territory_competitors_2'] }}</strong>
-                                                @endif
-                                                @if(isset($knowledge_data['top_3_local_business_territory_competitors_3']))
-                                                    <br><strong class="green-darker">{{ $knowledge_data['top_3_local_business_territory_competitors_3'] }}</strong>
-                                                @endif
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['top_3_international_business_competitors_1']) || isset($knowledge_data['top_3_international_business_competitors_2']) || isset($knowledge_data['top_3_international_business_competitors_3']))
-                                            <li>
-                                                Top international competitors:
-                                                @if(isset($knowledge_data['top_3_international_business_competitors_1']))
-                                                    <br><strong class="green-darker">{{ $knowledge_data['top_3_international_business_competitors_1'] }}</strong>
-                                                @endif
-                                                @if(isset($knowledge_data['top_3_international_business_competitors_2']))
-                                                    <br><strong class="green-darker">{{ $knowledge_data['top_3_international_business_competitors_2'] }}</strong>
-                                                @endif
-                                                @if(isset($knowledge_data['top_3_international_business_competitors_3']))
-                                                    <br><strong class="green-darker">{{ $knowledge_data['top_3_international_business_competitors_3'] }}</strong>
-                                                @endif
-                                            </li>
-                                        @endif
-                                        @if(isset($knowledge_data['contracts_percentage_retainers']) || isset($knowledge_data['contracts_percentage_time_based_fees']))
-                                            <li>
-                                                We estimate that our contracts are:
-                                                <br><strong class="green-darker">{{ $knowledge_data['contracts_percentage_retainers'] }}%</strong> retainers
-                                                <br><strong class="green-darker">{{ $knowledge_data['contracts_percentage_time_based_fees'] }}%</strong> time-based fees
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="masonry-grid__item">
-                            <div class="border-box fill-light-green section-survey border-light-green">
-
                                 <div class="knowledge-profile-section-title"><i class="fa fa-info-circle"></i> Further Information</div>
                                 <div class="border-box__content">
                                     <div class="row no-margin">
@@ -410,101 +306,17 @@
                                                 @if(isset($knowledge_data['professional_indemnity_insurance']))
                                                     <li>We <strong class="green-darker text-upper">{{ ($knowledge_data['professional_indemnity_insurance'] == 'Yes') ? 'do' : 'do not' }}</strong> have professional indemnity insurance{{ ($knowledge_data['professional_indemnity_insurance'] == 'Yes') ? ':<br><em>Up to ' . $knowledge_data['professional_indemnity_insurance_details'] . '</em>' : '.'  }}</li>
                                                 @endif
-                                                @if(isset($knowledge_data['hou_survey_feedback']))
-                                                    <li>Survey feedback: <span class="small-print">{{ $knowledge_data['hou_survey_feedback'] }}</span></li>
-                                                @endif
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="masonry-grid__item">
-                            <div class="border-box fill-light-green section-survey border-light-green">
-
-                                <div class="knowledge-profile-section-title"><i class="fa fa-eye"></i> Perception Audit</div>
-                                <div class="border-box__content">
-
-                                    @if(isset($perception_audit) && count($perception_audit > 0))
-                                        @foreach($perception_audit['groups'] as $group_id => $areas)
-                                            <div class="knowledge-profile-section-block">
-                                                <div class="knowledge-profile-section-sub-title margin-bottom">{{ $perception_audit['questions'][$group_id] }}</div>
-                                                @if(isset($areas))
-                                                    <table class="index-table" cellspacing="5" cellpadding="5" border="0" width="100%">
-                                                        <thead>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td valign="middle" style="text-align: center">1</td>
-                                                            <td valign="middle" style="text-align: center">2</td>
-                                                            <td valign="middle" style="text-align: center">3</td>
-                                                            <td valign="middle" style="text-align: center">4</td>
-                                                            <td valign="middle" style="text-align: center">5</td>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach($areas as $slug => $area)
-                                                                @if(isset($knowledge_data['perception_audit'][$slug]))
-                                                                    <tr>
-                                                                        <td valign="middle">{{ $area }}</td>
-                                                                        @if($knowledge_data['perception_audit'][$slug] == 1)
-                                                                            <td style="text-align:center"><i class="fa fa-circle text--green"></i></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                        @elseif($knowledge_data['perception_audit'][$slug] == 2)
-                                                                            <td></td>
-                                                                            <td style="text-align:center"><i class="fa fa-circle text--green"></i></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                        @elseif($knowledge_data['perception_audit'][$slug] == 3)
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td style="text-align:center"><i class="fa fa-circle text--green"></i></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                        @elseif($knowledge_data['perception_audit'][$slug] == 4)
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td style="text-align:center"><i class="fa fa-circle text--green"></i></td>
-                                                                            <td></td>
-                                                                        @elseif($knowledge_data['perception_audit'][$slug] == 5)
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td></td>
-                                                                            <td style="text-align:center"><i class="fa fa-circle text--green"></i></td>
-                                                                        @endif
-                                                                    </tr>
-                                                                @endif
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    @endif
-
-                                    @if(isset($knowledge_data['perception_audit_other_comments']))
-                                        <div class="knowledge-profile-section-block">
-                                            Perception comments and other criteria: <span class="small-print">{{ $knowledge_data['perception_audit_other_comments'] }}</span>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> {{--/.masonry-grid--}}
-
+                    </div>
                 @else
                     No information available at this time.
                 @endif
-
             </div>
         </div>
-    </div>
 
 @stop
