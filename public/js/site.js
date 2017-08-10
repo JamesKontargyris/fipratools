@@ -158,9 +158,8 @@
         $('.url-format').on('blur', function()
         {
             var urlEntry = $(this);
-            if(urlEntry.val().substr(0,7) != 'http://'){
-                urlEntry.val('http://' + urlEntry.val());
-            }
+            urlEntry.val(urlEntry.val().replace(/^https?:\/\//i, ""));
+            urlEntry.val('http://' + urlEntry.val());
         });
 
         return false;
@@ -185,9 +184,8 @@
     $('.url-format').on('blur', function()
     {
         var urlEntry = $(this);
-        if(urlEntry.val().substr(0,7) != 'http://'){
-            urlEntry.val('http://' + urlEntry.val());
-        }
+        urlEntry.val(urlEntry.val().replace(/^https?:\/\//i, ""));
+        urlEntry.val('http://' + urlEntry.val());
     });
 
     // Reveal further details entry box on Knowledge Survey form
