@@ -11,6 +11,7 @@ class ListController extends BaseController {
 		parent::__construct();
 		View::share( 'page_title', 'Client List' );
 		View::share( 'key', 'list' );
+		Session::put( 'section', 'list' );
 	}
 
 	public function index() {
