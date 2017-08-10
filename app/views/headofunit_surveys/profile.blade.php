@@ -374,7 +374,7 @@
                                                 @endif
                                             </li>
                                         @endif
-                                        @if(isset($knowledge_data['contracts_percentage_retainers']) || isset($knowledge_data['contracts_percentage_time_based_fees']))
+                                        @if(isset($knowledge_data['contracts_percentage_retainers']) && isset($knowledge_data['contracts_percentage_time_based_fees']))
                                             <li>
                                                 We estimate that our contracts are:
                                                 <br><strong class="green-darker">{{ $knowledge_data['contracts_percentage_retainers'] }}%</strong> retainers
