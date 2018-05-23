@@ -18,4 +18,9 @@ class PagesController extends \BaseController {
 	{
 		return View::make('iwo');
 	}
+
+	public function privacyNotice()
+	{
+		return View::make('privacynotice');
+	}
 } 

@@ -1,11 +1,6 @@
-footer {
+.footer__legal {
 	@include font-size(12);
 	padding:0;
 	color:$black;
-	a {
-		color:white;
-		&:hover {
-			color:$blue;
-		}
-	}
+	padding:$v-rhythm * 2 0;
 }

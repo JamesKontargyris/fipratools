@@ -130,6 +130,9 @@ Route::group(['before' => 'auth'], function()
 	// Temporary IWO route
 	Route::any('iwo', 'PagesController@iwo');
 
+	// Privacy notice route
+	Route::any('privacynotice', 'PagesController@privacynotice');
+
 	Route::get('password/change', 'PasswordController@getChange');
 	Route::post('password/change', 'PasswordController@postChange');
 

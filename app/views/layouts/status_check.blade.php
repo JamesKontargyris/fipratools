@@ -27,11 +27,7 @@
 
         </section>
 
-        <div class="container">
-            <footer>
-                <p>&copy; Fipra <?php echo date("Y"); ?>. All Rights Reserved.<br><a href="http://fipra.com/other~3/code_of_conduct~7/" target="_blank">Code of conduct</a></p>
-            </footer>
-        </div>
+        @include('layouts.partials.footer')
 
 	@include('layouts.partials.scripts')
 

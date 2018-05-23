@@ -2754,17 +2754,12 @@ header {
       opacity: 0.8; }
 
 /* line 1, ../../app/assets/sass/_footer.scss */
-footer {
+.footer__legal {
   font-size: 12px;
   font-size: 0.75rem;
   padding: 0;
-  color: #333; }
-  /* line 5, ../../app/assets/sass/_footer.scss */
-  footer a {
-    color: white; }
-    /* line 7, ../../app/assets/sass/_footer.scss */
-    footer a:hover {
-      color: #00257f; }
+  color: #333;
+  padding: 40px 0; }
 
 /* line 1, ../../app/assets/sass/_forum.scss */
 .forum__page-title {
