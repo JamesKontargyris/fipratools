@@ -81,6 +81,7 @@ Privacy Notice
     9.1    We use cookies for the following purposes:<br><br>
     <p style="padding-left: 30px;">(a)   necessary - we use cookies to ensure the correct functioning of our website in order to personalise the website for you. We also use these cookies to ensure website security is not compromised. Cookies used for this purpose are:</p>
     <p style="padding-left: 60px;">fipratools_session: stored in a temporary memory location and then subsequently deleted after the session is completed or the web browser is closed. This cookie stores information on the movements and actions of the user within the website in order to personalise and enhance the experience.</p>
+    <p style="padding-left: 60px;">fipratools_cookies_consent: used to identify where a user has accepted the terms set out in the cookies consent banner.</p>
 
     <h4>10. Cookies used by our service providers</h4>
     10.1  Our service providers use cookies and those cookies may be stored on your computer when you visit our website.<br><br>

@@ -21,3 +21,13 @@
 <script src="{{ asset('js/reports.js?141021') }}"></script>
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<!--Cookie consent-->
+<script type="text/javascript" id="cookiebanner"
+        src="https://cdnjs.cloudflare.com/ajax/libs/cookie-banner/1.2.2/cookiebanner.min.js"
+        data-message="By using the Fipra Tools website you consent to our use of cookies and to the use of data as set out in our Privacy Notice."
+        data-moreinfo="/privacynotice?global=admin"
+        data-linkmsg="View our Privacy Notice"
+        data-cookie="fipratools_cookies_consent"
+        data-close-text="Continue"
+        data-close-style="font-weight:bold;float:right;padding-left:5px;"
+></script>
