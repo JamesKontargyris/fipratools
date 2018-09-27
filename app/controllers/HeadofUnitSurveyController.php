@@ -101,10 +101,6 @@ class HeadofUnitSurveyController extends \BaseController {
 	public function index() {
 		$this->check_role( [ 'Head of Unit', 'Administrator' ] );
 
-		if ( $this->user->hasRole( 'Head of Unit' ) ) {
-			return Redirect::to( 'headofunitsurvey/profile/edit' ); // redirect to the survey page if user is a Head of Unit
-		}
-
 		// otherwise, user is an admin - continue to an overview page of Heads of Units
 
 		$this->destroyCurrentPageNumber( true );
