@@ -331,11 +331,11 @@ class ClientsController extends \BaseController
 	protected function getClient( $id )
 	{
 		$client = Client::find( $id );
-		if ( ! $this->user->hasRole( 'Administrator' ) && $client->unit()->pluck( 'id' ) != $this->user->unit_id )
+		if ( $this->user->can( 'manage_clients' ) && ($this->user->hasRole('Administrator') || $client->unit()->pluck( 'id' ) == $this->user->unit_id) )
 		{
-			throw new PermissionDeniedException( 'clients' );
+			return $client;
 		}
 
-		return $client;
+		throw new PermissionDeniedException( 'clients' );
 	}
 }
