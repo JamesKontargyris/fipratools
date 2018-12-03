@@ -151,23 +151,16 @@ class ClientsController extends \BaseController
 
 		if ( $client = $this->getClient( $id ))
 		{
-			// Check permissions
-			if( $this->user->hasRole('Administrator') || $this->user->id == $client->user_id)
-			{
-				$this->getFormData();
+			$this->getFormData();
 
-				return View::make( 'clients.edit' )->with( [
-					'account_directors' => $this->account_directors,
-					'units'             => $this->units,
-					'sectors'           => $this->sectors,
-					'types'             => $this->types,
-					'services'          => $this->services,
-					'client'            => $client
-				] );
-			} else
-			{
-				throw new PermissionDeniedException('clients');
-			}
+			return View::make( 'clients.edit' )->with( [
+				'account_directors' => $this->account_directors,
+				'units'             => $this->units,
+				'sectors'           => $this->sectors,
+				'types'             => $this->types,
+				'services'          => $this->services,
+				'client'            => $client
+			] );
 
 		} else
 		{
