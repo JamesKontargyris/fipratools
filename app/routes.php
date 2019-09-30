@@ -261,7 +261,7 @@ Route::post('/imageupload', function()
   /*******************************************************
    * Only these origins will be allowed to upload images *
    ******************************************************/
-  $accepted_origins = array("http://localhost", "http://192.168.1.1", "http://ftools.app", "http://tools.fipra.com");
+  $accepted_origins = array("http://localhost", "http://192.168.1.1", "http://ftools.app", "http://tools.fipra.com", "https://fipratools.com");
 
   /*********************************************
    * Change this line to set the upload folder *
