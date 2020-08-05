@@ -13,7 +13,7 @@
 
 @section('page-nav')
     <?php if ( $user->hasRole( 'Head of Unit' ) || $user->hasRole( 'Administrator' ) ) : ?>
-        <li><a href="{{ url('/headofunitsurvey/profile/edit') }}" class="secondary"><i class="fa fa-pencil"></i> Update your Head of Unit Knowledge Profile</a></li>
+        <li><a href="{{ url('/headofunitsurvey/profile/edit') }}" class="primary"><i class="fa fa-pencil"></i> Update your Head of Unit Knowledge Profile</a></li>
     <?php endif; ?>
 @stop
 

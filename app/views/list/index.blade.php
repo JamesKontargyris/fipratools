@@ -16,9 +16,9 @@
 
 @section('page-nav')
 	@if($user->can('manage_clients'))
-		<li><a href="{{ route('clients.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
+		<li><a href="{{ route('clients.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
 	@endif
-	<li><a href="{{ url('reports') }}" class="secondary"><i class="fa fa-pie-chart"></i> View Reports</a></li>
+	<li><a href="{{ url('reports') }}" class="primary"><i class="fa fa-pie-chart"></i> View Reports</a></li>
 @stop
 
 @section('content')

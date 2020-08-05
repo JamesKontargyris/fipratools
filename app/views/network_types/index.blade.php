@@ -9,8 +9,8 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('units.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Network Overview</a></li>
-    <li><a href="{{ route('network_types.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Network Type</a></li>
+    <li><a href="{{ route('units.index') }}" class="primary"><i class="fa fa-caret-left"></i> Network Overview</a></li>
+    <li><a href="{{ route('network_types.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Network Type</a></li>
 @stop
 
 @section('content')

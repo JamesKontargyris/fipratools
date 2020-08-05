@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-<li><a href="/sectors/{{ $service->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this service</a></li>
+<li><a href="/sectors/{{ $service->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this service</a></li>
 @stop
 
 @section('content')

@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('cases.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Overview</a></li>
+    <li><a href="{{ route('cases.index') }}" class="primary"><i class="fa fa-caret-left"></i> Overview</a></li>
 @stop
 
 @section('content')
@@ -41,7 +41,7 @@
             </div>
             <div class="formfield client-select">
                 {{ Form::label('client', 'Client:') }}
-                {{ Form::select('client_id', $clients, isset($case->client_id) ? $case->client_id : '', ['class' => 'select2', 'style' => "font-family: FontAwesome, Lato, sans-serif; width:100%;"]) }}
+                {{ Form::select('client_id', $clients, isset($case->client_id) ? $case->client_id : '', ['class' => 'select2', 'style' => "width:100%;"]) }}
             </div>
             @if($user->hasRole('Administrator'))
                 <div class="formfield">

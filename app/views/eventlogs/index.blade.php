@@ -5,7 +5,7 @@ Event Log
 @stop
 
 @section('page-nav')
-<li><a href="{{ url('eventlog/trash') }}" class="secondary trash-logs"><i class="fa fa-trash"></i> Trash All Logs</a></li>
+<li><a href="{{ url('eventlog/trash') }}" class="primary trash-logs"><i class="fa fa-trash"></i> Trash All Logs</a></li>
 @stop
 
 @section('content')

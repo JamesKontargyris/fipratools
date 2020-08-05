@@ -244,11 +244,11 @@
                     </tbody>
                 </table>
                 @if(Input::old('unit_staff_carrying_out_public_affairs'))
-                    <a href="#" class="secondary but-small entry-table-new-row-button" data-id-index="{{ count(Input::old('unit_staff_carrying_out_public_affairs')) }}" data-target-table=".unit_staff_carrying_out_public_affairs">Add a staff member</a>
+                    <a href="#" class="primary entry-table-new-row-button" data-id-index="{{ count(Input::old('unit_staff_carrying_out_public_affairs')) }}" data-target-table=".unit_staff_carrying_out_public_affairs">Add a staff member</a>
                 @elseif(isset($hou_survey_data['unit_staff_carrying_out_public_affairs']))
-                    <a href="#" class="secondary but-small entry-table-new-row-button" data-id-index="{{ count($hou_survey_data['unit_staff_carrying_out_public_affairs']) }}" data-target-table=".unit_staff_carrying_out_public_affairs">Add a staff member</a>
+                    <a href="#" class="primary entry-table-new-row-button" data-id-index="{{ count($hou_survey_data['unit_staff_carrying_out_public_affairs']) }}" data-target-table=".unit_staff_carrying_out_public_affairs">Add a staff member</a>
                 @else
-                    <a href="#" class="secondary but-small entry-table-new-row-button" data-id-index="1" data-target-table=".unit_staff_carrying_out_public_affairs">Add a staff member</a>
+                    <a href="#" class="primary entry-table-new-row-button" data-id-index="1" data-target-table=".unit_staff_carrying_out_public_affairs">Add a staff member</a>
                 @endif
             </div>
         </div>
@@ -323,11 +323,11 @@
                     </tbody>
                 </table>
                 @if(Input::old('points_of_contact_people'))
-                    <a href="#" class="secondary but-small entry-table-new-row-button" data-id-index="{{ count(Input::old('points_of_contact_people')) }}" data-target-table=".points_of_contact_people">Add a staff member</a>
+                    <a href="#" class="primary entry-table-new-row-button" data-id-index="{{ count(Input::old('points_of_contact_people')) }}" data-target-table=".points_of_contact_people">Add a staff member</a>
                 @elseif(isset($hou_survey_data['points_of_contact_people']))
-                    <a href="#" class="secondary but-small entry-table-new-row-button" data-id-index="{{ count($hou_survey_data['points_of_contact_people']) }}" data-target-table=".points_of_contact_people">Add a staff member</a>
+                    <a href="#" class="primary entry-table-new-row-button" data-id-index="{{ count($hou_survey_data['points_of_contact_people']) }}" data-target-table=".points_of_contact_people">Add a staff member</a>
                 @else
-                    <a href="#" class="secondary but-small entry-table-new-row-button" data-id-index="1" data-target-table=".points_of_contact_people">Add a staff member</a>
+                    <a href="#" class="primary entry-table-new-row-button" data-id-index="1" data-target-table=".points_of_contact_people">Add a staff member</a>
                 @endif
             </div>
         </div>
@@ -407,11 +407,6 @@
                     <li class="question-details online_platform_linkedin_details">
                         <div class="label-info">Please enter your LinkedIn URL:</div>
                         {{ Form::text('online_platform_linkedin_details', Input::has('online_platform_linkedin_details') ? Input::get('online_platform_linkedin_details') : isset($hou_survey_data['online_platform_linkedin_details']) ? $hou_survey_data['online_platform_linkedin_details'] : '', ['placeholder' => 'www.linkedin.com/url', 'style' => 'width:70%', 'class' => 'url-format', 'disabled' => 'disabled']) }}
-                    </li>
-                    <li>{{ Form::checkbox('online_platform_googleplus', '1', Input::has('online_platform_googleplus') ? 1 : isset($hou_survey_data['online_platform_googleplus']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} Google+</li>
-                    <li class="question-details online_platform_googleplus_details">
-                        <div class="label-info">Please enter your Google+ URL:</div>
-                        {{ Form::text('online_platform_googleplus_details', Input::has('online_platform_googleplus_details') ? Input::get('online_platform_googleplus_details') : isset($hou_survey_data['online_platform_googleplus_details']) ? $hou_survey_data['online_platform_googleplus_details'] : '', ['placeholder' => 'plus.google.com/url', 'style' => 'width:70%', 'class' => 'url-format', 'disabled' => 'disabled']) }}
                     </li>
                     <li>{{ Form::checkbox('online_platform_youtube', '1', Input::has('online_platform_youtube') ? 1 : isset($hou_survey_data['online_platform_youtube']) ? 1 : 0, ['class' => 'reveal-details-entry']) }} YouTube</li>
                     <li class="question-details online_platform_youtube_details">
@@ -872,7 +867,7 @@
     <div class="knowledge__section-title">Perception Audit</div>
     <div class="row">
         <div class="col-12">
-            @if(isset($perception_audit) && count($perception_audit > 0))
+            @if(isset($perception_audit) && count($perception_audit) > 0)
                 @foreach($perception_audit['groups'] as $group_id => $areas)
                     <div class="expertise-form__container">
                         <div class="row no-margin">

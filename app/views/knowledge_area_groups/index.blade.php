@@ -9,7 +9,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('knowledge_area_groups.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Knowledge Area Group</a></li>
+    <li><a href="{{ route('knowledge_area_groups.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Knowledge Area Group</a></li>
 @stop
 
 @section('export-nav')

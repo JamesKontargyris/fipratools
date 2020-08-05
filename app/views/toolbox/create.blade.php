@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('toolbox.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Overview</a></li>
+    <li><a href="{{ route('toolbox.index') }}" class="primary"><i class="fa fa-caret-left"></i> Overview</a></li>
 @stop
 
 @section('content')

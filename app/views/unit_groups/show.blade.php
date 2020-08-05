@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="/units/{{ $unit_group->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this sector category</a></li>
+    <li><a href="/units/{{ $unit_group->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this sector category</a></li>
 @stop
 
 @section('content')

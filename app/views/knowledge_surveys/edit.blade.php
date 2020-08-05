@@ -324,7 +324,7 @@
         <div class="col-12">
             <h2 class="knowledge__section-title">Your Knowledge</h2>
 
-            @if(isset($expertise['areas']) && count($expertise['areas'] > 0))
+            @if(isset($expertise['areas']) && count($expertise['areas']) > 0)
                 @foreach($expertise['areas'] as $group => $areas)
                     <div class="expertise-form__container">
                         <div class="row no-margin">

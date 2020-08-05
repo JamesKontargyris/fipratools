@@ -1,13 +1,5 @@
 // _layout.scss: code relating to general areas of all or certain pages, e.g. nav, header.
 
-// Susy setup
-// @include layout(12 (6.4% 2%) static float after);
-$susy: (
-	columns: 12,
-	gutters: 0.3,
-	math:fluid,
-);
-
 #site-nav-container {
   padding-top:$v-rhythm / 2;
   .mobile {
@@ -34,7 +26,9 @@ $susy: (
 
 .container,
 .content-container {
-	@include container();
+  @include clearfix;
+	margin-left:auto;
+	margin-right:auto;
 	max-width:1400px;
 	padding:0 20px;
     @include breakpoint($m-max) {
@@ -62,11 +56,10 @@ $susy: (
       height: 400px;
       margin-top: -200px; /* Half the height */
       margin-left: -250px; /* Half the width */
-      @include box-shadow($grey 0 0 15px);
-      @include border-radius(8px);
+      box-shadow: $grey 0 0 15px;
+      border-radius: 8px;
     }
-    @include background(url('../img/stars_bk.gif') top right no-repeat #ffffff);
-    background-color:white;
+    background: url('../img/stars_bk.gif') top right no-repeat #ffffff;
   }
 }
 
@@ -74,9 +67,10 @@ $susy: (
   @for $i from 1 through 12 {
     .col-#{$i} {
       float:left;
-      width: span($i);
-      margin-right:gutter();
+      width: (((100 / 12) * $i) * 1%) - 2%;
+      margin-right:2%;
       &:last-child {
+        width: (((100 / 12) * $i) * 1%);
         margin-right:0;
       }
     }

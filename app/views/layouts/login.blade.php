@@ -14,8 +14,7 @@
 		<div class="login-container">
 			<div class="login-form">
 				<div class="login-logo clearfix">
-					<img src="/img/fipra-logo-login.png" alt="Fipra">
-					<span class="login-title">Tools</span>
+					<span class="login-title">FIPRA Tools</span>
 					@if(is_request('login'))<div class="login-heading">Login</div>@endif
 				</div>
 

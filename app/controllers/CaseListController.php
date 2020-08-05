@@ -34,6 +34,7 @@ class CaseListController extends BaseController {
 		$units             = $this->units;
 		$sectors           = $this->sectors;
 		$sector_categories = $this->sector_categories;
+		$locations         = $this->locations;
 		$products          = $this->products;
 		$years             = $this->years;
 		$items             = CaseStudy::where( 'status', '=', 1 )->rowsSortOrder( $this->rows_sort_order )->paginate( $this->rows_to_view );
@@ -99,10 +100,9 @@ class CaseListController extends BaseController {
 		// Get a replica of the filters so we can play with them, without affecting the original
 		$filters = Session::get( $this->resource_key . '.Filters' );
 		// Get a blank Eloquent model
-		$items = CaseStudy::whereNotNull('id')->where('status', '=', 1);
+		$items = CaseStudy::whereNotNull( 'id' )->where( 'status', '=', 1 );
 		// Where functions are split across all columns to ensure filters work correctly
-		$items->where(function($query) use ($filters)
-		{
+		$items->where( function ( $query ) use ( $filters ) {
 			if ( isset( $filters['sector_id'] ) ) {
 				// Get the sector_id of the selected sector and prepare it for a LIKE SQL query
 				foreach ( $filters['sector_id'] as $id ) {
@@ -124,8 +124,7 @@ class CaseListController extends BaseController {
 				// Remove sector_category_id from the filters so it isn't included when the filters are run in a minute
 				unset( $filters['sector_category_id'] );
 			}
-		})->where(function($query) use ($filters)
-		{
+		} )->where( function ( $query ) use ( $filters ) {
 			if ( isset( $filters['product_id'] ) ) {
 				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
 				foreach ( $filters['product_id'] as $id ) {
@@ -135,30 +134,27 @@ class CaseListController extends BaseController {
 					$query->orWhere( 'product_id', 'LIKE', $id );
 				}
 			}
-		})->where(function($query) use ($filters)
-		{
+		} )->where( function ( $query ) use ( $filters ) {
 			if ( isset( $filters['year'] ) ) {
 				foreach ( $filters['year'] as $year ) {
 					$query->orWhere( 'year', '=', $year );
 				}
 			}
-		})->where(function($query) use ($filters)
-		{
+		} )->where( function ( $query ) use ( $filters ) {
 			if ( isset( $filters['unit_id'] ) ) {
 				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
 				foreach ( $filters['unit_id'] as $id ) {
 					$query->orWhere( 'unit_id', '=', $id );
 				}
 			}
-		})->where(function($query) use ($filters)
-		{
+		} )->where( function ( $query ) use ( $filters ) {
 			if ( isset( $filters['account_director_id'] ) ) {
 				// Get the product_id of the selected sector and prepare it for a LIKE SQL query
 				foreach ( $filters['account_director_id'] as $id ) {
 					$query->orWhere( 'account_director_id', '=', $id );
 				}
 			}
-		})->where( 'status', '=', 1 )->rowsSortOrder( $this->rows_sort_order );
+		} )->where( 'status', '=', 1 )->rowsSortOrder( $this->rows_sort_order );
 
 		if ( $for == 'export' ) {
 			// Get all results for PDF export
@@ -178,7 +174,7 @@ class CaseListController extends BaseController {
 				//If filter is an account director, then the model will need to pull first_name and last_name from account _directors
 				//rather than just name.
 				foreach ( $filter_array as $id ) {
-					$ad = AccountDirector::find( $id );
+					$ad     = AccountDirector::find( $id );
 					$values .= $ad->first_name . ' ' . $ad->last_name . ', ';
 				}
 

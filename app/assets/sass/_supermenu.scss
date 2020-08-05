@@ -1,6 +1,5 @@
 .super-menu__container {
-  background-color: shade($grey, 40%);
-  box-shadow: rgba(black, 0.4) 0 -3px 3px inset;
+  background-color: $dark-grey;
 
   @include breakpoint($m-max) {
     display:none;
@@ -21,10 +20,16 @@
   @include font-size(14);
   margin-top:20px;
   margin-left:10px;
+  font-family: $font-family-headings;
+  font-weight: normal;
 
   &:not(:last-of-type) {
     //margin-right:10px;
     //border-right:1px solid $grey;
+  }
+
+  @include breakpoint($l-max) {
+    margin-left:0;
   }
 
   @include breakpoint($m-l) {
@@ -65,14 +70,9 @@
     display:block;
     color:white;
     padding: $v-rhythm 13px;
-    border-radius:5px;
 
     @include breakpoint($m-l) {
       padding: ($v-rhythm / 1.7) 13px;
-    }
-
-    @include breakpoint($m) {
-      border-radius:5px 5px 0 0;
     }
 
     &:hover {
@@ -80,70 +80,68 @@
     }
 
     &.active {
-      background-color:$grey;
-      font-weight:bold;
-      box-shadow: rgba(black, 1) 0 0 7px;
+      background-color:$green;
       cursor: default;
 
       &:hover {
         color:white;
       }
 
-      &.section-list {
-        background: $turquoise linear-gradient(lighten($turquoise, 20%) 0%, $turquoise 40%) no-repeat top;
-        border-left:2px solid $turquoise;
-        border-top:2px solid $turquoise;
-        border-right:2px solid $turquoise;
-      }
-
-      &.section-case {
-        background: $violet linear-gradient(lighten($violet, 13%) 0%, $violet 40%) no-repeat top;
-        border-left:2px solid $violet;
-        border-top:2px solid $violet;
-        border-right:2px solid $violet;
-      }
-
-      &.section-survey {
-        background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
-        border-left:2px solid $green;
-        border-top:2px solid $green;
-        border-right:2px solid $green;
-      }
-
-      &.section-headofunitsurvey {
-        background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
-        border-left:2px solid $green;
-        border-top:2px solid $green;
-        border-right:2px solid $green;
-      }
-
-      &.section-forum {
-        background: $blue linear-gradient(lighten($blue, 15%) 0%, $blue 40%) no-repeat top;
-        border-left:2px solid $blue;
-        border-top:2px solid $blue;
-        border-right:2px solid $blue;
-      }
-
-      &.section-iwo {
-        background: $dark-teal linear-gradient(lighten($dark-teal, 10%) 0%, $dark-teal 40%) no-repeat top;
-        border-left:2px solid $dark-teal;
-        border-top:2px solid $dark-teal;
-        border-right:2px solid $dark-teal;
-      }
-
-      &.section-toolbox {
-        background: $orange linear-gradient(lighten($orange, 25%) 0%, $orange 40%) no-repeat top;
-        border-left:2px solid $orange;
-        border-top:2px solid $orange;
-        border-right:2px solid $orange;
-      }
-
-      &.section-admin {
-        background: $grey linear-gradient(lighten($grey, 20%) 0%, $grey 40%) no-repeat top;
-        border-left:2px solid $grey;
-        border-top:2px solid $grey;
-        border-right:2px solid $grey;
-      }
+      //&.section-list {
+      //  background: $turquoise linear-gradient(lighten($turquoise, 20%) 0%, $turquoise 40%) no-repeat top;
+      //  border-left:2px solid $turquoise;
+      //  border-top:2px solid $turquoise;
+      //  border-right:2px solid $turquoise;
+      //}
+      //
+      //&.section-case {
+      //  background: $violet linear-gradient(lighten($violet, 13%) 0%, $violet 40%) no-repeat top;
+      //  border-left:2px solid $violet;
+      //  border-top:2px solid $violet;
+      //  border-right:2px solid $violet;
+      //}
+      //
+      //&.section-survey {
+      //  background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
+      //  border-left:2px solid $green;
+      //  border-top:2px solid $green;
+      //  border-right:2px solid $green;
+      //}
+      //
+      //&.section-headofunitsurvey {
+      //  background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
+      //  border-left:2px solid $green;
+      //  border-top:2px solid $green;
+      //  border-right:2px solid $green;
+      //}
+      //
+      //&.section-forum {
+      //  background: $blue linear-gradient(lighten($blue, 15%) 0%, $blue 40%) no-repeat top;
+      //  border-left:2px solid $blue;
+      //  border-top:2px solid $blue;
+      //  border-right:2px solid $blue;
+      //}
+      //
+      //&.section-iwo {
+      //  background: $dark-teal linear-gradient(lighten($dark-teal, 10%) 0%, $dark-teal 40%) no-repeat top;
+      //  border-left:2px solid $dark-teal;
+      //  border-top:2px solid $dark-teal;
+      //  border-right:2px solid $dark-teal;
+      //}
+      //
+      //&.section-toolbox {
+      //  background: $orange linear-gradient(lighten($orange, 25%) 0%, $orange 40%) no-repeat top;
+      //  border-left:2px solid $orange;
+      //  border-top:2px solid $orange;
+      //  border-right:2px solid $orange;
+      //}
+      //
+      //&.section-admin {
+      //  background: $grey linear-gradient(lighten($grey, 20%) 0%, $grey 40%) no-repeat top;
+      //  border-left:2px solid $grey;
+      //  border-top:2px solid $grey;
+      //  border-right:2px solid $grey;
+      //}
     }
   }
 }
@@ -163,9 +161,9 @@
   }
 
   a:link, a:visited {
-    color:$turquoise;
+    color:$green;
     &:hover {
-      color:shade($turquoise, 20%);
+      color:shade($green, 20%);
     }
   }
 }

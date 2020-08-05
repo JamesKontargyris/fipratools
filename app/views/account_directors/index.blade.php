@@ -9,7 +9,7 @@
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('account_directors.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a new Account Director</a></li>
+<li><a href="{{ route('account_directors.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a new Account Director</a></li>
 @stop
 
 @section('content')

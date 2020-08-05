@@ -9,7 +9,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('products.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Product</a></li>
+    <li><a href="{{ route('products.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Product</a></li>
 @stop
 
 @section('export-nav')

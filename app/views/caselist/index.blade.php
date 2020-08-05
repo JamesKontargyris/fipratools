@@ -13,7 +13,7 @@
 
 @section('page-nav')
 	@if($user->can('manage_cases'))
-		<li><a href="{{ route('cases.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Case Study</a></li>
+		<li><a href="{{ route('cases.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Case Study</a></li>
 	@endif
 @stop
 

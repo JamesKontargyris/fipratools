@@ -7,7 +7,7 @@
 @section('page-nav')
     <li><a href="{{ URL::previous() }}" class="primary"><i class="fa fa-caret-left"></i> Go back</a></li>
     @if($user->unit_id == $case->unit_id || $user->hasRole('Administrator'))
-        <li><a href="/cases/{{ $case->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this case study</a></li>
+        <li><a href="/cases/{{ $case->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this case study</a></li>
     @endif
 @stop
 

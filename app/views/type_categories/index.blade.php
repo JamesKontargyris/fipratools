@@ -9,8 +9,8 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('types.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Types Overview</a></li>
-    <li><a href="{{ route('type_categories.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Type Reporting Category</a></li>
+    <li><a href="{{ route('types.index') }}" class="primary"><i class="fa fa-caret-left"></i> Types Overview</a></li>
+    <li><a href="{{ route('type_categories.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Type Reporting Category</a></li>
 @stop
 
 @section('content')

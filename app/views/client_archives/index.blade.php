@@ -5,8 +5,8 @@ Archive records for {{ $client->name }}
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('clients.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Clients Overview</a></li>
-<li><a href="{{ route('client_archives.create', ['client_id' => $client->id]) }}" class="secondary"><i class="fa fa-plus-circle"></i> Add an Archive Record</a></li>
+<li><a href="{{ route('clients.index') }}" class="primary"><i class="fa fa-caret-left"></i> Clients Overview</a></li>
+<li><a href="{{ route('client_archives.create', ['client_id' => $client->id]) }}" class="primary"><i class="fa fa-plus-circle"></i> Add an Archive Record</a></li>
 @stop
 
 @section('content')

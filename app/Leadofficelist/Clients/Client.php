@@ -179,9 +179,9 @@ class Client extends \BaseModel
 
 			if($client->status)
 			{
-				$clients[ $client->id ] = '&#xf111;  ' . $prefix . $client->name . (isset($unit->name) ? " - $unit->name" : '');
+				$clients[ $client->id ] = $prefix . $client->name . (isset($unit->name) ? " - $unit->name" : '');
 			} else {
-				$clients[ $client->id ] = '&#xf1db;  ' . $prefix . $client->name . (isset($unit->name) ? " (Dormant) - $unit->name" : '');
+				$clients[ $client->id ] = $prefix . $client->name . (isset($unit->name) ? " (Dormant) - $unit->name" : '');
 			}
 		}
 

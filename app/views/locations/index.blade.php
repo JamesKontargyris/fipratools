@@ -9,7 +9,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('locations.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Location</a></li>
+    <li><a href="{{ route('locations.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Location</a></li>
 @stop
 
 @section('export-nav')

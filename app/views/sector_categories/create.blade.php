@@ -5,7 +5,7 @@ Add an Expertise Category
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('sector_categories.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Overview</a></li>
+<li><a href="{{ route('sector_categories.index') }}" class="primary"><i class="fa fa-caret-left"></i> Overview</a></li>
 @stop
 
 @section('content')

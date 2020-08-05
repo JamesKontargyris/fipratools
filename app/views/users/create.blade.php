@@ -5,7 +5,7 @@ Add a User
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('users.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Overview</a></li>
+<li><a href="{{ route('users.index') }}" class="primary"><i class="fa fa-caret-left"></i> Overview</a></li>
 @stop
 
 @section('content')

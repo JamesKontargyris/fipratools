@@ -9,8 +9,8 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('units.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Network Members Overview</a></li>
-    <li><a href="{{ route('unit_groups.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Reporting Group</a></li>
+    <li><a href="{{ route('units.index') }}" class="primary"><i class="fa fa-caret-left"></i> Network Members Overview</a></li>
+    <li><a href="{{ route('unit_groups.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Reporting Group</a></li>
 @stop
 
 @section('content')

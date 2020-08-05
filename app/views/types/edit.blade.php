@@ -5,7 +5,7 @@ Editing Type: {{ $type->name }}
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('types.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Return to overview</a></li>
+<li><a href="{{ route('types.index') }}" class="primary"><i class="fa fa-caret-left"></i> Return to overview</a></li>
 @stop
 
 @section('content')

@@ -1,6 +1,14 @@
 .footer__legal {
-	@include font-size(12);
-	padding:0;
-	color:$black;
-	padding:$v-rhythm * 2 0;
+  @include font-size(12);
+  padding: 0;
+  color: white;
+  padding: $v-rhythm 0;
+
+  a:link, a:visited {
+    color: $green;
+
+    &:hover {
+      color: shade($green, 20%);
+    }
+  }
 }

@@ -30,36 +30,35 @@
 #site-nav-container {
   overflow: visible;
   position:relative;
-  background-color: $grey;
+  background-color: $green;
   color:darken(white, 5%);
   padding-top:10px;
-  box-shadow: rgba(black, 0.1) 0 -3px 3px inset;
 
-  &.section-list {
-    background-color: $turquoise;
-  }
-
-  &.section-case {
-    background-color: $violet;
-  }
-
-  &.section-survey {
-    background-color: $green;
-  }
-  &.section-headofunitsurvey {
-    background-color: $green;
-  }
-  &.section-forum {
-    background-color: $blue;
-  }
-
-  &.section-iwo {
-    background-color: $dark-teal;
-  }
-
-  &.section-toolbox {
-    background-color: $orange;
-  }
+  //&.section-list {
+  //  background-color: $turquoise;
+  //}
+  //
+  //&.section-case {
+  //  background-color: $violet;
+  //}
+  //
+  //&.section-survey {
+  //  background-color: $green;
+  //}
+  //&.section-headofunitsurvey {
+  //  background-color: $green;
+  //}
+  //&.section-forum {
+  //  background-color: $blue;
+  //}
+  //
+  //&.section-iwo {
+  //  background-color: $dark-teal;
+  //}
+  //
+  //&.section-toolbox {
+  //  background-color: $orange;
+  //}
 
   #site-nav {
     .logo {
@@ -91,7 +90,6 @@
         @include font-size(13);
         padding-left:10px;
         li {
-          border-radius:5px 5px 0 0;
           &:hover {
             background-color:rgba(white, 0.25);
           }
@@ -102,7 +100,6 @@
             background-color: white;
             color:$blue;
             cursor:default;
-            box-shadow: rgba(black, 0.4) 0 0 7px;
             & > a, a:hover {
               color:$blue;
               cursor:default;

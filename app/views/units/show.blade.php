@@ -7,7 +7,7 @@
 @section('page-nav')
 @if($user->can('manage_units'))
 	<li><a href="{{ URL::previous() }}" class="primary"><i class="fa fa-caret-left"></i> Go back</a></li>
-	<li><a href="/units/{{ $unit->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this {{ $unit->network_type()->first()->name }}</a></li>
+	<li><a href="/units/{{ $unit->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this {{ $unit->network_type()->first()->name }}</a></li>
 @endif
 @stop
 
@@ -81,8 +81,9 @@
 									<td class="hide-m">{{ $client->service()->pluck('name') }}</td>
 									@if($user->hasRole('Administrator'))
 										<td class="actions content-right">
-											{{ Form::open(['url' => 'clients/' . $client->id . '/archive', 'method' => 'get']) }}
-											<button type="submit" class="primary" title="Add an archive entry for this client"><i class="fa fa-folder"></i></button>
+											{{ Form::open(['url' => 'client_archives/create', 'method' => 'get']) }}
+											{{ Form::hidden('client_id', $client->id) }}
+											<button type="submit" class="primary" title="Add an archive entry for this client"><i class="fa fa-archive"></i></button>
 											{{ Form::close() }}
 										</td>
 										<td class="actions content-right">

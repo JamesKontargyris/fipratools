@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL ^ E_DEPRECATED);
+
 return array(
 
 	/*
@@ -73,8 +75,8 @@ return array(
 	|
 	*/
 
-	'key'    => 'AgJOQu66sVrSlfPXMW6sQgUqi8XsxzXs',
-	'cipher' => MCRYPT_RIJNDAEL_128,
+	'key'    => 'g5ndhMryX7SbXfmPDzhOQQzI1ILHIMaP',
+	'cipher' => MCRYPT_RIJNDAEL_256,
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers

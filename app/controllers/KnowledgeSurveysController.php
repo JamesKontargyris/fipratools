@@ -179,7 +179,7 @@ class KnowledgeSurveysController extends \BaseController {
 			$language_info  = $this->getUserLanguages();
 			$expertise_info = $this->getUserExpertiseInfoIDKeys();
 
-			return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'joined_fipra_data', 'languages', 'expertise', 'user_info', 'language_info', 'expertise_info', 'knowledge_data', 'expertise_areas', 'survey_name' ) );
+			return View::make( 'knowledge_surveys.edit' )->with( compact( 'dob_data', 'languages', 'expertise', 'user_info', 'language_info', 'expertise_info', 'knowledge_data', 'expertise_areas', 'survey_name' ) );
 		}
 
 		return Redirect::to( 'survey/profile' );

@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('cases.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Case Study</a></li>
+    <li><a href="{{ route('cases.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Case Study</a></li>
 @stop
 
 @section('export-nav')

@@ -22,15 +22,15 @@
 							@if(! is_request('client_links') && ! is_request('client_archives') && ! is_request('widgets'))
 								<ul class="small-font">
 									@if(isset($items) && ! is_request('about') && ! is_request('survey'))
-										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=pdf_all" class="secondary pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: All</a></li>
 										<!-- if this is the main list and a filter is in place, substitute an export filtered button for the the export visible button -->
-										<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Visible</a></li>
-										<li><a href="/{{ $items->key }}/export?filetype=excel_all" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: All</a></li>
-										<li><a href="/{{ $items->key }}/export?filetype=excel_selection&page={{ $items->getCurrentPage() }}" class="grey-but excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: Visible</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=pdf_selection&page={{ $items->getCurrentPage() }}" class="secondary pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Visible</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=excel_all" class="secondary excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: All</a></li>
+										<li><a href="/{{ $items->key }}/export?filetype=excel_selection&page={{ $items->getCurrentPage() }}" class="secondary excel-export-button"><i class="fa fa-file-excel-o"></i> Export Excel: Visible</a></li>
 
 										@yield('export-nav')
 
-										<li><a class="print-button grey-but" href="#"><i class="fa fa-print"></i> Print</a></li>
+										<li><a class="print-button secondary" href="#"><i class="fa fa-print"></i> Print</a></li>
 									@endif
 								</ul>
 							@endif

@@ -1,40 +1,89 @@
-var gulp = require('gulp'),
-    compass = require('gulp-compass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    minifycss = require('gulp-minify-css'),
-    rename = require('gulp-rename'),
-    imagemin = require('gulp-imagemin'),
-    notify = require('gulp-notify'),
-    cache = require('gulp-cache'),
-    del = require('del'),
-    sassDir = 'app/assets/sass',
-    cssDir = 'public/css',
-    imgDir = 'public/img';
+// Dirs
+var sassDir = 'app/assets/sass/',
+    jsDir = 'public/js/',
+    cssDir = 'public/css/';
 
-gulp.task('styles', function () {
-    return gulp.src(sassDir + '/style.scss')
-        .pipe(compass({
-            style: 'nested',
-            sass: sassDir,
-            css: cssDir,
-            image: imgDir,
-            require: ['susy', 'breakpoint']
+// Gulp
+const gulp = require('gulp');
+
+// Sass/CSS stuff
+const sass = require('gulp-sass');
+const prefix = require('gulp-autoprefixer');
+
+// JS
+const uglify = require('gulp-uglify');
+
+//Others
+const rename = require('gulp-rename');
+const browsersync = require('browser-sync').create();
+
+// BrowserSync
+function browserSync(done) {
+    browsersync.init({
+        proxy: "ftools.test",
+        notify: false,
+        open: false,
+        port:3000,
+        ghostMode: false,
+        https: false
+    });
+    done();
+}
+
+// BrowserSync Reload
+function browserSyncReload(done) {
+    browsersync.reload();
+    done();
+}
+
+// BrowserSync Stream
+function browserSyncStream(done) {
+    browsersync.stream();
+    done();
+}
+
+
+// Compile Sass
+function styles() {
+    return gulp
+        .src([sassDir + 'style.scss'])
+        .pipe(sass({
+            outputStyle: 'compressed'
         }))
+        .pipe(prefix(
+            "last 1 version", "> 1%", "ie 8", "ie 7"
+        ))
         .pipe(gulp.dest(cssDir))
-        .pipe(notify({message: 'Styles task complete'}));
-});
+        .pipe(browsersync.stream());
+}
 
-gulp.task('images', function () {
-    return gulp.src(imgDir + '/**/*')
-        .pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
-        .pipe(gulp.dest(imgDir))
-        .pipe(notify({message: 'Images task complete'}));
-});
+// uglify all JS
+function scripts() {
+    return gulp
+        .src(jsDir + '**/*.js')
+        .pipe(uglify())
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        // Adds min to filename
+        .pipe(gulp.dest(jsDir + 'min'));
+}
 
-gulp.task('watch', function () {
-    gulp.watch(sassDir + '/**/*.scss', ['styles']);
-});
+// Watch files
+function watchFiles(done) {
+    // Uses polling to get around issues with changes made to files locally that are not reflected on the virtual machine
+    // (https://github.com/floatdrop/gulp-watch/issues/213)
+    gulp.watch([sassDir + '**/*.scss'], { usePolling: true, ignoreInitial: false }, gulp.series(styles));
+    gulp.watch('app/**/*.php', { usePolling: true, ignoreInitial: false }, gulp.series(browserSyncReload));
+    gulp.watch('app/**/*.js', { usePolling: true, ignoreInitial: false }, gulp.series(browserSyncReload));
+    done();
+}
 
-gulp.task('default', function () {
-    gulp.start('styles', 'watch');
-});
+// call these using gulp js, gulp img etc.
+exports.css = gulp.series(styles);
+exports.js = gulp.series(scripts);
+exports.watch = gulp.series(watchFiles, browserSync);
+exports.build = gulp.series(scripts, styles);
+
+// call this using gulp default or just gulp
+exports.default = gulp.series(watchFiles, browserSync);

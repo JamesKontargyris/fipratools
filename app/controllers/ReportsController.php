@@ -242,24 +242,29 @@ class ReportsController extends \BaseController {
 
 	protected function getClientsByUnit()
 	{
+		$clients = [];
+			$total_clients = 0;
 //        First, get all units that are not included in a unit group (i.e. unit_group_id equals 0)
 //        Then grab the number of clients assigned to each unit
-		$units = Unit::where('unit_group_id', '=', 0)->where('network_type_id', '=', Network_type::where('name', '=', 'Unit / Correspondent')->first()->id)->get();
-		$clients = [];
-		$total_clients = 0;
-		$count = 0;
-		foreach($units as $unit)
-		{
-			$clients[] = ['unit_short_name' => $unit->short_name, 'unit_name' => $unit->name, 'client_count' => $unit->clients()->where('status', '=', 1)->count()];
-			$count++;
-			$total_clients += $unit->clients()->where('status', '=', 1)->count();
+		if(Network_type::where('name', '=', 'Unit / New Unit')->first()) {
+
+			$units = Unit::where('unit_group_id', '=', 0)->where('network_type_id', '=', Network_type::where('name', '=', 'Unit / New Unit')->first()->id)->get();
+			$count = 0;
+			foreach($units as $unit)
+			{
+				$clients[] = ['unit_short_name' => $unit->short_name, 'unit_name' => $unit->name, 'client_count' => $unit->clients()->where('status', '=', 1)->count()];
+				$count++;
+				$total_clients += $unit->clients()->where('status', '=', 1)->count();
+			}
 		}
 //        Second, get all the unit groups and work out how many clients are assigned to the units in each group
         $unit_groups = Unit_group::all();
         foreach($unit_groups as $group)
         {
+        	if(Network_type::where('name', '=', 'Unit / New Unit')->first()) {
+
 //            Get all the units in the current group and find out how many clients they have between them
-            $units_in_group = Unit::where('unit_group_id', '=', $group->id)->where('network_type_id', '=', Network_type::where('name', '=', 'Unit / Correspondent')->first()->id)->get();
+            $units_in_group = Unit::where('unit_group_id', '=', $group->id)->where('network_type_id', '=', Network_type::where('name', '=', 'Unit / New Unit')->first()->id)->get();
             $group_client_count = 0;
             foreach($units_in_group as $group_unit)
             {
@@ -269,6 +274,8 @@ class ReportsController extends \BaseController {
 //            Add the current group into the clients array with the other units
             $clients[] = ['unit_short_name' => $group->short_name, 'unit_name' => $group->name, 'client_count' => $group_client_count];
             $total_clients += $group_client_count;
+
+	        }
         }
 
 //        Sort the clients into order, highest number of clients first

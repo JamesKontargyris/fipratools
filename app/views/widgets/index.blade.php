@@ -9,7 +9,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('widgets.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Widget</a></li>
+    <li><a href="{{ route('widgets.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Widget</a></li>
 @stop
 
 @section('export-nav')

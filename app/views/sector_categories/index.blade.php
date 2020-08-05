@@ -9,8 +9,8 @@
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('sectors.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Sectors Overview</a></li>
-<li><a href="{{ route('sector_categories.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add an Expertise Category</a></li>
+<li><a href="{{ route('sectors.index') }}" class="primary"><i class="fa fa-caret-left"></i> Sectors Overview</a></li>
+<li><a href="{{ route('sector_categories.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add an Expertise Category</a></li>
 @stop
 
 @section('content')

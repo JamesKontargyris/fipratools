@@ -1,6 +1,7 @@
 .login {
-  background: url("../img/fipra-stars-bg.png") top right no-repeat, linear-gradient(top, lighten(desaturate($blue, 25%), 25%), desaturate($blue, 10%));
-  background-size: contain;
+  background: linear-gradient(to bottom, rgba($green, 0.8) 0, rgba($green, 0.8) 100%), url(../img/login-bg.svg) center no-repeat, $green;
+  background-size: auto, 260rem, auto;
+
 
   label {
     padding:0 0 10px;
@@ -35,16 +36,12 @@
 
   .login-form {
     max-width:600px;
-    box-shadow:rgba(black, 0.6) 0 0 10px;
-    border-radius:10px;
+    box-shadow: 0 10px 20px rgba(black, 0.3);
   }
 
   .login-logo {
-    @include box-shadow(0 0 5px black);
     padding:20px 30px;
-    background: linear-gradient(top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3));
-    @include border-top-left-radius(10px);
-    @include border-top-right-radius(10px);
+    background: white;
 
     img {
       float:left;
@@ -56,12 +53,11 @@
   }
 
   .login-title {
-    color:rgb(0, 37, 127);
-    @include font-size(40);
+    color:$logo-blue;
+    @include font-size(36);
     line-height:1;
-    font-weight:$font-bold;
+    font-family: $font-family-headings;
     letter-spacing:-1px;
-    @include text-shadow(rgba(255, 255, 255, 0.6) 0 1px 0);
   }
 
   .login-heading {
@@ -78,13 +74,9 @@
   }
 
   .login-body {
-    @include box-shadow(0 0 5px black);
-    background:$blue;
+    background:$logo-blue;
     padding:20px 30px;
-    @include box-shadow(inset #00205f 0 -5px 15px);
     color:white;
-    @include border-bottom-left-radius(10px);
-    @include border-bottom-right-radius(10px);
 
     h4 {
       color:white;

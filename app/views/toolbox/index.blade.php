@@ -6,7 +6,7 @@
 
 @section('page-nav')
     @if($user->hasRole('Administrator'))
-        <li><a href="{{ route('toolbox.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a new resource</a></li>
+        <li><a href="{{ route('toolbox.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a new resource</a></li>
     @endif
 @stop
 

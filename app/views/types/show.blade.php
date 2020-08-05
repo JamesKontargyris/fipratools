@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-<li><a href="/types/{{ $type->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this type</a></li>
+<li><a href="/types/{{ $type->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this type</a></li>
 @stop
 
 @section('content')

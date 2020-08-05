@@ -19,15 +19,14 @@
 							<h2>@yield('page-header')</h2>
 							<nav class="page-menu-nav">
 								<ul class="small-font">
-									<li><a class="secondary" href="{{ url('reports/bysector') }}"><i class="fa fa-pie-chart"></i> By Sector</a></li>
-									<li><a class="secondary" href="{{ url('reports/byexpertise') }}"><i class="fa fa-pie-chart"></i> By Expertise Area</a></li>
-									<li><a class="secondary" href="{{ url('reports/byunit') }}"><i class="fa fa-pie-chart"></i> By Unit</a></li>
-									<li><a class="secondary" href="{{ url('reports/bytype') }}"><i class="fa fa-pie-chart"></i> By Type</a></li>
-									<li><a class="secondary" href="{{ url('reports/byservice') }}"><i class="fa fa-pie-chart"></i> By Service</a></li>
+									<li><a class="primary" href="{{ url('reports/bysector') }}"><i class="fa fa-pie-chart"></i> By Sector</a></li>
+									<li><a class="primary" href="{{ url('reports/byexpertise') }}"><i class="fa fa-pie-chart"></i> By Expertise Area</a></li>
+									<li><a class="primary" href="{{ url('reports/byunit') }}"><i class="fa fa-pie-chart"></i> By Unit</a></li>
+									<li><a class="primary" href="{{ url('reports/bytype') }}"><i class="fa fa-pie-chart"></i> By Type</a></li>
+									<li><a class="primary" href="{{ url('reports/byservice') }}"><i class="fa fa-pie-chart"></i> By Service</a></li>
 								</ul>
 								<ul class="small-font">
-									<li><a href="/reports/export?filetype=pdf&report_type={{ $report_type }}" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export to PDF</a></li>
-									<li><a class="print-button grey-but" href="#"><i class="fa fa-print pdf-export-button"></i> Print</a></li>
+									<li><a class="print-button secondary" href="#"><i class="fa fa-print pdf-export-button"></i> Print</a></li>
 									@yield('export-nav')
 								</ul>
 							</nav>

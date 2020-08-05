@@ -7,10 +7,10 @@
 @section('page-nav')
     <li><a href="{{ URL::previous() }}" class="primary"><i class="fa fa-caret-left"></i> Go back</a></li>
     @if($user->unit_id == $client->unit_id)
-        <li><a href="/clients/{{ $client->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this
+        <li><a href="/clients/{{ $client->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this
         client</a></li>
     @endif
-    <li><a href="{{ route('cases.create', ['client_id' => $client->id]) }}" class="secondary"><i
+    <li><a href="{{ route('cases.create', ['client_id' => $client->id]) }}" class="primary"><i
                     class="fa fa-plus-circle"></i> Add a Case Study</a></li>
 @stop
 

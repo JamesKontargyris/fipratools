@@ -6,7 +6,7 @@
 
 @section('page-nav')
 @if($user->can('manage_users'))
-	<li><a href="/users/{{ $show_user->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this user</a></li>
+	<li><a href="/users/{{ $show_user->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this user</a></li>
 @endif
 @stop
 

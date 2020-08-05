@@ -5,15 +5,15 @@
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('clients.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
+<li><a href="{{ route('clients.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Client</a></li>
 @if($user->hasRole('Administrator'))
-	<li><a href="{{ route('client_links.create') }}" class="secondary"><i class="fa fa-link"></i> Create a Client/Member Link</a></li>
+	<li><a href="{{ route('client_links.create') }}" class="primary"><i class="fa fa-link"></i> Create a Client/Member Link</a></li>
 @endif
 @stop
 
 @section('export-nav')
 @if($user->hasRole('Administrator'))
-	<li><a href="/{{ $items->key }}/export?filetype=pdf_duplicates" class="grey-but pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Duplicates</a></li>
+	<li><a href="/{{ $items->key }}/export?filetype=pdf_duplicates" class="secondary pdf-export-button"><i class="fa fa-file-pdf-o"></i> Export PDF: Duplicates</a></li>
 @endif
 @stop
 
@@ -82,7 +82,7 @@
 										{{ Form::open(['route' => 'client_links.create', 'method' => 'get']) }}
 											{{ Form::hidden('unit_1', $client->unit()->pluck('id')) }}
 											{{ Form::hidden('client_1', $client->id) }}
-											<button type="submit" class="grey-but" title="Add a unit link for this client"><i class="fa fa-link"></i></button>
+											<button type="submit" class="primary" title="Add a unit link for this client"><i class="fa fa-link"></i></button>
 										{{ Form::close() }}
 									</td>
 									<td class="actions hide-print content-center">

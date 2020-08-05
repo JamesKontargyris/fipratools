@@ -5,7 +5,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="/type_categories/{{ $type_category->id }}/edit" class="secondary"><i class="fa fa-pencil"></i> Edit this type reporting category</a></li>
+    <li><a href="/type_categories/{{ $type_category->id }}/edit" class="primary"><i class="fa fa-pencil"></i> Edit this type reporting category</a></li>
 @stop
 
 @section('content')

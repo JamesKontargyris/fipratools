@@ -55,7 +55,7 @@ class CaseStudy extends \BaseModel {
 		$this->product_id          = serialize( $case->product_id );
 
 		// Add text entries in case unit / user / AD etc. is deleted
-		$this->client = Client::find($this->client_id)->name;
+		$this->client = $case->client_id ? Client::find($this->client_id)->name : 0;
 		$this->unit_name = Unit::find($this->unit_id)->name;
 		$this->user_name = User::find($this->user_id)->first_name . ' ' . User::find($this->user_id)->last_name;
 		$this->account_director_name = AccountDirector::find($this->account_director_id)->first_name . ' ' . AccountDirector::find($this->account_director_id)->last_name;
@@ -81,7 +81,7 @@ class CaseStudy extends \BaseModel {
 		$update_case->product_id          = serialize( $case->product_id );
 
 		// Add text entries in case unit / user / AD etc. is deleted
-		$update_case->client = Client::find($update_case->client_id)->name;
+		$update_case->client = $case->client_id ? Client::find($this->client_id)->name : 0;
 		$update_case->unit_name = Unit::find($update_case->unit_id)->name;
 		$update_case->user_name = User::find($update_case->user_id)->first_name . ' ' . User::find($update_case->user_id)->last_name;
 		$update_case->account_director_name = AccountDirector::find($update_case->account_director_id)->first_name . ' ' . AccountDirector::find($update_case->account_director_id)->last_name;

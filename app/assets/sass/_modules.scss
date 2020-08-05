@@ -1,5 +1,10 @@
 // _modules.scss: modular pieces of code used throughout your project. Use modules to avoid repeating code.
 
+.content-container {
+  background:white;
+  padding-bottom:20px;
+}
+
 .modal {
   display:none;
 }
@@ -27,32 +32,26 @@
 .red-but {
   @include primary-but();
   background-color:$red;
+  margin-bottom:3px;
 //  @include text-shadow(darken($red, 10%) 0 -1px);
-  border-top: 1px solid lighten($red, 10%);
-  border-bottom: 2px solid rgba(darken($red, 40%), 0.6);
-  @include dark-grad($red, top, 10%);
 }
 .grey-but {
   @include primary-but();
-  background-color:$grey;
+  background-color:$dark-grey;
+  margin-bottom:3px;
 //  @include text-shadow(darken($grey, 10%) 0 -1px);
-  border-top: 1px solid lighten($grey, 10%);
-  border-bottom: 2px solid rgba(darken($grey, 40%), 0.6);
-  @include dark-grad($grey, top, 10%);
 }
 .green-but {
   @include primary-but();
-  border-top: 1px solid lighten(#adff2f, 10%);
-  border-bottom: 2px solid rgba(darken(#adff2f, 40%), 0.6);
-  @include dark-grad(lighten(#adff2f, 20%), top, 10%);
-  color:green;
+  background:$green;
+  color:white;
+  margin-bottom:3px;
 }
 .orange-but {
   @include primary-but();
-  border-top: 1px solid lighten(orange, 10%);
-  border-bottom: 2px solid rgba(darken(orange, 40%), 0.6);
-  @include dark-grad(lighten(orange, 20%), top, 10%);
-  color:black;
+  background-color: $orange;
+  color:white;
+  margin-bottom:3px;
 }
 
 .but-small {
@@ -101,25 +100,32 @@
   background:rgba(white, 0.9);
 }
 .alert-success {
-  background-color:lighten(greenyellow, 20%);
-  border:1px solid greenyellow;
+  background-color:$green;
+  border:1px solid darken($green, 10%);
   &.alert-overlay {
-    background-color:rgba(lighten(greenyellow, 20%), 0.8);
+    background-color:rgba(darken($green, 20%), 0.8);
     border:0;
   }
   &:before {
     content: "\f046";
+    color:white;
   }
 }
 .alert-info {
-  background-color:lighten($blue, 68%);
-  border:1px solid lighten($blue, 50%);
+  color:white;
+  background-color:$light-blue;
+  border:1px solid darken($light-blue, 10%);
+
+  button.close {
+    color:white;
+  }
   &.alert-overlay {
-    background-color:rgba(lighten($blue, 68%), 0.8);
+    background-color:rgba($light-blue, 68%);
     border:0;
   }
   &:before {
     content: "\f05a";
+    color:white;
   }
 }
 .alert-info-alt {
@@ -164,13 +170,16 @@
 #page-header {
   @include clearfix;
   overflow:visible;
-  border-radius:5px;
   margin-bottom:15px;
+  border:1px solid $green;
   & > *:not(a) {
-    padding:($v-rhythm / 2) 15px 0;
+    padding:15px 20px 0;
   }
   h2 {
     padding-right:150px;
+    color:$green;
+    font-family: $font-family-headings;
+    font-weight:normal;
 
     @include breakpoint($l) {
       padding-right: 20px;
@@ -196,9 +205,8 @@
       }
     }
   }
-  padding-bottom:$v-rhythm / 2;
+  padding-bottom:10px;
   position:relative;
-  background-color: $blue;
   color:white;
   .page-menu-icon-s {
     color:black;
@@ -209,54 +217,53 @@
     @include breakpoint($l) { display:none; }
   }
 
-  &.section-list {
-    h2 { color:darken($turquoise, 10%); }
-    background: linear-gradient(top, desaturate(lighten($turquoise, 47%), 25%), desaturate(lighten($turquoise, 35%), 25%)) desaturate(lighten($turquoise, 47%), 25%);
-    border-bottom: 2px solid desaturate(lighten($turquoise, 28%), 25%);
-  }
-  &.section-case {
-    h2 { color:darken($violet, 10%); }
-    background: linear-gradient(top, desaturate(lighten($violet, 30%), 25%), desaturate(lighten($violet, 20%), 25%)) desaturate(lighten($violet, 30%), 25%);
-    border-bottom: 2px solid desaturate(lighten($violet, 15%), 25%);
-  }
-  &.section-survey {
-    h2 { color:saturate(darken($green, 30%), 50%); }
-    background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
-    border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
-  }
-  &.section-headofunitsurvey {
-    h2 { color:saturate(darken($green, 30%), 50%); }
-    background:linear-gradient(top, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
-    border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
-  }
-  &.section-forum {
-    h2 { color:white; }
-    background: linear-gradient(lighten($blue, 10%) 0%, $blue 50%) no-repeat top;
-    border-bottom: 2px solid desaturate(darken($blue, 25%), 25%);
-  }
-  &.section-iwo {
-    h2 { color:saturate(darken($dark-teal, 30%), 50%); }
-    background:linear-gradient(top, desaturate(lighten($dark-teal, 42%),25%), desaturate(lighten($dark-teal, 20%), 25%)) desaturate(lighten($dark-teal, 42%),25%);
-    border-bottom: 2px solid desaturate(lighten($dark-teal, 15%), 25%);
-  }
-  &.section-toolbox {
-    h2 { color:saturate(darken($orange, 30%), 50%); }
-    background:linear-gradient(top, lighten($orange, 42%), lighten($orange, 30%)) lighten($orange, 42%);
-    border-bottom: 2px solid desaturate(lighten($orange, 25%), 25%);
-  }
-  &.section-admin {
-    h2 { color:darken($grey, 10%); }
-    background-color: desaturate(lighten($grey, 40%), 25%);
-    border-bottom: 2px solid desaturate(lighten($grey, 25%), 25%);
-  }
+  //&.section-list {
+  //  h2 { color:darken($turquoise, 10%); }
+  //  background: linear-gradient(to bottom, desaturate(lighten($turquoise, 47%), 25%), desaturate(lighten($turquoise, 35%), 25%)) desaturate(lighten($turquoise, 47%), 25%);
+  //  border-bottom: 2px solid desaturate(lighten($turquoise, 28%), 25%);
+  //}
+  //&.section-case {
+  //  h2 { color:darken($violet, 10%); }
+  //  background: linear-gradient(to bottom, desaturate(lighten($violet, 30%), 25%), desaturate(lighten($violet, 20%), 25%)) desaturate(lighten($violet, 30%), 25%);
+  //  border-bottom: 2px solid desaturate(lighten($violet, 15%), 25%);
+  //}
+  //&.section-survey {
+  //  h2 { color:saturate(darken($green, 30%), 50%); }
+  //  background:linear-gradient(to bottom, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
+  //  border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
+  //}
+  //&.section-headofunitsurvey {
+  //  h2 { color:saturate(darken($green, 30%), 50%); }
+  //  background:linear-gradient(to bottom, lighten($green, 42%), lighten($green, 30%)) lighten($green, 42%);
+  //  border-bottom: 2px solid desaturate(lighten($green, 25%), 25%);
+  //}
+  //&.section-forum {
+  //  h2 { color:white; }
+  //  background: linear-gradient(lighten($blue, 10%) 0%, $blue 50%) no-repeat top;
+  //  border-bottom: 2px solid desaturate(darken($blue, 25%), 25%);
+  //}
+  //&.section-iwo {
+  //  h2 { color:saturate(darken($dark-teal, 30%), 50%); }
+  //  background:linear-gradient(to bottom, desaturate(lighten($dark-teal, 42%),25%), desaturate(lighten($dark-teal, 20%), 25%)) desaturate(lighten($dark-teal, 42%),25%);
+  //  border-bottom: 2px solid desaturate(lighten($dark-teal, 15%), 25%);
+  //}
+  //&.section-toolbox {
+  //  h2 { color:saturate(darken($orange, 30%), 50%); }
+  //  background:linear-gradient(to bottom, lighten($orange, 42%), lighten($orange, 30%)) lighten($orange, 42%);
+  //  border-bottom: 2px solid desaturate(lighten($orange, 25%), 25%);
+  //}
+  //&.section-admin {
+  //  h2 { color:darken($grey, 10%); }
+  //  background-color: desaturate(lighten($grey, 40%), 25%);
+  //  border-bottom: 2px solid desaturate(lighten($grey, 25%), 25%);
+  //}
 
   nav {
     @include clearfix();
     ul {
       @include horizontal-list();
       &.small-font a {
-        @include font-size(12);
-        font-weight: $font-bold;
+        @include font-size(13);
       }
       & + ul {
         margin-top:$v-rhythm / 1.5;
@@ -367,8 +374,7 @@
 }
 
 .filter-container {
-  background-color:darken(white, 5%);
-  @include breakpoint($m) { border-radius:5px 5px 0 0; }
+  background-color:$light-grey;
   .filters {
     @include font-size(12);
     @include breakpoint($l-max) { display:none; padding:($v-rhythm / 2) 0; }
@@ -437,15 +443,10 @@
 
 }
 .filter-but {
-  background-color:darken(white, 15%);
+  @include secondary-but;
   @include font-size(12);
-  @include dark-grad(white, top, 15%);
-  border:1px solid white;
-  padding:5px 10px;
-  @include border-radius(5px);
   &.highlight {
-    background-color: $blue;
-    @include dark-grad($blue, top, 15%);
+    background-color: $logo-blue;
     border:0;
     color:white;
   }
@@ -515,17 +516,17 @@
   thead {
     tr {
       & > td {
-        background-color:$grey;
-        @include dark-grad($grey, top, 10%);
+        background-color:$dark-grey;
         color:white;
         border-collapse: separate;
-        text-transform: uppercase;
-        font-weight:$font-bold;
+        font-family: $font-family-headings;
+        font-weight:normal;
         padding:4px 10px;
+        @include font-size(13);
         &.sub-header {
+          font-family: $font-family;
           background-color:$light-grey;
-          @include dark-grad($light-grey, top, 10%);
-          color:$grey;
+          color:$dark-grey;
         }
       }
     }
@@ -564,18 +565,18 @@
           border-left:0;
           padding:7px;
           .expertise-field__text-container {
+          color:$dark-grey;
             border-radius: 4px;
             position:relative;
             padding:8px;
-            background:darken(#efefef, 5%);
-            color:darken(#efefef, 40%);
+            background:$light-grey;
             .expertise-field__pointer {
               position:absolute;
               left:0;
               top:50%;
               margin-top:-5px;
               margin-left:-5px;
-              color:darken(#efefef, 5%);
+              color:$light-grey;
             }
           }
         }
@@ -599,8 +600,8 @@
     @include font-size(12);
   }
   .status-active {
-    color:green;
-    background-color: lighten(#adff2f, 35%);
+    color:white;
+    background-color: $green;
   }
   .status-dormant {
     color:#a3a3a3;
@@ -649,6 +650,7 @@
     tr {
       border:0 !important;
       td {
+        font-family: $font-family-bold;
         border: 0 !important;
         background: none;
         padding: 0;
@@ -688,6 +690,7 @@
 
     ul li {
       @include font-size(16);
+      margin-bottom:5px;
     }
 }
 .formgroup {
@@ -803,25 +806,25 @@ ul.square {
 ul.pagination {
   @include horizontal-list();
   padding:0;
+
   @include breakpoint($l-max) {
     display:inline-block;
-    margin:0 auto;
+    margin:20px auto 0;
   }
   li {
     padding:0 !important;
     margin-right:5px;
     a {
       @include but();
-      background-color:darken(white, 20%);
-      @include dark-grad(white, top, 12%);
-      border:1px solid darken(white, 20%);
-      color:$blue;
+      background-color:white;
+      border:1px solid $logo-blue;
+      color:$logo-blue;
     }
     &.active span {
       @include but();
-      background-color: $blue;
-      @include dark-grad($blue, top, 12%);
-      border:1px solid darken($blue, 20%);
+      background-color: $green;
+      border:1px solid $green;
+      border-bottom:2px solid darken($green, 20%);
       color:white;
     }
     &.disabled span {
@@ -850,9 +853,9 @@ ul.pagination {
 }
 
 .border-box {
-  border:1px solid $light-grey;
+  border:1px solid $green;
   background-color: white;
-  border-radius:5px;
+  margin-bottom:$v-rhythm;
   &.fill {
     background-color:lighten($light-grey, 10%);
   }
@@ -862,62 +865,63 @@ ul.pagination {
 
   .border-box__header {
     padding:12px 15px;
-    background:linear-gradient(top, white 0%, lighten($light-grey, 6%) 40%);
+    background:$light-grey;
     @include font-size(16);
     font-weight: $font-bold;
     border-bottom:1px solid $light-grey;
-    border-radius: 5px 5px 0 0;
 
     @include breakpoint($m) {
       @include font-size(18);
     }
   }
 
-  &.section-list {
-    .border-box__title,
-    .border-box__sub-title {
-      color:$turquoise;
-    }
-  }
-
-  &.section-case {
-    .border-box__title,
-    .border-box__sub-title {
-      color:darken($violet, 10%);
-    }
-  }
-
-  &.section-survey {
-     .border-box__title,
-     .border-box__sub-title {
-       color:$green;
-     }
-   }
-
-  &.section-headofunitsurvey {
-    .border-box__title,
-    .border-box__sub-title {
-      color:$green;
-    }
-  }
-
-  &.section-toolbox {
-    .border-box__title,
-    .border-box__sub-title {
-      color:$orange;
-    }
-  }
-
-  &.section-admin {
-    .border-box__title,
-    .border-box__sub-title {
-      color:darken($grey, 10%);
-    }
-  }
+  //&.section-list {
+  //  .border-box__title,
+  //  .border-box__sub-title {
+  //    color:$green;
+  //  }
+  //}
+  //
+  //&.section-case {
+  //  .border-box__title,
+  //  .border-box__sub-title {
+  //    color:darken($violet, 10%);
+  //  }
+  //}
+  //
+  //&.section-survey {
+  //   .border-box__title,
+  //   .border-box__sub-title {
+  //     color:$green;
+  //   }
+  // }
+  //
+  //&.section-headofunitsurvey {
+  //  .border-box__title,
+  //  .border-box__sub-title {
+  //    color:$green;
+  //  }
+  //}
+  //
+  //&.section-toolbox {
+  //  .border-box__title,
+  //  .border-box__sub-title {
+  //    color:$orange;
+  //  }
+  //}
+  //
+  //&.section-admin {
+  //  .border-box__title,
+  //  .border-box__sub-title {
+  //    color:darken($grey, 10%);
+  //  }
+  //}
 
   .border-box__title {
-    @include font-size(18);
-    font-weight: $font-black;
+    @include font-size(22);
+    font-family: $font-family-headings-normal;
+    color:$green;
+    font-weight: normal;
     margin: 0 0 9px 0;
 
     &.more-margin-bottom {
@@ -927,7 +931,9 @@ ul.pagination {
 
   .border-box__sub-title {
     @include font-size(15);
-    font-weight: $font-black;
+    font-family: $font-family-headings;
+    color:$green;
+    font-weight: normal;
     margin: 0 0 3px 0;
 
     &.more-margin-bottom {
@@ -1077,17 +1083,11 @@ ul.pagination {
 }
 
 .knowledge__section-title {
-  font-weight:$font-black;
+  font-family: $font-family-headings;
   padding:12px;
-  background-color:$green;
+  background-color:$dark-grey;
   color:white;
   margin-top:$v-rhythm;
-  background: $green linear-gradient(lighten($green, 25%) 0%, $green 40%) no-repeat top;
-  border-left:2px solid $green;
-  border-top:2px solid $green;
-  border-right:2px solid $green;
-  border-bottom:2px solid darken($green, 10%);
-  border-radius: 5px;
   @include font-size(19);
 
   &.with-margin-bottom {
@@ -1095,7 +1095,6 @@ ul.pagination {
   }
 
   &.with-intro {
-    border-radius: 5px 5px 0 0;
   }
 }
 .knowledge__section-intro {
@@ -1216,10 +1215,11 @@ ul.pagination {
 }
 
 .select2, .select2-dropdown {
-  font-family: FontAwesome, Lato, sans-serif !important;
+  //font-family: FontAwesome, Lato, sans-serif !important;
 }
 
-.select2 {
+.select2-container--default .select2-selection--single {
+  border:1px solid $green;
 }
 
 .select2-selection,

@@ -5,7 +5,7 @@ Create a Client Link
 @stop
 
 @section('page-nav')
-<li><a href="{{ route('clients.index') }}" class="secondary"><i class="fa fa-caret-left"></i> Clients Overview</a></li>
+<li><a href="{{ route('clients.index') }}" class="primary"><i class="fa fa-caret-left"></i> Clients Overview</a></li>
 @stop
 
 @section('content')

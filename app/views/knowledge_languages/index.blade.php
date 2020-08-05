@@ -9,7 +9,7 @@
 @stop
 
 @section('page-nav')
-    <li><a href="{{ route('knowledge_languages.create') }}" class="secondary"><i class="fa fa-plus-circle"></i> Add a Language</a></li>
+    <li><a href="{{ route('knowledge_languages.create') }}" class="primary"><i class="fa fa-plus-circle"></i> Add a Language</a></li>
 @stop
 
 @section('export-nav')

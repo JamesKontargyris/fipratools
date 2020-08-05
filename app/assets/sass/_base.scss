@@ -1,233 +1,277 @@
 //	_base.scss: styles that will affect all pages (heading tags, small tags, etc.)
 
 * {
-	@include box-sizing(border-box);
+  box-sizing: border-box;
 }
 
 html, body {
-	height:100%;
+  height: 100%;
+  background-color: $dark-grey;
 }
-html {
-	font-size:16px;
-}
-body {
-	font-family: $font-family;
-	color:$black;
-	line-height:$v-rhythm;
-}
-a {
-	text-decoration:none;
-	color:$blue;
-	&:hover {
-      color:rgba($blue, 0.7);
-	}
-}
-h1, h2 {
-	font-family: $font-family;
-    line-height:1;
 
+html {
+  font-size: 16px;
 }
-h1 {
-  @include font-size(26);
-  color:$grey;
-  font-weight: bold;
-  margin-bottom:$v-rhythm / 2;
-  @include breakpoint($l) {
-      margin-top:15px;
+
+body {
+  font-family: $font-family;
+  color: $black;
+  line-height: $v-rhythm;
+}
+
+a {
+  text-decoration: none;
+  color: $logo-blue;
+
+  &:hover {
+    color: rgba($logo-blue, 0.7);
   }
 }
-h2 {
-    padding:($v-rhythm / 2) 15px;
-    @include font-size(22);
-    color:white;
-    @include breakpoint($m-max) {
-      @include font-size(16);
-	}
 
-	&.no-right-pad {
-		padding-right:15px !important;
-	}
+h1, h2 {
+  font-family: $font-family-headings;
+  line-height: 1;
+
 }
+
+h1 {
+  @include font-size(26);
+  color: $grey;
+  margin-bottom: $v-rhythm / 2;
+  @include breakpoint($l) {
+    margin-top: 15px;
+  }
+}
+
+h2 {
+  padding: ($v-rhythm / 2) 15px;
+  @include font-size(24);
+  color: white;
+  @include breakpoint($m-max) {
+    @include font-size(16);
+  }
+
+  &.no-right-pad {
+    padding-right: 15px !important;
+  }
+}
+
 h3 {
-  padding:0 0 ($v-rhythm / 2);
+  padding: 0 0 ($v-rhythm / 2);
   @include font-size(20);
-  color:$black;
-  line-height:1.5;
+  color: $black;
+  line-height: 1.5;
 }
+
 h4 {
   @include font-size(18);
-  font-weight:$font-bold;
-  padding:($v-rhythm / 2) 0;
-  margin-bottom:($v-rhythm / 2);
-  border-bottom:1px solid $periwinkle;
+  padding: ($v-rhythm / 2) 0;
+  margin-bottom: ($v-rhythm / 2);
+  border-bottom: 1px solid $periwinkle;
 }
+
 h5 {
   @include font-size(14);
   text-transform: uppercase;
-  font-weight: $font-bold;
-  padding-bottom:$v-rhythm / 4;
+  padding-bottom: $v-rhythm / 4;
   border-bottom: 1px solid $light-grey;
-  margin-bottom:$v-rhythm / 4;
+  margin-bottom: $v-rhythm / 4;
+
   &.no-underline {
-    padding-bottom:0;
-    border-bottom:0;
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 }
+
 h1, h2, h3, h4, h5 {
   small {
-    font-size:0.7em;
-    color:$grey;
+    font-size: 0.7em;
+    color: $grey;
   }
 }
-p {
-	padding-bottom:$v-rhythm;
+
+p:not(:last-of-type) {
+  padding-bottom: $v-rhythm;
 }
+
 em {
   font-style: italic;
 }
+
 strong {
-	font-weight:$font-bold;
+  font-family: 'GrotesqueMTStd-Bold', 'GrotesqueMTStd', 'Corbel', sans-serif;
+  font-weight: normal;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  strong {
+    font-family: $font-family-headings;
+    font-weight:normal;
+  }
+}
+
 label {
-	display:inline-block;
-	font-weight:$font-bold;
-    @include font-size(16);
-	color:$grey;
-	padding-bottom:$v-rhythm / 2;
-	&.required {
-		&::before {
-			content:"* ";
-			color:$red;
-			font-weight:$font-bold;
-		}
-	}
+  display: inline-block;
+  font-weight: $font-bold;
+  @include font-size(16);
+  color: $grey;
+  padding-bottom: $v-rhythm / 2;
+
+  &.required {
+    &::before {
+      content: "* ";
+      color: $red;
+      font-weight: $font-bold;
+    }
+  }
 }
+
 a.back-to-top {
-	display:inline-block;
-	padding:($v-rhythm / 2) 10px;
-	background-color:darken(white, 5%);
-	margin:($v-rhythm / 2) 0;
-	&:hover {
-		opacity:0.8;
-	}
+  display: inline-block;
+  padding: ($v-rhythm / 2) 10px;
+  background-color: darken(white, 5%);
+  margin: ($v-rhythm / 2) 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
+
 a.button {
-  display:inline-block;
+  display: inline-block;
 }
+
 input[type=text],
 input[type=email],
 input[type=file],
 input[type=password],
 input[type=number],
 textarea {
-	width:100%;
-	padding:$v-rhythm / 4 10px;
-	@include font-size(14);
-	font-family:$font-family;
-	border-radius: 5px;
-	@include breakpoint($l) {
-		@include font-size(16);
-	}
-	&.inline {
-		width:auto;
-	}
+  width: 100%;
+  padding: $v-rhythm / 4 10px;
+  @include font-size(14);
+  font-family: $font-family;
+  border-radius: 5px;
+  border:1px solid $green;
+  margin-bottom:5px;
+  @include breakpoint($l) {
+    @include font-size(16);
+  }
+
+  &.inline {
+    width: auto;
+  }
 }
+
 input[readonly=readonly],
 input[disabled=disabled] {
-  background-color:lighten($red, 50%);
-  border:1px solid $red;
+  background-color: lighten($red, 50%);
+  border: 1px solid $red;
 }
-input[type=checkbox] {
-	width:30px;
-	height:30px;
-	vertical-align: middle;
-}
-input[type=submit] {
-	cursor:pointer;
-	padding-left:20px;
-	padding-right:20px;
-	font-weight:$font-bold;
-}
-select {
-    display: block;
-	width:100%;
-	padding:$v-rhythm / 4 10px;
-	@include font-size(14);
-	border:1px solid $green;
-	@include breakpoint($l) {
-		@include font-size(16);
-	}
-	&.inline {
-		display:inline-block;
-	}
-}
-input[type=radio] {
-	width:20px;
-	height:20px;
-	vertical-align: middle;
 
-	@include breakpoint($m) {
-		width:30px;
-		height:30px;
-	}
+input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+input[type=submit] {
+  cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: $font-family-headings;
+  font-weight: normal;
+}
+
+select {
+  display: block;
+  width: 100%;
+  padding: $v-rhythm / 4 10px;
+  @include font-size(14);
+  border: 1px solid $green;
+  font-family: $font-family;
+
+  @include breakpoint($l) {
+    @include font-size(16);
+  }
+
+  &.inline {
+    display: inline-block;
+  }
+}
+
+input[type=radio] {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+
+  @include breakpoint($m) {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 tr td {
-	vertical-align: inherit;
-}
-
-strong {
-	font-weight:$font-bold;
+  vertical-align: inherit;
 }
 
 #content {
-    padding-top:$v-rhythm;
-	@include font-size(14);
-	overflow: visible;
+  padding-top: $v-rhythm;
+  @include font-size(14);
+  overflow: visible;
 }
 
 .red {
-	color:$red !important;
+  color: $red !important;
 }
+
 .white {
-  color:white !important;
+  color: white !important;
 }
+
 .turquoise {
-  color:$turquoise !important;
+  color: $turquoise !important;
 }
+
 .green {
-  color:$green !important;
+  color: $green !important;
 }
+
 .green-darker {
-	color: darken($green, 10%) !important;
+  color: darken($green, 10%) !important;
 }
+
 .orange {
-  color:darken(orange, 10%) !important;
+  color: darken(orange, 10%) !important;
 }
+
 .periwinkle {
-  color:$periwinkle !important;
+  color: $periwinkle !important;
 }
+
 .light-grey {
-  color:$light-grey !important;
+  color: $light-grey !important;
 }
 
 .showjs {
-	display:none;
+  display: none;
 }
+
 .hidejs {
-  display:block;
+  display: block;
 }
+
 hr {
-	background-color:none;
-	height:1px;
-	border:0;
-	border-top:1px dotted #d7d7d7;
+  background-color: none;
+  height: 1px;
+  border: 0;
+  border-top: 1px dotted #d7d7d7;
 }
 
 .text-upper {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .no-top-pad {
-	padding-top:0 !important;
+  padding-top: 0 !important;
 }

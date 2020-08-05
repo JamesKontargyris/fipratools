@@ -183,9 +183,7 @@ class BaseController extends Controller {
 		$active_count  = 0;
 		$dormant_count = 0;
 
-		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
-
-		$heading1 = $logo;
+		$heading1 = "";
 		// Lead Office List specific heading
 		if ( is_request( 'list' ) || is_request( 'clients' ) ) {
 //			$heading1 .= 'All ';
@@ -245,9 +243,7 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
-
-		$heading1 = $logo;
+		$heading1 = "";
 		$heading1 .= current_section_name() . ': ' . ucfirst( clean_key( $key ) );
 		$heading2 = isset( $this->search_term_clean )
 			? 'Selection of ' . number_format( $items->count(), 0 ) . ' ' . strtolower( clean_key( $key ) ) . ' when searching for ' . Session::get( $this->resource_key . '.SearchType' ) . ' "' . $this->search_term_clean . '"'
@@ -299,9 +295,7 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$logo = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
-
-		$heading1 = $logo;
+		$heading1 = "";
 
 		$heading1 .= current_section_name() . ' | ' . 'Filtered ' . ucfirst( clean_key( $key ) );
 		if ( Session::get( 'list.rowsHideShowDormant' ) == 'show' && Session::get( 'list.rowsHideShowActive' ) == 'show' ) {
@@ -342,8 +336,7 @@ class BaseController extends Controller {
 		$key = is_request( 'list' ) ? 'clients' : $this->resource_key;
 		$key = is_request( 'caselist' ) ? 'case_studies' : $key;
 
-		$heading1 = '<img src="http://fipra.com/wp-content/themes/fipradotcom/minimg/fipra_logo.png" align="middle" alt="Fipra" style="width:36px; height:36px; padding-right:0px; padding-bottom:12px;"/> ';
-		$heading1 .= current_section_name() . ' | ' . 'Duplicated ' . ucfirst( clean_key( $this->resource_key ) );
+		$heading1 = current_section_name() . ' | ' . 'Duplicated ' . ucfirst( clean_key( $this->resource_key ) );
 		$heading2 = number_format( $items->count(), 0 ) . ' total ' . clean_key( $this->resource_key );
 
 		$active_count  = 0;
