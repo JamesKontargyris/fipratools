@@ -16,7 +16,7 @@
         "h4cc/wkhtmltopdf-amd64": "0.12.*",
         "maatwebsite/excel": "1.*",
         "pda/pheanstalk": "2.1.0",
-        "guzzlehttp/guzzle": "5.*",
+        "guzzlehttp/guzzle": "6.*",
 		"rych/random": "^0.1.0",
 		"cebe/markdown": "~1.0.1",
 		"riari/laravel-forum": "~1.0"
